@@ -41,52 +41,9 @@
             this.wednesdayLabel = new System.Windows.Forms.Label();
             this.tuesdayLabel = new System.Windows.Forms.Label();
             this.sundayLabel = new System.Windows.Forms.Label();
-            this.week1Day2Button = new System.Windows.Forms.Button();
-            this.week2Day2Button = new System.Windows.Forms.Button();
-            this.week1Day3Button = new System.Windows.Forms.Button();
-            this.week1Day4Button = new System.Windows.Forms.Button();
-            this.week1Day5Button = new System.Windows.Forms.Button();
-            this.week1Day6Button = new System.Windows.Forms.Button();
-            this.week1Day7Button = new System.Windows.Forms.Button();
-            this.week2Day1Button = new System.Windows.Forms.Button();
-            this.week2Day3Button = new System.Windows.Forms.Button();
-            this.week2Day4Button = new System.Windows.Forms.Button();
-            this.week2Day6Button = new System.Windows.Forms.Button();
-            this.week2Day7Button = new System.Windows.Forms.Button();
-            this.week3Day1Button = new System.Windows.Forms.Button();
-            this.week3Day2Button = new System.Windows.Forms.Button();
-            this.week3Day3Button = new System.Windows.Forms.Button();
-            this.week3Day4Button = new System.Windows.Forms.Button();
-            this.week3Day5Button = new System.Windows.Forms.Button();
-            this.week3Day6Button = new System.Windows.Forms.Button();
-            this.week3Day7Button = new System.Windows.Forms.Button();
-            this.week4Day1Button = new System.Windows.Forms.Button();
-            this.week4Day2Button = new System.Windows.Forms.Button();
-            this.week4Day3Button = new System.Windows.Forms.Button();
-            this.week4Day4Button = new System.Windows.Forms.Button();
-            this.week4Day5Button = new System.Windows.Forms.Button();
-            this.week4Day6Button = new System.Windows.Forms.Button();
-            this.week4Day7Button = new System.Windows.Forms.Button();
-            this.week5Day1Button = new System.Windows.Forms.Button();
-            this.week5Day2Button = new System.Windows.Forms.Button();
-            this.week5Day3Button = new System.Windows.Forms.Button();
-            this.week5Day4Button = new System.Windows.Forms.Button();
-            this.week5Day5Button = new System.Windows.Forms.Button();
-            this.week5Day6Button = new System.Windows.Forms.Button();
-            this.week1Day1Button = new System.Windows.Forms.Button();
-            this.week5Day7Button = new System.Windows.Forms.Button();
-            this.week6Day1Button = new System.Windows.Forms.Button();
-            this.week6Day2Button = new System.Windows.Forms.Button();
-            this.week6Day3Button = new System.Windows.Forms.Button();
-            this.week6Day4Button = new System.Windows.Forms.Button();
-            this.week6Day5Button = new System.Windows.Forms.Button();
-            this.week6Day6Button = new System.Windows.Forms.Button();
-            this.week6Day7Button = new System.Windows.Forms.Button();
-            this.daysTable = new System.Windows.Forms.TableLayoutPanel();
-            this.week2Day5Button = new System.Windows.Forms.Button();
             this.deleteTaskButton = new System.Windows.Forms.Button();
             this.updateTaskButton = new System.Windows.Forms.Button();
-            this.viewTaskButton = new System.Windows.Forms.Button();
+            this.viewTasksButton = new System.Windows.Forms.Button();
             this.addTaskButton = new System.Windows.Forms.Button();
             this.yearCompletedLabel = new System.Windows.Forms.Label();
             this.yearPartiallyCompletedLabel = new System.Windows.Forms.Label();
@@ -120,8 +77,51 @@
             this.monthCompletedLabel = new System.Windows.Forms.Label();
             this.monthPartiallyCompletedLabel = new System.Windows.Forms.Label();
             this.monthFailedLabel = new System.Windows.Forms.Label();
+            this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
+            this.week1Day1Label = new System.Windows.Forms.Label();
+            this.week1Day2Label = new System.Windows.Forms.Label();
+            this.week1Day3Label = new System.Windows.Forms.Label();
+            this.week1Day4Label = new System.Windows.Forms.Label();
+            this.week1Day5Label = new System.Windows.Forms.Label();
+            this.week1Day6Label = new System.Windows.Forms.Label();
+            this.week1Day7Label = new System.Windows.Forms.Label();
+            this.week2Day1Label = new System.Windows.Forms.Label();
+            this.week2Day2Label = new System.Windows.Forms.Label();
+            this.week2Day3Label = new System.Windows.Forms.Label();
+            this.week2Day4Label = new System.Windows.Forms.Label();
+            this.week2Day5Label = new System.Windows.Forms.Label();
+            this.week2Day6Label = new System.Windows.Forms.Label();
+            this.week2Day7Label = new System.Windows.Forms.Label();
+            this.week3Day1Label = new System.Windows.Forms.Label();
+            this.week3Day2Label = new System.Windows.Forms.Label();
+            this.week3Day3Label = new System.Windows.Forms.Label();
+            this.week3Day4Label = new System.Windows.Forms.Label();
+            this.week3Day5Label = new System.Windows.Forms.Label();
+            this.week3Day6Label = new System.Windows.Forms.Label();
+            this.week3Day7Label = new System.Windows.Forms.Label();
+            this.week4Day1Label = new System.Windows.Forms.Label();
+            this.week4Day2Label = new System.Windows.Forms.Label();
+            this.week4Day3Label = new System.Windows.Forms.Label();
+            this.week4Day4Label = new System.Windows.Forms.Label();
+            this.week4Day5Label = new System.Windows.Forms.Label();
+            this.week4Day6Label = new System.Windows.Forms.Label();
+            this.week4Day7Label = new System.Windows.Forms.Label();
+            this.week5Day1Label = new System.Windows.Forms.Label();
+            this.week5Day2Label = new System.Windows.Forms.Label();
+            this.week5Day3Label = new System.Windows.Forms.Label();
+            this.week5Day4Label = new System.Windows.Forms.Label();
+            this.week5Day5Label = new System.Windows.Forms.Label();
+            this.week5Day6Label = new System.Windows.Forms.Label();
+            this.week5Day7Label = new System.Windows.Forms.Label();
+            this.week6Day1Label = new System.Windows.Forms.Label();
+            this.week6Day2Label = new System.Windows.Forms.Label();
+            this.week6Day3Label = new System.Windows.Forms.Label();
+            this.week6Day4Label = new System.Windows.Forms.Label();
+            this.week6Day5Label = new System.Windows.Forms.Label();
+            this.week6Day6Label = new System.Windows.Forms.Label();
+            this.week6Day7Label = new System.Windows.Forms.Label();
             this.weekDaysTable.SuspendLayout();
-            this.daysTable.SuspendLayout();
+            this.tableLayoutPanel1.SuspendLayout();
             this.SuspendLayout();
             // 
             // yearLabel
@@ -165,6 +165,7 @@
             this.monthDropDown.Font = new System.Drawing.Font("Segoe UI", 21.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.monthDropDown.FormattingEnabled = true;
             this.monthDropDown.Location = new System.Drawing.Point(129, 77);
+            this.monthDropDown.MaxDropDownItems = 12;
             this.monthDropDown.Name = "monthDropDown";
             this.monthDropDown.Size = new System.Drawing.Size(190, 48);
             this.monthDropDown.TabIndex = 4;
@@ -287,580 +288,10 @@
             this.sundayLabel.Text = "Sunday";
             this.sundayLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // week1Day2Button
-            // 
-            this.week1Day2Button.BackColor = System.Drawing.Color.White;
-            this.week1Day2Button.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.week1Day2Button.Location = new System.Drawing.Point(97, 0);
-            this.week1Day2Button.Margin = new System.Windows.Forms.Padding(0);
-            this.week1Day2Button.Name = "week1Day2Button";
-            this.week1Day2Button.Size = new System.Drawing.Size(97, 56);
-            this.week1Day2Button.TabIndex = 13;
-            this.week1Day2Button.Text = "<none>";
-            this.week1Day2Button.UseVisualStyleBackColor = false;
-            // 
-            // week2Day2Button
-            // 
-            this.week2Day2Button.BackColor = System.Drawing.Color.White;
-            this.week2Day2Button.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.week2Day2Button.Location = new System.Drawing.Point(97, 56);
-            this.week2Day2Button.Margin = new System.Windows.Forms.Padding(0);
-            this.week2Day2Button.Name = "week2Day2Button";
-            this.week2Day2Button.Size = new System.Drawing.Size(97, 56);
-            this.week2Day2Button.TabIndex = 6;
-            this.week2Day2Button.Text = "<none>";
-            this.week2Day2Button.UseVisualStyleBackColor = false;
-            // 
-            // week1Day3Button
-            // 
-            this.week1Day3Button.BackColor = System.Drawing.Color.White;
-            this.week1Day3Button.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.week1Day3Button.Location = new System.Drawing.Point(194, 0);
-            this.week1Day3Button.Margin = new System.Windows.Forms.Padding(0);
-            this.week1Day3Button.Name = "week1Day3Button";
-            this.week1Day3Button.Size = new System.Drawing.Size(97, 56);
-            this.week1Day3Button.TabIndex = 7;
-            this.week1Day3Button.Text = "<none>";
-            this.week1Day3Button.UseVisualStyleBackColor = false;
-            // 
-            // week1Day4Button
-            // 
-            this.week1Day4Button.BackColor = System.Drawing.Color.White;
-            this.week1Day4Button.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.week1Day4Button.Location = new System.Drawing.Point(291, 0);
-            this.week1Day4Button.Margin = new System.Windows.Forms.Padding(0);
-            this.week1Day4Button.Name = "week1Day4Button";
-            this.week1Day4Button.Size = new System.Drawing.Size(97, 56);
-            this.week1Day4Button.TabIndex = 8;
-            this.week1Day4Button.Text = "<none>";
-            this.week1Day4Button.UseVisualStyleBackColor = false;
-            // 
-            // week1Day5Button
-            // 
-            this.week1Day5Button.BackColor = System.Drawing.Color.White;
-            this.week1Day5Button.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.week1Day5Button.Location = new System.Drawing.Point(388, 0);
-            this.week1Day5Button.Margin = new System.Windows.Forms.Padding(0);
-            this.week1Day5Button.Name = "week1Day5Button";
-            this.week1Day5Button.Size = new System.Drawing.Size(97, 56);
-            this.week1Day5Button.TabIndex = 9;
-            this.week1Day5Button.Text = "<none>";
-            this.week1Day5Button.UseVisualStyleBackColor = false;
-            // 
-            // week1Day6Button
-            // 
-            this.week1Day6Button.BackColor = System.Drawing.Color.White;
-            this.week1Day6Button.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.week1Day6Button.Location = new System.Drawing.Point(485, 0);
-            this.week1Day6Button.Margin = new System.Windows.Forms.Padding(0);
-            this.week1Day6Button.Name = "week1Day6Button";
-            this.week1Day6Button.Size = new System.Drawing.Size(97, 56);
-            this.week1Day6Button.TabIndex = 10;
-            this.week1Day6Button.Text = "<none>";
-            this.week1Day6Button.UseVisualStyleBackColor = false;
-            // 
-            // week1Day7Button
-            // 
-            this.week1Day7Button.BackColor = System.Drawing.Color.White;
-            this.week1Day7Button.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.week1Day7Button.Location = new System.Drawing.Point(582, 0);
-            this.week1Day7Button.Margin = new System.Windows.Forms.Padding(0);
-            this.week1Day7Button.Name = "week1Day7Button";
-            this.week1Day7Button.Size = new System.Drawing.Size(104, 56);
-            this.week1Day7Button.TabIndex = 11;
-            this.week1Day7Button.Text = "<none>";
-            this.week1Day7Button.UseVisualStyleBackColor = false;
-            // 
-            // week2Day1Button
-            // 
-            this.week2Day1Button.BackColor = System.Drawing.Color.White;
-            this.week2Day1Button.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.week2Day1Button.Location = new System.Drawing.Point(0, 56);
-            this.week2Day1Button.Margin = new System.Windows.Forms.Padding(0);
-            this.week2Day1Button.Name = "week2Day1Button";
-            this.week2Day1Button.Size = new System.Drawing.Size(97, 56);
-            this.week2Day1Button.TabIndex = 12;
-            this.week2Day1Button.Text = "<none>";
-            this.week2Day1Button.UseVisualStyleBackColor = false;
-            // 
-            // week2Day3Button
-            // 
-            this.week2Day3Button.BackColor = System.Drawing.Color.White;
-            this.week2Day3Button.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.week2Day3Button.Location = new System.Drawing.Point(194, 56);
-            this.week2Day3Button.Margin = new System.Windows.Forms.Padding(0);
-            this.week2Day3Button.Name = "week2Day3Button";
-            this.week2Day3Button.Size = new System.Drawing.Size(97, 56);
-            this.week2Day3Button.TabIndex = 14;
-            this.week2Day3Button.Text = "<none>";
-            this.week2Day3Button.UseVisualStyleBackColor = false;
-            // 
-            // week2Day4Button
-            // 
-            this.week2Day4Button.BackColor = System.Drawing.Color.White;
-            this.week2Day4Button.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.week2Day4Button.Location = new System.Drawing.Point(291, 56);
-            this.week2Day4Button.Margin = new System.Windows.Forms.Padding(0);
-            this.week2Day4Button.Name = "week2Day4Button";
-            this.week2Day4Button.Size = new System.Drawing.Size(97, 56);
-            this.week2Day4Button.TabIndex = 15;
-            this.week2Day4Button.Text = "<none>";
-            this.week2Day4Button.UseVisualStyleBackColor = false;
-            // 
-            // week2Day6Button
-            // 
-            this.week2Day6Button.BackColor = System.Drawing.Color.White;
-            this.week2Day6Button.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.week2Day6Button.Location = new System.Drawing.Point(485, 56);
-            this.week2Day6Button.Margin = new System.Windows.Forms.Padding(0);
-            this.week2Day6Button.Name = "week2Day6Button";
-            this.week2Day6Button.Size = new System.Drawing.Size(97, 56);
-            this.week2Day6Button.TabIndex = 17;
-            this.week2Day6Button.Text = "<none>";
-            this.week2Day6Button.UseVisualStyleBackColor = false;
-            // 
-            // week2Day7Button
-            // 
-            this.week2Day7Button.BackColor = System.Drawing.Color.White;
-            this.week2Day7Button.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.week2Day7Button.Location = new System.Drawing.Point(582, 56);
-            this.week2Day7Button.Margin = new System.Windows.Forms.Padding(0);
-            this.week2Day7Button.Name = "week2Day7Button";
-            this.week2Day7Button.Size = new System.Drawing.Size(104, 56);
-            this.week2Day7Button.TabIndex = 18;
-            this.week2Day7Button.Text = "<none>";
-            this.week2Day7Button.UseVisualStyleBackColor = false;
-            // 
-            // week3Day1Button
-            // 
-            this.week3Day1Button.BackColor = System.Drawing.Color.White;
-            this.week3Day1Button.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.week3Day1Button.Location = new System.Drawing.Point(0, 112);
-            this.week3Day1Button.Margin = new System.Windows.Forms.Padding(0);
-            this.week3Day1Button.Name = "week3Day1Button";
-            this.week3Day1Button.Size = new System.Drawing.Size(97, 56);
-            this.week3Day1Button.TabIndex = 19;
-            this.week3Day1Button.Text = "<none>";
-            this.week3Day1Button.UseVisualStyleBackColor = false;
-            // 
-            // week3Day2Button
-            // 
-            this.week3Day2Button.BackColor = System.Drawing.Color.White;
-            this.week3Day2Button.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.week3Day2Button.Location = new System.Drawing.Point(97, 112);
-            this.week3Day2Button.Margin = new System.Windows.Forms.Padding(0);
-            this.week3Day2Button.Name = "week3Day2Button";
-            this.week3Day2Button.Size = new System.Drawing.Size(97, 56);
-            this.week3Day2Button.TabIndex = 20;
-            this.week3Day2Button.Text = "<none>";
-            this.week3Day2Button.UseVisualStyleBackColor = false;
-            // 
-            // week3Day3Button
-            // 
-            this.week3Day3Button.BackColor = System.Drawing.Color.White;
-            this.week3Day3Button.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.week3Day3Button.Location = new System.Drawing.Point(194, 112);
-            this.week3Day3Button.Margin = new System.Windows.Forms.Padding(0);
-            this.week3Day3Button.Name = "week3Day3Button";
-            this.week3Day3Button.Size = new System.Drawing.Size(97, 56);
-            this.week3Day3Button.TabIndex = 21;
-            this.week3Day3Button.Text = "<none>";
-            this.week3Day3Button.UseVisualStyleBackColor = false;
-            // 
-            // week3Day4Button
-            // 
-            this.week3Day4Button.BackColor = System.Drawing.Color.White;
-            this.week3Day4Button.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.week3Day4Button.Location = new System.Drawing.Point(291, 112);
-            this.week3Day4Button.Margin = new System.Windows.Forms.Padding(0);
-            this.week3Day4Button.Name = "week3Day4Button";
-            this.week3Day4Button.Size = new System.Drawing.Size(97, 56);
-            this.week3Day4Button.TabIndex = 22;
-            this.week3Day4Button.Text = "<none>";
-            this.week3Day4Button.UseVisualStyleBackColor = false;
-            // 
-            // week3Day5Button
-            // 
-            this.week3Day5Button.BackColor = System.Drawing.Color.White;
-            this.week3Day5Button.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.week3Day5Button.Location = new System.Drawing.Point(388, 112);
-            this.week3Day5Button.Margin = new System.Windows.Forms.Padding(0);
-            this.week3Day5Button.Name = "week3Day5Button";
-            this.week3Day5Button.Size = new System.Drawing.Size(97, 56);
-            this.week3Day5Button.TabIndex = 23;
-            this.week3Day5Button.Text = "<none>";
-            this.week3Day5Button.UseVisualStyleBackColor = false;
-            // 
-            // week3Day6Button
-            // 
-            this.week3Day6Button.BackColor = System.Drawing.Color.White;
-            this.week3Day6Button.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.week3Day6Button.Location = new System.Drawing.Point(485, 112);
-            this.week3Day6Button.Margin = new System.Windows.Forms.Padding(0);
-            this.week3Day6Button.Name = "week3Day6Button";
-            this.week3Day6Button.Size = new System.Drawing.Size(97, 56);
-            this.week3Day6Button.TabIndex = 24;
-            this.week3Day6Button.Text = "<none>";
-            this.week3Day6Button.UseVisualStyleBackColor = false;
-            // 
-            // week3Day7Button
-            // 
-            this.week3Day7Button.BackColor = System.Drawing.Color.White;
-            this.week3Day7Button.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.week3Day7Button.Location = new System.Drawing.Point(582, 112);
-            this.week3Day7Button.Margin = new System.Windows.Forms.Padding(0);
-            this.week3Day7Button.Name = "week3Day7Button";
-            this.week3Day7Button.Size = new System.Drawing.Size(104, 56);
-            this.week3Day7Button.TabIndex = 25;
-            this.week3Day7Button.Text = "<none>";
-            this.week3Day7Button.UseVisualStyleBackColor = false;
-            // 
-            // week4Day1Button
-            // 
-            this.week4Day1Button.BackColor = System.Drawing.Color.White;
-            this.week4Day1Button.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.week4Day1Button.Location = new System.Drawing.Point(0, 168);
-            this.week4Day1Button.Margin = new System.Windows.Forms.Padding(0);
-            this.week4Day1Button.Name = "week4Day1Button";
-            this.week4Day1Button.Size = new System.Drawing.Size(97, 56);
-            this.week4Day1Button.TabIndex = 26;
-            this.week4Day1Button.Text = "<none>";
-            this.week4Day1Button.UseVisualStyleBackColor = false;
-            // 
-            // week4Day2Button
-            // 
-            this.week4Day2Button.BackColor = System.Drawing.Color.White;
-            this.week4Day2Button.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.week4Day2Button.Location = new System.Drawing.Point(97, 168);
-            this.week4Day2Button.Margin = new System.Windows.Forms.Padding(0);
-            this.week4Day2Button.Name = "week4Day2Button";
-            this.week4Day2Button.Size = new System.Drawing.Size(97, 56);
-            this.week4Day2Button.TabIndex = 27;
-            this.week4Day2Button.Text = "<none>";
-            this.week4Day2Button.UseVisualStyleBackColor = false;
-            // 
-            // week4Day3Button
-            // 
-            this.week4Day3Button.BackColor = System.Drawing.Color.White;
-            this.week4Day3Button.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.week4Day3Button.Location = new System.Drawing.Point(194, 168);
-            this.week4Day3Button.Margin = new System.Windows.Forms.Padding(0);
-            this.week4Day3Button.Name = "week4Day3Button";
-            this.week4Day3Button.Size = new System.Drawing.Size(97, 56);
-            this.week4Day3Button.TabIndex = 28;
-            this.week4Day3Button.Text = "<none>";
-            this.week4Day3Button.UseVisualStyleBackColor = false;
-            // 
-            // week4Day4Button
-            // 
-            this.week4Day4Button.BackColor = System.Drawing.Color.White;
-            this.week4Day4Button.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.week4Day4Button.Location = new System.Drawing.Point(291, 168);
-            this.week4Day4Button.Margin = new System.Windows.Forms.Padding(0);
-            this.week4Day4Button.Name = "week4Day4Button";
-            this.week4Day4Button.Size = new System.Drawing.Size(97, 56);
-            this.week4Day4Button.TabIndex = 29;
-            this.week4Day4Button.Text = "<none>";
-            this.week4Day4Button.UseVisualStyleBackColor = false;
-            // 
-            // week4Day5Button
-            // 
-            this.week4Day5Button.BackColor = System.Drawing.Color.White;
-            this.week4Day5Button.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.week4Day5Button.Location = new System.Drawing.Point(388, 168);
-            this.week4Day5Button.Margin = new System.Windows.Forms.Padding(0);
-            this.week4Day5Button.Name = "week4Day5Button";
-            this.week4Day5Button.Size = new System.Drawing.Size(97, 56);
-            this.week4Day5Button.TabIndex = 30;
-            this.week4Day5Button.Text = "<none>";
-            this.week4Day5Button.UseVisualStyleBackColor = false;
-            // 
-            // week4Day6Button
-            // 
-            this.week4Day6Button.BackColor = System.Drawing.Color.White;
-            this.week4Day6Button.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.week4Day6Button.Location = new System.Drawing.Point(485, 168);
-            this.week4Day6Button.Margin = new System.Windows.Forms.Padding(0);
-            this.week4Day6Button.Name = "week4Day6Button";
-            this.week4Day6Button.Size = new System.Drawing.Size(97, 56);
-            this.week4Day6Button.TabIndex = 31;
-            this.week4Day6Button.Text = "<none>";
-            this.week4Day6Button.UseVisualStyleBackColor = false;
-            // 
-            // week4Day7Button
-            // 
-            this.week4Day7Button.BackColor = System.Drawing.Color.White;
-            this.week4Day7Button.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.week4Day7Button.Location = new System.Drawing.Point(582, 168);
-            this.week4Day7Button.Margin = new System.Windows.Forms.Padding(0);
-            this.week4Day7Button.Name = "week4Day7Button";
-            this.week4Day7Button.Size = new System.Drawing.Size(104, 56);
-            this.week4Day7Button.TabIndex = 32;
-            this.week4Day7Button.Text = "<none>";
-            this.week4Day7Button.UseVisualStyleBackColor = false;
-            // 
-            // week5Day1Button
-            // 
-            this.week5Day1Button.BackColor = System.Drawing.Color.White;
-            this.week5Day1Button.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.week5Day1Button.Location = new System.Drawing.Point(0, 224);
-            this.week5Day1Button.Margin = new System.Windows.Forms.Padding(0);
-            this.week5Day1Button.Name = "week5Day1Button";
-            this.week5Day1Button.Size = new System.Drawing.Size(97, 56);
-            this.week5Day1Button.TabIndex = 33;
-            this.week5Day1Button.Text = "<none>";
-            this.week5Day1Button.UseVisualStyleBackColor = false;
-            // 
-            // week5Day2Button
-            // 
-            this.week5Day2Button.BackColor = System.Drawing.Color.White;
-            this.week5Day2Button.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.week5Day2Button.Location = new System.Drawing.Point(97, 224);
-            this.week5Day2Button.Margin = new System.Windows.Forms.Padding(0);
-            this.week5Day2Button.Name = "week5Day2Button";
-            this.week5Day2Button.Size = new System.Drawing.Size(97, 56);
-            this.week5Day2Button.TabIndex = 34;
-            this.week5Day2Button.Text = "<none>";
-            this.week5Day2Button.UseVisualStyleBackColor = false;
-            // 
-            // week5Day3Button
-            // 
-            this.week5Day3Button.BackColor = System.Drawing.Color.White;
-            this.week5Day3Button.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.week5Day3Button.Location = new System.Drawing.Point(194, 224);
-            this.week5Day3Button.Margin = new System.Windows.Forms.Padding(0);
-            this.week5Day3Button.Name = "week5Day3Button";
-            this.week5Day3Button.Size = new System.Drawing.Size(97, 56);
-            this.week5Day3Button.TabIndex = 35;
-            this.week5Day3Button.Text = "<none>";
-            this.week5Day3Button.UseVisualStyleBackColor = false;
-            // 
-            // week5Day4Button
-            // 
-            this.week5Day4Button.BackColor = System.Drawing.Color.White;
-            this.week5Day4Button.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.week5Day4Button.Location = new System.Drawing.Point(291, 224);
-            this.week5Day4Button.Margin = new System.Windows.Forms.Padding(0);
-            this.week5Day4Button.Name = "week5Day4Button";
-            this.week5Day4Button.Size = new System.Drawing.Size(97, 56);
-            this.week5Day4Button.TabIndex = 36;
-            this.week5Day4Button.Text = "<none>";
-            this.week5Day4Button.UseVisualStyleBackColor = false;
-            // 
-            // week5Day5Button
-            // 
-            this.week5Day5Button.BackColor = System.Drawing.Color.White;
-            this.week5Day5Button.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.week5Day5Button.Location = new System.Drawing.Point(388, 224);
-            this.week5Day5Button.Margin = new System.Windows.Forms.Padding(0);
-            this.week5Day5Button.Name = "week5Day5Button";
-            this.week5Day5Button.Size = new System.Drawing.Size(97, 56);
-            this.week5Day5Button.TabIndex = 37;
-            this.week5Day5Button.Text = "<none>";
-            this.week5Day5Button.UseVisualStyleBackColor = false;
-            // 
-            // week5Day6Button
-            // 
-            this.week5Day6Button.BackColor = System.Drawing.Color.White;
-            this.week5Day6Button.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.week5Day6Button.Location = new System.Drawing.Point(485, 224);
-            this.week5Day6Button.Margin = new System.Windows.Forms.Padding(0);
-            this.week5Day6Button.Name = "week5Day6Button";
-            this.week5Day6Button.Size = new System.Drawing.Size(97, 56);
-            this.week5Day6Button.TabIndex = 38;
-            this.week5Day6Button.Text = "<none>";
-            this.week5Day6Button.UseVisualStyleBackColor = false;
-            // 
-            // week1Day1Button
-            // 
-            this.week1Day1Button.BackColor = System.Drawing.Color.White;
-            this.week1Day1Button.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.week1Day1Button.Location = new System.Drawing.Point(0, 0);
-            this.week1Day1Button.Margin = new System.Windows.Forms.Padding(0);
-            this.week1Day1Button.Name = "week1Day1Button";
-            this.week1Day1Button.Size = new System.Drawing.Size(97, 56);
-            this.week1Day1Button.TabIndex = 5;
-            this.week1Day1Button.Text = "<none>";
-            this.week1Day1Button.UseVisualStyleBackColor = false;
-            this.week1Day1Button.Click += new System.EventHandler(this.button1_Click);
-            // 
-            // week5Day7Button
-            // 
-            this.week5Day7Button.BackColor = System.Drawing.Color.White;
-            this.week5Day7Button.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.week5Day7Button.Location = new System.Drawing.Point(582, 224);
-            this.week5Day7Button.Margin = new System.Windows.Forms.Padding(0);
-            this.week5Day7Button.Name = "week5Day7Button";
-            this.week5Day7Button.Size = new System.Drawing.Size(104, 56);
-            this.week5Day7Button.TabIndex = 39;
-            this.week5Day7Button.Text = "<none>";
-            this.week5Day7Button.UseVisualStyleBackColor = false;
-            // 
-            // week6Day1Button
-            // 
-            this.week6Day1Button.BackColor = System.Drawing.Color.White;
-            this.week6Day1Button.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.week6Day1Button.Location = new System.Drawing.Point(0, 280);
-            this.week6Day1Button.Margin = new System.Windows.Forms.Padding(0);
-            this.week6Day1Button.Name = "week6Day1Button";
-            this.week6Day1Button.Size = new System.Drawing.Size(97, 56);
-            this.week6Day1Button.TabIndex = 40;
-            this.week6Day1Button.Text = "<none>";
-            this.week6Day1Button.UseVisualStyleBackColor = false;
-            // 
-            // week6Day2Button
-            // 
-            this.week6Day2Button.BackColor = System.Drawing.Color.White;
-            this.week6Day2Button.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.week6Day2Button.Location = new System.Drawing.Point(97, 280);
-            this.week6Day2Button.Margin = new System.Windows.Forms.Padding(0);
-            this.week6Day2Button.Name = "week6Day2Button";
-            this.week6Day2Button.Size = new System.Drawing.Size(97, 56);
-            this.week6Day2Button.TabIndex = 41;
-            this.week6Day2Button.Text = "<none>";
-            this.week6Day2Button.UseVisualStyleBackColor = false;
-            // 
-            // week6Day3Button
-            // 
-            this.week6Day3Button.BackColor = System.Drawing.Color.White;
-            this.week6Day3Button.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.week6Day3Button.Location = new System.Drawing.Point(194, 280);
-            this.week6Day3Button.Margin = new System.Windows.Forms.Padding(0);
-            this.week6Day3Button.Name = "week6Day3Button";
-            this.week6Day3Button.Size = new System.Drawing.Size(97, 56);
-            this.week6Day3Button.TabIndex = 42;
-            this.week6Day3Button.Text = "<none>";
-            this.week6Day3Button.UseVisualStyleBackColor = false;
-            // 
-            // week6Day4Button
-            // 
-            this.week6Day4Button.BackColor = System.Drawing.Color.White;
-            this.week6Day4Button.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.week6Day4Button.Location = new System.Drawing.Point(291, 280);
-            this.week6Day4Button.Margin = new System.Windows.Forms.Padding(0);
-            this.week6Day4Button.Name = "week6Day4Button";
-            this.week6Day4Button.Size = new System.Drawing.Size(97, 56);
-            this.week6Day4Button.TabIndex = 43;
-            this.week6Day4Button.Text = "<none>";
-            this.week6Day4Button.UseVisualStyleBackColor = false;
-            // 
-            // week6Day5Button
-            // 
-            this.week6Day5Button.BackColor = System.Drawing.Color.White;
-            this.week6Day5Button.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.week6Day5Button.Location = new System.Drawing.Point(388, 280);
-            this.week6Day5Button.Margin = new System.Windows.Forms.Padding(0);
-            this.week6Day5Button.Name = "week6Day5Button";
-            this.week6Day5Button.Size = new System.Drawing.Size(97, 56);
-            this.week6Day5Button.TabIndex = 44;
-            this.week6Day5Button.Text = "<none>";
-            this.week6Day5Button.UseVisualStyleBackColor = false;
-            // 
-            // week6Day6Button
-            // 
-            this.week6Day6Button.BackColor = System.Drawing.Color.White;
-            this.week6Day6Button.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.week6Day6Button.Location = new System.Drawing.Point(485, 280);
-            this.week6Day6Button.Margin = new System.Windows.Forms.Padding(0);
-            this.week6Day6Button.Name = "week6Day6Button";
-            this.week6Day6Button.Size = new System.Drawing.Size(97, 56);
-            this.week6Day6Button.TabIndex = 45;
-            this.week6Day6Button.Text = "<none>";
-            this.week6Day6Button.UseVisualStyleBackColor = false;
-            // 
-            // week6Day7Button
-            // 
-            this.week6Day7Button.BackColor = System.Drawing.Color.White;
-            this.week6Day7Button.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.week6Day7Button.Location = new System.Drawing.Point(582, 280);
-            this.week6Day7Button.Margin = new System.Windows.Forms.Padding(0);
-            this.week6Day7Button.Name = "week6Day7Button";
-            this.week6Day7Button.Size = new System.Drawing.Size(104, 56);
-            this.week6Day7Button.TabIndex = 46;
-            this.week6Day7Button.Text = "<none>";
-            this.week6Day7Button.UseVisualStyleBackColor = false;
-            // 
-            // daysTable
-            // 
-            this.daysTable.ColumnCount = 7;
-            this.daysTable.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 14.28571F));
-            this.daysTable.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 14.28571F));
-            this.daysTable.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 14.28571F));
-            this.daysTable.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 14.28571F));
-            this.daysTable.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 14.28571F));
-            this.daysTable.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 14.28571F));
-            this.daysTable.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 14.28571F));
-            this.daysTable.Controls.Add(this.week6Day6Button, 5, 5);
-            this.daysTable.Controls.Add(this.week6Day5Button, 4, 5);
-            this.daysTable.Controls.Add(this.week6Day4Button, 3, 5);
-            this.daysTable.Controls.Add(this.week6Day3Button, 2, 5);
-            this.daysTable.Controls.Add(this.week6Day2Button, 1, 5);
-            this.daysTable.Controls.Add(this.week6Day1Button, 0, 5);
-            this.daysTable.Controls.Add(this.week5Day7Button, 6, 4);
-            this.daysTable.Controls.Add(this.week1Day1Button, 0, 0);
-            this.daysTable.Controls.Add(this.week5Day6Button, 5, 4);
-            this.daysTable.Controls.Add(this.week5Day5Button, 4, 4);
-            this.daysTable.Controls.Add(this.week5Day4Button, 3, 4);
-            this.daysTable.Controls.Add(this.week5Day3Button, 2, 4);
-            this.daysTable.Controls.Add(this.week5Day2Button, 1, 4);
-            this.daysTable.Controls.Add(this.week5Day1Button, 0, 4);
-            this.daysTable.Controls.Add(this.week4Day7Button, 6, 3);
-            this.daysTable.Controls.Add(this.week4Day6Button, 5, 3);
-            this.daysTable.Controls.Add(this.week4Day5Button, 4, 3);
-            this.daysTable.Controls.Add(this.week4Day4Button, 3, 3);
-            this.daysTable.Controls.Add(this.week4Day3Button, 2, 3);
-            this.daysTable.Controls.Add(this.week4Day2Button, 1, 3);
-            this.daysTable.Controls.Add(this.week4Day1Button, 0, 3);
-            this.daysTable.Controls.Add(this.week3Day7Button, 6, 2);
-            this.daysTable.Controls.Add(this.week3Day6Button, 5, 2);
-            this.daysTable.Controls.Add(this.week3Day5Button, 4, 2);
-            this.daysTable.Controls.Add(this.week3Day4Button, 3, 2);
-            this.daysTable.Controls.Add(this.week3Day3Button, 2, 2);
-            this.daysTable.Controls.Add(this.week3Day2Button, 1, 2);
-            this.daysTable.Controls.Add(this.week3Day1Button, 0, 2);
-            this.daysTable.Controls.Add(this.week2Day7Button, 6, 1);
-            this.daysTable.Controls.Add(this.week2Day6Button, 5, 1);
-            this.daysTable.Controls.Add(this.week2Day5Button, 4, 1);
-            this.daysTable.Controls.Add(this.week2Day4Button, 3, 1);
-            this.daysTable.Controls.Add(this.week2Day3Button, 2, 1);
-            this.daysTable.Controls.Add(this.week2Day1Button, 0, 1);
-            this.daysTable.Controls.Add(this.week1Day7Button, 6, 0);
-            this.daysTable.Controls.Add(this.week1Day6Button, 5, 0);
-            this.daysTable.Controls.Add(this.week1Day5Button, 4, 0);
-            this.daysTable.Controls.Add(this.week1Day4Button, 3, 0);
-            this.daysTable.Controls.Add(this.week1Day3Button, 2, 0);
-            this.daysTable.Controls.Add(this.week2Day2Button, 1, 1);
-            this.daysTable.Controls.Add(this.week1Day2Button, 1, 0);
-            this.daysTable.Controls.Add(this.week6Day7Button, 6, 5);
-            this.daysTable.Location = new System.Drawing.Point(23, 203);
-            this.daysTable.Name = "daysTable";
-            this.daysTable.RowCount = 6;
-            this.daysTable.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 16.66667F));
-            this.daysTable.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 16.66667F));
-            this.daysTable.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 16.66667F));
-            this.daysTable.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 16.66667F));
-            this.daysTable.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 16.66667F));
-            this.daysTable.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 16.66667F));
-            this.daysTable.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.daysTable.Size = new System.Drawing.Size(686, 337);
-            this.daysTable.TabIndex = 7;
-            // 
-            // week2Day5Button
-            // 
-            this.week2Day5Button.BackColor = System.Drawing.Color.White;
-            this.week2Day5Button.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.week2Day5Button.Location = new System.Drawing.Point(388, 56);
-            this.week2Day5Button.Margin = new System.Windows.Forms.Padding(0);
-            this.week2Day5Button.Name = "week2Day5Button";
-            this.week2Day5Button.Size = new System.Drawing.Size(97, 56);
-            this.week2Day5Button.TabIndex = 16;
-            this.week2Day5Button.Text = "<none>";
-            this.week2Day5Button.UseVisualStyleBackColor = false;
-            // 
             // deleteTaskButton
             // 
             this.deleteTaskButton.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.deleteTaskButton.Location = new System.Drawing.Point(750, 70);
+            this.deleteTaskButton.Location = new System.Drawing.Point(750, 78);
             this.deleteTaskButton.Name = "deleteTaskButton";
             this.deleteTaskButton.Size = new System.Drawing.Size(120, 37);
             this.deleteTaskButton.TabIndex = 48;
@@ -870,27 +301,27 @@
             // updateTaskButton
             // 
             this.updateTaskButton.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.updateTaskButton.Location = new System.Drawing.Point(750, 27);
+            this.updateTaskButton.Location = new System.Drawing.Point(750, 35);
             this.updateTaskButton.Name = "updateTaskButton";
             this.updateTaskButton.Size = new System.Drawing.Size(120, 37);
             this.updateTaskButton.TabIndex = 47;
             this.updateTaskButton.Text = "Update task";
             this.updateTaskButton.UseVisualStyleBackColor = true;
             // 
-            // viewTaskButton
+            // viewTasksButton
             // 
-            this.viewTaskButton.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.viewTaskButton.Location = new System.Drawing.Point(624, 70);
-            this.viewTaskButton.Name = "viewTaskButton";
-            this.viewTaskButton.Size = new System.Drawing.Size(120, 37);
-            this.viewTaskButton.TabIndex = 46;
-            this.viewTaskButton.Text = "View task";
-            this.viewTaskButton.UseVisualStyleBackColor = true;
+            this.viewTasksButton.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.viewTasksButton.Location = new System.Drawing.Point(624, 78);
+            this.viewTasksButton.Name = "viewTasksButton";
+            this.viewTasksButton.Size = new System.Drawing.Size(120, 37);
+            this.viewTasksButton.TabIndex = 46;
+            this.viewTasksButton.Text = "View tasks";
+            this.viewTasksButton.UseVisualStyleBackColor = true;
             // 
             // addTaskButton
             // 
             this.addTaskButton.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.addTaskButton.Location = new System.Drawing.Point(624, 27);
+            this.addTaskButton.Location = new System.Drawing.Point(624, 35);
             this.addTaskButton.Name = "addTaskButton";
             this.addTaskButton.Size = new System.Drawing.Size(120, 37);
             this.addTaskButton.TabIndex = 45;
@@ -1254,12 +685,497 @@
             this.monthFailedLabel.Text = "0";
             this.monthFailedLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
+            // tableLayoutPanel1
+            // 
+            this.tableLayoutPanel1.ColumnCount = 7;
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 14.28571F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 14.28572F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 14.28572F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 14.28572F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 14.28572F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 14.28572F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 14.28572F));
+            this.tableLayoutPanel1.Controls.Add(this.week6Day7Label, 6, 5);
+            this.tableLayoutPanel1.Controls.Add(this.week6Day6Label, 5, 5);
+            this.tableLayoutPanel1.Controls.Add(this.week6Day5Label, 4, 5);
+            this.tableLayoutPanel1.Controls.Add(this.week6Day4Label, 3, 5);
+            this.tableLayoutPanel1.Controls.Add(this.week6Day3Label, 2, 5);
+            this.tableLayoutPanel1.Controls.Add(this.week6Day2Label, 1, 5);
+            this.tableLayoutPanel1.Controls.Add(this.week6Day1Label, 0, 5);
+            this.tableLayoutPanel1.Controls.Add(this.week5Day7Label, 6, 4);
+            this.tableLayoutPanel1.Controls.Add(this.week5Day6Label, 5, 4);
+            this.tableLayoutPanel1.Controls.Add(this.week5Day5Label, 4, 4);
+            this.tableLayoutPanel1.Controls.Add(this.week5Day4Label, 3, 4);
+            this.tableLayoutPanel1.Controls.Add(this.week5Day3Label, 2, 4);
+            this.tableLayoutPanel1.Controls.Add(this.week5Day2Label, 1, 4);
+            this.tableLayoutPanel1.Controls.Add(this.week5Day1Label, 0, 4);
+            this.tableLayoutPanel1.Controls.Add(this.week4Day7Label, 6, 3);
+            this.tableLayoutPanel1.Controls.Add(this.week4Day6Label, 5, 3);
+            this.tableLayoutPanel1.Controls.Add(this.week4Day5Label, 4, 3);
+            this.tableLayoutPanel1.Controls.Add(this.week4Day4Label, 3, 3);
+            this.tableLayoutPanel1.Controls.Add(this.week4Day3Label, 2, 3);
+            this.tableLayoutPanel1.Controls.Add(this.week4Day2Label, 1, 3);
+            this.tableLayoutPanel1.Controls.Add(this.week4Day1Label, 0, 3);
+            this.tableLayoutPanel1.Controls.Add(this.week3Day7Label, 6, 2);
+            this.tableLayoutPanel1.Controls.Add(this.week3Day6Label, 5, 2);
+            this.tableLayoutPanel1.Controls.Add(this.week3Day5Label, 4, 2);
+            this.tableLayoutPanel1.Controls.Add(this.week3Day4Label, 3, 2);
+            this.tableLayoutPanel1.Controls.Add(this.week3Day3Label, 2, 2);
+            this.tableLayoutPanel1.Controls.Add(this.week3Day2Label, 1, 2);
+            this.tableLayoutPanel1.Controls.Add(this.week3Day1Label, 0, 2);
+            this.tableLayoutPanel1.Controls.Add(this.week2Day7Label, 6, 1);
+            this.tableLayoutPanel1.Controls.Add(this.week2Day6Label, 5, 1);
+            this.tableLayoutPanel1.Controls.Add(this.week2Day5Label, 4, 1);
+            this.tableLayoutPanel1.Controls.Add(this.week2Day4Label, 3, 1);
+            this.tableLayoutPanel1.Controls.Add(this.week2Day3Label, 2, 1);
+            this.tableLayoutPanel1.Controls.Add(this.week2Day2Label, 1, 1);
+            this.tableLayoutPanel1.Controls.Add(this.week2Day1Label, 0, 1);
+            this.tableLayoutPanel1.Controls.Add(this.week1Day7Label, 6, 0);
+            this.tableLayoutPanel1.Controls.Add(this.week1Day6Label, 5, 0);
+            this.tableLayoutPanel1.Controls.Add(this.week1Day5Label, 4, 0);
+            this.tableLayoutPanel1.Controls.Add(this.week1Day4Label, 3, 0);
+            this.tableLayoutPanel1.Controls.Add(this.week1Day3Label, 2, 0);
+            this.tableLayoutPanel1.Controls.Add(this.week1Day2Label, 1, 0);
+            this.tableLayoutPanel1.Controls.Add(this.week1Day1Label, 0, 0);
+            this.tableLayoutPanel1.Location = new System.Drawing.Point(23, 203);
+            this.tableLayoutPanel1.Name = "tableLayoutPanel1";
+            this.tableLayoutPanel1.RowCount = 6;
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 16.66667F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 16.66667F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 16.66667F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 16.66667F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 16.66667F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 16.66667F));
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(686, 336);
+            this.tableLayoutPanel1.TabIndex = 82;
+            // 
+            // week1Day1Label
+            // 
+            this.week1Day1Label.Location = new System.Drawing.Point(0, 0);
+            this.week1Day1Label.Margin = new System.Windows.Forms.Padding(0);
+            this.week1Day1Label.Name = "week1Day1Label";
+            this.week1Day1Label.Size = new System.Drawing.Size(97, 56);
+            this.week1Day1Label.TabIndex = 83;
+            this.week1Day1Label.Text = "<date>";
+            this.week1Day1Label.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // week1Day2Label
+            // 
+            this.week1Day2Label.Location = new System.Drawing.Point(97, 0);
+            this.week1Day2Label.Margin = new System.Windows.Forms.Padding(0);
+            this.week1Day2Label.Name = "week1Day2Label";
+            this.week1Day2Label.Size = new System.Drawing.Size(97, 56);
+            this.week1Day2Label.TabIndex = 84;
+            this.week1Day2Label.Text = "<date>";
+            this.week1Day2Label.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // week1Day3Label
+            // 
+            this.week1Day3Label.Location = new System.Drawing.Point(195, 0);
+            this.week1Day3Label.Margin = new System.Windows.Forms.Padding(0);
+            this.week1Day3Label.Name = "week1Day3Label";
+            this.week1Day3Label.Size = new System.Drawing.Size(97, 56);
+            this.week1Day3Label.TabIndex = 85;
+            this.week1Day3Label.Text = "<date>";
+            this.week1Day3Label.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // week1Day4Label
+            // 
+            this.week1Day4Label.Location = new System.Drawing.Point(293, 0);
+            this.week1Day4Label.Margin = new System.Windows.Forms.Padding(0);
+            this.week1Day4Label.Name = "week1Day4Label";
+            this.week1Day4Label.Size = new System.Drawing.Size(97, 56);
+            this.week1Day4Label.TabIndex = 86;
+            this.week1Day4Label.Text = "<date>";
+            this.week1Day4Label.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // week1Day5Label
+            // 
+            this.week1Day5Label.Location = new System.Drawing.Point(391, 0);
+            this.week1Day5Label.Margin = new System.Windows.Forms.Padding(0);
+            this.week1Day5Label.Name = "week1Day5Label";
+            this.week1Day5Label.Size = new System.Drawing.Size(97, 56);
+            this.week1Day5Label.TabIndex = 87;
+            this.week1Day5Label.Text = "<date>";
+            this.week1Day5Label.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // week1Day6Label
+            // 
+            this.week1Day6Label.Location = new System.Drawing.Point(489, 0);
+            this.week1Day6Label.Margin = new System.Windows.Forms.Padding(0);
+            this.week1Day6Label.Name = "week1Day6Label";
+            this.week1Day6Label.Size = new System.Drawing.Size(97, 56);
+            this.week1Day6Label.TabIndex = 88;
+            this.week1Day6Label.Text = "<date>";
+            this.week1Day6Label.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // week1Day7Label
+            // 
+            this.week1Day7Label.Location = new System.Drawing.Point(587, 0);
+            this.week1Day7Label.Margin = new System.Windows.Forms.Padding(0);
+            this.week1Day7Label.Name = "week1Day7Label";
+            this.week1Day7Label.Size = new System.Drawing.Size(99, 56);
+            this.week1Day7Label.TabIndex = 89;
+            this.week1Day7Label.Text = "<date>";
+            this.week1Day7Label.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // week2Day1Label
+            // 
+            this.week2Day1Label.Location = new System.Drawing.Point(0, 56);
+            this.week2Day1Label.Margin = new System.Windows.Forms.Padding(0);
+            this.week2Day1Label.Name = "week2Day1Label";
+            this.week2Day1Label.Size = new System.Drawing.Size(97, 56);
+            this.week2Day1Label.TabIndex = 90;
+            this.week2Day1Label.Text = "<date>";
+            this.week2Day1Label.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // week2Day2Label
+            // 
+            this.week2Day2Label.Location = new System.Drawing.Point(97, 56);
+            this.week2Day2Label.Margin = new System.Windows.Forms.Padding(0);
+            this.week2Day2Label.Name = "week2Day2Label";
+            this.week2Day2Label.Size = new System.Drawing.Size(97, 56);
+            this.week2Day2Label.TabIndex = 91;
+            this.week2Day2Label.Text = "<date>";
+            this.week2Day2Label.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // week2Day3Label
+            // 
+            this.week2Day3Label.Location = new System.Drawing.Point(195, 56);
+            this.week2Day3Label.Margin = new System.Windows.Forms.Padding(0);
+            this.week2Day3Label.Name = "week2Day3Label";
+            this.week2Day3Label.Size = new System.Drawing.Size(97, 56);
+            this.week2Day3Label.TabIndex = 92;
+            this.week2Day3Label.Text = "<date>";
+            this.week2Day3Label.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // week2Day4Label
+            // 
+            this.week2Day4Label.Location = new System.Drawing.Point(293, 56);
+            this.week2Day4Label.Margin = new System.Windows.Forms.Padding(0);
+            this.week2Day4Label.Name = "week2Day4Label";
+            this.week2Day4Label.Size = new System.Drawing.Size(97, 56);
+            this.week2Day4Label.TabIndex = 93;
+            this.week2Day4Label.Text = "<date>";
+            this.week2Day4Label.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // week2Day5Label
+            // 
+            this.week2Day5Label.Location = new System.Drawing.Point(391, 56);
+            this.week2Day5Label.Margin = new System.Windows.Forms.Padding(0);
+            this.week2Day5Label.Name = "week2Day5Label";
+            this.week2Day5Label.Size = new System.Drawing.Size(97, 56);
+            this.week2Day5Label.TabIndex = 94;
+            this.week2Day5Label.Text = "<date>";
+            this.week2Day5Label.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // week2Day6Label
+            // 
+            this.week2Day6Label.Location = new System.Drawing.Point(489, 56);
+            this.week2Day6Label.Margin = new System.Windows.Forms.Padding(0);
+            this.week2Day6Label.Name = "week2Day6Label";
+            this.week2Day6Label.Size = new System.Drawing.Size(97, 56);
+            this.week2Day6Label.TabIndex = 95;
+            this.week2Day6Label.Text = "<date>";
+            this.week2Day6Label.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // week2Day7Label
+            // 
+            this.week2Day7Label.Location = new System.Drawing.Point(587, 56);
+            this.week2Day7Label.Margin = new System.Windows.Forms.Padding(0);
+            this.week2Day7Label.Name = "week2Day7Label";
+            this.week2Day7Label.Size = new System.Drawing.Size(99, 56);
+            this.week2Day7Label.TabIndex = 96;
+            this.week2Day7Label.Text = "<date>";
+            this.week2Day7Label.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // week3Day1Label
+            // 
+            this.week3Day1Label.Location = new System.Drawing.Point(0, 112);
+            this.week3Day1Label.Margin = new System.Windows.Forms.Padding(0);
+            this.week3Day1Label.Name = "week3Day1Label";
+            this.week3Day1Label.Size = new System.Drawing.Size(97, 56);
+            this.week3Day1Label.TabIndex = 97;
+            this.week3Day1Label.Text = "<date>";
+            this.week3Day1Label.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // week3Day2Label
+            // 
+            this.week3Day2Label.Location = new System.Drawing.Point(97, 112);
+            this.week3Day2Label.Margin = new System.Windows.Forms.Padding(0);
+            this.week3Day2Label.Name = "week3Day2Label";
+            this.week3Day2Label.Size = new System.Drawing.Size(97, 56);
+            this.week3Day2Label.TabIndex = 98;
+            this.week3Day2Label.Text = "<date>";
+            this.week3Day2Label.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // week3Day3Label
+            // 
+            this.week3Day3Label.Location = new System.Drawing.Point(195, 112);
+            this.week3Day3Label.Margin = new System.Windows.Forms.Padding(0);
+            this.week3Day3Label.Name = "week3Day3Label";
+            this.week3Day3Label.Size = new System.Drawing.Size(97, 56);
+            this.week3Day3Label.TabIndex = 99;
+            this.week3Day3Label.Text = "<date>";
+            this.week3Day3Label.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // week3Day4Label
+            // 
+            this.week3Day4Label.Location = new System.Drawing.Point(293, 112);
+            this.week3Day4Label.Margin = new System.Windows.Forms.Padding(0);
+            this.week3Day4Label.Name = "week3Day4Label";
+            this.week3Day4Label.Size = new System.Drawing.Size(97, 56);
+            this.week3Day4Label.TabIndex = 100;
+            this.week3Day4Label.Text = "<date>";
+            this.week3Day4Label.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // week3Day5Label
+            // 
+            this.week3Day5Label.Location = new System.Drawing.Point(391, 112);
+            this.week3Day5Label.Margin = new System.Windows.Forms.Padding(0);
+            this.week3Day5Label.Name = "week3Day5Label";
+            this.week3Day5Label.Size = new System.Drawing.Size(97, 56);
+            this.week3Day5Label.TabIndex = 101;
+            this.week3Day5Label.Text = "<date>";
+            this.week3Day5Label.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // week3Day6Label
+            // 
+            this.week3Day6Label.Location = new System.Drawing.Point(489, 112);
+            this.week3Day6Label.Margin = new System.Windows.Forms.Padding(0);
+            this.week3Day6Label.Name = "week3Day6Label";
+            this.week3Day6Label.Size = new System.Drawing.Size(97, 56);
+            this.week3Day6Label.TabIndex = 102;
+            this.week3Day6Label.Text = "<date>";
+            this.week3Day6Label.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // week3Day7Label
+            // 
+            this.week3Day7Label.Location = new System.Drawing.Point(587, 112);
+            this.week3Day7Label.Margin = new System.Windows.Forms.Padding(0);
+            this.week3Day7Label.Name = "week3Day7Label";
+            this.week3Day7Label.Size = new System.Drawing.Size(99, 56);
+            this.week3Day7Label.TabIndex = 103;
+            this.week3Day7Label.Text = "<date>";
+            this.week3Day7Label.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // week4Day1Label
+            // 
+            this.week4Day1Label.Location = new System.Drawing.Point(0, 168);
+            this.week4Day1Label.Margin = new System.Windows.Forms.Padding(0);
+            this.week4Day1Label.Name = "week4Day1Label";
+            this.week4Day1Label.Size = new System.Drawing.Size(97, 56);
+            this.week4Day1Label.TabIndex = 104;
+            this.week4Day1Label.Text = "<date>";
+            this.week4Day1Label.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // week4Day2Label
+            // 
+            this.week4Day2Label.Location = new System.Drawing.Point(97, 168);
+            this.week4Day2Label.Margin = new System.Windows.Forms.Padding(0);
+            this.week4Day2Label.Name = "week4Day2Label";
+            this.week4Day2Label.Size = new System.Drawing.Size(97, 56);
+            this.week4Day2Label.TabIndex = 105;
+            this.week4Day2Label.Text = "<date>";
+            this.week4Day2Label.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // week4Day3Label
+            // 
+            this.week4Day3Label.Location = new System.Drawing.Point(195, 168);
+            this.week4Day3Label.Margin = new System.Windows.Forms.Padding(0);
+            this.week4Day3Label.Name = "week4Day3Label";
+            this.week4Day3Label.Size = new System.Drawing.Size(97, 56);
+            this.week4Day3Label.TabIndex = 106;
+            this.week4Day3Label.Text = "<date>";
+            this.week4Day3Label.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // week4Day4Label
+            // 
+            this.week4Day4Label.Location = new System.Drawing.Point(293, 168);
+            this.week4Day4Label.Margin = new System.Windows.Forms.Padding(0);
+            this.week4Day4Label.Name = "week4Day4Label";
+            this.week4Day4Label.Size = new System.Drawing.Size(97, 56);
+            this.week4Day4Label.TabIndex = 107;
+            this.week4Day4Label.Text = "<date>";
+            this.week4Day4Label.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // week4Day5Label
+            // 
+            this.week4Day5Label.Location = new System.Drawing.Point(391, 168);
+            this.week4Day5Label.Margin = new System.Windows.Forms.Padding(0);
+            this.week4Day5Label.Name = "week4Day5Label";
+            this.week4Day5Label.Size = new System.Drawing.Size(97, 56);
+            this.week4Day5Label.TabIndex = 108;
+            this.week4Day5Label.Text = "<date>";
+            this.week4Day5Label.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // week4Day6Label
+            // 
+            this.week4Day6Label.Location = new System.Drawing.Point(489, 168);
+            this.week4Day6Label.Margin = new System.Windows.Forms.Padding(0);
+            this.week4Day6Label.Name = "week4Day6Label";
+            this.week4Day6Label.Size = new System.Drawing.Size(97, 56);
+            this.week4Day6Label.TabIndex = 109;
+            this.week4Day6Label.Text = "<date>";
+            this.week4Day6Label.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // week4Day7Label
+            // 
+            this.week4Day7Label.Location = new System.Drawing.Point(587, 168);
+            this.week4Day7Label.Margin = new System.Windows.Forms.Padding(0);
+            this.week4Day7Label.Name = "week4Day7Label";
+            this.week4Day7Label.Size = new System.Drawing.Size(99, 56);
+            this.week4Day7Label.TabIndex = 110;
+            this.week4Day7Label.Text = "<date>";
+            this.week4Day7Label.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // week5Day1Label
+            // 
+            this.week5Day1Label.Location = new System.Drawing.Point(0, 224);
+            this.week5Day1Label.Margin = new System.Windows.Forms.Padding(0);
+            this.week5Day1Label.Name = "week5Day1Label";
+            this.week5Day1Label.Size = new System.Drawing.Size(97, 56);
+            this.week5Day1Label.TabIndex = 111;
+            this.week5Day1Label.Text = "<date>";
+            this.week5Day1Label.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // week5Day2Label
+            // 
+            this.week5Day2Label.Location = new System.Drawing.Point(97, 224);
+            this.week5Day2Label.Margin = new System.Windows.Forms.Padding(0);
+            this.week5Day2Label.Name = "week5Day2Label";
+            this.week5Day2Label.Size = new System.Drawing.Size(97, 56);
+            this.week5Day2Label.TabIndex = 112;
+            this.week5Day2Label.Text = "<date>";
+            this.week5Day2Label.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // week5Day3Label
+            // 
+            this.week5Day3Label.Location = new System.Drawing.Point(195, 224);
+            this.week5Day3Label.Margin = new System.Windows.Forms.Padding(0);
+            this.week5Day3Label.Name = "week5Day3Label";
+            this.week5Day3Label.Size = new System.Drawing.Size(97, 56);
+            this.week5Day3Label.TabIndex = 113;
+            this.week5Day3Label.Text = "<date>";
+            this.week5Day3Label.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // week5Day4Label
+            // 
+            this.week5Day4Label.Location = new System.Drawing.Point(293, 224);
+            this.week5Day4Label.Margin = new System.Windows.Forms.Padding(0);
+            this.week5Day4Label.Name = "week5Day4Label";
+            this.week5Day4Label.Size = new System.Drawing.Size(97, 56);
+            this.week5Day4Label.TabIndex = 114;
+            this.week5Day4Label.Text = "<date>";
+            this.week5Day4Label.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // week5Day5Label
+            // 
+            this.week5Day5Label.Location = new System.Drawing.Point(391, 224);
+            this.week5Day5Label.Margin = new System.Windows.Forms.Padding(0);
+            this.week5Day5Label.Name = "week5Day5Label";
+            this.week5Day5Label.Size = new System.Drawing.Size(97, 56);
+            this.week5Day5Label.TabIndex = 115;
+            this.week5Day5Label.Text = "<date>";
+            this.week5Day5Label.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // week5Day6Label
+            // 
+            this.week5Day6Label.Location = new System.Drawing.Point(489, 224);
+            this.week5Day6Label.Margin = new System.Windows.Forms.Padding(0);
+            this.week5Day6Label.Name = "week5Day6Label";
+            this.week5Day6Label.Size = new System.Drawing.Size(97, 56);
+            this.week5Day6Label.TabIndex = 116;
+            this.week5Day6Label.Text = "<date>";
+            this.week5Day6Label.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // week5Day7Label
+            // 
+            this.week5Day7Label.Location = new System.Drawing.Point(587, 224);
+            this.week5Day7Label.Margin = new System.Windows.Forms.Padding(0);
+            this.week5Day7Label.Name = "week5Day7Label";
+            this.week5Day7Label.Size = new System.Drawing.Size(99, 56);
+            this.week5Day7Label.TabIndex = 117;
+            this.week5Day7Label.Text = "<date>";
+            this.week5Day7Label.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // week6Day1Label
+            // 
+            this.week6Day1Label.Location = new System.Drawing.Point(0, 280);
+            this.week6Day1Label.Margin = new System.Windows.Forms.Padding(0);
+            this.week6Day1Label.Name = "week6Day1Label";
+            this.week6Day1Label.Size = new System.Drawing.Size(97, 56);
+            this.week6Day1Label.TabIndex = 118;
+            this.week6Day1Label.Text = "<date>";
+            this.week6Day1Label.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // week6Day2Label
+            // 
+            this.week6Day2Label.Location = new System.Drawing.Point(97, 280);
+            this.week6Day2Label.Margin = new System.Windows.Forms.Padding(0);
+            this.week6Day2Label.Name = "week6Day2Label";
+            this.week6Day2Label.Size = new System.Drawing.Size(97, 56);
+            this.week6Day2Label.TabIndex = 119;
+            this.week6Day2Label.Text = "<date>";
+            this.week6Day2Label.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // week6Day3Label
+            // 
+            this.week6Day3Label.Location = new System.Drawing.Point(195, 280);
+            this.week6Day3Label.Margin = new System.Windows.Forms.Padding(0);
+            this.week6Day3Label.Name = "week6Day3Label";
+            this.week6Day3Label.Size = new System.Drawing.Size(97, 56);
+            this.week6Day3Label.TabIndex = 120;
+            this.week6Day3Label.Text = "<date>";
+            this.week6Day3Label.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // week6Day4Label
+            // 
+            this.week6Day4Label.Location = new System.Drawing.Point(293, 280);
+            this.week6Day4Label.Margin = new System.Windows.Forms.Padding(0);
+            this.week6Day4Label.Name = "week6Day4Label";
+            this.week6Day4Label.Size = new System.Drawing.Size(97, 56);
+            this.week6Day4Label.TabIndex = 121;
+            this.week6Day4Label.Text = "<date>";
+            this.week6Day4Label.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // week6Day5Label
+            // 
+            this.week6Day5Label.Location = new System.Drawing.Point(391, 280);
+            this.week6Day5Label.Margin = new System.Windows.Forms.Padding(0);
+            this.week6Day5Label.Name = "week6Day5Label";
+            this.week6Day5Label.Size = new System.Drawing.Size(97, 56);
+            this.week6Day5Label.TabIndex = 122;
+            this.week6Day5Label.Text = "<date>";
+            this.week6Day5Label.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // week6Day6Label
+            // 
+            this.week6Day6Label.Location = new System.Drawing.Point(489, 280);
+            this.week6Day6Label.Margin = new System.Windows.Forms.Padding(0);
+            this.week6Day6Label.Name = "week6Day6Label";
+            this.week6Day6Label.Size = new System.Drawing.Size(97, 56);
+            this.week6Day6Label.TabIndex = 123;
+            this.week6Day6Label.Text = "<date>";
+            this.week6Day6Label.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // week6Day7Label
+            // 
+            this.week6Day7Label.Location = new System.Drawing.Point(587, 280);
+            this.week6Day7Label.Margin = new System.Windows.Forms.Padding(0);
+            this.week6Day7Label.Name = "week6Day7Label";
+            this.week6Day7Label.Size = new System.Drawing.Size(99, 56);
+            this.week6Day7Label.TabIndex = 124;
+            this.week6Day7Label.Text = "<date>";
+            this.week6Day7Label.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
             // SlothOrganizerForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 30F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
             this.ClientSize = new System.Drawing.Size(883, 583);
+            this.Controls.Add(this.tableLayoutPanel1);
             this.Controls.Add(this.monthInProcessLabel);
             this.Controls.Add(this.monthCompletedLabel);
             this.Controls.Add(this.monthPartiallyCompletedLabel);
@@ -1294,9 +1210,8 @@
             this.Controls.Add(this.weekOneInProcessLabel);
             this.Controls.Add(this.deleteTaskButton);
             this.Controls.Add(this.updateTaskButton);
-            this.Controls.Add(this.viewTaskButton);
+            this.Controls.Add(this.viewTasksButton);
             this.Controls.Add(this.addTaskButton);
-            this.Controls.Add(this.daysTable);
             this.Controls.Add(this.weekDaysTable);
             this.Controls.Add(this.monthDropDown);
             this.Controls.Add(this.monthLabel);
@@ -1309,7 +1224,7 @@
             this.Text = "Sloth Organizer";
             this.weekDaysTable.ResumeLayout(false);
             this.weekDaysTable.PerformLayout();
-            this.daysTable.ResumeLayout(false);
+            this.tableLayoutPanel1.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -1328,52 +1243,9 @@
         private System.Windows.Forms.Label wednesdayLabel;
         private System.Windows.Forms.Label tuesdayLabel;
         private System.Windows.Forms.Label sundayLabel;
-        private System.Windows.Forms.Button week1Day2Button;
-        private System.Windows.Forms.Button week2Day2Button;
-        private System.Windows.Forms.Button week1Day3Button;
-        private System.Windows.Forms.Button week1Day4Button;
-        private System.Windows.Forms.Button week1Day5Button;
-        private System.Windows.Forms.Button week1Day6Button;
-        private System.Windows.Forms.Button week1Day7Button;
-        private System.Windows.Forms.Button week2Day1Button;
-        private System.Windows.Forms.Button week2Day3Button;
-        private System.Windows.Forms.Button week2Day4Button;
-        private System.Windows.Forms.Button week2Day6Button;
-        private System.Windows.Forms.Button week2Day7Button;
-        private System.Windows.Forms.Button week3Day1Button;
-        private System.Windows.Forms.Button week3Day2Button;
-        private System.Windows.Forms.Button week3Day3Button;
-        private System.Windows.Forms.Button week3Day4Button;
-        private System.Windows.Forms.Button week3Day5Button;
-        private System.Windows.Forms.Button week3Day6Button;
-        private System.Windows.Forms.Button week3Day7Button;
-        private System.Windows.Forms.Button week4Day1Button;
-        private System.Windows.Forms.Button week4Day2Button;
-        private System.Windows.Forms.Button week4Day3Button;
-        private System.Windows.Forms.Button week4Day4Button;
-        private System.Windows.Forms.Button week4Day5Button;
-        private System.Windows.Forms.Button week4Day6Button;
-        private System.Windows.Forms.Button week4Day7Button;
-        private System.Windows.Forms.Button week5Day1Button;
-        private System.Windows.Forms.Button week5Day2Button;
-        private System.Windows.Forms.Button week5Day3Button;
-        private System.Windows.Forms.Button week5Day4Button;
-        private System.Windows.Forms.Button week5Day5Button;
-        private System.Windows.Forms.Button week5Day6Button;
-        private System.Windows.Forms.Button week1Day1Button;
-        private System.Windows.Forms.Button week5Day7Button;
-        private System.Windows.Forms.Button week6Day1Button;
-        private System.Windows.Forms.Button week6Day2Button;
-        private System.Windows.Forms.Button week6Day3Button;
-        private System.Windows.Forms.Button week6Day4Button;
-        private System.Windows.Forms.Button week6Day5Button;
-        private System.Windows.Forms.Button week6Day6Button;
-        private System.Windows.Forms.Button week6Day7Button;
-        private System.Windows.Forms.TableLayoutPanel daysTable;
-        private System.Windows.Forms.Button week2Day5Button;
         private System.Windows.Forms.Button deleteTaskButton;
         private System.Windows.Forms.Button updateTaskButton;
-        private System.Windows.Forms.Button viewTaskButton;
+        private System.Windows.Forms.Button viewTasksButton;
         private System.Windows.Forms.Button addTaskButton;
         private System.Windows.Forms.Label weekOneInProcessLabel;
         private System.Windows.Forms.Label weekSixInProcessLabel;
@@ -1407,6 +1279,49 @@
         private System.Windows.Forms.Label monthCompletedLabel;
         private System.Windows.Forms.Label monthPartiallyCompletedLabel;
         private System.Windows.Forms.Label monthFailedLabel;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
+        private System.Windows.Forms.Label week6Day7Label;
+        private System.Windows.Forms.Label week6Day6Label;
+        private System.Windows.Forms.Label week6Day5Label;
+        private System.Windows.Forms.Label week6Day4Label;
+        private System.Windows.Forms.Label week6Day3Label;
+        private System.Windows.Forms.Label week6Day2Label;
+        private System.Windows.Forms.Label week6Day1Label;
+        private System.Windows.Forms.Label week5Day7Label;
+        private System.Windows.Forms.Label week5Day6Label;
+        private System.Windows.Forms.Label week5Day5Label;
+        private System.Windows.Forms.Label week5Day4Label;
+        private System.Windows.Forms.Label week5Day3Label;
+        private System.Windows.Forms.Label week5Day2Label;
+        private System.Windows.Forms.Label week5Day1Label;
+        private System.Windows.Forms.Label week4Day7Label;
+        private System.Windows.Forms.Label week4Day6Label;
+        private System.Windows.Forms.Label week4Day5Label;
+        private System.Windows.Forms.Label week4Day4Label;
+        private System.Windows.Forms.Label week4Day3Label;
+        private System.Windows.Forms.Label week4Day2Label;
+        private System.Windows.Forms.Label week4Day1Label;
+        private System.Windows.Forms.Label week3Day7Label;
+        private System.Windows.Forms.Label week3Day6Label;
+        private System.Windows.Forms.Label week3Day5Label;
+        private System.Windows.Forms.Label week3Day4Label;
+        private System.Windows.Forms.Label week3Day3Label;
+        private System.Windows.Forms.Label week3Day2Label;
+        private System.Windows.Forms.Label week3Day1Label;
+        private System.Windows.Forms.Label week2Day7Label;
+        private System.Windows.Forms.Label week2Day6Label;
+        private System.Windows.Forms.Label week2Day5Label;
+        private System.Windows.Forms.Label week2Day4Label;
+        private System.Windows.Forms.Label week2Day3Label;
+        private System.Windows.Forms.Label week2Day2Label;
+        private System.Windows.Forms.Label week2Day1Label;
+        private System.Windows.Forms.Label week1Day7Label;
+        private System.Windows.Forms.Label week1Day6Label;
+        private System.Windows.Forms.Label week1Day5Label;
+        private System.Windows.Forms.Label week1Day4Label;
+        private System.Windows.Forms.Label week1Day3Label;
+        private System.Windows.Forms.Label week1Day2Label;
+        private System.Windows.Forms.Label week1Day1Label;
     }
 }
 
