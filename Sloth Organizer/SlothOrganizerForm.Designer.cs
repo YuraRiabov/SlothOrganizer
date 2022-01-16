@@ -43,40 +43,8 @@
             this.sundayLabel = new System.Windows.Forms.Label();
             this.deleteTaskButton = new System.Windows.Forms.Button();
             this.updateTaskButton = new System.Windows.Forms.Button();
-            this.viewTasksButton = new System.Windows.Forms.Button();
+            this.viewTaskButton = new System.Windows.Forms.Button();
             this.createTaskButton = new System.Windows.Forms.Button();
-            this.yearCompletedLabel = new System.Windows.Forms.Label();
-            this.yearPartiallyCompletedLabel = new System.Windows.Forms.Label();
-            this.yearFailedLabel = new System.Windows.Forms.Label();
-            this.weekTwoFailedLabel = new System.Windows.Forms.Label();
-            this.weekThreeFailedLabel = new System.Windows.Forms.Label();
-            this.weekFourFailedLabel = new System.Windows.Forms.Label();
-            this.weekFiveFailedLabel = new System.Windows.Forms.Label();
-            this.weekSixFailedLabel = new System.Windows.Forms.Label();
-            this.weekOneFailedLabel = new System.Windows.Forms.Label();
-            this.weekTwoPartiallyCompletedLabel = new System.Windows.Forms.Label();
-            this.weekThreePartiallyCompletedLabel = new System.Windows.Forms.Label();
-            this.weekFourPartiallyCompletedLabel = new System.Windows.Forms.Label();
-            this.weekFivePartiallyCompletedLabel = new System.Windows.Forms.Label();
-            this.weekSixPartiallyCompletedLabel = new System.Windows.Forms.Label();
-            this.weekOnePartiallyCompletedLabel = new System.Windows.Forms.Label();
-            this.weekTwoCompletedLabel = new System.Windows.Forms.Label();
-            this.weekComThreepletedLabel = new System.Windows.Forms.Label();
-            this.weekFourCompletedLabel = new System.Windows.Forms.Label();
-            this.weekFiveCompletedLabel = new System.Windows.Forms.Label();
-            this.weekSixCompletedLabel = new System.Windows.Forms.Label();
-            this.weekOneCompletedLabel = new System.Windows.Forms.Label();
-            this.weekTwoInProcessLabel = new System.Windows.Forms.Label();
-            this.weekThreeInProcessLabel = new System.Windows.Forms.Label();
-            this.weekFourInProcessLabel = new System.Windows.Forms.Label();
-            this.weekFiveInProcessLabel = new System.Windows.Forms.Label();
-            this.weekSixInProcessLabel = new System.Windows.Forms.Label();
-            this.weekOneInProcessLabel = new System.Windows.Forms.Label();
-            this.yearInProcessLabel = new System.Windows.Forms.Label();
-            this.monthInProcessLabel = new System.Windows.Forms.Label();
-            this.monthCompletedLabel = new System.Windows.Forms.Label();
-            this.monthPartiallyCompletedLabel = new System.Windows.Forms.Label();
-            this.monthFailedLabel = new System.Windows.Forms.Label();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.week1Day1Label = new System.Windows.Forms.Label();
             this.week1Day2Label = new System.Windows.Forms.Label();
@@ -120,6 +88,38 @@
             this.week6Day5Label = new System.Windows.Forms.Label();
             this.week6Day6Label = new System.Windows.Forms.Label();
             this.week6Day7Label = new System.Windows.Forms.Label();
+            this.monthInProcessLabel = new System.Windows.Forms.Label();
+            this.monthCompletedLabel = new System.Windows.Forms.Label();
+            this.monthPartiallyCompletedLabel = new System.Windows.Forms.Label();
+            this.monthFailedLabel = new System.Windows.Forms.Label();
+            this.yearInProcessLabel = new System.Windows.Forms.Label();
+            this.yearCompletedLabel = new System.Windows.Forms.Label();
+            this.yearPartiallyCompletedLabel = new System.Windows.Forms.Label();
+            this.yearFailedLabel = new System.Windows.Forms.Label();
+            this.weekTwoFailedLabel = new System.Windows.Forms.Label();
+            this.weekThreeFailedLabel = new System.Windows.Forms.Label();
+            this.weekFourFailedLabel = new System.Windows.Forms.Label();
+            this.weekFiveFailedLabel = new System.Windows.Forms.Label();
+            this.weekSixFailedLabel = new System.Windows.Forms.Label();
+            this.weekOneFailedLabel = new System.Windows.Forms.Label();
+            this.weekTwoPartiallyCompletedLabel = new System.Windows.Forms.Label();
+            this.weekThreePartiallyCompletedLabel = new System.Windows.Forms.Label();
+            this.weekFourPartiallyCompletedLabel = new System.Windows.Forms.Label();
+            this.weekFivePartiallyCompletedLabel = new System.Windows.Forms.Label();
+            this.weekSixPartiallyCompletedLabel = new System.Windows.Forms.Label();
+            this.weekOnePartiallyCompletedLabel = new System.Windows.Forms.Label();
+            this.weekTwoCompletedLabel = new System.Windows.Forms.Label();
+            this.weekComThreepletedLabel = new System.Windows.Forms.Label();
+            this.weekFourCompletedLabel = new System.Windows.Forms.Label();
+            this.weekFiveCompletedLabel = new System.Windows.Forms.Label();
+            this.weekSixCompletedLabel = new System.Windows.Forms.Label();
+            this.weekOneCompletedLabel = new System.Windows.Forms.Label();
+            this.weekTwoInProcessLabel = new System.Windows.Forms.Label();
+            this.weekThreeInProcessLabel = new System.Windows.Forms.Label();
+            this.weekFourInProcessLabel = new System.Windows.Forms.Label();
+            this.weekFiveInProcessLabel = new System.Windows.Forms.Label();
+            this.weekSixInProcessLabel = new System.Windows.Forms.Label();
+            this.weekOneInProcessLabel = new System.Windows.Forms.Label();
             this.weekDaysTable.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
             this.SuspendLayout();
@@ -308,15 +308,15 @@
             this.updateTaskButton.Text = "Update task";
             this.updateTaskButton.UseVisualStyleBackColor = true;
             // 
-            // viewTasksButton
+            // viewTaskButton
             // 
-            this.viewTasksButton.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.viewTasksButton.Location = new System.Drawing.Point(624, 78);
-            this.viewTasksButton.Name = "viewTasksButton";
-            this.viewTasksButton.Size = new System.Drawing.Size(120, 37);
-            this.viewTasksButton.TabIndex = 46;
-            this.viewTasksButton.Text = "View tasks";
-            this.viewTasksButton.UseVisualStyleBackColor = true;
+            this.viewTaskButton.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.viewTaskButton.Location = new System.Drawing.Point(624, 78);
+            this.viewTaskButton.Name = "viewTaskButton";
+            this.viewTaskButton.Size = new System.Drawing.Size(120, 37);
+            this.viewTaskButton.TabIndex = 46;
+            this.viewTaskButton.Text = "View task";
+            this.viewTaskButton.UseVisualStyleBackColor = true;
             // 
             // createTaskButton
             // 
@@ -327,363 +327,6 @@
             this.createTaskButton.TabIndex = 45;
             this.createTaskButton.Text = "Create task";
             this.createTaskButton.UseVisualStyleBackColor = true;
-            // 
-            // yearCompletedLabel
-            // 
-            this.yearCompletedLabel.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.yearCompletedLabel.Image = global::Sloth_Organizer.Properties.Resources.green_circle;
-            this.yearCompletedLabel.Location = new System.Drawing.Point(409, 15);
-            this.yearCompletedLabel.Name = "yearCompletedLabel";
-            this.yearCompletedLabel.Size = new System.Drawing.Size(56, 57);
-            this.yearCompletedLabel.TabIndex = 76;
-            this.yearCompletedLabel.Text = "0";
-            this.yearCompletedLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.yearCompletedLabel.Click += new System.EventHandler(this.label29_Click);
-            // 
-            // yearPartiallyCompletedLabel
-            // 
-            this.yearPartiallyCompletedLabel.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.yearPartiallyCompletedLabel.Image = global::Sloth_Organizer.Properties.Resources.yellow_circle;
-            this.yearPartiallyCompletedLabel.Location = new System.Drawing.Point(471, 15);
-            this.yearPartiallyCompletedLabel.Name = "yearPartiallyCompletedLabel";
-            this.yearPartiallyCompletedLabel.Size = new System.Drawing.Size(56, 57);
-            this.yearPartiallyCompletedLabel.TabIndex = 74;
-            this.yearPartiallyCompletedLabel.Text = "0";
-            this.yearPartiallyCompletedLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.yearPartiallyCompletedLabel.Click += new System.EventHandler(this.label27_Click);
-            // 
-            // yearFailedLabel
-            // 
-            this.yearFailedLabel.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.yearFailedLabel.Image = global::Sloth_Organizer.Properties.Resources.red_circle;
-            this.yearFailedLabel.Location = new System.Drawing.Point(533, 15);
-            this.yearFailedLabel.Name = "yearFailedLabel";
-            this.yearFailedLabel.Size = new System.Drawing.Size(56, 57);
-            this.yearFailedLabel.TabIndex = 72;
-            this.yearFailedLabel.Text = "0";
-            this.yearFailedLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.yearFailedLabel.Click += new System.EventHandler(this.label25_Click);
-            // 
-            // weekTwoFailedLabel
-            // 
-            this.weekTwoFailedLabel.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.weekTwoFailedLabel.Image = global::Sloth_Organizer.Properties.Resources.small_red_circle;
-            this.weekTwoFailedLabel.Location = new System.Drawing.Point(836, 270);
-            this.weekTwoFailedLabel.Name = "weekTwoFailedLabel";
-            this.weekTwoFailedLabel.Size = new System.Drawing.Size(34, 34);
-            this.weekTwoFailedLabel.TabIndex = 71;
-            this.weekTwoFailedLabel.Text = "0";
-            this.weekTwoFailedLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // weekThreeFailedLabel
-            // 
-            this.weekThreeFailedLabel.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.weekThreeFailedLabel.Image = global::Sloth_Organizer.Properties.Resources.small_red_circle;
-            this.weekThreeFailedLabel.Location = new System.Drawing.Point(836, 326);
-            this.weekThreeFailedLabel.Name = "weekThreeFailedLabel";
-            this.weekThreeFailedLabel.Size = new System.Drawing.Size(34, 34);
-            this.weekThreeFailedLabel.TabIndex = 70;
-            this.weekThreeFailedLabel.Text = "0";
-            this.weekThreeFailedLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // weekFourFailedLabel
-            // 
-            this.weekFourFailedLabel.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.weekFourFailedLabel.Image = global::Sloth_Organizer.Properties.Resources.small_red_circle;
-            this.weekFourFailedLabel.Location = new System.Drawing.Point(837, 382);
-            this.weekFourFailedLabel.Name = "weekFourFailedLabel";
-            this.weekFourFailedLabel.Size = new System.Drawing.Size(34, 34);
-            this.weekFourFailedLabel.TabIndex = 69;
-            this.weekFourFailedLabel.Text = "0";
-            this.weekFourFailedLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // weekFiveFailedLabel
-            // 
-            this.weekFiveFailedLabel.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.weekFiveFailedLabel.Image = global::Sloth_Organizer.Properties.Resources.small_red_circle;
-            this.weekFiveFailedLabel.Location = new System.Drawing.Point(836, 438);
-            this.weekFiveFailedLabel.Name = "weekFiveFailedLabel";
-            this.weekFiveFailedLabel.Size = new System.Drawing.Size(34, 34);
-            this.weekFiveFailedLabel.TabIndex = 68;
-            this.weekFiveFailedLabel.Text = "0";
-            this.weekFiveFailedLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // weekSixFailedLabel
-            // 
-            this.weekSixFailedLabel.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.weekSixFailedLabel.Image = global::Sloth_Organizer.Properties.Resources.small_red_circle;
-            this.weekSixFailedLabel.Location = new System.Drawing.Point(837, 494);
-            this.weekSixFailedLabel.Name = "weekSixFailedLabel";
-            this.weekSixFailedLabel.Size = new System.Drawing.Size(34, 34);
-            this.weekSixFailedLabel.TabIndex = 67;
-            this.weekSixFailedLabel.Text = "0";
-            this.weekSixFailedLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // weekOneFailedLabel
-            // 
-            this.weekOneFailedLabel.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.weekOneFailedLabel.Image = global::Sloth_Organizer.Properties.Resources.small_red_circle;
-            this.weekOneFailedLabel.Location = new System.Drawing.Point(836, 214);
-            this.weekOneFailedLabel.Name = "weekOneFailedLabel";
-            this.weekOneFailedLabel.Size = new System.Drawing.Size(34, 34);
-            this.weekOneFailedLabel.TabIndex = 66;
-            this.weekOneFailedLabel.Text = "0";
-            this.weekOneFailedLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // weekTwoPartiallyCompletedLabel
-            // 
-            this.weekTwoPartiallyCompletedLabel.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.weekTwoPartiallyCompletedLabel.Image = global::Sloth_Organizer.Properties.Resources.small_yellow_circle;
-            this.weekTwoPartiallyCompletedLabel.Location = new System.Drawing.Point(796, 270);
-            this.weekTwoPartiallyCompletedLabel.Name = "weekTwoPartiallyCompletedLabel";
-            this.weekTwoPartiallyCompletedLabel.Size = new System.Drawing.Size(34, 34);
-            this.weekTwoPartiallyCompletedLabel.TabIndex = 65;
-            this.weekTwoPartiallyCompletedLabel.Text = "0";
-            this.weekTwoPartiallyCompletedLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // weekThreePartiallyCompletedLabel
-            // 
-            this.weekThreePartiallyCompletedLabel.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.weekThreePartiallyCompletedLabel.Image = global::Sloth_Organizer.Properties.Resources.small_yellow_circle;
-            this.weekThreePartiallyCompletedLabel.Location = new System.Drawing.Point(796, 326);
-            this.weekThreePartiallyCompletedLabel.Name = "weekThreePartiallyCompletedLabel";
-            this.weekThreePartiallyCompletedLabel.Size = new System.Drawing.Size(34, 34);
-            this.weekThreePartiallyCompletedLabel.TabIndex = 64;
-            this.weekThreePartiallyCompletedLabel.Text = "0";
-            this.weekThreePartiallyCompletedLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // weekFourPartiallyCompletedLabel
-            // 
-            this.weekFourPartiallyCompletedLabel.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.weekFourPartiallyCompletedLabel.Image = global::Sloth_Organizer.Properties.Resources.small_yellow_circle;
-            this.weekFourPartiallyCompletedLabel.Location = new System.Drawing.Point(796, 382);
-            this.weekFourPartiallyCompletedLabel.Name = "weekFourPartiallyCompletedLabel";
-            this.weekFourPartiallyCompletedLabel.Size = new System.Drawing.Size(34, 34);
-            this.weekFourPartiallyCompletedLabel.TabIndex = 63;
-            this.weekFourPartiallyCompletedLabel.Text = "0";
-            this.weekFourPartiallyCompletedLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // weekFivePartiallyCompletedLabel
-            // 
-            this.weekFivePartiallyCompletedLabel.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.weekFivePartiallyCompletedLabel.Image = global::Sloth_Organizer.Properties.Resources.small_yellow_circle;
-            this.weekFivePartiallyCompletedLabel.Location = new System.Drawing.Point(796, 438);
-            this.weekFivePartiallyCompletedLabel.Name = "weekFivePartiallyCompletedLabel";
-            this.weekFivePartiallyCompletedLabel.Size = new System.Drawing.Size(34, 34);
-            this.weekFivePartiallyCompletedLabel.TabIndex = 62;
-            this.weekFivePartiallyCompletedLabel.Text = "0";
-            this.weekFivePartiallyCompletedLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // weekSixPartiallyCompletedLabel
-            // 
-            this.weekSixPartiallyCompletedLabel.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.weekSixPartiallyCompletedLabel.Image = global::Sloth_Organizer.Properties.Resources.small_yellow_circle;
-            this.weekSixPartiallyCompletedLabel.Location = new System.Drawing.Point(796, 494);
-            this.weekSixPartiallyCompletedLabel.Name = "weekSixPartiallyCompletedLabel";
-            this.weekSixPartiallyCompletedLabel.Size = new System.Drawing.Size(34, 34);
-            this.weekSixPartiallyCompletedLabel.TabIndex = 61;
-            this.weekSixPartiallyCompletedLabel.Text = "0";
-            this.weekSixPartiallyCompletedLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // weekOnePartiallyCompletedLabel
-            // 
-            this.weekOnePartiallyCompletedLabel.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.weekOnePartiallyCompletedLabel.Image = global::Sloth_Organizer.Properties.Resources.small_yellow_circle;
-            this.weekOnePartiallyCompletedLabel.Location = new System.Drawing.Point(796, 214);
-            this.weekOnePartiallyCompletedLabel.Name = "weekOnePartiallyCompletedLabel";
-            this.weekOnePartiallyCompletedLabel.Size = new System.Drawing.Size(34, 34);
-            this.weekOnePartiallyCompletedLabel.TabIndex = 60;
-            this.weekOnePartiallyCompletedLabel.Text = "0";
-            this.weekOnePartiallyCompletedLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // weekTwoCompletedLabel
-            // 
-            this.weekTwoCompletedLabel.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.weekTwoCompletedLabel.Image = global::Sloth_Organizer.Properties.Resources.small_green_circle;
-            this.weekTwoCompletedLabel.Location = new System.Drawing.Point(756, 270);
-            this.weekTwoCompletedLabel.Name = "weekTwoCompletedLabel";
-            this.weekTwoCompletedLabel.Size = new System.Drawing.Size(34, 34);
-            this.weekTwoCompletedLabel.TabIndex = 59;
-            this.weekTwoCompletedLabel.Text = "0";
-            this.weekTwoCompletedLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // weekComThreepletedLabel
-            // 
-            this.weekComThreepletedLabel.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.weekComThreepletedLabel.Image = global::Sloth_Organizer.Properties.Resources.small_green_circle;
-            this.weekComThreepletedLabel.Location = new System.Drawing.Point(756, 326);
-            this.weekComThreepletedLabel.Name = "weekComThreepletedLabel";
-            this.weekComThreepletedLabel.Size = new System.Drawing.Size(34, 34);
-            this.weekComThreepletedLabel.TabIndex = 58;
-            this.weekComThreepletedLabel.Text = "0";
-            this.weekComThreepletedLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // weekFourCompletedLabel
-            // 
-            this.weekFourCompletedLabel.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.weekFourCompletedLabel.Image = global::Sloth_Organizer.Properties.Resources.small_green_circle;
-            this.weekFourCompletedLabel.Location = new System.Drawing.Point(756, 382);
-            this.weekFourCompletedLabel.Name = "weekFourCompletedLabel";
-            this.weekFourCompletedLabel.Size = new System.Drawing.Size(34, 34);
-            this.weekFourCompletedLabel.TabIndex = 57;
-            this.weekFourCompletedLabel.Text = "0";
-            this.weekFourCompletedLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // weekFiveCompletedLabel
-            // 
-            this.weekFiveCompletedLabel.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.weekFiveCompletedLabel.Image = global::Sloth_Organizer.Properties.Resources.small_green_circle;
-            this.weekFiveCompletedLabel.Location = new System.Drawing.Point(756, 438);
-            this.weekFiveCompletedLabel.Name = "weekFiveCompletedLabel";
-            this.weekFiveCompletedLabel.Size = new System.Drawing.Size(34, 34);
-            this.weekFiveCompletedLabel.TabIndex = 56;
-            this.weekFiveCompletedLabel.Text = "0";
-            this.weekFiveCompletedLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // weekSixCompletedLabel
-            // 
-            this.weekSixCompletedLabel.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.weekSixCompletedLabel.Image = global::Sloth_Organizer.Properties.Resources.small_green_circle;
-            this.weekSixCompletedLabel.Location = new System.Drawing.Point(756, 494);
-            this.weekSixCompletedLabel.Name = "weekSixCompletedLabel";
-            this.weekSixCompletedLabel.Size = new System.Drawing.Size(34, 34);
-            this.weekSixCompletedLabel.TabIndex = 55;
-            this.weekSixCompletedLabel.Text = "0";
-            this.weekSixCompletedLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // weekOneCompletedLabel
-            // 
-            this.weekOneCompletedLabel.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.weekOneCompletedLabel.Image = global::Sloth_Organizer.Properties.Resources.small_green_circle;
-            this.weekOneCompletedLabel.Location = new System.Drawing.Point(756, 214);
-            this.weekOneCompletedLabel.Name = "weekOneCompletedLabel";
-            this.weekOneCompletedLabel.Size = new System.Drawing.Size(34, 34);
-            this.weekOneCompletedLabel.TabIndex = 54;
-            this.weekOneCompletedLabel.Text = "0";
-            this.weekOneCompletedLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // weekTwoInProcessLabel
-            // 
-            this.weekTwoInProcessLabel.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.weekTwoInProcessLabel.Image = global::Sloth_Organizer.Properties.Resources.small_grey_circle;
-            this.weekTwoInProcessLabel.Location = new System.Drawing.Point(716, 270);
-            this.weekTwoInProcessLabel.Name = "weekTwoInProcessLabel";
-            this.weekTwoInProcessLabel.Size = new System.Drawing.Size(34, 34);
-            this.weekTwoInProcessLabel.TabIndex = 53;
-            this.weekTwoInProcessLabel.Text = "0";
-            this.weekTwoInProcessLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // weekThreeInProcessLabel
-            // 
-            this.weekThreeInProcessLabel.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.weekThreeInProcessLabel.Image = global::Sloth_Organizer.Properties.Resources.small_grey_circle;
-            this.weekThreeInProcessLabel.Location = new System.Drawing.Point(716, 326);
-            this.weekThreeInProcessLabel.Name = "weekThreeInProcessLabel";
-            this.weekThreeInProcessLabel.Size = new System.Drawing.Size(34, 34);
-            this.weekThreeInProcessLabel.TabIndex = 52;
-            this.weekThreeInProcessLabel.Text = "0";
-            this.weekThreeInProcessLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // weekFourInProcessLabel
-            // 
-            this.weekFourInProcessLabel.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.weekFourInProcessLabel.Image = global::Sloth_Organizer.Properties.Resources.small_grey_circle;
-            this.weekFourInProcessLabel.Location = new System.Drawing.Point(716, 382);
-            this.weekFourInProcessLabel.Name = "weekFourInProcessLabel";
-            this.weekFourInProcessLabel.Size = new System.Drawing.Size(34, 34);
-            this.weekFourInProcessLabel.TabIndex = 51;
-            this.weekFourInProcessLabel.Text = "0";
-            this.weekFourInProcessLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // weekFiveInProcessLabel
-            // 
-            this.weekFiveInProcessLabel.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.weekFiveInProcessLabel.Image = global::Sloth_Organizer.Properties.Resources.small_grey_circle;
-            this.weekFiveInProcessLabel.Location = new System.Drawing.Point(716, 438);
-            this.weekFiveInProcessLabel.Name = "weekFiveInProcessLabel";
-            this.weekFiveInProcessLabel.Size = new System.Drawing.Size(34, 34);
-            this.weekFiveInProcessLabel.TabIndex = 50;
-            this.weekFiveInProcessLabel.Text = "0";
-            this.weekFiveInProcessLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // weekSixInProcessLabel
-            // 
-            this.weekSixInProcessLabel.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.weekSixInProcessLabel.Image = global::Sloth_Organizer.Properties.Resources.small_grey_circle;
-            this.weekSixInProcessLabel.Location = new System.Drawing.Point(716, 494);
-            this.weekSixInProcessLabel.Name = "weekSixInProcessLabel";
-            this.weekSixInProcessLabel.Size = new System.Drawing.Size(34, 34);
-            this.weekSixInProcessLabel.TabIndex = 49;
-            this.weekSixInProcessLabel.Text = "0";
-            this.weekSixInProcessLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // weekOneInProcessLabel
-            // 
-            this.weekOneInProcessLabel.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.weekOneInProcessLabel.Image = global::Sloth_Organizer.Properties.Resources.small_grey_circle;
-            this.weekOneInProcessLabel.Location = new System.Drawing.Point(716, 214);
-            this.weekOneInProcessLabel.Name = "weekOneInProcessLabel";
-            this.weekOneInProcessLabel.Size = new System.Drawing.Size(34, 34);
-            this.weekOneInProcessLabel.TabIndex = 0;
-            this.weekOneInProcessLabel.Text = "0";
-            this.weekOneInProcessLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.weekOneInProcessLabel.Click += new System.EventHandler(this.label1_Click_3);
-            // 
-            // yearInProcessLabel
-            // 
-            this.yearInProcessLabel.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.yearInProcessLabel.Image = global::Sloth_Organizer.Properties.Resources.grey_circle;
-            this.yearInProcessLabel.Location = new System.Drawing.Point(347, 15);
-            this.yearInProcessLabel.Name = "yearInProcessLabel";
-            this.yearInProcessLabel.Size = new System.Drawing.Size(56, 57);
-            this.yearInProcessLabel.TabIndex = 77;
-            this.yearInProcessLabel.Text = "0";
-            this.yearInProcessLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.yearInProcessLabel.Click += new System.EventHandler(this.label30_Click);
-            // 
-            // monthInProcessLabel
-            // 
-            this.monthInProcessLabel.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.monthInProcessLabel.Image = global::Sloth_Organizer.Properties.Resources.grey_circle;
-            this.monthInProcessLabel.Location = new System.Drawing.Point(347, 76);
-            this.monthInProcessLabel.Name = "monthInProcessLabel";
-            this.monthInProcessLabel.Size = new System.Drawing.Size(56, 57);
-            this.monthInProcessLabel.TabIndex = 81;
-            this.monthInProcessLabel.Text = "0";
-            this.monthInProcessLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // monthCompletedLabel
-            // 
-            this.monthCompletedLabel.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.monthCompletedLabel.Image = global::Sloth_Organizer.Properties.Resources.green_circle;
-            this.monthCompletedLabel.Location = new System.Drawing.Point(409, 76);
-            this.monthCompletedLabel.Name = "monthCompletedLabel";
-            this.monthCompletedLabel.Size = new System.Drawing.Size(56, 57);
-            this.monthCompletedLabel.TabIndex = 80;
-            this.monthCompletedLabel.Text = "0";
-            this.monthCompletedLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // monthPartiallyCompletedLabel
-            // 
-            this.monthPartiallyCompletedLabel.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.monthPartiallyCompletedLabel.Image = global::Sloth_Organizer.Properties.Resources.yellow_circle;
-            this.monthPartiallyCompletedLabel.Location = new System.Drawing.Point(471, 76);
-            this.monthPartiallyCompletedLabel.Name = "monthPartiallyCompletedLabel";
-            this.monthPartiallyCompletedLabel.Size = new System.Drawing.Size(56, 57);
-            this.monthPartiallyCompletedLabel.TabIndex = 79;
-            this.monthPartiallyCompletedLabel.Text = "0";
-            this.monthPartiallyCompletedLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // monthFailedLabel
-            // 
-            this.monthFailedLabel.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.monthFailedLabel.Image = global::Sloth_Organizer.Properties.Resources.red_circle;
-            this.monthFailedLabel.Location = new System.Drawing.Point(533, 76);
-            this.monthFailedLabel.Name = "monthFailedLabel";
-            this.monthFailedLabel.Size = new System.Drawing.Size(56, 57);
-            this.monthFailedLabel.TabIndex = 78;
-            this.monthFailedLabel.Text = "0";
-            this.monthFailedLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // tableLayoutPanel1
             // 
@@ -1169,6 +812,363 @@
             this.week6Day7Label.Text = "<date>";
             this.week6Day7Label.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
+            // monthInProcessLabel
+            // 
+            this.monthInProcessLabel.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.monthInProcessLabel.Image = global::Sloth_Organizer.Properties.Resources.grey_circle;
+            this.monthInProcessLabel.Location = new System.Drawing.Point(347, 76);
+            this.monthInProcessLabel.Name = "monthInProcessLabel";
+            this.monthInProcessLabel.Size = new System.Drawing.Size(56, 57);
+            this.monthInProcessLabel.TabIndex = 81;
+            this.monthInProcessLabel.Text = "0";
+            this.monthInProcessLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // monthCompletedLabel
+            // 
+            this.monthCompletedLabel.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.monthCompletedLabel.Image = global::Sloth_Organizer.Properties.Resources.green_circle;
+            this.monthCompletedLabel.Location = new System.Drawing.Point(409, 76);
+            this.monthCompletedLabel.Name = "monthCompletedLabel";
+            this.monthCompletedLabel.Size = new System.Drawing.Size(56, 57);
+            this.monthCompletedLabel.TabIndex = 80;
+            this.monthCompletedLabel.Text = "0";
+            this.monthCompletedLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // monthPartiallyCompletedLabel
+            // 
+            this.monthPartiallyCompletedLabel.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.monthPartiallyCompletedLabel.Image = global::Sloth_Organizer.Properties.Resources.yellow_circle;
+            this.monthPartiallyCompletedLabel.Location = new System.Drawing.Point(471, 76);
+            this.monthPartiallyCompletedLabel.Name = "monthPartiallyCompletedLabel";
+            this.monthPartiallyCompletedLabel.Size = new System.Drawing.Size(56, 57);
+            this.monthPartiallyCompletedLabel.TabIndex = 79;
+            this.monthPartiallyCompletedLabel.Text = "0";
+            this.monthPartiallyCompletedLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // monthFailedLabel
+            // 
+            this.monthFailedLabel.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.monthFailedLabel.Image = global::Sloth_Organizer.Properties.Resources.red_circle;
+            this.monthFailedLabel.Location = new System.Drawing.Point(533, 76);
+            this.monthFailedLabel.Name = "monthFailedLabel";
+            this.monthFailedLabel.Size = new System.Drawing.Size(56, 57);
+            this.monthFailedLabel.TabIndex = 78;
+            this.monthFailedLabel.Text = "0";
+            this.monthFailedLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // yearInProcessLabel
+            // 
+            this.yearInProcessLabel.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.yearInProcessLabel.Image = global::Sloth_Organizer.Properties.Resources.grey_circle;
+            this.yearInProcessLabel.Location = new System.Drawing.Point(347, 15);
+            this.yearInProcessLabel.Name = "yearInProcessLabel";
+            this.yearInProcessLabel.Size = new System.Drawing.Size(56, 57);
+            this.yearInProcessLabel.TabIndex = 77;
+            this.yearInProcessLabel.Text = "0";
+            this.yearInProcessLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.yearInProcessLabel.Click += new System.EventHandler(this.label30_Click);
+            // 
+            // yearCompletedLabel
+            // 
+            this.yearCompletedLabel.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.yearCompletedLabel.Image = global::Sloth_Organizer.Properties.Resources.green_circle;
+            this.yearCompletedLabel.Location = new System.Drawing.Point(409, 15);
+            this.yearCompletedLabel.Name = "yearCompletedLabel";
+            this.yearCompletedLabel.Size = new System.Drawing.Size(56, 57);
+            this.yearCompletedLabel.TabIndex = 76;
+            this.yearCompletedLabel.Text = "0";
+            this.yearCompletedLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.yearCompletedLabel.Click += new System.EventHandler(this.label29_Click);
+            // 
+            // yearPartiallyCompletedLabel
+            // 
+            this.yearPartiallyCompletedLabel.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.yearPartiallyCompletedLabel.Image = global::Sloth_Organizer.Properties.Resources.yellow_circle;
+            this.yearPartiallyCompletedLabel.Location = new System.Drawing.Point(471, 15);
+            this.yearPartiallyCompletedLabel.Name = "yearPartiallyCompletedLabel";
+            this.yearPartiallyCompletedLabel.Size = new System.Drawing.Size(56, 57);
+            this.yearPartiallyCompletedLabel.TabIndex = 74;
+            this.yearPartiallyCompletedLabel.Text = "0";
+            this.yearPartiallyCompletedLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.yearPartiallyCompletedLabel.Click += new System.EventHandler(this.label27_Click);
+            // 
+            // yearFailedLabel
+            // 
+            this.yearFailedLabel.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.yearFailedLabel.Image = global::Sloth_Organizer.Properties.Resources.red_circle;
+            this.yearFailedLabel.Location = new System.Drawing.Point(533, 15);
+            this.yearFailedLabel.Name = "yearFailedLabel";
+            this.yearFailedLabel.Size = new System.Drawing.Size(56, 57);
+            this.yearFailedLabel.TabIndex = 72;
+            this.yearFailedLabel.Text = "0";
+            this.yearFailedLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.yearFailedLabel.Click += new System.EventHandler(this.label25_Click);
+            // 
+            // weekTwoFailedLabel
+            // 
+            this.weekTwoFailedLabel.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.weekTwoFailedLabel.Image = global::Sloth_Organizer.Properties.Resources.small_red_circle;
+            this.weekTwoFailedLabel.Location = new System.Drawing.Point(836, 270);
+            this.weekTwoFailedLabel.Name = "weekTwoFailedLabel";
+            this.weekTwoFailedLabel.Size = new System.Drawing.Size(34, 34);
+            this.weekTwoFailedLabel.TabIndex = 71;
+            this.weekTwoFailedLabel.Text = "0";
+            this.weekTwoFailedLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // weekThreeFailedLabel
+            // 
+            this.weekThreeFailedLabel.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.weekThreeFailedLabel.Image = global::Sloth_Organizer.Properties.Resources.small_red_circle;
+            this.weekThreeFailedLabel.Location = new System.Drawing.Point(836, 326);
+            this.weekThreeFailedLabel.Name = "weekThreeFailedLabel";
+            this.weekThreeFailedLabel.Size = new System.Drawing.Size(34, 34);
+            this.weekThreeFailedLabel.TabIndex = 70;
+            this.weekThreeFailedLabel.Text = "0";
+            this.weekThreeFailedLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // weekFourFailedLabel
+            // 
+            this.weekFourFailedLabel.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.weekFourFailedLabel.Image = global::Sloth_Organizer.Properties.Resources.small_red_circle;
+            this.weekFourFailedLabel.Location = new System.Drawing.Point(837, 382);
+            this.weekFourFailedLabel.Name = "weekFourFailedLabel";
+            this.weekFourFailedLabel.Size = new System.Drawing.Size(34, 34);
+            this.weekFourFailedLabel.TabIndex = 69;
+            this.weekFourFailedLabel.Text = "0";
+            this.weekFourFailedLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // weekFiveFailedLabel
+            // 
+            this.weekFiveFailedLabel.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.weekFiveFailedLabel.Image = global::Sloth_Organizer.Properties.Resources.small_red_circle;
+            this.weekFiveFailedLabel.Location = new System.Drawing.Point(836, 438);
+            this.weekFiveFailedLabel.Name = "weekFiveFailedLabel";
+            this.weekFiveFailedLabel.Size = new System.Drawing.Size(34, 34);
+            this.weekFiveFailedLabel.TabIndex = 68;
+            this.weekFiveFailedLabel.Text = "0";
+            this.weekFiveFailedLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // weekSixFailedLabel
+            // 
+            this.weekSixFailedLabel.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.weekSixFailedLabel.Image = global::Sloth_Organizer.Properties.Resources.small_red_circle;
+            this.weekSixFailedLabel.Location = new System.Drawing.Point(837, 494);
+            this.weekSixFailedLabel.Name = "weekSixFailedLabel";
+            this.weekSixFailedLabel.Size = new System.Drawing.Size(34, 34);
+            this.weekSixFailedLabel.TabIndex = 67;
+            this.weekSixFailedLabel.Text = "0";
+            this.weekSixFailedLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // weekOneFailedLabel
+            // 
+            this.weekOneFailedLabel.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.weekOneFailedLabel.Image = global::Sloth_Organizer.Properties.Resources.small_red_circle;
+            this.weekOneFailedLabel.Location = new System.Drawing.Point(836, 214);
+            this.weekOneFailedLabel.Name = "weekOneFailedLabel";
+            this.weekOneFailedLabel.Size = new System.Drawing.Size(34, 34);
+            this.weekOneFailedLabel.TabIndex = 66;
+            this.weekOneFailedLabel.Text = "0";
+            this.weekOneFailedLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // weekTwoPartiallyCompletedLabel
+            // 
+            this.weekTwoPartiallyCompletedLabel.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.weekTwoPartiallyCompletedLabel.Image = global::Sloth_Organizer.Properties.Resources.small_yellow_circle;
+            this.weekTwoPartiallyCompletedLabel.Location = new System.Drawing.Point(796, 270);
+            this.weekTwoPartiallyCompletedLabel.Name = "weekTwoPartiallyCompletedLabel";
+            this.weekTwoPartiallyCompletedLabel.Size = new System.Drawing.Size(34, 34);
+            this.weekTwoPartiallyCompletedLabel.TabIndex = 65;
+            this.weekTwoPartiallyCompletedLabel.Text = "0";
+            this.weekTwoPartiallyCompletedLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // weekThreePartiallyCompletedLabel
+            // 
+            this.weekThreePartiallyCompletedLabel.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.weekThreePartiallyCompletedLabel.Image = global::Sloth_Organizer.Properties.Resources.small_yellow_circle;
+            this.weekThreePartiallyCompletedLabel.Location = new System.Drawing.Point(796, 326);
+            this.weekThreePartiallyCompletedLabel.Name = "weekThreePartiallyCompletedLabel";
+            this.weekThreePartiallyCompletedLabel.Size = new System.Drawing.Size(34, 34);
+            this.weekThreePartiallyCompletedLabel.TabIndex = 64;
+            this.weekThreePartiallyCompletedLabel.Text = "0";
+            this.weekThreePartiallyCompletedLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // weekFourPartiallyCompletedLabel
+            // 
+            this.weekFourPartiallyCompletedLabel.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.weekFourPartiallyCompletedLabel.Image = global::Sloth_Organizer.Properties.Resources.small_yellow_circle;
+            this.weekFourPartiallyCompletedLabel.Location = new System.Drawing.Point(796, 382);
+            this.weekFourPartiallyCompletedLabel.Name = "weekFourPartiallyCompletedLabel";
+            this.weekFourPartiallyCompletedLabel.Size = new System.Drawing.Size(34, 34);
+            this.weekFourPartiallyCompletedLabel.TabIndex = 63;
+            this.weekFourPartiallyCompletedLabel.Text = "0";
+            this.weekFourPartiallyCompletedLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // weekFivePartiallyCompletedLabel
+            // 
+            this.weekFivePartiallyCompletedLabel.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.weekFivePartiallyCompletedLabel.Image = global::Sloth_Organizer.Properties.Resources.small_yellow_circle;
+            this.weekFivePartiallyCompletedLabel.Location = new System.Drawing.Point(796, 438);
+            this.weekFivePartiallyCompletedLabel.Name = "weekFivePartiallyCompletedLabel";
+            this.weekFivePartiallyCompletedLabel.Size = new System.Drawing.Size(34, 34);
+            this.weekFivePartiallyCompletedLabel.TabIndex = 62;
+            this.weekFivePartiallyCompletedLabel.Text = "0";
+            this.weekFivePartiallyCompletedLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // weekSixPartiallyCompletedLabel
+            // 
+            this.weekSixPartiallyCompletedLabel.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.weekSixPartiallyCompletedLabel.Image = global::Sloth_Organizer.Properties.Resources.small_yellow_circle;
+            this.weekSixPartiallyCompletedLabel.Location = new System.Drawing.Point(796, 494);
+            this.weekSixPartiallyCompletedLabel.Name = "weekSixPartiallyCompletedLabel";
+            this.weekSixPartiallyCompletedLabel.Size = new System.Drawing.Size(34, 34);
+            this.weekSixPartiallyCompletedLabel.TabIndex = 61;
+            this.weekSixPartiallyCompletedLabel.Text = "0";
+            this.weekSixPartiallyCompletedLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // weekOnePartiallyCompletedLabel
+            // 
+            this.weekOnePartiallyCompletedLabel.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.weekOnePartiallyCompletedLabel.Image = global::Sloth_Organizer.Properties.Resources.small_yellow_circle;
+            this.weekOnePartiallyCompletedLabel.Location = new System.Drawing.Point(796, 214);
+            this.weekOnePartiallyCompletedLabel.Name = "weekOnePartiallyCompletedLabel";
+            this.weekOnePartiallyCompletedLabel.Size = new System.Drawing.Size(34, 34);
+            this.weekOnePartiallyCompletedLabel.TabIndex = 60;
+            this.weekOnePartiallyCompletedLabel.Text = "0";
+            this.weekOnePartiallyCompletedLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // weekTwoCompletedLabel
+            // 
+            this.weekTwoCompletedLabel.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.weekTwoCompletedLabel.Image = global::Sloth_Organizer.Properties.Resources.small_green_circle;
+            this.weekTwoCompletedLabel.Location = new System.Drawing.Point(756, 270);
+            this.weekTwoCompletedLabel.Name = "weekTwoCompletedLabel";
+            this.weekTwoCompletedLabel.Size = new System.Drawing.Size(34, 34);
+            this.weekTwoCompletedLabel.TabIndex = 59;
+            this.weekTwoCompletedLabel.Text = "0";
+            this.weekTwoCompletedLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // weekComThreepletedLabel
+            // 
+            this.weekComThreepletedLabel.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.weekComThreepletedLabel.Image = global::Sloth_Organizer.Properties.Resources.small_green_circle;
+            this.weekComThreepletedLabel.Location = new System.Drawing.Point(756, 326);
+            this.weekComThreepletedLabel.Name = "weekComThreepletedLabel";
+            this.weekComThreepletedLabel.Size = new System.Drawing.Size(34, 34);
+            this.weekComThreepletedLabel.TabIndex = 58;
+            this.weekComThreepletedLabel.Text = "0";
+            this.weekComThreepletedLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // weekFourCompletedLabel
+            // 
+            this.weekFourCompletedLabel.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.weekFourCompletedLabel.Image = global::Sloth_Organizer.Properties.Resources.small_green_circle;
+            this.weekFourCompletedLabel.Location = new System.Drawing.Point(756, 382);
+            this.weekFourCompletedLabel.Name = "weekFourCompletedLabel";
+            this.weekFourCompletedLabel.Size = new System.Drawing.Size(34, 34);
+            this.weekFourCompletedLabel.TabIndex = 57;
+            this.weekFourCompletedLabel.Text = "0";
+            this.weekFourCompletedLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // weekFiveCompletedLabel
+            // 
+            this.weekFiveCompletedLabel.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.weekFiveCompletedLabel.Image = global::Sloth_Organizer.Properties.Resources.small_green_circle;
+            this.weekFiveCompletedLabel.Location = new System.Drawing.Point(756, 438);
+            this.weekFiveCompletedLabel.Name = "weekFiveCompletedLabel";
+            this.weekFiveCompletedLabel.Size = new System.Drawing.Size(34, 34);
+            this.weekFiveCompletedLabel.TabIndex = 56;
+            this.weekFiveCompletedLabel.Text = "0";
+            this.weekFiveCompletedLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // weekSixCompletedLabel
+            // 
+            this.weekSixCompletedLabel.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.weekSixCompletedLabel.Image = global::Sloth_Organizer.Properties.Resources.small_green_circle;
+            this.weekSixCompletedLabel.Location = new System.Drawing.Point(756, 494);
+            this.weekSixCompletedLabel.Name = "weekSixCompletedLabel";
+            this.weekSixCompletedLabel.Size = new System.Drawing.Size(34, 34);
+            this.weekSixCompletedLabel.TabIndex = 55;
+            this.weekSixCompletedLabel.Text = "0";
+            this.weekSixCompletedLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // weekOneCompletedLabel
+            // 
+            this.weekOneCompletedLabel.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.weekOneCompletedLabel.Image = global::Sloth_Organizer.Properties.Resources.small_green_circle;
+            this.weekOneCompletedLabel.Location = new System.Drawing.Point(756, 214);
+            this.weekOneCompletedLabel.Name = "weekOneCompletedLabel";
+            this.weekOneCompletedLabel.Size = new System.Drawing.Size(34, 34);
+            this.weekOneCompletedLabel.TabIndex = 54;
+            this.weekOneCompletedLabel.Text = "0";
+            this.weekOneCompletedLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // weekTwoInProcessLabel
+            // 
+            this.weekTwoInProcessLabel.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.weekTwoInProcessLabel.Image = global::Sloth_Organizer.Properties.Resources.small_grey_circle;
+            this.weekTwoInProcessLabel.Location = new System.Drawing.Point(716, 270);
+            this.weekTwoInProcessLabel.Name = "weekTwoInProcessLabel";
+            this.weekTwoInProcessLabel.Size = new System.Drawing.Size(34, 34);
+            this.weekTwoInProcessLabel.TabIndex = 53;
+            this.weekTwoInProcessLabel.Text = "0";
+            this.weekTwoInProcessLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // weekThreeInProcessLabel
+            // 
+            this.weekThreeInProcessLabel.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.weekThreeInProcessLabel.Image = global::Sloth_Organizer.Properties.Resources.small_grey_circle;
+            this.weekThreeInProcessLabel.Location = new System.Drawing.Point(716, 326);
+            this.weekThreeInProcessLabel.Name = "weekThreeInProcessLabel";
+            this.weekThreeInProcessLabel.Size = new System.Drawing.Size(34, 34);
+            this.weekThreeInProcessLabel.TabIndex = 52;
+            this.weekThreeInProcessLabel.Text = "0";
+            this.weekThreeInProcessLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // weekFourInProcessLabel
+            // 
+            this.weekFourInProcessLabel.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.weekFourInProcessLabel.Image = global::Sloth_Organizer.Properties.Resources.small_grey_circle;
+            this.weekFourInProcessLabel.Location = new System.Drawing.Point(716, 382);
+            this.weekFourInProcessLabel.Name = "weekFourInProcessLabel";
+            this.weekFourInProcessLabel.Size = new System.Drawing.Size(34, 34);
+            this.weekFourInProcessLabel.TabIndex = 51;
+            this.weekFourInProcessLabel.Text = "0";
+            this.weekFourInProcessLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // weekFiveInProcessLabel
+            // 
+            this.weekFiveInProcessLabel.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.weekFiveInProcessLabel.Image = global::Sloth_Organizer.Properties.Resources.small_grey_circle;
+            this.weekFiveInProcessLabel.Location = new System.Drawing.Point(716, 438);
+            this.weekFiveInProcessLabel.Name = "weekFiveInProcessLabel";
+            this.weekFiveInProcessLabel.Size = new System.Drawing.Size(34, 34);
+            this.weekFiveInProcessLabel.TabIndex = 50;
+            this.weekFiveInProcessLabel.Text = "0";
+            this.weekFiveInProcessLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // weekSixInProcessLabel
+            // 
+            this.weekSixInProcessLabel.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.weekSixInProcessLabel.Image = global::Sloth_Organizer.Properties.Resources.small_grey_circle;
+            this.weekSixInProcessLabel.Location = new System.Drawing.Point(716, 494);
+            this.weekSixInProcessLabel.Name = "weekSixInProcessLabel";
+            this.weekSixInProcessLabel.Size = new System.Drawing.Size(34, 34);
+            this.weekSixInProcessLabel.TabIndex = 49;
+            this.weekSixInProcessLabel.Text = "0";
+            this.weekSixInProcessLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // weekOneInProcessLabel
+            // 
+            this.weekOneInProcessLabel.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.weekOneInProcessLabel.Image = global::Sloth_Organizer.Properties.Resources.small_grey_circle;
+            this.weekOneInProcessLabel.Location = new System.Drawing.Point(716, 214);
+            this.weekOneInProcessLabel.Name = "weekOneInProcessLabel";
+            this.weekOneInProcessLabel.Size = new System.Drawing.Size(34, 34);
+            this.weekOneInProcessLabel.TabIndex = 0;
+            this.weekOneInProcessLabel.Text = "0";
+            this.weekOneInProcessLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.weekOneInProcessLabel.Click += new System.EventHandler(this.label1_Click_3);
+            // 
             // SlothOrganizerForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 30F);
@@ -1210,7 +1210,7 @@
             this.Controls.Add(this.weekOneInProcessLabel);
             this.Controls.Add(this.deleteTaskButton);
             this.Controls.Add(this.updateTaskButton);
-            this.Controls.Add(this.viewTasksButton);
+            this.Controls.Add(this.viewTaskButton);
             this.Controls.Add(this.createTaskButton);
             this.Controls.Add(this.weekDaysTable);
             this.Controls.Add(this.monthDropDown);
@@ -1245,7 +1245,7 @@
         private System.Windows.Forms.Label sundayLabel;
         private System.Windows.Forms.Button deleteTaskButton;
         private System.Windows.Forms.Button updateTaskButton;
-        private System.Windows.Forms.Button viewTasksButton;
+        private System.Windows.Forms.Button viewTaskButton;
         private System.Windows.Forms.Button createTaskButton;
         private System.Windows.Forms.Label weekOneInProcessLabel;
         private System.Windows.Forms.Label weekSixInProcessLabel;

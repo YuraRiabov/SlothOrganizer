@@ -35,7 +35,7 @@
             this.deleteTaskLabel = new System.Windows.Forms.Label();
             this.chooseWeekDropDown = new System.Windows.Forms.ComboBox();
             this.taskListBox = new System.Windows.Forms.ListBox();
-            this.startSelectionLabel = new System.Windows.Forms.Label();
+            this.taskSelectionLabel = new System.Windows.Forms.Label();
             this.deleteTaskButton = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
@@ -90,14 +90,14 @@
             this.taskListBox.Size = new System.Drawing.Size(502, 154);
             this.taskListBox.TabIndex = 11;
             // 
-            // startSelectionLabel
+            // taskSelectionLabel
             // 
-            this.startSelectionLabel.AutoSize = true;
-            this.startSelectionLabel.Location = new System.Drawing.Point(12, 46);
-            this.startSelectionLabel.Name = "startSelectionLabel";
-            this.startSelectionLabel.Size = new System.Drawing.Size(235, 30);
-            this.startSelectionLabel.TabIndex = 12;
-            this.startSelectionLabel.Text = "Choose a task to delete:";
+            this.taskSelectionLabel.AutoSize = true;
+            this.taskSelectionLabel.Location = new System.Drawing.Point(12, 46);
+            this.taskSelectionLabel.Name = "taskSelectionLabel";
+            this.taskSelectionLabel.Size = new System.Drawing.Size(235, 30);
+            this.taskSelectionLabel.TabIndex = 12;
+            this.taskSelectionLabel.Text = "Choose a task to delete:";
             // 
             // deleteTaskButton
             // 
@@ -116,7 +116,7 @@
             this.BackColor = System.Drawing.Color.White;
             this.ClientSize = new System.Drawing.Size(526, 368);
             this.Controls.Add(this.deleteTaskButton);
-            this.Controls.Add(this.startSelectionLabel);
+            this.Controls.Add(this.taskSelectionLabel);
             this.Controls.Add(this.taskListBox);
             this.Controls.Add(this.chooseWeekDropDown);
             this.Controls.Add(this.deleteTaskLabel);
@@ -127,7 +127,7 @@
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Margin = new System.Windows.Forms.Padding(6, 7, 6, 7);
             this.Name = "DeleteTaskForm";
-            this.Text = "DeleteTaskForm";
+            this.Text = "Delete Task";
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -141,7 +141,7 @@
         private System.Windows.Forms.Label deleteTaskLabel;
         private System.Windows.Forms.ComboBox chooseWeekDropDown;
         private System.Windows.Forms.ListBox taskListBox;
-        private System.Windows.Forms.Label startSelectionLabel;
+        private System.Windows.Forms.Label taskSelectionLabel;
         private System.Windows.Forms.Button deleteTaskButton;
     }
 }
