@@ -44,7 +44,7 @@
             this.deleteTaskButton = new System.Windows.Forms.Button();
             this.updateTaskButton = new System.Windows.Forms.Button();
             this.viewTasksButton = new System.Windows.Forms.Button();
-            this.addTaskButton = new System.Windows.Forms.Button();
+            this.createTaskButton = new System.Windows.Forms.Button();
             this.yearCompletedLabel = new System.Windows.Forms.Label();
             this.yearPartiallyCompletedLabel = new System.Windows.Forms.Label();
             this.yearFailedLabel = new System.Windows.Forms.Label();
@@ -318,15 +318,15 @@
             this.viewTasksButton.Text = "View tasks";
             this.viewTasksButton.UseVisualStyleBackColor = true;
             // 
-            // addTaskButton
+            // createTaskButton
             // 
-            this.addTaskButton.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.addTaskButton.Location = new System.Drawing.Point(624, 35);
-            this.addTaskButton.Name = "addTaskButton";
-            this.addTaskButton.Size = new System.Drawing.Size(120, 37);
-            this.addTaskButton.TabIndex = 45;
-            this.addTaskButton.Text = "Add task";
-            this.addTaskButton.UseVisualStyleBackColor = true;
+            this.createTaskButton.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.createTaskButton.Location = new System.Drawing.Point(624, 35);
+            this.createTaskButton.Name = "createTaskButton";
+            this.createTaskButton.Size = new System.Drawing.Size(120, 37);
+            this.createTaskButton.TabIndex = 45;
+            this.createTaskButton.Text = "Create task";
+            this.createTaskButton.UseVisualStyleBackColor = true;
             // 
             // yearCompletedLabel
             // 
@@ -1211,7 +1211,7 @@
             this.Controls.Add(this.deleteTaskButton);
             this.Controls.Add(this.updateTaskButton);
             this.Controls.Add(this.viewTasksButton);
-            this.Controls.Add(this.addTaskButton);
+            this.Controls.Add(this.createTaskButton);
             this.Controls.Add(this.weekDaysTable);
             this.Controls.Add(this.monthDropDown);
             this.Controls.Add(this.monthLabel);
@@ -1246,7 +1246,7 @@
         private System.Windows.Forms.Button deleteTaskButton;
         private System.Windows.Forms.Button updateTaskButton;
         private System.Windows.Forms.Button viewTasksButton;
-        private System.Windows.Forms.Button addTaskButton;
+        private System.Windows.Forms.Button createTaskButton;
         private System.Windows.Forms.Label weekOneInProcessLabel;
         private System.Windows.Forms.Label weekSixInProcessLabel;
         private System.Windows.Forms.Label weekFiveInProcessLabel;

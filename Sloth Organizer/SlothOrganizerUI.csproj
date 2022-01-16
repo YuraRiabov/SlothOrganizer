@@ -46,6 +46,18 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CreateTaskForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CreateTaskForm.Designer.cs">
+      <DependentUpon>CreateTaskForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="DeleteTaskForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="DeleteTaskForm.Designer.cs">
+      <DependentUpon>DeleteTaskForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="SlothOrganizerForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -54,6 +66,12 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="CreateTaskForm.resx">
+      <DependentUpon>CreateTaskForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DeleteTaskForm.resx">
+      <DependentUpon>DeleteTaskForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="SlothOrganizerForm.resx">
       <DependentUpon>SlothOrganizerForm.cs</DependentUpon>
     </EmbeddedResource>

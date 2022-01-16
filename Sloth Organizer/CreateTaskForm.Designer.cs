@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(CreateTaskForm));
-            this.addTaskLabel = new System.Windows.Forms.Label();
+            this.createTaskLabel = new System.Windows.Forms.Label();
             this.startSelectionLabel = new System.Windows.Forms.Label();
             this.startingYearDropDown = new System.Windows.Forms.ComboBox();
             this.startingDayDropDown = new System.Windows.Forms.ComboBox();
@@ -45,16 +45,16 @@
             this.createTaskButton = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
-            // addTaskLabel
+            // createTaskLabel
             // 
-            this.addTaskLabel.AutoSize = true;
-            this.addTaskLabel.Font = new System.Drawing.Font("Segoe UI", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.addTaskLabel.Location = new System.Drawing.Point(128, 7);
-            this.addTaskLabel.Name = "addTaskLabel";
-            this.addTaskLabel.Size = new System.Drawing.Size(148, 37);
-            this.addTaskLabel.TabIndex = 0;
-            this.addTaskLabel.Text = "Create task";
-            this.addTaskLabel.Click += new System.EventHandler(this.label1_Click);
+            this.createTaskLabel.AutoSize = true;
+            this.createTaskLabel.Font = new System.Drawing.Font("Segoe UI", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.createTaskLabel.Location = new System.Drawing.Point(128, 7);
+            this.createTaskLabel.Name = "createTaskLabel";
+            this.createTaskLabel.Size = new System.Drawing.Size(148, 37);
+            this.createTaskLabel.TabIndex = 0;
+            this.createTaskLabel.Text = "Create task";
+            this.createTaskLabel.Click += new System.EventHandler(this.label1_Click);
             // 
             // startSelectionLabel
             // 
@@ -144,7 +144,7 @@
             // deleteSubtaskButton
             // 
             this.deleteSubtaskButton.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.deleteSubtaskButton.Location = new System.Drawing.Point(167, 366);
+            this.deleteSubtaskButton.Location = new System.Drawing.Point(242, 366);
             this.deleteSubtaskButton.Name = "deleteSubtaskButton";
             this.deleteSubtaskButton.Size = new System.Drawing.Size(150, 37);
             this.deleteSubtaskButton.TabIndex = 52;
@@ -190,7 +190,7 @@
             this.Controls.Add(this.startingDayDropDown);
             this.Controls.Add(this.startingYearDropDown);
             this.Controls.Add(this.startSelectionLabel);
-            this.Controls.Add(this.addTaskLabel);
+            this.Controls.Add(this.createTaskLabel);
             this.Font = new System.Drawing.Font("Segoe UI", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Margin = new System.Windows.Forms.Padding(6, 7, 6, 7);
@@ -203,7 +203,7 @@
 
         #endregion
 
-        private System.Windows.Forms.Label addTaskLabel;
+        private System.Windows.Forms.Label createTaskLabel;
         private System.Windows.Forms.Label startSelectionLabel;
         private System.Windows.Forms.ComboBox startingYearDropDown;
         private System.Windows.Forms.ComboBox startingDayDropDown;
