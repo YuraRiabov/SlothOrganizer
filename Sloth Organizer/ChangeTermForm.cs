@@ -16,5 +16,10 @@ namespace Sloth_Organizer
         {
             InitializeComponent();
         }
+
+        private void ChangeTermForm_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 }

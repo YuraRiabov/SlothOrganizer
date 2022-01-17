@@ -26,5 +26,10 @@ namespace Sloth_Organizer
         {
 
         }
+
+        private void dateTimePicker1_ValueChanged(object sender, EventArgs e)
+        {
+
+        }
     }
 }

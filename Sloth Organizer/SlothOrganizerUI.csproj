@@ -46,6 +46,24 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ChangeStatusForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ChangeStatusForm.Designer.cs">
+      <DependentUpon>ChangeStatusForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ChangeTermForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ChangeTermForm.Designer.cs">
+      <DependentUpon>ChangeTermForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ConfirmDeletionForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ConfirmDeletionForm.Designer.cs">
+      <DependentUpon>ConfirmDeletionForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="CreateTaskForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -66,6 +84,27 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="UpdateTaskForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UpdateTaskForm.Designer.cs">
+      <DependentUpon>UpdateTaskForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ViewTasksForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ViewTasksForm.Designer.cs">
+      <DependentUpon>ViewTasksForm.cs</DependentUpon>
+    </Compile>
+    <EmbeddedResource Include="ChangeStatusForm.resx">
+      <DependentUpon>ChangeStatusForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ChangeTermForm.resx">
+      <DependentUpon>ChangeTermForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ConfirmDeletionForm.resx">
+      <DependentUpon>ConfirmDeletionForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="CreateTaskForm.resx">
       <DependentUpon>CreateTaskForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -85,6 +124,12 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
+    <EmbeddedResource Include="UpdateTaskForm.resx">
+      <DependentUpon>UpdateTaskForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ViewTasksForm.resx">
+      <DependentUpon>ViewTasksForm.cs</DependentUpon>
+    </EmbeddedResource>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -94,6 +139,9 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <None Include="SlothOrganizerDB.db">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

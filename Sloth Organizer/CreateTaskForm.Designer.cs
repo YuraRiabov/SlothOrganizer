@@ -31,18 +31,14 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(CreateTaskForm));
             this.createTaskLabel = new System.Windows.Forms.Label();
             this.startSelectionLabel = new System.Windows.Forms.Label();
-            this.startingYearDropDown = new System.Windows.Forms.ComboBox();
-            this.startingDayDropDown = new System.Windows.Forms.ComboBox();
-            this.startingMonthDropDown = new System.Windows.Forms.ComboBox();
-            this.endingMonthDropDown = new System.Windows.Forms.ComboBox();
-            this.endingDayDropDown = new System.Windows.Forms.ComboBox();
-            this.endingYearDropDown = new System.Windows.Forms.ComboBox();
             this.endSelectionLabel = new System.Windows.Forms.Label();
             this.subtaskListBox = new System.Windows.Forms.ListBox();
             this.subtaskListLabel = new System.Windows.Forms.Label();
             this.deleteSubtaskButton = new System.Windows.Forms.Button();
             this.createSubtaskButton = new System.Windows.Forms.Button();
             this.createTaskButton = new System.Windows.Forms.Button();
+            this.startPicker = new System.Windows.Forms.DateTimePicker();
+            this.endPicker = new System.Windows.Forms.DateTimePicker();
             this.SuspendLayout();
             // 
             // createTaskLabel
@@ -65,54 +61,6 @@
             this.startSelectionLabel.TabIndex = 1;
             this.startSelectionLabel.Text = "Choose starting date:";
             this.startSelectionLabel.Click += new System.EventHandler(this.label1_Click_1);
-            // 
-            // startingYearDropDown
-            // 
-            this.startingYearDropDown.FormattingEnabled = true;
-            this.startingYearDropDown.Location = new System.Drawing.Point(17, 77);
-            this.startingYearDropDown.Name = "startingYearDropDown";
-            this.startingYearDropDown.Size = new System.Drawing.Size(121, 38);
-            this.startingYearDropDown.TabIndex = 2;
-            // 
-            // startingDayDropDown
-            // 
-            this.startingDayDropDown.FormattingEnabled = true;
-            this.startingDayDropDown.Location = new System.Drawing.Point(271, 77);
-            this.startingDayDropDown.Name = "startingDayDropDown";
-            this.startingDayDropDown.Size = new System.Drawing.Size(121, 38);
-            this.startingDayDropDown.TabIndex = 3;
-            // 
-            // startingMonthDropDown
-            // 
-            this.startingMonthDropDown.FormattingEnabled = true;
-            this.startingMonthDropDown.Location = new System.Drawing.Point(144, 77);
-            this.startingMonthDropDown.Name = "startingMonthDropDown";
-            this.startingMonthDropDown.Size = new System.Drawing.Size(121, 38);
-            this.startingMonthDropDown.TabIndex = 5;
-            // 
-            // endingMonthDropDown
-            // 
-            this.endingMonthDropDown.FormattingEnabled = true;
-            this.endingMonthDropDown.Location = new System.Drawing.Point(144, 151);
-            this.endingMonthDropDown.Name = "endingMonthDropDown";
-            this.endingMonthDropDown.Size = new System.Drawing.Size(121, 38);
-            this.endingMonthDropDown.TabIndex = 9;
-            // 
-            // endingDayDropDown
-            // 
-            this.endingDayDropDown.FormattingEnabled = true;
-            this.endingDayDropDown.Location = new System.Drawing.Point(271, 151);
-            this.endingDayDropDown.Name = "endingDayDropDown";
-            this.endingDayDropDown.Size = new System.Drawing.Size(121, 38);
-            this.endingDayDropDown.TabIndex = 8;
-            // 
-            // endingYearDropDown
-            // 
-            this.endingYearDropDown.FormattingEnabled = true;
-            this.endingYearDropDown.Location = new System.Drawing.Point(17, 151);
-            this.endingYearDropDown.Name = "endingYearDropDown";
-            this.endingYearDropDown.Size = new System.Drawing.Size(121, 38);
-            this.endingYearDropDown.TabIndex = 7;
             // 
             // endSelectionLabel
             // 
@@ -171,24 +119,35 @@
             this.createTaskButton.Text = "Create task";
             this.createTaskButton.UseVisualStyleBackColor = true;
             // 
+            // startPicker
+            // 
+            this.startPicker.Location = new System.Drawing.Point(17, 80);
+            this.startPicker.Name = "startPicker";
+            this.startPicker.Size = new System.Drawing.Size(375, 35);
+            this.startPicker.TabIndex = 54;
+            this.startPicker.ValueChanged += new System.EventHandler(this.dateTimePicker1_ValueChanged);
+            // 
+            // endPicker
+            // 
+            this.endPicker.Location = new System.Drawing.Point(18, 165);
+            this.endPicker.Name = "endPicker";
+            this.endPicker.Size = new System.Drawing.Size(374, 35);
+            this.endPicker.TabIndex = 55;
+            // 
             // CreateTaskForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 30F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
             this.ClientSize = new System.Drawing.Size(411, 520);
+            this.Controls.Add(this.endPicker);
+            this.Controls.Add(this.startPicker);
             this.Controls.Add(this.createTaskButton);
             this.Controls.Add(this.deleteSubtaskButton);
             this.Controls.Add(this.createSubtaskButton);
             this.Controls.Add(this.subtaskListLabel);
             this.Controls.Add(this.subtaskListBox);
-            this.Controls.Add(this.endingMonthDropDown);
-            this.Controls.Add(this.endingDayDropDown);
-            this.Controls.Add(this.endingYearDropDown);
             this.Controls.Add(this.endSelectionLabel);
-            this.Controls.Add(this.startingMonthDropDown);
-            this.Controls.Add(this.startingDayDropDown);
-            this.Controls.Add(this.startingYearDropDown);
             this.Controls.Add(this.startSelectionLabel);
             this.Controls.Add(this.createTaskLabel);
             this.Font = new System.Drawing.Font("Segoe UI", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -205,17 +164,13 @@
 
         private System.Windows.Forms.Label createTaskLabel;
         private System.Windows.Forms.Label startSelectionLabel;
-        private System.Windows.Forms.ComboBox startingYearDropDown;
-        private System.Windows.Forms.ComboBox startingDayDropDown;
-        private System.Windows.Forms.ComboBox startingMonthDropDown;
-        private System.Windows.Forms.ComboBox endingMonthDropDown;
-        private System.Windows.Forms.ComboBox endingDayDropDown;
-        private System.Windows.Forms.ComboBox endingYearDropDown;
         private System.Windows.Forms.Label endSelectionLabel;
         private System.Windows.Forms.Label subtaskListLabel;
         private System.Windows.Forms.Button deleteSubtaskButton;
         private System.Windows.Forms.Button createSubtaskButton;
         private System.Windows.Forms.ListBox subtaskListBox;
         private System.Windows.Forms.Button createTaskButton;
+        private System.Windows.Forms.DateTimePicker startPicker;
+        private System.Windows.Forms.DateTimePicker endPicker;
     }
 }

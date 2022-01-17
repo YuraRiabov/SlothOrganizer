@@ -29,41 +29,13 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ChangeTermForm));
-            this.startingMonthDropDown = new System.Windows.Forms.ComboBox();
-            this.startingDayDropDown = new System.Windows.Forms.ComboBox();
-            this.startingYearDropDown = new System.Windows.Forms.ComboBox();
             this.startSelectionLabel = new System.Windows.Forms.Label();
-            this.endingMonthDropDown = new System.Windows.Forms.ComboBox();
-            this.endingDayDropDown = new System.Windows.Forms.ComboBox();
-            this.endingYearDropDown = new System.Windows.Forms.ComboBox();
             this.endSelectionLabel = new System.Windows.Forms.Label();
             this.changeTermLabel = new System.Windows.Forms.Label();
             this.updateTaskButton = new System.Windows.Forms.Button();
+            this.startPicker = new System.Windows.Forms.DateTimePicker();
+            this.endPicker = new System.Windows.Forms.DateTimePicker();
             this.SuspendLayout();
-            // 
-            // startingMonthDropDown
-            // 
-            this.startingMonthDropDown.FormattingEnabled = true;
-            this.startingMonthDropDown.Location = new System.Drawing.Point(144, 79);
-            this.startingMonthDropDown.Name = "startingMonthDropDown";
-            this.startingMonthDropDown.Size = new System.Drawing.Size(121, 38);
-            this.startingMonthDropDown.TabIndex = 9;
-            // 
-            // startingDayDropDown
-            // 
-            this.startingDayDropDown.FormattingEnabled = true;
-            this.startingDayDropDown.Location = new System.Drawing.Point(271, 79);
-            this.startingDayDropDown.Name = "startingDayDropDown";
-            this.startingDayDropDown.Size = new System.Drawing.Size(121, 38);
-            this.startingDayDropDown.TabIndex = 8;
-            // 
-            // startingYearDropDown
-            // 
-            this.startingYearDropDown.FormattingEnabled = true;
-            this.startingYearDropDown.Location = new System.Drawing.Point(17, 79);
-            this.startingYearDropDown.Name = "startingYearDropDown";
-            this.startingYearDropDown.Size = new System.Drawing.Size(121, 38);
-            this.startingYearDropDown.TabIndex = 7;
             // 
             // startSelectionLabel
             // 
@@ -73,30 +45,6 @@
             this.startSelectionLabel.Size = new System.Drawing.Size(210, 30);
             this.startSelectionLabel.TabIndex = 6;
             this.startSelectionLabel.Text = "Choose starting date:";
-            // 
-            // endingMonthDropDown
-            // 
-            this.endingMonthDropDown.FormattingEnabled = true;
-            this.endingMonthDropDown.Location = new System.Drawing.Point(144, 153);
-            this.endingMonthDropDown.Name = "endingMonthDropDown";
-            this.endingMonthDropDown.Size = new System.Drawing.Size(121, 38);
-            this.endingMonthDropDown.TabIndex = 13;
-            // 
-            // endingDayDropDown
-            // 
-            this.endingDayDropDown.FormattingEnabled = true;
-            this.endingDayDropDown.Location = new System.Drawing.Point(271, 153);
-            this.endingDayDropDown.Name = "endingDayDropDown";
-            this.endingDayDropDown.Size = new System.Drawing.Size(121, 38);
-            this.endingDayDropDown.TabIndex = 12;
-            // 
-            // endingYearDropDown
-            // 
-            this.endingYearDropDown.FormattingEnabled = true;
-            this.endingYearDropDown.Location = new System.Drawing.Point(17, 153);
-            this.endingYearDropDown.Name = "endingYearDropDown";
-            this.endingYearDropDown.Size = new System.Drawing.Size(121, 38);
-            this.endingYearDropDown.TabIndex = 11;
             // 
             // endSelectionLabel
             // 
@@ -127,43 +75,49 @@
             this.updateTaskButton.Text = "Update task";
             this.updateTaskButton.UseVisualStyleBackColor = true;
             // 
+            // startPicker
+            // 
+            this.startPicker.Location = new System.Drawing.Point(17, 82);
+            this.startPicker.Name = "startPicker";
+            this.startPicker.Size = new System.Drawing.Size(375, 35);
+            this.startPicker.TabIndex = 55;
+            // 
+            // endPicker
+            // 
+            this.endPicker.Location = new System.Drawing.Point(17, 153);
+            this.endPicker.Name = "endPicker";
+            this.endPicker.Size = new System.Drawing.Size(374, 35);
+            this.endPicker.TabIndex = 56;
+            // 
             // ChangeTermForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 30F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
             this.ClientSize = new System.Drawing.Size(406, 292);
+            this.Controls.Add(this.endPicker);
+            this.Controls.Add(this.startPicker);
             this.Controls.Add(this.updateTaskButton);
             this.Controls.Add(this.changeTermLabel);
-            this.Controls.Add(this.endingMonthDropDown);
-            this.Controls.Add(this.endingDayDropDown);
-            this.Controls.Add(this.endingYearDropDown);
             this.Controls.Add(this.endSelectionLabel);
-            this.Controls.Add(this.startingMonthDropDown);
-            this.Controls.Add(this.startingDayDropDown);
-            this.Controls.Add(this.startingYearDropDown);
             this.Controls.Add(this.startSelectionLabel);
             this.Font = new System.Drawing.Font("Segoe UI", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Margin = new System.Windows.Forms.Padding(6, 7, 6, 7);
             this.Name = "ChangeTermForm";
             this.Text = "Change Term";
+            this.Load += new System.EventHandler(this.ChangeTermForm_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 
         }
 
         #endregion
-
-        private System.Windows.Forms.ComboBox startingMonthDropDown;
-        private System.Windows.Forms.ComboBox startingDayDropDown;
-        private System.Windows.Forms.ComboBox startingYearDropDown;
         private System.Windows.Forms.Label startSelectionLabel;
-        private System.Windows.Forms.ComboBox endingMonthDropDown;
-        private System.Windows.Forms.ComboBox endingDayDropDown;
-        private System.Windows.Forms.ComboBox endingYearDropDown;
         private System.Windows.Forms.Label endSelectionLabel;
         private System.Windows.Forms.Label changeTermLabel;
         private System.Windows.Forms.Button updateTaskButton;
+        private System.Windows.Forms.DateTimePicker startPicker;
+        private System.Windows.Forms.DateTimePicker endPicker;
     }
 }
