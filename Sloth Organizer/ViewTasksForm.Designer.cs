@@ -29,13 +29,9 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ViewTasksForm));
-            this.taskSelectionLabel = new System.Windows.Forms.Label();
+            this.taskStatusSelectionLabel = new System.Windows.Forms.Label();
             this.taskListBox = new System.Windows.Forms.ListBox();
-            this.chooseWeekDropDown = new System.Windows.Forms.ComboBox();
             this.viewTaskLabel = new System.Windows.Forms.Label();
-            this.chooseMonthDropDown = new System.Windows.Forms.ComboBox();
-            this.chooseDayDropDown = new System.Windows.Forms.ComboBox();
-            this.chooseYearDropDown = new System.Windows.Forms.ComboBox();
             this.startLabel = new System.Windows.Forms.Label();
             this.endLabel = new System.Windows.Forms.Label();
             this.startInfo = new System.Windows.Forms.Label();
@@ -44,33 +40,34 @@
             this.statusInfo = new System.Windows.Forms.Label();
             this.subtaskListLabel = new System.Windows.Forms.Label();
             this.subtaskListBox = new System.Windows.Forms.ListBox();
+            this.activeCheckBox = new System.Windows.Forms.CheckBox();
+            this.completedCheckBox = new System.Windows.Forms.CheckBox();
+            this.partiallyCompletedChackBox = new System.Windows.Forms.CheckBox();
+            this.failedCheckBox = new System.Windows.Forms.CheckBox();
+            this.endPicker = new System.Windows.Forms.DateTimePicker();
+            this.startPicker = new System.Windows.Forms.DateTimePicker();
+            this.endSelectionLabel = new System.Windows.Forms.Label();
+            this.allCheckBox = new System.Windows.Forms.CheckBox();
             this.SuspendLayout();
             // 
-            // taskSelectionLabel
+            // taskStatusSelectionLabel
             // 
-            this.taskSelectionLabel.AutoSize = true;
-            this.taskSelectionLabel.Location = new System.Drawing.Point(12, 46);
-            this.taskSelectionLabel.Name = "taskSelectionLabel";
-            this.taskSelectionLabel.Size = new System.Drawing.Size(291, 30);
-            this.taskSelectionLabel.TabIndex = 19;
-            this.taskSelectionLabel.Text = "Choose a task to view info on:";
+            this.taskStatusSelectionLabel.AutoSize = true;
+            this.taskStatusSelectionLabel.Location = new System.Drawing.Point(12, 46);
+            this.taskStatusSelectionLabel.Name = "taskStatusSelectionLabel";
+            this.taskStatusSelectionLabel.Size = new System.Drawing.Size(414, 30);
+            this.taskStatusSelectionLabel.TabIndex = 19;
+            this.taskStatusSelectionLabel.Text = "Choose statuses of tasks you want to view :";
             // 
             // taskListBox
             // 
             this.taskListBox.FormattingEnabled = true;
             this.taskListBox.ItemHeight = 30;
-            this.taskListBox.Location = new System.Drawing.Point(12, 123);
+            this.taskListBox.Location = new System.Drawing.Point(12, 271);
             this.taskListBox.Name = "taskListBox";
             this.taskListBox.Size = new System.Drawing.Size(502, 154);
             this.taskListBox.TabIndex = 18;
-            // 
-            // chooseWeekDropDown
-            // 
-            this.chooseWeekDropDown.FormattingEnabled = true;
-            this.chooseWeekDropDown.Location = new System.Drawing.Point(266, 79);
-            this.chooseWeekDropDown.Name = "chooseWeekDropDown";
-            this.chooseWeekDropDown.Size = new System.Drawing.Size(121, 38);
-            this.chooseWeekDropDown.TabIndex = 17;
+            this.taskListBox.SelectedIndexChanged += new System.EventHandler(this.taskListBox_SelectedIndexChanged);
             // 
             // viewTaskLabel
             // 
@@ -82,34 +79,10 @@
             this.viewTaskLabel.TabIndex = 16;
             this.viewTaskLabel.Text = "View task";
             // 
-            // chooseMonthDropDown
-            // 
-            this.chooseMonthDropDown.FormattingEnabled = true;
-            this.chooseMonthDropDown.Location = new System.Drawing.Point(139, 79);
-            this.chooseMonthDropDown.Name = "chooseMonthDropDown";
-            this.chooseMonthDropDown.Size = new System.Drawing.Size(121, 38);
-            this.chooseMonthDropDown.TabIndex = 15;
-            // 
-            // chooseDayDropDown
-            // 
-            this.chooseDayDropDown.FormattingEnabled = true;
-            this.chooseDayDropDown.Location = new System.Drawing.Point(393, 79);
-            this.chooseDayDropDown.Name = "chooseDayDropDown";
-            this.chooseDayDropDown.Size = new System.Drawing.Size(121, 38);
-            this.chooseDayDropDown.TabIndex = 14;
-            // 
-            // chooseYearDropDown
-            // 
-            this.chooseYearDropDown.FormattingEnabled = true;
-            this.chooseYearDropDown.Location = new System.Drawing.Point(12, 79);
-            this.chooseYearDropDown.Name = "chooseYearDropDown";
-            this.chooseYearDropDown.Size = new System.Drawing.Size(121, 38);
-            this.chooseYearDropDown.TabIndex = 13;
-            // 
             // startLabel
             // 
             this.startLabel.AutoSize = true;
-            this.startLabel.Location = new System.Drawing.Point(12, 294);
+            this.startLabel.Location = new System.Drawing.Point(12, 442);
             this.startLabel.Name = "startLabel";
             this.startLabel.Size = new System.Drawing.Size(107, 30);
             this.startLabel.TabIndex = 20;
@@ -118,7 +91,7 @@
             // endLabel
             // 
             this.endLabel.AutoSize = true;
-            this.endLabel.Location = new System.Drawing.Point(12, 324);
+            this.endLabel.Location = new System.Drawing.Point(12, 472);
             this.endLabel.Name = "endLabel";
             this.endLabel.Size = new System.Drawing.Size(100, 30);
             this.endLabel.TabIndex = 21;
@@ -126,26 +99,22 @@
             // 
             // startInfo
             // 
-            this.startInfo.AutoSize = true;
-            this.startInfo.Location = new System.Drawing.Point(125, 294);
+            this.startInfo.Location = new System.Drawing.Point(125, 442);
             this.startInfo.Name = "startInfo";
-            this.startInfo.Size = new System.Drawing.Size(82, 30);
+            this.startInfo.Size = new System.Drawing.Size(113, 30);
             this.startInfo.TabIndex = 22;
-            this.startInfo.Text = "<date>";
             // 
             // endInfo
             // 
-            this.endInfo.AutoSize = true;
-            this.endInfo.Location = new System.Drawing.Point(125, 324);
+            this.endInfo.Location = new System.Drawing.Point(125, 472);
             this.endInfo.Name = "endInfo";
-            this.endInfo.Size = new System.Drawing.Size(82, 30);
+            this.endInfo.Size = new System.Drawing.Size(113, 30);
             this.endInfo.TabIndex = 23;
-            this.endInfo.Text = "<date>";
             // 
             // statusLabel
             // 
             this.statusLabel.AutoSize = true;
-            this.statusLabel.Location = new System.Drawing.Point(12, 354);
+            this.statusLabel.Location = new System.Drawing.Point(12, 502);
             this.statusLabel.Name = "statusLabel";
             this.statusLabel.Size = new System.Drawing.Size(80, 30);
             this.statusLabel.TabIndex = 24;
@@ -154,16 +123,15 @@
             // statusInfo
             // 
             this.statusInfo.AutoSize = true;
-            this.statusInfo.Location = new System.Drawing.Point(125, 354);
+            this.statusInfo.Location = new System.Drawing.Point(125, 502);
             this.statusInfo.Name = "statusInfo";
-            this.statusInfo.Size = new System.Drawing.Size(209, 30);
+            this.statusInfo.Size = new System.Drawing.Size(0, 30);
             this.statusInfo.TabIndex = 25;
-            this.statusInfo.Text = "<Completion status>";
             // 
             // subtaskListLabel
             // 
             this.subtaskListLabel.AutoSize = true;
-            this.subtaskListLabel.Location = new System.Drawing.Point(11, 384);
+            this.subtaskListLabel.Location = new System.Drawing.Point(11, 532);
             this.subtaskListLabel.Name = "subtaskListLabel";
             this.subtaskListLabel.Size = new System.Drawing.Size(122, 30);
             this.subtaskListLabel.TabIndex = 27;
@@ -173,19 +141,108 @@
             // 
             this.subtaskListBox.FormattingEnabled = true;
             this.subtaskListBox.ItemHeight = 30;
-            this.subtaskListBox.Location = new System.Drawing.Point(12, 417);
+            this.subtaskListBox.Location = new System.Drawing.Point(12, 565);
             this.subtaskListBox.Name = "subtaskListBox";
-            this.subtaskListBox.SelectionMode = System.Windows.Forms.SelectionMode.None;
             this.subtaskListBox.Size = new System.Drawing.Size(502, 124);
             this.subtaskListBox.TabIndex = 26;
-            this.subtaskListBox.SelectedIndexChanged += new System.EventHandler(this.subtaskListBox_SelectedIndexChanged);
+            // 
+            // activeCheckBox
+            // 
+            this.activeCheckBox.AutoSize = true;
+            this.activeCheckBox.Location = new System.Drawing.Point(74, 79);
+            this.activeCheckBox.Name = "activeCheckBox";
+            this.activeCheckBox.Size = new System.Drawing.Size(89, 34);
+            this.activeCheckBox.TabIndex = 28;
+            this.activeCheckBox.Text = "Active";
+            this.activeCheckBox.UseVisualStyleBackColor = true;
+            this.activeCheckBox.CheckedChanged += new System.EventHandler(this.activeCheckBox_CheckedChanged);
+            // 
+            // completedCheckBox
+            // 
+            this.completedCheckBox.AutoSize = true;
+            this.completedCheckBox.Location = new System.Drawing.Point(169, 79);
+            this.completedCheckBox.Name = "completedCheckBox";
+            this.completedCheckBox.Size = new System.Drawing.Size(133, 34);
+            this.completedCheckBox.TabIndex = 29;
+            this.completedCheckBox.Text = "Completed";
+            this.completedCheckBox.UseVisualStyleBackColor = true;
+            this.completedCheckBox.CheckedChanged += new System.EventHandler(this.completedCheckBox_CheckedChanged);
+            // 
+            // partiallyCompletedChackBox
+            // 
+            this.partiallyCompletedChackBox.AutoSize = true;
+            this.partiallyCompletedChackBox.Location = new System.Drawing.Point(12, 119);
+            this.partiallyCompletedChackBox.Name = "partiallyCompletedChackBox";
+            this.partiallyCompletedChackBox.Size = new System.Drawing.Size(208, 34);
+            this.partiallyCompletedChackBox.TabIndex = 30;
+            this.partiallyCompletedChackBox.Text = "Partially completed";
+            this.partiallyCompletedChackBox.UseVisualStyleBackColor = true;
+            this.partiallyCompletedChackBox.CheckedChanged += new System.EventHandler(this.partiallyCompletedChackBox_CheckedChanged);
+            // 
+            // failedCheckBox
+            // 
+            this.failedCheckBox.AutoSize = true;
+            this.failedCheckBox.Location = new System.Drawing.Point(226, 119);
+            this.failedCheckBox.Name = "failedCheckBox";
+            this.failedCheckBox.Size = new System.Drawing.Size(85, 34);
+            this.failedCheckBox.TabIndex = 31;
+            this.failedCheckBox.Text = "Failed";
+            this.failedCheckBox.UseVisualStyleBackColor = true;
+            this.failedCheckBox.CheckedChanged += new System.EventHandler(this.failedCheckBox_CheckedChanged);
+            // 
+            // endPicker
+            // 
+            this.endPicker.Location = new System.Drawing.Point(12, 230);
+            this.endPicker.Name = "endPicker";
+            this.endPicker.Size = new System.Drawing.Size(375, 35);
+            this.endPicker.TabIndex = 58;
+            this.endPicker.ValueChanged += new System.EventHandler(this.endPicker_ValueChanged);
+            // 
+            // startPicker
+            // 
+            this.startPicker.Location = new System.Drawing.Point(12, 189);
+            this.startPicker.Name = "startPicker";
+            this.startPicker.Size = new System.Drawing.Size(375, 35);
+            this.startPicker.TabIndex = 57;
+            this.startPicker.Value = new System.DateTime(2022, 1, 18, 0, 0, 0, 0);
+            this.startPicker.ValueChanged += new System.EventHandler(this.startPicker_ValueChanged);
+            // 
+            // endSelectionLabel
+            // 
+            this.endSelectionLabel.AutoSize = true;
+            this.endSelectionLabel.Location = new System.Drawing.Point(12, 156);
+            this.endSelectionLabel.Name = "endSelectionLabel";
+            this.endSelectionLabel.Size = new System.Drawing.Size(330, 30);
+            this.endSelectionLabel.TabIndex = 56;
+            this.endSelectionLabel.Text = "Choose starting and ending dates:";
+            // 
+            // allCheckBox
+            // 
+            this.allCheckBox.AutoSize = true;
+            this.allCheckBox.Checked = true;
+            this.allCheckBox.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.allCheckBox.Location = new System.Drawing.Point(12, 79);
+            this.allCheckBox.Name = "allCheckBox";
+            this.allCheckBox.Size = new System.Drawing.Size(56, 34);
+            this.allCheckBox.TabIndex = 59;
+            this.allCheckBox.Text = "All";
+            this.allCheckBox.UseVisualStyleBackColor = true;
+            this.allCheckBox.CheckedChanged += new System.EventHandler(this.allCheckBox_CheckedChanged);
             // 
             // ViewTasksForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 30F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
-            this.ClientSize = new System.Drawing.Size(523, 554);
+            this.ClientSize = new System.Drawing.Size(523, 703);
+            this.Controls.Add(this.allCheckBox);
+            this.Controls.Add(this.endPicker);
+            this.Controls.Add(this.startPicker);
+            this.Controls.Add(this.endSelectionLabel);
+            this.Controls.Add(this.failedCheckBox);
+            this.Controls.Add(this.partiallyCompletedChackBox);
+            this.Controls.Add(this.completedCheckBox);
+            this.Controls.Add(this.activeCheckBox);
             this.Controls.Add(this.subtaskListLabel);
             this.Controls.Add(this.subtaskListBox);
             this.Controls.Add(this.statusInfo);
@@ -194,13 +251,9 @@
             this.Controls.Add(this.startInfo);
             this.Controls.Add(this.endLabel);
             this.Controls.Add(this.startLabel);
-            this.Controls.Add(this.taskSelectionLabel);
+            this.Controls.Add(this.taskStatusSelectionLabel);
             this.Controls.Add(this.taskListBox);
-            this.Controls.Add(this.chooseWeekDropDown);
             this.Controls.Add(this.viewTaskLabel);
-            this.Controls.Add(this.chooseMonthDropDown);
-            this.Controls.Add(this.chooseDayDropDown);
-            this.Controls.Add(this.chooseYearDropDown);
             this.Font = new System.Drawing.Font("Segoe UI", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Margin = new System.Windows.Forms.Padding(6, 7, 6, 7);
@@ -213,13 +266,9 @@
 
         #endregion
 
-        private System.Windows.Forms.Label taskSelectionLabel;
+        private System.Windows.Forms.Label taskStatusSelectionLabel;
         private System.Windows.Forms.ListBox taskListBox;
-        private System.Windows.Forms.ComboBox chooseWeekDropDown;
         private System.Windows.Forms.Label viewTaskLabel;
-        private System.Windows.Forms.ComboBox chooseMonthDropDown;
-        private System.Windows.Forms.ComboBox chooseDayDropDown;
-        private System.Windows.Forms.ComboBox chooseYearDropDown;
         private System.Windows.Forms.Label startLabel;
         private System.Windows.Forms.Label endLabel;
         private System.Windows.Forms.Label startInfo;
@@ -228,5 +277,13 @@
         private System.Windows.Forms.Label statusInfo;
         private System.Windows.Forms.Label subtaskListLabel;
         private System.Windows.Forms.ListBox subtaskListBox;
+        private System.Windows.Forms.CheckBox activeCheckBox;
+        private System.Windows.Forms.CheckBox completedCheckBox;
+        private System.Windows.Forms.CheckBox partiallyCompletedChackBox;
+        private System.Windows.Forms.CheckBox failedCheckBox;
+        private System.Windows.Forms.DateTimePicker endPicker;
+        private System.Windows.Forms.DateTimePicker startPicker;
+        private System.Windows.Forms.Label endSelectionLabel;
+        private System.Windows.Forms.CheckBox allCheckBox;
     }
 }

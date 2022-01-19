@@ -33,61 +33,10 @@
             this.yearDropDown = new System.Windows.Forms.ComboBox();
             this.monthLabel = new System.Windows.Forms.Label();
             this.monthDropDown = new System.Windows.Forms.ComboBox();
-            this.weekDaysTable = new System.Windows.Forms.TableLayoutPanel();
-            this.mondayLabel = new System.Windows.Forms.Label();
-            this.saturdayLabel = new System.Windows.Forms.Label();
-            this.fridayLabel = new System.Windows.Forms.Label();
-            this.thursdayLabel = new System.Windows.Forms.Label();
-            this.wednesdayLabel = new System.Windows.Forms.Label();
-            this.tuesdayLabel = new System.Windows.Forms.Label();
-            this.sundayLabel = new System.Windows.Forms.Label();
             this.deleteTaskButton = new System.Windows.Forms.Button();
             this.updateTaskButton = new System.Windows.Forms.Button();
             this.viewTaskButton = new System.Windows.Forms.Button();
             this.createTaskButton = new System.Windows.Forms.Button();
-            this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
-            this.week6Day7Label = new System.Windows.Forms.Label();
-            this.week6Day6Label = new System.Windows.Forms.Label();
-            this.week6Day5Label = new System.Windows.Forms.Label();
-            this.week6Day4Label = new System.Windows.Forms.Label();
-            this.week6Day3Label = new System.Windows.Forms.Label();
-            this.week6Day2Label = new System.Windows.Forms.Label();
-            this.week6Day1Label = new System.Windows.Forms.Label();
-            this.week5Day7Label = new System.Windows.Forms.Label();
-            this.week5Day6Label = new System.Windows.Forms.Label();
-            this.week5Day5Label = new System.Windows.Forms.Label();
-            this.week5Day4Label = new System.Windows.Forms.Label();
-            this.week5Day3Label = new System.Windows.Forms.Label();
-            this.week5Day2Label = new System.Windows.Forms.Label();
-            this.week5Day1Label = new System.Windows.Forms.Label();
-            this.week4Day7Label = new System.Windows.Forms.Label();
-            this.week4Day6Label = new System.Windows.Forms.Label();
-            this.week4Day5Label = new System.Windows.Forms.Label();
-            this.week4Day4Label = new System.Windows.Forms.Label();
-            this.week4Day3Label = new System.Windows.Forms.Label();
-            this.week4Day2Label = new System.Windows.Forms.Label();
-            this.week4Day1Label = new System.Windows.Forms.Label();
-            this.week3Day7Label = new System.Windows.Forms.Label();
-            this.week3Day6Label = new System.Windows.Forms.Label();
-            this.week3Day5Label = new System.Windows.Forms.Label();
-            this.week3Day4Label = new System.Windows.Forms.Label();
-            this.week3Day3Label = new System.Windows.Forms.Label();
-            this.week3Day2Label = new System.Windows.Forms.Label();
-            this.week3Day1Label = new System.Windows.Forms.Label();
-            this.week2Day7Label = new System.Windows.Forms.Label();
-            this.week2Day6Label = new System.Windows.Forms.Label();
-            this.week2Day5Label = new System.Windows.Forms.Label();
-            this.week2Day4Label = new System.Windows.Forms.Label();
-            this.week2Day3Label = new System.Windows.Forms.Label();
-            this.week2Day2Label = new System.Windows.Forms.Label();
-            this.week2Day1Label = new System.Windows.Forms.Label();
-            this.week1Day7Label = new System.Windows.Forms.Label();
-            this.week1Day6Label = new System.Windows.Forms.Label();
-            this.week1Day5Label = new System.Windows.Forms.Label();
-            this.week1Day4Label = new System.Windows.Forms.Label();
-            this.week1Day3Label = new System.Windows.Forms.Label();
-            this.week1Day2Label = new System.Windows.Forms.Label();
-            this.week1Day1Label = new System.Windows.Forms.Label();
             this.monthActiveLabel = new System.Windows.Forms.Label();
             this.monthCompletedLabel = new System.Windows.Forms.Label();
             this.monthPartiallyCompletedLabel = new System.Windows.Forms.Label();
@@ -120,8 +69,60 @@
             this.weekFiveActiveLabel = new System.Windows.Forms.Label();
             this.weekSixActiveLabel = new System.Windows.Forms.Label();
             this.weekOneActiveLabel = new System.Windows.Forms.Label();
-            this.weekDaysTable.SuspendLayout();
+            this.week1Day1Label = new System.Windows.Forms.Label();
+            this.week1Day2Label = new System.Windows.Forms.Label();
+            this.week1Day3Label = new System.Windows.Forms.Label();
+            this.week1Day4Label = new System.Windows.Forms.Label();
+            this.week1Day5Label = new System.Windows.Forms.Label();
+            this.week1Day6Label = new System.Windows.Forms.Label();
+            this.week1Day7Label = new System.Windows.Forms.Label();
+            this.week2Day1Label = new System.Windows.Forms.Label();
+            this.week2Day2Label = new System.Windows.Forms.Label();
+            this.week2Day3Label = new System.Windows.Forms.Label();
+            this.week2Day4Label = new System.Windows.Forms.Label();
+            this.week2Day5Label = new System.Windows.Forms.Label();
+            this.week2Day6Label = new System.Windows.Forms.Label();
+            this.week2Day7Label = new System.Windows.Forms.Label();
+            this.week3Day1Label = new System.Windows.Forms.Label();
+            this.week3Day2Label = new System.Windows.Forms.Label();
+            this.week3Day3Label = new System.Windows.Forms.Label();
+            this.week3Day4Label = new System.Windows.Forms.Label();
+            this.week3Day5Label = new System.Windows.Forms.Label();
+            this.week3Day6Label = new System.Windows.Forms.Label();
+            this.week3Day7Label = new System.Windows.Forms.Label();
+            this.week4Day1Label = new System.Windows.Forms.Label();
+            this.week4Day2Label = new System.Windows.Forms.Label();
+            this.week4Day3Label = new System.Windows.Forms.Label();
+            this.week4Day4Label = new System.Windows.Forms.Label();
+            this.week4Day5Label = new System.Windows.Forms.Label();
+            this.week4Day6Label = new System.Windows.Forms.Label();
+            this.week4Day7Label = new System.Windows.Forms.Label();
+            this.week5Day1Label = new System.Windows.Forms.Label();
+            this.week5Day2Label = new System.Windows.Forms.Label();
+            this.week5Day3Label = new System.Windows.Forms.Label();
+            this.week5Day4Label = new System.Windows.Forms.Label();
+            this.week5Day5Label = new System.Windows.Forms.Label();
+            this.week5Day6Label = new System.Windows.Forms.Label();
+            this.week5Day7Label = new System.Windows.Forms.Label();
+            this.week6Day1Label = new System.Windows.Forms.Label();
+            this.week6Day2Label = new System.Windows.Forms.Label();
+            this.week6Day3Label = new System.Windows.Forms.Label();
+            this.week6Day4Label = new System.Windows.Forms.Label();
+            this.week6Day5Label = new System.Windows.Forms.Label();
+            this.week6Day6Label = new System.Windows.Forms.Label();
+            this.week6Day7Label = new System.Windows.Forms.Label();
+            this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
+            this.sundayLabel = new System.Windows.Forms.Label();
+            this.tuesdayLabel = new System.Windows.Forms.Label();
+            this.wednesdayLabel = new System.Windows.Forms.Label();
+            this.thursdayLabel = new System.Windows.Forms.Label();
+            this.fridayLabel = new System.Windows.Forms.Label();
+            this.saturdayLabel = new System.Windows.Forms.Label();
+            this.mondayLabel = new System.Windows.Forms.Label();
+            this.weekDaysTable = new System.Windows.Forms.TableLayoutPanel();
+            this.refreshButton = new System.Windows.Forms.Button();
             this.tableLayoutPanel1.SuspendLayout();
+            this.weekDaysTable.SuspendLayout();
             this.SuspendLayout();
             // 
             // yearLabel
@@ -134,7 +135,6 @@
             this.yearLabel.Size = new System.Drawing.Size(70, 40);
             this.yearLabel.TabIndex = 1;
             this.yearLabel.Text = "Year";
-            this.yearLabel.Click += new System.EventHandler(this.label1_Click);
             // 
             // yearDropDown
             // 
@@ -145,7 +145,6 @@
             this.yearDropDown.Name = "yearDropDown";
             this.yearDropDown.Size = new System.Drawing.Size(115, 48);
             this.yearDropDown.TabIndex = 2;
-            this.yearDropDown.SelectedIndexChanged += new System.EventHandler(this.comboBox1_SelectedIndexChanged);
             // 
             // monthLabel
             // 
@@ -157,7 +156,6 @@
             this.monthLabel.Size = new System.Drawing.Size(102, 40);
             this.monthLabel.TabIndex = 3;
             this.monthLabel.Text = "Month";
-            this.monthLabel.Click += new System.EventHandler(this.label2_Click);
             // 
             // monthDropDown
             // 
@@ -169,129 +167,11 @@
             this.monthDropDown.Name = "monthDropDown";
             this.monthDropDown.Size = new System.Drawing.Size(190, 48);
             this.monthDropDown.TabIndex = 4;
-            this.monthDropDown.SelectedIndexChanged += new System.EventHandler(this.monthDropDown_SelectedIndexChanged);
-            // 
-            // weekDaysTable
-            // 
-            this.weekDaysTable.BackColor = System.Drawing.Color.WhiteSmoke;
-            this.weekDaysTable.ColumnCount = 7;
-            this.weekDaysTable.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 14.28571F));
-            this.weekDaysTable.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 14.28571F));
-            this.weekDaysTable.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 14.28571F));
-            this.weekDaysTable.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 14.28571F));
-            this.weekDaysTable.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 14.28571F));
-            this.weekDaysTable.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 14.28571F));
-            this.weekDaysTable.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 14.28571F));
-            this.weekDaysTable.Controls.Add(this.mondayLabel, 0, 0);
-            this.weekDaysTable.Controls.Add(this.saturdayLabel, 5, 0);
-            this.weekDaysTable.Controls.Add(this.fridayLabel, 4, 0);
-            this.weekDaysTable.Controls.Add(this.thursdayLabel, 3, 0);
-            this.weekDaysTable.Controls.Add(this.wednesdayLabel, 2, 0);
-            this.weekDaysTable.Controls.Add(this.tuesdayLabel, 1, 0);
-            this.weekDaysTable.Controls.Add(this.sundayLabel, 6, 0);
-            this.weekDaysTable.Location = new System.Drawing.Point(23, 156);
-            this.weekDaysTable.Name = "weekDaysTable";
-            this.weekDaysTable.RowCount = 1;
-            this.weekDaysTable.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.weekDaysTable.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 41F));
-            this.weekDaysTable.Size = new System.Drawing.Size(686, 41);
-            this.weekDaysTable.TabIndex = 5;
-            // 
-            // mondayLabel
-            // 
-            this.mondayLabel.AccessibleName = "mondayLabel";
-            this.mondayLabel.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.mondayLabel.AutoSize = true;
-            this.mondayLabel.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.mondayLabel.Location = new System.Drawing.Point(17, 10);
-            this.mondayLabel.Name = "mondayLabel";
-            this.mondayLabel.Size = new System.Drawing.Size(63, 20);
-            this.mondayLabel.TabIndex = 5;
-            this.mondayLabel.Text = "Monday";
-            this.mondayLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // saturdayLabel
-            // 
-            this.saturdayLabel.AccessibleName = "mondayLabel";
-            this.saturdayLabel.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.saturdayLabel.AutoSize = true;
-            this.saturdayLabel.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.saturdayLabel.Location = new System.Drawing.Point(500, 10);
-            this.saturdayLabel.Name = "saturdayLabel";
-            this.saturdayLabel.Size = new System.Drawing.Size(67, 20);
-            this.saturdayLabel.TabIndex = 9;
-            this.saturdayLabel.Text = "Saturday";
-            this.saturdayLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // fridayLabel
-            // 
-            this.fridayLabel.AccessibleName = "mondayLabel";
-            this.fridayLabel.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.fridayLabel.AutoSize = true;
-            this.fridayLabel.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.fridayLabel.Location = new System.Drawing.Point(412, 10);
-            this.fridayLabel.Name = "fridayLabel";
-            this.fridayLabel.Size = new System.Drawing.Size(49, 20);
-            this.fridayLabel.TabIndex = 10;
-            this.fridayLabel.Text = "Friday";
-            this.fridayLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // thursdayLabel
-            // 
-            this.thursdayLabel.AccessibleName = "mondayLabel";
-            this.thursdayLabel.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.thursdayLabel.AutoSize = true;
-            this.thursdayLabel.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.thursdayLabel.Location = new System.Drawing.Point(305, 10);
-            this.thursdayLabel.Name = "thursdayLabel";
-            this.thursdayLabel.Size = new System.Drawing.Size(68, 20);
-            this.thursdayLabel.TabIndex = 11;
-            this.thursdayLabel.Text = "Thursday";
-            this.thursdayLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // wednesdayLabel
-            // 
-            this.wednesdayLabel.AccessibleName = "mondayLabel";
-            this.wednesdayLabel.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.wednesdayLabel.AutoSize = true;
-            this.wednesdayLabel.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.wednesdayLabel.Location = new System.Drawing.Point(200, 10);
-            this.wednesdayLabel.Name = "wednesdayLabel";
-            this.wednesdayLabel.Size = new System.Drawing.Size(85, 20);
-            this.wednesdayLabel.TabIndex = 6;
-            this.wednesdayLabel.Text = "Wednesday";
-            this.wednesdayLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // tuesdayLabel
-            // 
-            this.tuesdayLabel.AccessibleName = "mondayLabel";
-            this.tuesdayLabel.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.tuesdayLabel.AutoSize = true;
-            this.tuesdayLabel.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.tuesdayLabel.Location = new System.Drawing.Point(114, 10);
-            this.tuesdayLabel.Name = "tuesdayLabel";
-            this.tuesdayLabel.Size = new System.Drawing.Size(63, 20);
-            this.tuesdayLabel.TabIndex = 7;
-            this.tuesdayLabel.Text = "Tuesday";
-            this.tuesdayLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // sundayLabel
-            // 
-            this.sundayLabel.AccessibleName = "mondayLabel";
-            this.sundayLabel.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.sundayLabel.AutoSize = true;
-            this.sundayLabel.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.sundayLabel.Location = new System.Drawing.Point(605, 10);
-            this.sundayLabel.Name = "sundayLabel";
-            this.sundayLabel.Size = new System.Drawing.Size(57, 20);
-            this.sundayLabel.TabIndex = 8;
-            this.sundayLabel.Text = "Sunday";
-            this.sundayLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // deleteTaskButton
             // 
             this.deleteTaskButton.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.deleteTaskButton.Location = new System.Drawing.Point(750, 78);
+            this.deleteTaskButton.Location = new System.Drawing.Point(751, 58);
             this.deleteTaskButton.Name = "deleteTaskButton";
             this.deleteTaskButton.Size = new System.Drawing.Size(120, 37);
             this.deleteTaskButton.TabIndex = 48;
@@ -301,7 +181,7 @@
             // updateTaskButton
             // 
             this.updateTaskButton.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.updateTaskButton.Location = new System.Drawing.Point(750, 35);
+            this.updateTaskButton.Location = new System.Drawing.Point(751, 15);
             this.updateTaskButton.Name = "updateTaskButton";
             this.updateTaskButton.Size = new System.Drawing.Size(120, 37);
             this.updateTaskButton.TabIndex = 47;
@@ -311,506 +191,24 @@
             // viewTaskButton
             // 
             this.viewTaskButton.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.viewTaskButton.Location = new System.Drawing.Point(624, 78);
+            this.viewTaskButton.Location = new System.Drawing.Point(625, 58);
             this.viewTaskButton.Name = "viewTaskButton";
             this.viewTaskButton.Size = new System.Drawing.Size(120, 37);
             this.viewTaskButton.TabIndex = 46;
             this.viewTaskButton.Text = "View task";
             this.viewTaskButton.UseVisualStyleBackColor = true;
+            this.viewTaskButton.Click += new System.EventHandler(this.viewTaskButton_Click);
             // 
             // createTaskButton
             // 
             this.createTaskButton.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.createTaskButton.Location = new System.Drawing.Point(624, 35);
+            this.createTaskButton.Location = new System.Drawing.Point(625, 15);
             this.createTaskButton.Name = "createTaskButton";
             this.createTaskButton.Size = new System.Drawing.Size(120, 37);
             this.createTaskButton.TabIndex = 45;
             this.createTaskButton.Text = "Create task";
             this.createTaskButton.UseVisualStyleBackColor = true;
-            // 
-            // tableLayoutPanel1
-            // 
-            this.tableLayoutPanel1.ColumnCount = 7;
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 14.28571F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 14.28572F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 14.28572F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 14.28572F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 14.28572F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 14.28572F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 14.28572F));
-            this.tableLayoutPanel1.Controls.Add(this.week6Day7Label, 6, 5);
-            this.tableLayoutPanel1.Controls.Add(this.week6Day6Label, 5, 5);
-            this.tableLayoutPanel1.Controls.Add(this.week6Day5Label, 4, 5);
-            this.tableLayoutPanel1.Controls.Add(this.week6Day4Label, 3, 5);
-            this.tableLayoutPanel1.Controls.Add(this.week6Day3Label, 2, 5);
-            this.tableLayoutPanel1.Controls.Add(this.week6Day2Label, 1, 5);
-            this.tableLayoutPanel1.Controls.Add(this.week6Day1Label, 0, 5);
-            this.tableLayoutPanel1.Controls.Add(this.week5Day7Label, 6, 4);
-            this.tableLayoutPanel1.Controls.Add(this.week5Day6Label, 5, 4);
-            this.tableLayoutPanel1.Controls.Add(this.week5Day5Label, 4, 4);
-            this.tableLayoutPanel1.Controls.Add(this.week5Day4Label, 3, 4);
-            this.tableLayoutPanel1.Controls.Add(this.week5Day3Label, 2, 4);
-            this.tableLayoutPanel1.Controls.Add(this.week5Day2Label, 1, 4);
-            this.tableLayoutPanel1.Controls.Add(this.week5Day1Label, 0, 4);
-            this.tableLayoutPanel1.Controls.Add(this.week4Day7Label, 6, 3);
-            this.tableLayoutPanel1.Controls.Add(this.week4Day6Label, 5, 3);
-            this.tableLayoutPanel1.Controls.Add(this.week4Day5Label, 4, 3);
-            this.tableLayoutPanel1.Controls.Add(this.week4Day4Label, 3, 3);
-            this.tableLayoutPanel1.Controls.Add(this.week4Day3Label, 2, 3);
-            this.tableLayoutPanel1.Controls.Add(this.week4Day2Label, 1, 3);
-            this.tableLayoutPanel1.Controls.Add(this.week4Day1Label, 0, 3);
-            this.tableLayoutPanel1.Controls.Add(this.week3Day7Label, 6, 2);
-            this.tableLayoutPanel1.Controls.Add(this.week3Day6Label, 5, 2);
-            this.tableLayoutPanel1.Controls.Add(this.week3Day5Label, 4, 2);
-            this.tableLayoutPanel1.Controls.Add(this.week3Day4Label, 3, 2);
-            this.tableLayoutPanel1.Controls.Add(this.week3Day3Label, 2, 2);
-            this.tableLayoutPanel1.Controls.Add(this.week3Day2Label, 1, 2);
-            this.tableLayoutPanel1.Controls.Add(this.week3Day1Label, 0, 2);
-            this.tableLayoutPanel1.Controls.Add(this.week2Day7Label, 6, 1);
-            this.tableLayoutPanel1.Controls.Add(this.week2Day6Label, 5, 1);
-            this.tableLayoutPanel1.Controls.Add(this.week2Day5Label, 4, 1);
-            this.tableLayoutPanel1.Controls.Add(this.week2Day4Label, 3, 1);
-            this.tableLayoutPanel1.Controls.Add(this.week2Day3Label, 2, 1);
-            this.tableLayoutPanel1.Controls.Add(this.week2Day2Label, 1, 1);
-            this.tableLayoutPanel1.Controls.Add(this.week2Day1Label, 0, 1);
-            this.tableLayoutPanel1.Controls.Add(this.week1Day7Label, 6, 0);
-            this.tableLayoutPanel1.Controls.Add(this.week1Day6Label, 5, 0);
-            this.tableLayoutPanel1.Controls.Add(this.week1Day5Label, 4, 0);
-            this.tableLayoutPanel1.Controls.Add(this.week1Day4Label, 3, 0);
-            this.tableLayoutPanel1.Controls.Add(this.week1Day3Label, 2, 0);
-            this.tableLayoutPanel1.Controls.Add(this.week1Day2Label, 1, 0);
-            this.tableLayoutPanel1.Controls.Add(this.week1Day1Label, 0, 0);
-            this.tableLayoutPanel1.Location = new System.Drawing.Point(23, 203);
-            this.tableLayoutPanel1.Name = "tableLayoutPanel1";
-            this.tableLayoutPanel1.RowCount = 6;
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 16.66667F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 16.66667F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 16.66667F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 16.66667F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 16.66667F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 16.66667F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(686, 336);
-            this.tableLayoutPanel1.TabIndex = 82;
-            // 
-            // week6Day7Label
-            // 
-            this.week6Day7Label.Location = new System.Drawing.Point(587, 275);
-            this.week6Day7Label.Margin = new System.Windows.Forms.Padding(0);
-            this.week6Day7Label.Name = "week6Day7Label";
-            this.week6Day7Label.Size = new System.Drawing.Size(99, 61);
-            this.week6Day7Label.TabIndex = 124;
-            this.week6Day7Label.Text = "<date>";
-            this.week6Day7Label.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // week6Day6Label
-            // 
-            this.week6Day6Label.Location = new System.Drawing.Point(489, 275);
-            this.week6Day6Label.Margin = new System.Windows.Forms.Padding(0);
-            this.week6Day6Label.Name = "week6Day6Label";
-            this.week6Day6Label.Size = new System.Drawing.Size(97, 61);
-            this.week6Day6Label.TabIndex = 123;
-            this.week6Day6Label.Text = "<date>";
-            this.week6Day6Label.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // week6Day5Label
-            // 
-            this.week6Day5Label.Location = new System.Drawing.Point(391, 275);
-            this.week6Day5Label.Margin = new System.Windows.Forms.Padding(0);
-            this.week6Day5Label.Name = "week6Day5Label";
-            this.week6Day5Label.Size = new System.Drawing.Size(97, 61);
-            this.week6Day5Label.TabIndex = 122;
-            this.week6Day5Label.Text = "<date>";
-            this.week6Day5Label.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // week6Day4Label
-            // 
-            this.week6Day4Label.Location = new System.Drawing.Point(293, 275);
-            this.week6Day4Label.Margin = new System.Windows.Forms.Padding(0);
-            this.week6Day4Label.Name = "week6Day4Label";
-            this.week6Day4Label.Size = new System.Drawing.Size(97, 61);
-            this.week6Day4Label.TabIndex = 121;
-            this.week6Day4Label.Text = "<date>";
-            this.week6Day4Label.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // week6Day3Label
-            // 
-            this.week6Day3Label.Location = new System.Drawing.Point(195, 275);
-            this.week6Day3Label.Margin = new System.Windows.Forms.Padding(0);
-            this.week6Day3Label.Name = "week6Day3Label";
-            this.week6Day3Label.Size = new System.Drawing.Size(97, 61);
-            this.week6Day3Label.TabIndex = 120;
-            this.week6Day3Label.Text = "<date>";
-            this.week6Day3Label.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // week6Day2Label
-            // 
-            this.week6Day2Label.Location = new System.Drawing.Point(97, 275);
-            this.week6Day2Label.Margin = new System.Windows.Forms.Padding(0);
-            this.week6Day2Label.Name = "week6Day2Label";
-            this.week6Day2Label.Size = new System.Drawing.Size(97, 61);
-            this.week6Day2Label.TabIndex = 119;
-            this.week6Day2Label.Text = "<date>";
-            this.week6Day2Label.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // week6Day1Label
-            // 
-            this.week6Day1Label.Location = new System.Drawing.Point(0, 275);
-            this.week6Day1Label.Margin = new System.Windows.Forms.Padding(0);
-            this.week6Day1Label.Name = "week6Day1Label";
-            this.week6Day1Label.Size = new System.Drawing.Size(97, 61);
-            this.week6Day1Label.TabIndex = 118;
-            this.week6Day1Label.Text = "<date>";
-            this.week6Day1Label.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // week5Day7Label
-            // 
-            this.week5Day7Label.Location = new System.Drawing.Point(587, 220);
-            this.week5Day7Label.Margin = new System.Windows.Forms.Padding(0);
-            this.week5Day7Label.Name = "week5Day7Label";
-            this.week5Day7Label.Size = new System.Drawing.Size(99, 55);
-            this.week5Day7Label.TabIndex = 117;
-            this.week5Day7Label.Text = "<date>";
-            this.week5Day7Label.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // week5Day6Label
-            // 
-            this.week5Day6Label.Location = new System.Drawing.Point(489, 220);
-            this.week5Day6Label.Margin = new System.Windows.Forms.Padding(0);
-            this.week5Day6Label.Name = "week5Day6Label";
-            this.week5Day6Label.Size = new System.Drawing.Size(97, 55);
-            this.week5Day6Label.TabIndex = 116;
-            this.week5Day6Label.Text = "<date>";
-            this.week5Day6Label.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // week5Day5Label
-            // 
-            this.week5Day5Label.Location = new System.Drawing.Point(391, 220);
-            this.week5Day5Label.Margin = new System.Windows.Forms.Padding(0);
-            this.week5Day5Label.Name = "week5Day5Label";
-            this.week5Day5Label.Size = new System.Drawing.Size(97, 55);
-            this.week5Day5Label.TabIndex = 115;
-            this.week5Day5Label.Text = "<date>";
-            this.week5Day5Label.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // week5Day4Label
-            // 
-            this.week5Day4Label.Location = new System.Drawing.Point(293, 220);
-            this.week5Day4Label.Margin = new System.Windows.Forms.Padding(0);
-            this.week5Day4Label.Name = "week5Day4Label";
-            this.week5Day4Label.Size = new System.Drawing.Size(97, 55);
-            this.week5Day4Label.TabIndex = 114;
-            this.week5Day4Label.Text = "<date>";
-            this.week5Day4Label.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // week5Day3Label
-            // 
-            this.week5Day3Label.Location = new System.Drawing.Point(195, 220);
-            this.week5Day3Label.Margin = new System.Windows.Forms.Padding(0);
-            this.week5Day3Label.Name = "week5Day3Label";
-            this.week5Day3Label.Size = new System.Drawing.Size(97, 55);
-            this.week5Day3Label.TabIndex = 113;
-            this.week5Day3Label.Text = "<date>";
-            this.week5Day3Label.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // week5Day2Label
-            // 
-            this.week5Day2Label.Location = new System.Drawing.Point(97, 220);
-            this.week5Day2Label.Margin = new System.Windows.Forms.Padding(0);
-            this.week5Day2Label.Name = "week5Day2Label";
-            this.week5Day2Label.Size = new System.Drawing.Size(97, 55);
-            this.week5Day2Label.TabIndex = 112;
-            this.week5Day2Label.Text = "<date>";
-            this.week5Day2Label.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // week5Day1Label
-            // 
-            this.week5Day1Label.Location = new System.Drawing.Point(0, 220);
-            this.week5Day1Label.Margin = new System.Windows.Forms.Padding(0);
-            this.week5Day1Label.Name = "week5Day1Label";
-            this.week5Day1Label.Size = new System.Drawing.Size(97, 55);
-            this.week5Day1Label.TabIndex = 111;
-            this.week5Day1Label.Text = "<date>";
-            this.week5Day1Label.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // week4Day7Label
-            // 
-            this.week4Day7Label.Location = new System.Drawing.Point(587, 165);
-            this.week4Day7Label.Margin = new System.Windows.Forms.Padding(0);
-            this.week4Day7Label.Name = "week4Day7Label";
-            this.week4Day7Label.Size = new System.Drawing.Size(99, 55);
-            this.week4Day7Label.TabIndex = 110;
-            this.week4Day7Label.Text = "<date>";
-            this.week4Day7Label.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // week4Day6Label
-            // 
-            this.week4Day6Label.Location = new System.Drawing.Point(489, 165);
-            this.week4Day6Label.Margin = new System.Windows.Forms.Padding(0);
-            this.week4Day6Label.Name = "week4Day6Label";
-            this.week4Day6Label.Size = new System.Drawing.Size(97, 55);
-            this.week4Day6Label.TabIndex = 109;
-            this.week4Day6Label.Text = "<date>";
-            this.week4Day6Label.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // week4Day5Label
-            // 
-            this.week4Day5Label.Location = new System.Drawing.Point(391, 165);
-            this.week4Day5Label.Margin = new System.Windows.Forms.Padding(0);
-            this.week4Day5Label.Name = "week4Day5Label";
-            this.week4Day5Label.Size = new System.Drawing.Size(97, 55);
-            this.week4Day5Label.TabIndex = 108;
-            this.week4Day5Label.Text = "<date>";
-            this.week4Day5Label.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // week4Day4Label
-            // 
-            this.week4Day4Label.Location = new System.Drawing.Point(293, 165);
-            this.week4Day4Label.Margin = new System.Windows.Forms.Padding(0);
-            this.week4Day4Label.Name = "week4Day4Label";
-            this.week4Day4Label.Size = new System.Drawing.Size(97, 55);
-            this.week4Day4Label.TabIndex = 107;
-            this.week4Day4Label.Text = "<date>";
-            this.week4Day4Label.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // week4Day3Label
-            // 
-            this.week4Day3Label.Location = new System.Drawing.Point(195, 165);
-            this.week4Day3Label.Margin = new System.Windows.Forms.Padding(0);
-            this.week4Day3Label.Name = "week4Day3Label";
-            this.week4Day3Label.Size = new System.Drawing.Size(97, 55);
-            this.week4Day3Label.TabIndex = 106;
-            this.week4Day3Label.Text = "<date>";
-            this.week4Day3Label.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // week4Day2Label
-            // 
-            this.week4Day2Label.Location = new System.Drawing.Point(97, 165);
-            this.week4Day2Label.Margin = new System.Windows.Forms.Padding(0);
-            this.week4Day2Label.Name = "week4Day2Label";
-            this.week4Day2Label.Size = new System.Drawing.Size(97, 55);
-            this.week4Day2Label.TabIndex = 105;
-            this.week4Day2Label.Text = "<date>";
-            this.week4Day2Label.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // week4Day1Label
-            // 
-            this.week4Day1Label.Location = new System.Drawing.Point(0, 165);
-            this.week4Day1Label.Margin = new System.Windows.Forms.Padding(0);
-            this.week4Day1Label.Name = "week4Day1Label";
-            this.week4Day1Label.Size = new System.Drawing.Size(97, 55);
-            this.week4Day1Label.TabIndex = 104;
-            this.week4Day1Label.Text = "<date>";
-            this.week4Day1Label.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // week3Day7Label
-            // 
-            this.week3Day7Label.Location = new System.Drawing.Point(587, 110);
-            this.week3Day7Label.Margin = new System.Windows.Forms.Padding(0);
-            this.week3Day7Label.Name = "week3Day7Label";
-            this.week3Day7Label.Size = new System.Drawing.Size(99, 55);
-            this.week3Day7Label.TabIndex = 103;
-            this.week3Day7Label.Text = "<date>";
-            this.week3Day7Label.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // week3Day6Label
-            // 
-            this.week3Day6Label.Location = new System.Drawing.Point(489, 110);
-            this.week3Day6Label.Margin = new System.Windows.Forms.Padding(0);
-            this.week3Day6Label.Name = "week3Day6Label";
-            this.week3Day6Label.Size = new System.Drawing.Size(97, 55);
-            this.week3Day6Label.TabIndex = 102;
-            this.week3Day6Label.Text = "<date>";
-            this.week3Day6Label.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // week3Day5Label
-            // 
-            this.week3Day5Label.Location = new System.Drawing.Point(391, 110);
-            this.week3Day5Label.Margin = new System.Windows.Forms.Padding(0);
-            this.week3Day5Label.Name = "week3Day5Label";
-            this.week3Day5Label.Size = new System.Drawing.Size(97, 55);
-            this.week3Day5Label.TabIndex = 101;
-            this.week3Day5Label.Text = "<date>";
-            this.week3Day5Label.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // week3Day4Label
-            // 
-            this.week3Day4Label.Location = new System.Drawing.Point(293, 110);
-            this.week3Day4Label.Margin = new System.Windows.Forms.Padding(0);
-            this.week3Day4Label.Name = "week3Day4Label";
-            this.week3Day4Label.Size = new System.Drawing.Size(97, 55);
-            this.week3Day4Label.TabIndex = 100;
-            this.week3Day4Label.Text = "<date>";
-            this.week3Day4Label.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // week3Day3Label
-            // 
-            this.week3Day3Label.Location = new System.Drawing.Point(195, 110);
-            this.week3Day3Label.Margin = new System.Windows.Forms.Padding(0);
-            this.week3Day3Label.Name = "week3Day3Label";
-            this.week3Day3Label.Size = new System.Drawing.Size(97, 55);
-            this.week3Day3Label.TabIndex = 99;
-            this.week3Day3Label.Text = "<date>";
-            this.week3Day3Label.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // week3Day2Label
-            // 
-            this.week3Day2Label.Location = new System.Drawing.Point(97, 110);
-            this.week3Day2Label.Margin = new System.Windows.Forms.Padding(0);
-            this.week3Day2Label.Name = "week3Day2Label";
-            this.week3Day2Label.Size = new System.Drawing.Size(97, 55);
-            this.week3Day2Label.TabIndex = 98;
-            this.week3Day2Label.Text = "<date>";
-            this.week3Day2Label.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // week3Day1Label
-            // 
-            this.week3Day1Label.Location = new System.Drawing.Point(0, 110);
-            this.week3Day1Label.Margin = new System.Windows.Forms.Padding(0);
-            this.week3Day1Label.Name = "week3Day1Label";
-            this.week3Day1Label.Size = new System.Drawing.Size(97, 55);
-            this.week3Day1Label.TabIndex = 97;
-            this.week3Day1Label.Text = "<date>";
-            this.week3Day1Label.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // week2Day7Label
-            // 
-            this.week2Day7Label.Location = new System.Drawing.Point(587, 55);
-            this.week2Day7Label.Margin = new System.Windows.Forms.Padding(0);
-            this.week2Day7Label.Name = "week2Day7Label";
-            this.week2Day7Label.Size = new System.Drawing.Size(99, 55);
-            this.week2Day7Label.TabIndex = 96;
-            this.week2Day7Label.Text = "<date>";
-            this.week2Day7Label.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // week2Day6Label
-            // 
-            this.week2Day6Label.Location = new System.Drawing.Point(489, 55);
-            this.week2Day6Label.Margin = new System.Windows.Forms.Padding(0);
-            this.week2Day6Label.Name = "week2Day6Label";
-            this.week2Day6Label.Size = new System.Drawing.Size(97, 55);
-            this.week2Day6Label.TabIndex = 95;
-            this.week2Day6Label.Text = "<date>";
-            this.week2Day6Label.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // week2Day5Label
-            // 
-            this.week2Day5Label.Location = new System.Drawing.Point(391, 55);
-            this.week2Day5Label.Margin = new System.Windows.Forms.Padding(0);
-            this.week2Day5Label.Name = "week2Day5Label";
-            this.week2Day5Label.Size = new System.Drawing.Size(97, 55);
-            this.week2Day5Label.TabIndex = 94;
-            this.week2Day5Label.Text = "<date>";
-            this.week2Day5Label.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // week2Day4Label
-            // 
-            this.week2Day4Label.Location = new System.Drawing.Point(293, 55);
-            this.week2Day4Label.Margin = new System.Windows.Forms.Padding(0);
-            this.week2Day4Label.Name = "week2Day4Label";
-            this.week2Day4Label.Size = new System.Drawing.Size(97, 55);
-            this.week2Day4Label.TabIndex = 93;
-            this.week2Day4Label.Text = "<date>";
-            this.week2Day4Label.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // week2Day3Label
-            // 
-            this.week2Day3Label.Location = new System.Drawing.Point(195, 55);
-            this.week2Day3Label.Margin = new System.Windows.Forms.Padding(0);
-            this.week2Day3Label.Name = "week2Day3Label";
-            this.week2Day3Label.Size = new System.Drawing.Size(97, 55);
-            this.week2Day3Label.TabIndex = 92;
-            this.week2Day3Label.Text = "<date>";
-            this.week2Day3Label.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // week2Day2Label
-            // 
-            this.week2Day2Label.Location = new System.Drawing.Point(97, 55);
-            this.week2Day2Label.Margin = new System.Windows.Forms.Padding(0);
-            this.week2Day2Label.Name = "week2Day2Label";
-            this.week2Day2Label.Size = new System.Drawing.Size(97, 55);
-            this.week2Day2Label.TabIndex = 91;
-            this.week2Day2Label.Text = "<date>";
-            this.week2Day2Label.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // week2Day1Label
-            // 
-            this.week2Day1Label.Location = new System.Drawing.Point(0, 55);
-            this.week2Day1Label.Margin = new System.Windows.Forms.Padding(0);
-            this.week2Day1Label.Name = "week2Day1Label";
-            this.week2Day1Label.Size = new System.Drawing.Size(97, 55);
-            this.week2Day1Label.TabIndex = 90;
-            this.week2Day1Label.Text = "<date>";
-            this.week2Day1Label.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // week1Day7Label
-            // 
-            this.week1Day7Label.Location = new System.Drawing.Point(587, 0);
-            this.week1Day7Label.Margin = new System.Windows.Forms.Padding(0);
-            this.week1Day7Label.Name = "week1Day7Label";
-            this.week1Day7Label.Size = new System.Drawing.Size(99, 55);
-            this.week1Day7Label.TabIndex = 89;
-            this.week1Day7Label.Text = "<date>";
-            this.week1Day7Label.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // week1Day6Label
-            // 
-            this.week1Day6Label.Location = new System.Drawing.Point(489, 0);
-            this.week1Day6Label.Margin = new System.Windows.Forms.Padding(0);
-            this.week1Day6Label.Name = "week1Day6Label";
-            this.week1Day6Label.Size = new System.Drawing.Size(97, 55);
-            this.week1Day6Label.TabIndex = 88;
-            this.week1Day6Label.Text = "<date>";
-            this.week1Day6Label.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // week1Day5Label
-            // 
-            this.week1Day5Label.Location = new System.Drawing.Point(391, 0);
-            this.week1Day5Label.Margin = new System.Windows.Forms.Padding(0);
-            this.week1Day5Label.Name = "week1Day5Label";
-            this.week1Day5Label.Size = new System.Drawing.Size(97, 55);
-            this.week1Day5Label.TabIndex = 87;
-            this.week1Day5Label.Text = "<date>";
-            this.week1Day5Label.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // week1Day4Label
-            // 
-            this.week1Day4Label.Location = new System.Drawing.Point(293, 0);
-            this.week1Day4Label.Margin = new System.Windows.Forms.Padding(0);
-            this.week1Day4Label.Name = "week1Day4Label";
-            this.week1Day4Label.Size = new System.Drawing.Size(97, 55);
-            this.week1Day4Label.TabIndex = 86;
-            this.week1Day4Label.Text = "<date>";
-            this.week1Day4Label.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // week1Day3Label
-            // 
-            this.week1Day3Label.Location = new System.Drawing.Point(195, 0);
-            this.week1Day3Label.Margin = new System.Windows.Forms.Padding(0);
-            this.week1Day3Label.Name = "week1Day3Label";
-            this.week1Day3Label.Size = new System.Drawing.Size(97, 55);
-            this.week1Day3Label.TabIndex = 85;
-            this.week1Day3Label.Text = "<date>";
-            this.week1Day3Label.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // week1Day2Label
-            // 
-            this.week1Day2Label.Location = new System.Drawing.Point(97, 0);
-            this.week1Day2Label.Margin = new System.Windows.Forms.Padding(0);
-            this.week1Day2Label.Name = "week1Day2Label";
-            this.week1Day2Label.Size = new System.Drawing.Size(97, 55);
-            this.week1Day2Label.TabIndex = 84;
-            this.week1Day2Label.Text = "<date>";
-            this.week1Day2Label.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // week1Day1Label
-            // 
-            this.week1Day1Label.Location = new System.Drawing.Point(0, 0);
-            this.week1Day1Label.Margin = new System.Windows.Forms.Padding(0);
-            this.week1Day1Label.Name = "week1Day1Label";
-            this.week1Day1Label.Size = new System.Drawing.Size(97, 55);
-            this.week1Day1Label.TabIndex = 83;
-            this.week1Day1Label.Text = "<date>";
-            this.week1Day1Label.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.createTaskButton.Click += new System.EventHandler(this.createTaskButton_Click);
             // 
             // monthActiveLabel
             // 
@@ -866,7 +264,6 @@
             this.yearActiveLabel.TabIndex = 77;
             this.yearActiveLabel.Text = "0";
             this.yearActiveLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.yearActiveLabel.Click += new System.EventHandler(this.label30_Click);
             // 
             // yearCompletedLabel
             // 
@@ -878,7 +275,6 @@
             this.yearCompletedLabel.TabIndex = 76;
             this.yearCompletedLabel.Text = "0";
             this.yearCompletedLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.yearCompletedLabel.Click += new System.EventHandler(this.label29_Click);
             // 
             // yearPartiallyCompletedLabel
             // 
@@ -890,7 +286,6 @@
             this.yearPartiallyCompletedLabel.TabIndex = 74;
             this.yearPartiallyCompletedLabel.Text = "0";
             this.yearPartiallyCompletedLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.yearPartiallyCompletedLabel.Click += new System.EventHandler(this.label27_Click);
             // 
             // yearFailedLabel
             // 
@@ -902,7 +297,6 @@
             this.yearFailedLabel.TabIndex = 72;
             this.yearFailedLabel.Text = "0";
             this.yearFailedLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.yearFailedLabel.Click += new System.EventHandler(this.label25_Click);
             // 
             // weekTwoFailedLabel
             // 
@@ -1145,7 +539,6 @@
             this.weekFiveActiveLabel.TabIndex = 50;
             this.weekFiveActiveLabel.Text = "0";
             this.weekFiveActiveLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.weekFiveActiveLabel.Click += new System.EventHandler(this.weekFiveInProcessLabel_Click);
             // 
             // weekSixActiveLabel
             // 
@@ -1168,14 +561,625 @@
             this.weekOneActiveLabel.TabIndex = 0;
             this.weekOneActiveLabel.Text = "0";
             this.weekOneActiveLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.weekOneActiveLabel.Click += new System.EventHandler(this.label1_Click_3);
+            // 
+            // week1Day1Label
+            // 
+            this.week1Day1Label.Location = new System.Drawing.Point(0, 0);
+            this.week1Day1Label.Margin = new System.Windows.Forms.Padding(0);
+            this.week1Day1Label.Name = "week1Day1Label";
+            this.week1Day1Label.Size = new System.Drawing.Size(97, 55);
+            this.week1Day1Label.TabIndex = 83;
+            this.week1Day1Label.Text = "<date>";
+            this.week1Day1Label.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // week1Day2Label
+            // 
+            this.week1Day2Label.Location = new System.Drawing.Point(97, 0);
+            this.week1Day2Label.Margin = new System.Windows.Forms.Padding(0);
+            this.week1Day2Label.Name = "week1Day2Label";
+            this.week1Day2Label.Size = new System.Drawing.Size(97, 55);
+            this.week1Day2Label.TabIndex = 84;
+            this.week1Day2Label.Text = "<date>";
+            this.week1Day2Label.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // week1Day3Label
+            // 
+            this.week1Day3Label.Location = new System.Drawing.Point(195, 0);
+            this.week1Day3Label.Margin = new System.Windows.Forms.Padding(0);
+            this.week1Day3Label.Name = "week1Day3Label";
+            this.week1Day3Label.Size = new System.Drawing.Size(97, 55);
+            this.week1Day3Label.TabIndex = 85;
+            this.week1Day3Label.Text = "<date>";
+            this.week1Day3Label.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // week1Day4Label
+            // 
+            this.week1Day4Label.Location = new System.Drawing.Point(293, 0);
+            this.week1Day4Label.Margin = new System.Windows.Forms.Padding(0);
+            this.week1Day4Label.Name = "week1Day4Label";
+            this.week1Day4Label.Size = new System.Drawing.Size(97, 55);
+            this.week1Day4Label.TabIndex = 86;
+            this.week1Day4Label.Text = "<date>";
+            this.week1Day4Label.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // week1Day5Label
+            // 
+            this.week1Day5Label.Location = new System.Drawing.Point(391, 0);
+            this.week1Day5Label.Margin = new System.Windows.Forms.Padding(0);
+            this.week1Day5Label.Name = "week1Day5Label";
+            this.week1Day5Label.Size = new System.Drawing.Size(97, 55);
+            this.week1Day5Label.TabIndex = 87;
+            this.week1Day5Label.Text = "<date>";
+            this.week1Day5Label.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // week1Day6Label
+            // 
+            this.week1Day6Label.Location = new System.Drawing.Point(489, 0);
+            this.week1Day6Label.Margin = new System.Windows.Forms.Padding(0);
+            this.week1Day6Label.Name = "week1Day6Label";
+            this.week1Day6Label.Size = new System.Drawing.Size(97, 55);
+            this.week1Day6Label.TabIndex = 88;
+            this.week1Day6Label.Text = "<date>";
+            this.week1Day6Label.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // week1Day7Label
+            // 
+            this.week1Day7Label.Location = new System.Drawing.Point(587, 0);
+            this.week1Day7Label.Margin = new System.Windows.Forms.Padding(0);
+            this.week1Day7Label.Name = "week1Day7Label";
+            this.week1Day7Label.Size = new System.Drawing.Size(99, 55);
+            this.week1Day7Label.TabIndex = 89;
+            this.week1Day7Label.Text = "<date>";
+            this.week1Day7Label.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // week2Day1Label
+            // 
+            this.week2Day1Label.Location = new System.Drawing.Point(0, 55);
+            this.week2Day1Label.Margin = new System.Windows.Forms.Padding(0);
+            this.week2Day1Label.Name = "week2Day1Label";
+            this.week2Day1Label.Size = new System.Drawing.Size(97, 55);
+            this.week2Day1Label.TabIndex = 90;
+            this.week2Day1Label.Text = "<date>";
+            this.week2Day1Label.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // week2Day2Label
+            // 
+            this.week2Day2Label.Location = new System.Drawing.Point(97, 55);
+            this.week2Day2Label.Margin = new System.Windows.Forms.Padding(0);
+            this.week2Day2Label.Name = "week2Day2Label";
+            this.week2Day2Label.Size = new System.Drawing.Size(97, 55);
+            this.week2Day2Label.TabIndex = 91;
+            this.week2Day2Label.Text = "<date>";
+            this.week2Day2Label.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // week2Day3Label
+            // 
+            this.week2Day3Label.Location = new System.Drawing.Point(195, 55);
+            this.week2Day3Label.Margin = new System.Windows.Forms.Padding(0);
+            this.week2Day3Label.Name = "week2Day3Label";
+            this.week2Day3Label.Size = new System.Drawing.Size(97, 55);
+            this.week2Day3Label.TabIndex = 92;
+            this.week2Day3Label.Text = "<date>";
+            this.week2Day3Label.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // week2Day4Label
+            // 
+            this.week2Day4Label.Location = new System.Drawing.Point(293, 55);
+            this.week2Day4Label.Margin = new System.Windows.Forms.Padding(0);
+            this.week2Day4Label.Name = "week2Day4Label";
+            this.week2Day4Label.Size = new System.Drawing.Size(97, 55);
+            this.week2Day4Label.TabIndex = 93;
+            this.week2Day4Label.Text = "<date>";
+            this.week2Day4Label.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // week2Day5Label
+            // 
+            this.week2Day5Label.Location = new System.Drawing.Point(391, 55);
+            this.week2Day5Label.Margin = new System.Windows.Forms.Padding(0);
+            this.week2Day5Label.Name = "week2Day5Label";
+            this.week2Day5Label.Size = new System.Drawing.Size(97, 55);
+            this.week2Day5Label.TabIndex = 94;
+            this.week2Day5Label.Text = "<date>";
+            this.week2Day5Label.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // week2Day6Label
+            // 
+            this.week2Day6Label.Location = new System.Drawing.Point(489, 55);
+            this.week2Day6Label.Margin = new System.Windows.Forms.Padding(0);
+            this.week2Day6Label.Name = "week2Day6Label";
+            this.week2Day6Label.Size = new System.Drawing.Size(97, 55);
+            this.week2Day6Label.TabIndex = 95;
+            this.week2Day6Label.Text = "<date>";
+            this.week2Day6Label.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // week2Day7Label
+            // 
+            this.week2Day7Label.Location = new System.Drawing.Point(587, 55);
+            this.week2Day7Label.Margin = new System.Windows.Forms.Padding(0);
+            this.week2Day7Label.Name = "week2Day7Label";
+            this.week2Day7Label.Size = new System.Drawing.Size(99, 55);
+            this.week2Day7Label.TabIndex = 96;
+            this.week2Day7Label.Text = "<date>";
+            this.week2Day7Label.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // week3Day1Label
+            // 
+            this.week3Day1Label.Location = new System.Drawing.Point(0, 110);
+            this.week3Day1Label.Margin = new System.Windows.Forms.Padding(0);
+            this.week3Day1Label.Name = "week3Day1Label";
+            this.week3Day1Label.Size = new System.Drawing.Size(97, 55);
+            this.week3Day1Label.TabIndex = 97;
+            this.week3Day1Label.Text = "<date>";
+            this.week3Day1Label.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // week3Day2Label
+            // 
+            this.week3Day2Label.Location = new System.Drawing.Point(97, 110);
+            this.week3Day2Label.Margin = new System.Windows.Forms.Padding(0);
+            this.week3Day2Label.Name = "week3Day2Label";
+            this.week3Day2Label.Size = new System.Drawing.Size(97, 55);
+            this.week3Day2Label.TabIndex = 98;
+            this.week3Day2Label.Text = "<date>";
+            this.week3Day2Label.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // week3Day3Label
+            // 
+            this.week3Day3Label.Location = new System.Drawing.Point(195, 110);
+            this.week3Day3Label.Margin = new System.Windows.Forms.Padding(0);
+            this.week3Day3Label.Name = "week3Day3Label";
+            this.week3Day3Label.Size = new System.Drawing.Size(97, 55);
+            this.week3Day3Label.TabIndex = 99;
+            this.week3Day3Label.Text = "<date>";
+            this.week3Day3Label.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // week3Day4Label
+            // 
+            this.week3Day4Label.Location = new System.Drawing.Point(293, 110);
+            this.week3Day4Label.Margin = new System.Windows.Forms.Padding(0);
+            this.week3Day4Label.Name = "week3Day4Label";
+            this.week3Day4Label.Size = new System.Drawing.Size(97, 55);
+            this.week3Day4Label.TabIndex = 100;
+            this.week3Day4Label.Text = "<date>";
+            this.week3Day4Label.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // week3Day5Label
+            // 
+            this.week3Day5Label.Location = new System.Drawing.Point(391, 110);
+            this.week3Day5Label.Margin = new System.Windows.Forms.Padding(0);
+            this.week3Day5Label.Name = "week3Day5Label";
+            this.week3Day5Label.Size = new System.Drawing.Size(97, 55);
+            this.week3Day5Label.TabIndex = 101;
+            this.week3Day5Label.Text = "<date>";
+            this.week3Day5Label.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // week3Day6Label
+            // 
+            this.week3Day6Label.Location = new System.Drawing.Point(489, 110);
+            this.week3Day6Label.Margin = new System.Windows.Forms.Padding(0);
+            this.week3Day6Label.Name = "week3Day6Label";
+            this.week3Day6Label.Size = new System.Drawing.Size(97, 55);
+            this.week3Day6Label.TabIndex = 102;
+            this.week3Day6Label.Text = "<date>";
+            this.week3Day6Label.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // week3Day7Label
+            // 
+            this.week3Day7Label.Location = new System.Drawing.Point(587, 110);
+            this.week3Day7Label.Margin = new System.Windows.Forms.Padding(0);
+            this.week3Day7Label.Name = "week3Day7Label";
+            this.week3Day7Label.Size = new System.Drawing.Size(99, 55);
+            this.week3Day7Label.TabIndex = 103;
+            this.week3Day7Label.Text = "<date>";
+            this.week3Day7Label.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // week4Day1Label
+            // 
+            this.week4Day1Label.Location = new System.Drawing.Point(0, 165);
+            this.week4Day1Label.Margin = new System.Windows.Forms.Padding(0);
+            this.week4Day1Label.Name = "week4Day1Label";
+            this.week4Day1Label.Size = new System.Drawing.Size(97, 55);
+            this.week4Day1Label.TabIndex = 104;
+            this.week4Day1Label.Text = "<date>";
+            this.week4Day1Label.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // week4Day2Label
+            // 
+            this.week4Day2Label.Location = new System.Drawing.Point(97, 165);
+            this.week4Day2Label.Margin = new System.Windows.Forms.Padding(0);
+            this.week4Day2Label.Name = "week4Day2Label";
+            this.week4Day2Label.Size = new System.Drawing.Size(97, 55);
+            this.week4Day2Label.TabIndex = 105;
+            this.week4Day2Label.Text = "<date>";
+            this.week4Day2Label.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // week4Day3Label
+            // 
+            this.week4Day3Label.Location = new System.Drawing.Point(195, 165);
+            this.week4Day3Label.Margin = new System.Windows.Forms.Padding(0);
+            this.week4Day3Label.Name = "week4Day3Label";
+            this.week4Day3Label.Size = new System.Drawing.Size(97, 55);
+            this.week4Day3Label.TabIndex = 106;
+            this.week4Day3Label.Text = "<date>";
+            this.week4Day3Label.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // week4Day4Label
+            // 
+            this.week4Day4Label.Location = new System.Drawing.Point(293, 165);
+            this.week4Day4Label.Margin = new System.Windows.Forms.Padding(0);
+            this.week4Day4Label.Name = "week4Day4Label";
+            this.week4Day4Label.Size = new System.Drawing.Size(97, 55);
+            this.week4Day4Label.TabIndex = 107;
+            this.week4Day4Label.Text = "<date>";
+            this.week4Day4Label.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // week4Day5Label
+            // 
+            this.week4Day5Label.Location = new System.Drawing.Point(391, 165);
+            this.week4Day5Label.Margin = new System.Windows.Forms.Padding(0);
+            this.week4Day5Label.Name = "week4Day5Label";
+            this.week4Day5Label.Size = new System.Drawing.Size(97, 55);
+            this.week4Day5Label.TabIndex = 108;
+            this.week4Day5Label.Text = "<date>";
+            this.week4Day5Label.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // week4Day6Label
+            // 
+            this.week4Day6Label.Location = new System.Drawing.Point(489, 165);
+            this.week4Day6Label.Margin = new System.Windows.Forms.Padding(0);
+            this.week4Day6Label.Name = "week4Day6Label";
+            this.week4Day6Label.Size = new System.Drawing.Size(97, 55);
+            this.week4Day6Label.TabIndex = 109;
+            this.week4Day6Label.Text = "<date>";
+            this.week4Day6Label.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // week4Day7Label
+            // 
+            this.week4Day7Label.Location = new System.Drawing.Point(587, 165);
+            this.week4Day7Label.Margin = new System.Windows.Forms.Padding(0);
+            this.week4Day7Label.Name = "week4Day7Label";
+            this.week4Day7Label.Size = new System.Drawing.Size(99, 55);
+            this.week4Day7Label.TabIndex = 110;
+            this.week4Day7Label.Text = "<date>";
+            this.week4Day7Label.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // week5Day1Label
+            // 
+            this.week5Day1Label.Location = new System.Drawing.Point(0, 220);
+            this.week5Day1Label.Margin = new System.Windows.Forms.Padding(0);
+            this.week5Day1Label.Name = "week5Day1Label";
+            this.week5Day1Label.Size = new System.Drawing.Size(97, 55);
+            this.week5Day1Label.TabIndex = 111;
+            this.week5Day1Label.Text = "<date>";
+            this.week5Day1Label.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // week5Day2Label
+            // 
+            this.week5Day2Label.Location = new System.Drawing.Point(97, 220);
+            this.week5Day2Label.Margin = new System.Windows.Forms.Padding(0);
+            this.week5Day2Label.Name = "week5Day2Label";
+            this.week5Day2Label.Size = new System.Drawing.Size(97, 55);
+            this.week5Day2Label.TabIndex = 112;
+            this.week5Day2Label.Text = "<date>";
+            this.week5Day2Label.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // week5Day3Label
+            // 
+            this.week5Day3Label.Location = new System.Drawing.Point(195, 220);
+            this.week5Day3Label.Margin = new System.Windows.Forms.Padding(0);
+            this.week5Day3Label.Name = "week5Day3Label";
+            this.week5Day3Label.Size = new System.Drawing.Size(97, 55);
+            this.week5Day3Label.TabIndex = 113;
+            this.week5Day3Label.Text = "<date>";
+            this.week5Day3Label.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // week5Day4Label
+            // 
+            this.week5Day4Label.Location = new System.Drawing.Point(293, 220);
+            this.week5Day4Label.Margin = new System.Windows.Forms.Padding(0);
+            this.week5Day4Label.Name = "week5Day4Label";
+            this.week5Day4Label.Size = new System.Drawing.Size(97, 55);
+            this.week5Day4Label.TabIndex = 114;
+            this.week5Day4Label.Text = "<date>";
+            this.week5Day4Label.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // week5Day5Label
+            // 
+            this.week5Day5Label.Location = new System.Drawing.Point(391, 220);
+            this.week5Day5Label.Margin = new System.Windows.Forms.Padding(0);
+            this.week5Day5Label.Name = "week5Day5Label";
+            this.week5Day5Label.Size = new System.Drawing.Size(97, 55);
+            this.week5Day5Label.TabIndex = 115;
+            this.week5Day5Label.Text = "<date>";
+            this.week5Day5Label.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // week5Day6Label
+            // 
+            this.week5Day6Label.Location = new System.Drawing.Point(489, 220);
+            this.week5Day6Label.Margin = new System.Windows.Forms.Padding(0);
+            this.week5Day6Label.Name = "week5Day6Label";
+            this.week5Day6Label.Size = new System.Drawing.Size(97, 55);
+            this.week5Day6Label.TabIndex = 116;
+            this.week5Day6Label.Text = "<date>";
+            this.week5Day6Label.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // week5Day7Label
+            // 
+            this.week5Day7Label.Location = new System.Drawing.Point(587, 220);
+            this.week5Day7Label.Margin = new System.Windows.Forms.Padding(0);
+            this.week5Day7Label.Name = "week5Day7Label";
+            this.week5Day7Label.Size = new System.Drawing.Size(99, 55);
+            this.week5Day7Label.TabIndex = 117;
+            this.week5Day7Label.Text = "<date>";
+            this.week5Day7Label.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // week6Day1Label
+            // 
+            this.week6Day1Label.Location = new System.Drawing.Point(0, 275);
+            this.week6Day1Label.Margin = new System.Windows.Forms.Padding(0);
+            this.week6Day1Label.Name = "week6Day1Label";
+            this.week6Day1Label.Size = new System.Drawing.Size(97, 61);
+            this.week6Day1Label.TabIndex = 118;
+            this.week6Day1Label.Text = "<date>";
+            this.week6Day1Label.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // week6Day2Label
+            // 
+            this.week6Day2Label.Location = new System.Drawing.Point(97, 275);
+            this.week6Day2Label.Margin = new System.Windows.Forms.Padding(0);
+            this.week6Day2Label.Name = "week6Day2Label";
+            this.week6Day2Label.Size = new System.Drawing.Size(97, 61);
+            this.week6Day2Label.TabIndex = 119;
+            this.week6Day2Label.Text = "<date>";
+            this.week6Day2Label.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // week6Day3Label
+            // 
+            this.week6Day3Label.Location = new System.Drawing.Point(195, 275);
+            this.week6Day3Label.Margin = new System.Windows.Forms.Padding(0);
+            this.week6Day3Label.Name = "week6Day3Label";
+            this.week6Day3Label.Size = new System.Drawing.Size(97, 61);
+            this.week6Day3Label.TabIndex = 120;
+            this.week6Day3Label.Text = "<date>";
+            this.week6Day3Label.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // week6Day4Label
+            // 
+            this.week6Day4Label.Location = new System.Drawing.Point(293, 275);
+            this.week6Day4Label.Margin = new System.Windows.Forms.Padding(0);
+            this.week6Day4Label.Name = "week6Day4Label";
+            this.week6Day4Label.Size = new System.Drawing.Size(97, 61);
+            this.week6Day4Label.TabIndex = 121;
+            this.week6Day4Label.Text = "<date>";
+            this.week6Day4Label.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // week6Day5Label
+            // 
+            this.week6Day5Label.Location = new System.Drawing.Point(391, 275);
+            this.week6Day5Label.Margin = new System.Windows.Forms.Padding(0);
+            this.week6Day5Label.Name = "week6Day5Label";
+            this.week6Day5Label.Size = new System.Drawing.Size(97, 61);
+            this.week6Day5Label.TabIndex = 122;
+            this.week6Day5Label.Text = "<date>";
+            this.week6Day5Label.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // week6Day6Label
+            // 
+            this.week6Day6Label.Location = new System.Drawing.Point(489, 275);
+            this.week6Day6Label.Margin = new System.Windows.Forms.Padding(0);
+            this.week6Day6Label.Name = "week6Day6Label";
+            this.week6Day6Label.Size = new System.Drawing.Size(97, 61);
+            this.week6Day6Label.TabIndex = 123;
+            this.week6Day6Label.Text = "<date>";
+            this.week6Day6Label.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // week6Day7Label
+            // 
+            this.week6Day7Label.Location = new System.Drawing.Point(587, 275);
+            this.week6Day7Label.Margin = new System.Windows.Forms.Padding(0);
+            this.week6Day7Label.Name = "week6Day7Label";
+            this.week6Day7Label.Size = new System.Drawing.Size(99, 61);
+            this.week6Day7Label.TabIndex = 124;
+            this.week6Day7Label.Text = "<date>";
+            this.week6Day7Label.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // tableLayoutPanel1
+            // 
+            this.tableLayoutPanel1.ColumnCount = 7;
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 14.28571F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 14.28572F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 14.28572F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 14.28572F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 14.28572F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 14.28572F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 14.28572F));
+            this.tableLayoutPanel1.Controls.Add(this.week6Day7Label, 6, 5);
+            this.tableLayoutPanel1.Controls.Add(this.week6Day6Label, 5, 5);
+            this.tableLayoutPanel1.Controls.Add(this.week6Day5Label, 4, 5);
+            this.tableLayoutPanel1.Controls.Add(this.week6Day4Label, 3, 5);
+            this.tableLayoutPanel1.Controls.Add(this.week6Day3Label, 2, 5);
+            this.tableLayoutPanel1.Controls.Add(this.week6Day2Label, 1, 5);
+            this.tableLayoutPanel1.Controls.Add(this.week6Day1Label, 0, 5);
+            this.tableLayoutPanel1.Controls.Add(this.week5Day7Label, 6, 4);
+            this.tableLayoutPanel1.Controls.Add(this.week5Day6Label, 5, 4);
+            this.tableLayoutPanel1.Controls.Add(this.week5Day5Label, 4, 4);
+            this.tableLayoutPanel1.Controls.Add(this.week5Day4Label, 3, 4);
+            this.tableLayoutPanel1.Controls.Add(this.week5Day3Label, 2, 4);
+            this.tableLayoutPanel1.Controls.Add(this.week5Day2Label, 1, 4);
+            this.tableLayoutPanel1.Controls.Add(this.week5Day1Label, 0, 4);
+            this.tableLayoutPanel1.Controls.Add(this.week4Day7Label, 6, 3);
+            this.tableLayoutPanel1.Controls.Add(this.week4Day6Label, 5, 3);
+            this.tableLayoutPanel1.Controls.Add(this.week4Day5Label, 4, 3);
+            this.tableLayoutPanel1.Controls.Add(this.week4Day4Label, 3, 3);
+            this.tableLayoutPanel1.Controls.Add(this.week4Day3Label, 2, 3);
+            this.tableLayoutPanel1.Controls.Add(this.week4Day2Label, 1, 3);
+            this.tableLayoutPanel1.Controls.Add(this.week4Day1Label, 0, 3);
+            this.tableLayoutPanel1.Controls.Add(this.week3Day7Label, 6, 2);
+            this.tableLayoutPanel1.Controls.Add(this.week3Day6Label, 5, 2);
+            this.tableLayoutPanel1.Controls.Add(this.week3Day5Label, 4, 2);
+            this.tableLayoutPanel1.Controls.Add(this.week3Day4Label, 3, 2);
+            this.tableLayoutPanel1.Controls.Add(this.week3Day3Label, 2, 2);
+            this.tableLayoutPanel1.Controls.Add(this.week3Day2Label, 1, 2);
+            this.tableLayoutPanel1.Controls.Add(this.week3Day1Label, 0, 2);
+            this.tableLayoutPanel1.Controls.Add(this.week2Day7Label, 6, 1);
+            this.tableLayoutPanel1.Controls.Add(this.week2Day6Label, 5, 1);
+            this.tableLayoutPanel1.Controls.Add(this.week2Day5Label, 4, 1);
+            this.tableLayoutPanel1.Controls.Add(this.week2Day4Label, 3, 1);
+            this.tableLayoutPanel1.Controls.Add(this.week2Day3Label, 2, 1);
+            this.tableLayoutPanel1.Controls.Add(this.week2Day2Label, 1, 1);
+            this.tableLayoutPanel1.Controls.Add(this.week2Day1Label, 0, 1);
+            this.tableLayoutPanel1.Controls.Add(this.week1Day7Label, 6, 0);
+            this.tableLayoutPanel1.Controls.Add(this.week1Day6Label, 5, 0);
+            this.tableLayoutPanel1.Controls.Add(this.week1Day5Label, 4, 0);
+            this.tableLayoutPanel1.Controls.Add(this.week1Day4Label, 3, 0);
+            this.tableLayoutPanel1.Controls.Add(this.week1Day3Label, 2, 0);
+            this.tableLayoutPanel1.Controls.Add(this.week1Day2Label, 1, 0);
+            this.tableLayoutPanel1.Controls.Add(this.week1Day1Label, 0, 0);
+            this.tableLayoutPanel1.Location = new System.Drawing.Point(23, 203);
+            this.tableLayoutPanel1.Name = "tableLayoutPanel1";
+            this.tableLayoutPanel1.RowCount = 6;
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 16.66667F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 16.66667F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 16.66667F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 16.66667F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 16.66667F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 16.66667F));
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(686, 336);
+            this.tableLayoutPanel1.TabIndex = 82;
+            // 
+            // sundayLabel
+            // 
+            this.sundayLabel.AccessibleName = "mondayLabel";
+            this.sundayLabel.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.sundayLabel.AutoSize = true;
+            this.sundayLabel.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.sundayLabel.Location = new System.Drawing.Point(605, 10);
+            this.sundayLabel.Name = "sundayLabel";
+            this.sundayLabel.Size = new System.Drawing.Size(57, 20);
+            this.sundayLabel.TabIndex = 8;
+            this.sundayLabel.Text = "Sunday";
+            this.sundayLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // tuesdayLabel
+            // 
+            this.tuesdayLabel.AccessibleName = "mondayLabel";
+            this.tuesdayLabel.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.tuesdayLabel.AutoSize = true;
+            this.tuesdayLabel.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.tuesdayLabel.Location = new System.Drawing.Point(114, 10);
+            this.tuesdayLabel.Name = "tuesdayLabel";
+            this.tuesdayLabel.Size = new System.Drawing.Size(63, 20);
+            this.tuesdayLabel.TabIndex = 7;
+            this.tuesdayLabel.Text = "Tuesday";
+            this.tuesdayLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // wednesdayLabel
+            // 
+            this.wednesdayLabel.AccessibleName = "mondayLabel";
+            this.wednesdayLabel.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.wednesdayLabel.AutoSize = true;
+            this.wednesdayLabel.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.wednesdayLabel.Location = new System.Drawing.Point(200, 10);
+            this.wednesdayLabel.Name = "wednesdayLabel";
+            this.wednesdayLabel.Size = new System.Drawing.Size(85, 20);
+            this.wednesdayLabel.TabIndex = 6;
+            this.wednesdayLabel.Text = "Wednesday";
+            this.wednesdayLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // thursdayLabel
+            // 
+            this.thursdayLabel.AccessibleName = "mondayLabel";
+            this.thursdayLabel.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.thursdayLabel.AutoSize = true;
+            this.thursdayLabel.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.thursdayLabel.Location = new System.Drawing.Point(305, 10);
+            this.thursdayLabel.Name = "thursdayLabel";
+            this.thursdayLabel.Size = new System.Drawing.Size(68, 20);
+            this.thursdayLabel.TabIndex = 11;
+            this.thursdayLabel.Text = "Thursday";
+            this.thursdayLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // fridayLabel
+            // 
+            this.fridayLabel.AccessibleName = "mondayLabel";
+            this.fridayLabel.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.fridayLabel.AutoSize = true;
+            this.fridayLabel.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.fridayLabel.Location = new System.Drawing.Point(412, 10);
+            this.fridayLabel.Name = "fridayLabel";
+            this.fridayLabel.Size = new System.Drawing.Size(49, 20);
+            this.fridayLabel.TabIndex = 10;
+            this.fridayLabel.Text = "Friday";
+            this.fridayLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // saturdayLabel
+            // 
+            this.saturdayLabel.AccessibleName = "mondayLabel";
+            this.saturdayLabel.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.saturdayLabel.AutoSize = true;
+            this.saturdayLabel.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.saturdayLabel.Location = new System.Drawing.Point(500, 10);
+            this.saturdayLabel.Name = "saturdayLabel";
+            this.saturdayLabel.Size = new System.Drawing.Size(67, 20);
+            this.saturdayLabel.TabIndex = 9;
+            this.saturdayLabel.Text = "Saturday";
+            this.saturdayLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // mondayLabel
+            // 
+            this.mondayLabel.AccessibleName = "mondayLabel";
+            this.mondayLabel.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.mondayLabel.AutoSize = true;
+            this.mondayLabel.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.mondayLabel.Location = new System.Drawing.Point(17, 10);
+            this.mondayLabel.Name = "mondayLabel";
+            this.mondayLabel.Size = new System.Drawing.Size(63, 20);
+            this.mondayLabel.TabIndex = 5;
+            this.mondayLabel.Text = "Monday";
+            this.mondayLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // weekDaysTable
+            // 
+            this.weekDaysTable.BackColor = System.Drawing.Color.WhiteSmoke;
+            this.weekDaysTable.ColumnCount = 7;
+            this.weekDaysTable.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 14.28571F));
+            this.weekDaysTable.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 14.28571F));
+            this.weekDaysTable.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 14.28571F));
+            this.weekDaysTable.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 14.28571F));
+            this.weekDaysTable.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 14.28571F));
+            this.weekDaysTable.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 14.28571F));
+            this.weekDaysTable.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 14.28571F));
+            this.weekDaysTable.Controls.Add(this.mondayLabel, 0, 0);
+            this.weekDaysTable.Controls.Add(this.saturdayLabel, 5, 0);
+            this.weekDaysTable.Controls.Add(this.fridayLabel, 4, 0);
+            this.weekDaysTable.Controls.Add(this.thursdayLabel, 3, 0);
+            this.weekDaysTable.Controls.Add(this.wednesdayLabel, 2, 0);
+            this.weekDaysTable.Controls.Add(this.tuesdayLabel, 1, 0);
+            this.weekDaysTable.Controls.Add(this.sundayLabel, 6, 0);
+            this.weekDaysTable.Location = new System.Drawing.Point(23, 156);
+            this.weekDaysTable.Name = "weekDaysTable";
+            this.weekDaysTable.RowCount = 1;
+            this.weekDaysTable.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.weekDaysTable.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 41F));
+            this.weekDaysTable.Size = new System.Drawing.Size(686, 41);
+            this.weekDaysTable.TabIndex = 5;
+            // 
+            // refreshButton
+            // 
+            this.refreshButton.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.refreshButton.Location = new System.Drawing.Point(689, 101);
+            this.refreshButton.Name = "refreshButton";
+            this.refreshButton.Size = new System.Drawing.Size(120, 37);
+            this.refreshButton.TabIndex = 83;
+            this.refreshButton.Text = "Refresh";
+            this.refreshButton.UseVisualStyleBackColor = true;
             // 
             // SlothOrganizerForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 30F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
-            this.ClientSize = new System.Drawing.Size(883, 583);
+            this.ClientSize = new System.Drawing.Size(883, 544);
+            this.Controls.Add(this.refreshButton);
             this.Controls.Add(this.tableLayoutPanel1);
             this.Controls.Add(this.monthActiveLabel);
             this.Controls.Add(this.monthCompletedLabel);
@@ -1223,9 +1227,9 @@
             this.Margin = new System.Windows.Forms.Padding(6, 7, 6, 7);
             this.Name = "SlothOrganizerForm";
             this.Text = "Sloth Organizer";
+            this.tableLayoutPanel1.ResumeLayout(false);
             this.weekDaysTable.ResumeLayout(false);
             this.weekDaysTable.PerformLayout();
-            this.tableLayoutPanel1.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -1236,14 +1240,6 @@
         private System.Windows.Forms.ComboBox yearDropDown;
         private System.Windows.Forms.Label monthLabel;
         private System.Windows.Forms.ComboBox monthDropDown;
-        private System.Windows.Forms.TableLayoutPanel weekDaysTable;
-        private System.Windows.Forms.Label mondayLabel;
-        private System.Windows.Forms.Label saturdayLabel;
-        private System.Windows.Forms.Label fridayLabel;
-        private System.Windows.Forms.Label thursdayLabel;
-        private System.Windows.Forms.Label wednesdayLabel;
-        private System.Windows.Forms.Label tuesdayLabel;
-        private System.Windows.Forms.Label sundayLabel;
         private System.Windows.Forms.Button deleteTaskButton;
         private System.Windows.Forms.Button updateTaskButton;
         private System.Windows.Forms.Button viewTaskButton;
@@ -1280,49 +1276,58 @@
         private System.Windows.Forms.Label monthCompletedLabel;
         private System.Windows.Forms.Label monthPartiallyCompletedLabel;
         private System.Windows.Forms.Label monthFailedLabel;
-        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
-        private System.Windows.Forms.Label week6Day7Label;
-        private System.Windows.Forms.Label week6Day6Label;
-        private System.Windows.Forms.Label week6Day5Label;
-        private System.Windows.Forms.Label week6Day4Label;
-        private System.Windows.Forms.Label week6Day3Label;
-        private System.Windows.Forms.Label week6Day2Label;
-        private System.Windows.Forms.Label week6Day1Label;
-        private System.Windows.Forms.Label week5Day7Label;
-        private System.Windows.Forms.Label week5Day6Label;
-        private System.Windows.Forms.Label week5Day5Label;
-        private System.Windows.Forms.Label week5Day4Label;
-        private System.Windows.Forms.Label week5Day3Label;
-        private System.Windows.Forms.Label week5Day2Label;
-        private System.Windows.Forms.Label week5Day1Label;
-        private System.Windows.Forms.Label week4Day7Label;
-        private System.Windows.Forms.Label week4Day6Label;
-        private System.Windows.Forms.Label week4Day5Label;
-        private System.Windows.Forms.Label week4Day4Label;
-        private System.Windows.Forms.Label week4Day3Label;
-        private System.Windows.Forms.Label week4Day2Label;
-        private System.Windows.Forms.Label week4Day1Label;
-        private System.Windows.Forms.Label week3Day7Label;
-        private System.Windows.Forms.Label week3Day6Label;
-        private System.Windows.Forms.Label week3Day5Label;
-        private System.Windows.Forms.Label week3Day4Label;
-        private System.Windows.Forms.Label week3Day3Label;
-        private System.Windows.Forms.Label week3Day2Label;
-        private System.Windows.Forms.Label week3Day1Label;
-        private System.Windows.Forms.Label week2Day7Label;
-        private System.Windows.Forms.Label week2Day6Label;
-        private System.Windows.Forms.Label week2Day5Label;
-        private System.Windows.Forms.Label week2Day4Label;
-        private System.Windows.Forms.Label week2Day3Label;
-        private System.Windows.Forms.Label week2Day2Label;
-        private System.Windows.Forms.Label week2Day1Label;
-        private System.Windows.Forms.Label week1Day7Label;
-        private System.Windows.Forms.Label week1Day6Label;
-        private System.Windows.Forms.Label week1Day5Label;
-        private System.Windows.Forms.Label week1Day4Label;
-        private System.Windows.Forms.Label week1Day3Label;
-        private System.Windows.Forms.Label week1Day2Label;
         private System.Windows.Forms.Label week1Day1Label;
+        private System.Windows.Forms.Label week1Day2Label;
+        private System.Windows.Forms.Label week1Day3Label;
+        private System.Windows.Forms.Label week1Day4Label;
+        private System.Windows.Forms.Label week1Day5Label;
+        private System.Windows.Forms.Label week1Day6Label;
+        private System.Windows.Forms.Label week1Day7Label;
+        private System.Windows.Forms.Label week2Day1Label;
+        private System.Windows.Forms.Label week2Day2Label;
+        private System.Windows.Forms.Label week2Day3Label;
+        private System.Windows.Forms.Label week2Day4Label;
+        private System.Windows.Forms.Label week2Day5Label;
+        private System.Windows.Forms.Label week2Day6Label;
+        private System.Windows.Forms.Label week2Day7Label;
+        private System.Windows.Forms.Label week3Day1Label;
+        private System.Windows.Forms.Label week3Day2Label;
+        private System.Windows.Forms.Label week3Day3Label;
+        private System.Windows.Forms.Label week3Day4Label;
+        private System.Windows.Forms.Label week3Day5Label;
+        private System.Windows.Forms.Label week3Day6Label;
+        private System.Windows.Forms.Label week3Day7Label;
+        private System.Windows.Forms.Label week4Day1Label;
+        private System.Windows.Forms.Label week4Day2Label;
+        private System.Windows.Forms.Label week4Day3Label;
+        private System.Windows.Forms.Label week4Day4Label;
+        private System.Windows.Forms.Label week4Day5Label;
+        private System.Windows.Forms.Label week4Day6Label;
+        private System.Windows.Forms.Label week4Day7Label;
+        private System.Windows.Forms.Label week5Day1Label;
+        private System.Windows.Forms.Label week5Day2Label;
+        private System.Windows.Forms.Label week5Day3Label;
+        private System.Windows.Forms.Label week5Day4Label;
+        private System.Windows.Forms.Label week5Day5Label;
+        private System.Windows.Forms.Label week5Day6Label;
+        private System.Windows.Forms.Label week5Day7Label;
+        private System.Windows.Forms.Label week6Day1Label;
+        private System.Windows.Forms.Label week6Day2Label;
+        private System.Windows.Forms.Label week6Day3Label;
+        private System.Windows.Forms.Label week6Day4Label;
+        private System.Windows.Forms.Label week6Day5Label;
+        private System.Windows.Forms.Label week6Day6Label;
+        private System.Windows.Forms.Label week6Day7Label;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
+        private System.Windows.Forms.Label sundayLabel;
+        private System.Windows.Forms.Label tuesdayLabel;
+        private System.Windows.Forms.Label wednesdayLabel;
+        private System.Windows.Forms.Label thursdayLabel;
+        private System.Windows.Forms.Label fridayLabel;
+        private System.Windows.Forms.Label saturdayLabel;
+        private System.Windows.Forms.Label mondayLabel;
+        private System.Windows.Forms.TableLayoutPanel weekDaysTable;
+        private System.Windows.Forms.Button refreshButton;
     }
 }
 

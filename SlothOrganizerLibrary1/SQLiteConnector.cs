@@ -47,6 +47,23 @@ namespace SlothOrganizerLibrary
                 ExecuteQuery($"delete from Tasks where id={task.Id}");
             }
         }
+        public static List<Assignment> GetAllTasks()
+        {
+            List<Assignment> tasks = new List<Assignment>();
+            using(SQLiteConnection connection = new SQLiteConnection(GetConnectionString()))
+            {
+                connection.Open();
+                string query = "select * from Tasks";
+                SQLiteCommand command = new SQLiteCommand(query, connection);
+                SQLiteDataReader reader = command.ExecuteReader();
+                while(reader.Read())
+                {
+                    Assignment assignment = new Assignment((int)reader.GetInt64(0), reader.GetString(1), DateTime.Parse(reader.GetString(5)), DateTime.Parse(reader.GetString(6)), reader.GetInt32(4));
+                    tasks.Add(assignment);
+                }
+            }
+            return tasks;
+        }
         public static List<Assignment> GetSubTasks(Assignment task)
         {
             List<Assignment> subTasks = new List<Assignment>();
@@ -54,14 +71,13 @@ namespace SlothOrganizerLibrary
             {
                 connection.Open();
 
-                string query = $"select from Tasks where ParentId={task.Id}";
+                string query = $"select * from Tasks where ParentId={(Int64)task.Id}";
                 SQLiteCommand command = new SQLiteCommand(query, connection);
                 SQLiteDataReader reader = command.ExecuteReader();
 
                 while (reader.Read())
                 {
-                    Assignment subTask = new Assignment(reader.GetString(1), reader.GetDateTime(5),
-                                            reader.GetDateTime(6), reader.GetBoolean(2));
+                    Assignment subTask = new Assignment(reader.GetString(1), DateTime.Parse(reader.GetString(5)), DateTime.Parse(reader.GetString(6)), reader.GetInt32(4));
                     subTasks.Add(subTask);
                 }
             }

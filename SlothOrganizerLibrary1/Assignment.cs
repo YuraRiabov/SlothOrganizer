@@ -21,19 +21,28 @@ namespace SlothOrganizerLibrary
             TimeLimits = new Term();
             IsSubTask = false;
         }
-        public Assignment(string text, DateTime start, DateTime end, bool isSubTask)
+        public Assignment(string text, DateTime start, DateTime end, int state)
         {
             Text = text;
             TimeLimits.Start = start;
             TimeLimits.End = end;
+            State = (TaskState)state;
             UpdateState();
-            IsSubTask = isSubTask;
         }
         public Assignment(bool isSubTask)
         {
             Text = "";
             TimeLimits = new Term();
             IsSubTask = isSubTask;
+        }
+        public Assignment(int id, string text, DateTime start, DateTime end, int state)
+        {
+            Text = text;
+            TimeLimits.Start = start;
+            TimeLimits.End = end;
+            State = (TaskState)state;
+            UpdateState();
+            Id = id;
         }
         public void UpdateState()
         {
