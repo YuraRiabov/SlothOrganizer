@@ -28,27 +28,23 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(CreateTaskForm));
             this.createTaskLabel = new System.Windows.Forms.Label();
             this.startSelectionLabel = new System.Windows.Forms.Label();
             this.endSelectionLabel = new System.Windows.Forms.Label();
-            this.subTaskListBox = new System.Windows.Forms.ListBox();
+            this.subtaskListBox = new System.Windows.Forms.ListBox();
             this.subtaskListLabel = new System.Windows.Forms.Label();
             this.deleteSubtaskButton = new System.Windows.Forms.Button();
             this.createSubtaskButton = new System.Windows.Forms.Button();
             this.createTaskButton = new System.Windows.Forms.Button();
             this.startPicker = new System.Windows.Forms.DateTimePicker();
             this.endPicker = new System.Windows.Forms.DateTimePicker();
-            this.textTextBox = new System.Windows.Forms.TextBox();
-            this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.textLabel = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // createTaskLabel
             // 
             this.createTaskLabel.AutoSize = true;
-            this.createTaskLabel.Font = new System.Drawing.Font("Segoe UI", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.createTaskLabel.Font = new System.Drawing.Font("Segoe UI", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.createTaskLabel.Location = new System.Drawing.Point(128, 7);
             this.createTaskLabel.Name = "createTaskLabel";
             this.createTaskLabel.Size = new System.Drawing.Size(148, 37);
@@ -58,7 +54,7 @@
             // startSelectionLabel
             // 
             this.startSelectionLabel.AutoSize = true;
-            this.startSelectionLabel.Location = new System.Drawing.Point(12, 115);
+            this.startSelectionLabel.Location = new System.Drawing.Point(12, 44);
             this.startSelectionLabel.Name = "startSelectionLabel";
             this.startSelectionLabel.Size = new System.Drawing.Size(210, 30);
             this.startSelectionLabel.TabIndex = 1;
@@ -67,25 +63,25 @@
             // endSelectionLabel
             // 
             this.endSelectionLabel.AutoSize = true;
-            this.endSelectionLabel.Location = new System.Drawing.Point(12, 189);
+            this.endSelectionLabel.Location = new System.Drawing.Point(12, 118);
             this.endSelectionLabel.Name = "endSelectionLabel";
             this.endSelectionLabel.Size = new System.Drawing.Size(204, 30);
             this.endSelectionLabel.TabIndex = 6;
             this.endSelectionLabel.Text = "Choose ending date:";
             // 
-            // subTaskListBox
+            // subtaskListBox
             // 
-            this.subTaskListBox.FormattingEnabled = true;
-            this.subTaskListBox.ItemHeight = 30;
-            this.subTaskListBox.Location = new System.Drawing.Point(18, 307);
-            this.subTaskListBox.Name = "subTaskListBox";
-            this.subTaskListBox.Size = new System.Drawing.Size(374, 124);
-            this.subTaskListBox.TabIndex = 10;
+            this.subtaskListBox.FormattingEnabled = true;
+            this.subtaskListBox.ItemHeight = 30;
+            this.subtaskListBox.Location = new System.Drawing.Point(18, 236);
+            this.subtaskListBox.Name = "subtaskListBox";
+            this.subtaskListBox.Size = new System.Drawing.Size(374, 124);
+            this.subtaskListBox.TabIndex = 10;
             // 
             // subtaskListLabel
             // 
             this.subtaskListLabel.AutoSize = true;
-            this.subtaskListLabel.Location = new System.Drawing.Point(12, 274);
+            this.subtaskListLabel.Location = new System.Drawing.Point(12, 203);
             this.subtaskListLabel.Name = "subtaskListLabel";
             this.subtaskListLabel.Size = new System.Drawing.Size(122, 30);
             this.subtaskListLabel.TabIndex = 11;
@@ -93,30 +89,28 @@
             // 
             // deleteSubtaskButton
             // 
-            this.deleteSubtaskButton.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.deleteSubtaskButton.Location = new System.Drawing.Point(242, 437);
+            this.deleteSubtaskButton.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.deleteSubtaskButton.Location = new System.Drawing.Point(242, 366);
             this.deleteSubtaskButton.Name = "deleteSubtaskButton";
             this.deleteSubtaskButton.Size = new System.Drawing.Size(150, 37);
             this.deleteSubtaskButton.TabIndex = 52;
             this.deleteSubtaskButton.Text = "Delete subtask";
             this.deleteSubtaskButton.UseVisualStyleBackColor = true;
-            this.deleteSubtaskButton.Click += new System.EventHandler(this.deleteSubtaskButton_Click);
             // 
             // createSubtaskButton
             // 
-            this.createSubtaskButton.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.createSubtaskButton.Location = new System.Drawing.Point(18, 437);
+            this.createSubtaskButton.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.createSubtaskButton.Location = new System.Drawing.Point(18, 366);
             this.createSubtaskButton.Name = "createSubtaskButton";
             this.createSubtaskButton.Size = new System.Drawing.Size(143, 37);
             this.createSubtaskButton.TabIndex = 49;
             this.createSubtaskButton.Text = "Create subtask";
             this.createSubtaskButton.UseVisualStyleBackColor = true;
-            this.createSubtaskButton.Click += new System.EventHandler(this.createSubtaskButton_Click);
             // 
             // createTaskButton
             // 
-            this.createTaskButton.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.createTaskButton.Location = new System.Drawing.Point(135, 511);
+            this.createTaskButton.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.createTaskButton.Location = new System.Drawing.Point(135, 440);
             this.createTaskButton.Name = "createTaskButton";
             this.createTaskButton.Size = new System.Drawing.Size(139, 53);
             this.createTaskButton.TabIndex = 53;
@@ -126,7 +120,7 @@
             // 
             // startPicker
             // 
-            this.startPicker.Location = new System.Drawing.Point(17, 151);
+            this.startPicker.Location = new System.Drawing.Point(17, 80);
             this.startPicker.Name = "startPicker";
             this.startPicker.Size = new System.Drawing.Size(375, 35);
             this.startPicker.TabIndex = 54;
@@ -134,51 +128,28 @@
             // 
             // endPicker
             // 
-            this.endPicker.Location = new System.Drawing.Point(18, 236);
+            this.endPicker.Location = new System.Drawing.Point(18, 165);
             this.endPicker.Name = "endPicker";
             this.endPicker.Size = new System.Drawing.Size(374, 35);
             this.endPicker.TabIndex = 55;
-            // 
-            // textTextBox
-            // 
-            this.textTextBox.Location = new System.Drawing.Point(18, 77);
-            this.textTextBox.Name = "textTextBox";
-            this.textTextBox.Size = new System.Drawing.Size(374, 35);
-            this.textTextBox.TabIndex = 56;
-            // 
-            // contextMenuStrip1
-            // 
-            this.contextMenuStrip1.Name = "contextMenuStrip1";
-            this.contextMenuStrip1.Size = new System.Drawing.Size(61, 4);
-            // 
-            // textLabel
-            // 
-            this.textLabel.AutoSize = true;
-            this.textLabel.Location = new System.Drawing.Point(11, 44);
-            this.textLabel.Name = "textLabel";
-            this.textLabel.Size = new System.Drawing.Size(211, 30);
-            this.textLabel.TabIndex = 57;
-            this.textLabel.Text = "Enter text of the task:";
             // 
             // CreateTaskForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 30F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
-            this.ClientSize = new System.Drawing.Size(411, 572);
-            this.Controls.Add(this.textLabel);
-            this.Controls.Add(this.textTextBox);
+            this.ClientSize = new System.Drawing.Size(411, 520);
             this.Controls.Add(this.endPicker);
             this.Controls.Add(this.startPicker);
             this.Controls.Add(this.createTaskButton);
             this.Controls.Add(this.deleteSubtaskButton);
             this.Controls.Add(this.createSubtaskButton);
             this.Controls.Add(this.subtaskListLabel);
-            this.Controls.Add(this.subTaskListBox);
+            this.Controls.Add(this.subtaskListBox);
             this.Controls.Add(this.endSelectionLabel);
             this.Controls.Add(this.startSelectionLabel);
             this.Controls.Add(this.createTaskLabel);
-            this.Font = new System.Drawing.Font("Segoe UI", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Font = new System.Drawing.Font("Segoe UI", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Margin = new System.Windows.Forms.Padding(6, 7, 6, 7);
             this.Name = "CreateTaskForm";
@@ -196,12 +167,9 @@
         private System.Windows.Forms.Label subtaskListLabel;
         private System.Windows.Forms.Button deleteSubtaskButton;
         private System.Windows.Forms.Button createSubtaskButton;
-        private System.Windows.Forms.ListBox subTaskListBox;
+        private System.Windows.Forms.ListBox subtaskListBox;
         private System.Windows.Forms.Button createTaskButton;
         private System.Windows.Forms.DateTimePicker startPicker;
         private System.Windows.Forms.DateTimePicker endPicker;
-        private System.Windows.Forms.TextBox textTextBox;
-        private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
-        private System.Windows.Forms.Label textLabel;
     }
 }

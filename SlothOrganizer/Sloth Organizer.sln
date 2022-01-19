@@ -5,7 +5,7 @@ VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SlothOrganizerUI", "SlothOrganizerUI.csproj", "{5BCBED1B-9083-4778-A788-849021046474}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SlothOrganizerLibrary", "..\SlothOrganizerLibrary1\SlothOrganizerLibrary.csproj", "{ED1E42E9-943D-4C27-A67E-4DD7B58A433D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SlothOrganizerLibrary", "..\SlothOrganizerLibrary\SlothOrganizerLibrary.csproj", "{2C9EC07A-39FC-4499-BD36-A2F04DDFEA1B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -17,10 +17,10 @@ Global
 		{5BCBED1B-9083-4778-A788-849021046474}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5BCBED1B-9083-4778-A788-849021046474}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5BCBED1B-9083-4778-A788-849021046474}.Release|Any CPU.Build.0 = Release|Any CPU
-		{ED1E42E9-943D-4C27-A67E-4DD7B58A433D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{ED1E42E9-943D-4C27-A67E-4DD7B58A433D}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{ED1E42E9-943D-4C27-A67E-4DD7B58A433D}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{ED1E42E9-943D-4C27-A67E-4DD7B58A433D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2C9EC07A-39FC-4499-BD36-A2F04DDFEA1B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2C9EC07A-39FC-4499-BD36-A2F04DDFEA1B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2C9EC07A-39FC-4499-BD36-A2F04DDFEA1B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2C9EC07A-39FC-4499-BD36-A2F04DDFEA1B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

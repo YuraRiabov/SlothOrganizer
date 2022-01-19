@@ -4,12 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SlothOrganizerLibrary.Models
+namespace SlothOrganizerLibrary
 {
     public class TimePeriod
     {
-        public DateOnly Start { get; set; }
-        public DateOnly End { get; private set; }
+        public DateTime Start { get; set; }
+        public DateTime End { get; private set; }
         public int Length { get; set; }
         public List<TimePeriod> ChildrenTimePeriods { get; set; } = new List<TimePeriod>();
         public int ActiveNumber { get; set; } = 0;

@@ -4,12 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SlothOrganizerLibrary.Models
+namespace SlothOrganizerLibrary
 {
     public class Calendar
     {
-        public List<Task> Tasks { get; set; } = new List<Task>();
+        public List<Assignment> Tasks { get; set; } = new List<Assignment>();
         public List<TimePeriod> Years { get; set; } = new List<TimePeriod>();
-        public DateOnly CurrentDate { get; set; }
+        public DateTime CurrentDate { get; set; }
     }
 }

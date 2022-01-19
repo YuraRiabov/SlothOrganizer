@@ -9,7 +9,7 @@ namespace SlothOrganizerLibrary
     public enum TaskState
     {
         Inactive,
-        Active, // TODO - change all form namings from InProcess to Active
+        Active,
         Completed,
         PartiallyCompleted,
         Failed

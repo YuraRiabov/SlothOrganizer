@@ -16,8 +16,7 @@ namespace Sloth_Organizer
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            //Application.Run(new SlothOrganizerForm());
-            Application.Run(new CreateTaskForm());
+            Application.Run(new SlothOrganizerForm());
         }
     }
 }

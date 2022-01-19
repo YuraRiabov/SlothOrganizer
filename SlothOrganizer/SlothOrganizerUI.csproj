@@ -177,8 +177,8 @@
     <None Include="Resources\green circle.png" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\SlothOrganizerLibrary1\SlothOrganizerLibrary.csproj">
-      <Project>{ED1E42E9-943D-4C27-A67E-4DD7B58A433D}</Project>
+    <ProjectReference Include="..\SlothOrganizerLibrary\SlothOrganizerLibrary.csproj">
+      <Project>{2c9ec07a-39fc-4499-bd36-a2f04ddfea1b}</Project>
       <Name>SlothOrganizerLibrary</Name>
     </ProjectReference>
   </ItemGroup>
