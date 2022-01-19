@@ -47,6 +47,22 @@ namespace SlothOrganizerLibrary
                 ExecuteQuery($"delete from Tasks where id={task.Id}");
             }
         }
+
+        public static void DeleteSubTasks(Assignment task)
+        {
+            foreach (Assignment st in task.SubTasks)
+            {
+                Assignment subTask = st;
+                if(subTask.SubTasks.Count != 0)
+                {
+                    DeleteSubTasks(subTask);
+                }
+                using(SQLiteConnection connection = new SQLiteConnection(GetConnectionString()))
+                {
+                    ExecuteQuery($"delete from Tasks where ParentId={task.Id}");
+                }
+            }
+        }
         public static List<Assignment> GetAllTasks()
         {
             List<Assignment> tasks = new List<Assignment>();

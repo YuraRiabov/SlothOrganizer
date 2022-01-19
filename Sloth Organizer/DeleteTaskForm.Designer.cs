@@ -29,39 +29,20 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(DeleteTaskForm));
-            this.chooseMonthDropDown = new System.Windows.Forms.ComboBox();
-            this.chooseDayDropDown = new System.Windows.Forms.ComboBox();
-            this.chooseYearDropDown = new System.Windows.Forms.ComboBox();
             this.deleteTaskLabel = new System.Windows.Forms.Label();
-            this.chooseWeekDropDown = new System.Windows.Forms.ComboBox();
+            this.deleteWithSubTaskButton = new System.Windows.Forms.Button();
+            this.allCheckBox = new System.Windows.Forms.CheckBox();
+            this.endPicker = new System.Windows.Forms.DateTimePicker();
+            this.startPicker = new System.Windows.Forms.DateTimePicker();
+            this.endSelectionLabel = new System.Windows.Forms.Label();
+            this.failedCheckBox = new System.Windows.Forms.CheckBox();
+            this.partiallyCompletedChackBox = new System.Windows.Forms.CheckBox();
+            this.completedCheckBox = new System.Windows.Forms.CheckBox();
+            this.activeCheckBox = new System.Windows.Forms.CheckBox();
+            this.taskStatusSelectionLabel = new System.Windows.Forms.Label();
             this.taskListBox = new System.Windows.Forms.ListBox();
-            this.taskSelectionLabel = new System.Windows.Forms.Label();
-            this.deleteTaskButton = new System.Windows.Forms.Button();
+            this.deleteWithoutSubTaskButton = new System.Windows.Forms.Button();
             this.SuspendLayout();
-            // 
-            // chooseMonthDropDown
-            // 
-            this.chooseMonthDropDown.FormattingEnabled = true;
-            this.chooseMonthDropDown.Location = new System.Drawing.Point(139, 79);
-            this.chooseMonthDropDown.Name = "chooseMonthDropDown";
-            this.chooseMonthDropDown.Size = new System.Drawing.Size(121, 38);
-            this.chooseMonthDropDown.TabIndex = 8;
-            // 
-            // chooseDayDropDown
-            // 
-            this.chooseDayDropDown.FormattingEnabled = true;
-            this.chooseDayDropDown.Location = new System.Drawing.Point(393, 79);
-            this.chooseDayDropDown.Name = "chooseDayDropDown";
-            this.chooseDayDropDown.Size = new System.Drawing.Size(121, 38);
-            this.chooseDayDropDown.TabIndex = 7;
-            // 
-            // chooseYearDropDown
-            // 
-            this.chooseYearDropDown.FormattingEnabled = true;
-            this.chooseYearDropDown.Location = new System.Drawing.Point(12, 79);
-            this.chooseYearDropDown.Name = "chooseYearDropDown";
-            this.chooseYearDropDown.Size = new System.Drawing.Size(121, 38);
-            this.chooseYearDropDown.TabIndex = 6;
             // 
             // deleteTaskLabel
             // 
@@ -73,56 +54,146 @@
             this.deleteTaskLabel.TabIndex = 9;
             this.deleteTaskLabel.Text = "Delete task";
             // 
-            // chooseWeekDropDown
+            // deleteWithSubTaskButton
             // 
-            this.chooseWeekDropDown.FormattingEnabled = true;
-            this.chooseWeekDropDown.Location = new System.Drawing.Point(266, 79);
-            this.chooseWeekDropDown.Name = "chooseWeekDropDown";
-            this.chooseWeekDropDown.Size = new System.Drawing.Size(121, 38);
-            this.chooseWeekDropDown.TabIndex = 10;
+            this.deleteWithSubTaskButton.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.deleteWithSubTaskButton.Location = new System.Drawing.Point(12, 431);
+            this.deleteWithSubTaskButton.Name = "deleteWithSubTaskButton";
+            this.deleteWithSubTaskButton.Size = new System.Drawing.Size(228, 54);
+            this.deleteWithSubTaskButton.TabIndex = 49;
+            this.deleteWithSubTaskButton.Text = "Delete with subtasks";
+            this.deleteWithSubTaskButton.UseVisualStyleBackColor = true;
+            this.deleteWithSubTaskButton.Click += new System.EventHandler(this.deleteWithSubTaskButton_Click);
+            // 
+            // allCheckBox
+            // 
+            this.allCheckBox.AutoSize = true;
+            this.allCheckBox.Location = new System.Drawing.Point(12, 79);
+            this.allCheckBox.Name = "allCheckBox";
+            this.allCheckBox.Size = new System.Drawing.Size(56, 34);
+            this.allCheckBox.TabIndex = 69;
+            this.allCheckBox.Text = "All";
+            this.allCheckBox.UseVisualStyleBackColor = true;
+            this.allCheckBox.CheckedChanged += new System.EventHandler(this.allCheckBox_CheckedChanged);
+            // 
+            // endPicker
+            // 
+            this.endPicker.Location = new System.Drawing.Point(12, 230);
+            this.endPicker.Name = "endPicker";
+            this.endPicker.Size = new System.Drawing.Size(375, 35);
+            this.endPicker.TabIndex = 68;
+            this.endPicker.ValueChanged += new System.EventHandler(this.endPicker_ValueChanged);
+            // 
+            // startPicker
+            // 
+            this.startPicker.Location = new System.Drawing.Point(12, 189);
+            this.startPicker.Name = "startPicker";
+            this.startPicker.Size = new System.Drawing.Size(375, 35);
+            this.startPicker.TabIndex = 67;
+            this.startPicker.Value = new System.DateTime(2022, 1, 18, 0, 0, 0, 0);
+            this.startPicker.ValueChanged += new System.EventHandler(this.startPicker_ValueChanged);
+            // 
+            // endSelectionLabel
+            // 
+            this.endSelectionLabel.AutoSize = true;
+            this.endSelectionLabel.Location = new System.Drawing.Point(12, 156);
+            this.endSelectionLabel.Name = "endSelectionLabel";
+            this.endSelectionLabel.Size = new System.Drawing.Size(330, 30);
+            this.endSelectionLabel.TabIndex = 66;
+            this.endSelectionLabel.Text = "Choose starting and ending dates:";
+            // 
+            // failedCheckBox
+            // 
+            this.failedCheckBox.AutoSize = true;
+            this.failedCheckBox.Location = new System.Drawing.Point(226, 119);
+            this.failedCheckBox.Name = "failedCheckBox";
+            this.failedCheckBox.Size = new System.Drawing.Size(85, 34);
+            this.failedCheckBox.TabIndex = 65;
+            this.failedCheckBox.Text = "Failed";
+            this.failedCheckBox.UseVisualStyleBackColor = true;
+            this.failedCheckBox.CheckedChanged += new System.EventHandler(this.failedCheckBox_CheckedChanged);
+            // 
+            // partiallyCompletedChackBox
+            // 
+            this.partiallyCompletedChackBox.AutoSize = true;
+            this.partiallyCompletedChackBox.Location = new System.Drawing.Point(12, 119);
+            this.partiallyCompletedChackBox.Name = "partiallyCompletedChackBox";
+            this.partiallyCompletedChackBox.Size = new System.Drawing.Size(208, 34);
+            this.partiallyCompletedChackBox.TabIndex = 64;
+            this.partiallyCompletedChackBox.Text = "Partially completed";
+            this.partiallyCompletedChackBox.UseVisualStyleBackColor = true;
+            this.partiallyCompletedChackBox.CheckedChanged += new System.EventHandler(this.partiallyCompletedChackBox_CheckedChanged);
+            // 
+            // completedCheckBox
+            // 
+            this.completedCheckBox.AutoSize = true;
+            this.completedCheckBox.Location = new System.Drawing.Point(169, 79);
+            this.completedCheckBox.Name = "completedCheckBox";
+            this.completedCheckBox.Size = new System.Drawing.Size(133, 34);
+            this.completedCheckBox.TabIndex = 63;
+            this.completedCheckBox.Text = "Completed";
+            this.completedCheckBox.UseVisualStyleBackColor = true;
+            this.completedCheckBox.CheckedChanged += new System.EventHandler(this.completedCheckBox_CheckedChanged);
+            // 
+            // activeCheckBox
+            // 
+            this.activeCheckBox.AutoSize = true;
+            this.activeCheckBox.Location = new System.Drawing.Point(74, 79);
+            this.activeCheckBox.Name = "activeCheckBox";
+            this.activeCheckBox.Size = new System.Drawing.Size(89, 34);
+            this.activeCheckBox.TabIndex = 62;
+            this.activeCheckBox.Text = "Active";
+            this.activeCheckBox.UseVisualStyleBackColor = true;
+            this.activeCheckBox.CheckedChanged += new System.EventHandler(this.activeCheckBox_CheckedChanged);
+            // 
+            // taskStatusSelectionLabel
+            // 
+            this.taskStatusSelectionLabel.AutoSize = true;
+            this.taskStatusSelectionLabel.Location = new System.Drawing.Point(12, 46);
+            this.taskStatusSelectionLabel.Name = "taskStatusSelectionLabel";
+            this.taskStatusSelectionLabel.Size = new System.Drawing.Size(401, 30);
+            this.taskStatusSelectionLabel.TabIndex = 61;
+            this.taskStatusSelectionLabel.Text = "Choose status of task you want to delete :";
             // 
             // taskListBox
             // 
             this.taskListBox.FormattingEnabled = true;
             this.taskListBox.ItemHeight = 30;
-            this.taskListBox.Location = new System.Drawing.Point(12, 123);
+            this.taskListBox.Location = new System.Drawing.Point(12, 271);
             this.taskListBox.Name = "taskListBox";
             this.taskListBox.Size = new System.Drawing.Size(502, 154);
-            this.taskListBox.TabIndex = 11;
+            this.taskListBox.TabIndex = 60;
             // 
-            // taskSelectionLabel
+            // deleteWithoutSubTaskButton
             // 
-            this.taskSelectionLabel.AutoSize = true;
-            this.taskSelectionLabel.Location = new System.Drawing.Point(12, 46);
-            this.taskSelectionLabel.Name = "taskSelectionLabel";
-            this.taskSelectionLabel.Size = new System.Drawing.Size(235, 30);
-            this.taskSelectionLabel.TabIndex = 12;
-            this.taskSelectionLabel.Text = "Choose a task to delete:";
-            // 
-            // deleteTaskButton
-            // 
-            this.deleteTaskButton.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.deleteTaskButton.Location = new System.Drawing.Point(173, 302);
-            this.deleteTaskButton.Name = "deleteTaskButton";
-            this.deleteTaskButton.Size = new System.Drawing.Size(163, 54);
-            this.deleteTaskButton.TabIndex = 49;
-            this.deleteTaskButton.Text = "Delete task";
-            this.deleteTaskButton.UseVisualStyleBackColor = true;
+            this.deleteWithoutSubTaskButton.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.deleteWithoutSubTaskButton.Location = new System.Drawing.Point(286, 431);
+            this.deleteWithoutSubTaskButton.Name = "deleteWithoutSubTaskButton";
+            this.deleteWithoutSubTaskButton.Size = new System.Drawing.Size(228, 54);
+            this.deleteWithoutSubTaskButton.TabIndex = 70;
+            this.deleteWithoutSubTaskButton.Text = "Delete without subtasks";
+            this.deleteWithoutSubTaskButton.UseVisualStyleBackColor = true;
+            this.deleteWithoutSubTaskButton.Click += new System.EventHandler(this.deleteWithoutSubTaskButton_Click);
             // 
             // DeleteTaskForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 30F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
-            this.ClientSize = new System.Drawing.Size(526, 368);
-            this.Controls.Add(this.deleteTaskButton);
-            this.Controls.Add(this.taskSelectionLabel);
+            this.ClientSize = new System.Drawing.Size(526, 496);
+            this.Controls.Add(this.deleteWithoutSubTaskButton);
+            this.Controls.Add(this.allCheckBox);
+            this.Controls.Add(this.endPicker);
+            this.Controls.Add(this.startPicker);
+            this.Controls.Add(this.endSelectionLabel);
+            this.Controls.Add(this.failedCheckBox);
+            this.Controls.Add(this.partiallyCompletedChackBox);
+            this.Controls.Add(this.completedCheckBox);
+            this.Controls.Add(this.activeCheckBox);
+            this.Controls.Add(this.taskStatusSelectionLabel);
             this.Controls.Add(this.taskListBox);
-            this.Controls.Add(this.chooseWeekDropDown);
+            this.Controls.Add(this.deleteWithSubTaskButton);
             this.Controls.Add(this.deleteTaskLabel);
-            this.Controls.Add(this.chooseMonthDropDown);
-            this.Controls.Add(this.chooseDayDropDown);
-            this.Controls.Add(this.chooseYearDropDown);
             this.Font = new System.Drawing.Font("Segoe UI", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Margin = new System.Windows.Forms.Padding(6, 7, 6, 7);
@@ -134,14 +205,18 @@
         }
 
         #endregion
-
-        private System.Windows.Forms.ComboBox chooseMonthDropDown;
-        private System.Windows.Forms.ComboBox chooseDayDropDown;
-        private System.Windows.Forms.ComboBox chooseYearDropDown;
         private System.Windows.Forms.Label deleteTaskLabel;
-        private System.Windows.Forms.ComboBox chooseWeekDropDown;
+        private System.Windows.Forms.Button deleteWithSubTaskButton;
+        private System.Windows.Forms.CheckBox allCheckBox;
+        private System.Windows.Forms.DateTimePicker endPicker;
+        private System.Windows.Forms.DateTimePicker startPicker;
+        private System.Windows.Forms.Label endSelectionLabel;
+        private System.Windows.Forms.CheckBox failedCheckBox;
+        private System.Windows.Forms.CheckBox partiallyCompletedChackBox;
+        private System.Windows.Forms.CheckBox completedCheckBox;
+        private System.Windows.Forms.CheckBox activeCheckBox;
+        private System.Windows.Forms.Label taskStatusSelectionLabel;
         private System.Windows.Forms.ListBox taskListBox;
-        private System.Windows.Forms.Label taskSelectionLabel;
-        private System.Windows.Forms.Button deleteTaskButton;
+        private System.Windows.Forms.Button deleteWithoutSubTaskButton;
     }
 }
