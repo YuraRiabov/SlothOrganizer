@@ -188,6 +188,7 @@
             this.updateTaskButton.TabIndex = 47;
             this.updateTaskButton.Text = "Update task";
             this.updateTaskButton.UseVisualStyleBackColor = true;
+            this.updateTaskButton.Click += new System.EventHandler(this.updateTaskButton_Click);
             // 
             // viewTaskButton
             // 

@@ -47,7 +47,7 @@
             this.endPicker = new System.Windows.Forms.DateTimePicker();
             this.startPicker = new System.Windows.Forms.DateTimePicker();
             this.endSelectionLabel = new System.Windows.Forms.Label();
-            this.allCheckBox = new System.Windows.Forms.CheckBox();
+            this.inactiveCheckBox = new System.Windows.Forms.CheckBox();
             this.SuspendLayout();
             // 
             // taskStatusSelectionLabel
@@ -149,7 +149,7 @@
             // activeCheckBox
             // 
             this.activeCheckBox.AutoSize = true;
-            this.activeCheckBox.Location = new System.Drawing.Point(74, 79);
+            this.activeCheckBox.Location = new System.Drawing.Point(122, 79);
             this.activeCheckBox.Name = "activeCheckBox";
             this.activeCheckBox.Size = new System.Drawing.Size(89, 34);
             this.activeCheckBox.TabIndex = 28;
@@ -160,7 +160,7 @@
             // completedCheckBox
             // 
             this.completedCheckBox.AutoSize = true;
-            this.completedCheckBox.Location = new System.Drawing.Point(169, 79);
+            this.completedCheckBox.Location = new System.Drawing.Point(217, 79);
             this.completedCheckBox.Name = "completedCheckBox";
             this.completedCheckBox.Size = new System.Drawing.Size(133, 34);
             this.completedCheckBox.TabIndex = 29;
@@ -216,16 +216,16 @@
             this.endSelectionLabel.TabIndex = 56;
             this.endSelectionLabel.Text = "Choose starting and ending dates:";
             // 
-            // allCheckBox
+            // inactiveCheckBox
             // 
-            this.allCheckBox.AutoSize = true;
-            this.allCheckBox.Location = new System.Drawing.Point(12, 79);
-            this.allCheckBox.Name = "allCheckBox";
-            this.allCheckBox.Size = new System.Drawing.Size(56, 34);
-            this.allCheckBox.TabIndex = 59;
-            this.allCheckBox.Text = "All";
-            this.allCheckBox.UseVisualStyleBackColor = true;
-            this.allCheckBox.CheckedChanged += new System.EventHandler(this.allCheckBox_CheckedChanged);
+            this.inactiveCheckBox.AutoSize = true;
+            this.inactiveCheckBox.Location = new System.Drawing.Point(12, 79);
+            this.inactiveCheckBox.Name = "inactiveCheckBox";
+            this.inactiveCheckBox.Size = new System.Drawing.Size(104, 34);
+            this.inactiveCheckBox.TabIndex = 81;
+            this.inactiveCheckBox.Text = "Inactive";
+            this.inactiveCheckBox.UseVisualStyleBackColor = true;
+            this.inactiveCheckBox.CheckedChanged += new System.EventHandler(this.inactiveCheckBox_CheckedChanged);
             // 
             // ViewTasksForm
             // 
@@ -233,7 +233,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
             this.ClientSize = new System.Drawing.Size(523, 703);
-            this.Controls.Add(this.allCheckBox);
+            this.Controls.Add(this.inactiveCheckBox);
             this.Controls.Add(this.endPicker);
             this.Controls.Add(this.startPicker);
             this.Controls.Add(this.endSelectionLabel);
@@ -282,6 +282,6 @@
         private System.Windows.Forms.DateTimePicker endPicker;
         private System.Windows.Forms.DateTimePicker startPicker;
         private System.Windows.Forms.Label endSelectionLabel;
-        private System.Windows.Forms.CheckBox allCheckBox;
+        private System.Windows.Forms.CheckBox inactiveCheckBox;
     }
 }

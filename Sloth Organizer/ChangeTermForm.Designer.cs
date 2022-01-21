@@ -74,6 +74,7 @@
             this.updateTaskButton.TabIndex = 48;
             this.updateTaskButton.Text = "Update task";
             this.updateTaskButton.UseVisualStyleBackColor = true;
+            this.updateTaskButton.Click += new System.EventHandler(this.updateTaskButton_Click);
             // 
             // startPicker
             // 
@@ -106,7 +107,6 @@
             this.Margin = new System.Windows.Forms.Padding(6, 7, 6, 7);
             this.Name = "ChangeTermForm";
             this.Text = "Change Term";
-            this.Load += new System.EventHandler(this.ChangeTermForm_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 

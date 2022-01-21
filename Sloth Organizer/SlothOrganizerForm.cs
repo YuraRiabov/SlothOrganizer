@@ -34,5 +34,11 @@ namespace Sloth_Organizer
             DeleteTaskForm deleteTaskForm = new DeleteTaskForm();
             deleteTaskForm.ShowDialog();
         }
+
+        private void updateTaskButton_Click(object sender, EventArgs e)
+        {
+            UpdateTaskForm updateTaskForm = new UpdateTaskForm();
+            updateTaskForm.ShowDialog();
+        }
     }
 }

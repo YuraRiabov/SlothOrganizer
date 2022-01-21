@@ -63,6 +63,7 @@ namespace SlothOrganizerLibrary
                 }
             }
         }
+
         public static List<Assignment> GetAllTasks()
         {
             List<Assignment> tasks = new List<Assignment>();
@@ -80,6 +81,7 @@ namespace SlothOrganizerLibrary
             }
             return tasks;
         }
+
         public static List<Assignment> GetSubTasks(Assignment task)
         {
             List<Assignment> subTasks = new List<Assignment>();
@@ -93,12 +95,23 @@ namespace SlothOrganizerLibrary
 
                 while (reader.Read())
                 {
-                    Assignment subTask = new Assignment(reader.GetString(1), DateTime.Parse(reader.GetString(5)), DateTime.Parse(reader.GetString(6)), reader.GetInt32(4));
+                    Assignment subTask = new Assignment((int)reader.GetInt64(0), reader.GetString(1), DateTime.Parse(reader.GetString(5)), DateTime.Parse(reader.GetString(6)), reader.GetInt32(4));
                     subTasks.Add(subTask);
                 }
             }
             return subTasks;
         }
+
+        public static void UpdateTask(Assignment task, DateTime newStart, DateTime newEnd)
+        {
+            ExecuteQuery($"update Tasks set Start='{newStart}', End='{newEnd}' where id={task.Id}");
+        }
+
+        public static void UpdateTask(Assignment task, TaskState newState)
+        {
+            ExecuteQuery($"update Tasks set State={(int)newState} where id={task.Id}");
+        }
+
         private static string GetConnectionString(string name = "SlothOrganizerDB")
         {
             return ConfigurationManager.ConnectionStrings[name].ConnectionString;

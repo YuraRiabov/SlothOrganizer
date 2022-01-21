@@ -31,7 +31,6 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(DeleteTaskForm));
             this.deleteTaskLabel = new System.Windows.Forms.Label();
             this.deleteWithSubTaskButton = new System.Windows.Forms.Button();
-            this.allCheckBox = new System.Windows.Forms.CheckBox();
             this.endPicker = new System.Windows.Forms.DateTimePicker();
             this.startPicker = new System.Windows.Forms.DateTimePicker();
             this.endSelectionLabel = new System.Windows.Forms.Label();
@@ -42,6 +41,7 @@
             this.taskStatusSelectionLabel = new System.Windows.Forms.Label();
             this.taskListBox = new System.Windows.Forms.ListBox();
             this.deleteWithoutSubTaskButton = new System.Windows.Forms.Button();
+            this.inactiveCheckBox = new System.Windows.Forms.CheckBox();
             this.SuspendLayout();
             // 
             // deleteTaskLabel
@@ -64,17 +64,6 @@
             this.deleteWithSubTaskButton.Text = "Delete with subtasks";
             this.deleteWithSubTaskButton.UseVisualStyleBackColor = true;
             this.deleteWithSubTaskButton.Click += new System.EventHandler(this.deleteWithSubTaskButton_Click);
-            // 
-            // allCheckBox
-            // 
-            this.allCheckBox.AutoSize = true;
-            this.allCheckBox.Location = new System.Drawing.Point(12, 79);
-            this.allCheckBox.Name = "allCheckBox";
-            this.allCheckBox.Size = new System.Drawing.Size(56, 34);
-            this.allCheckBox.TabIndex = 69;
-            this.allCheckBox.Text = "All";
-            this.allCheckBox.UseVisualStyleBackColor = true;
-            this.allCheckBox.CheckedChanged += new System.EventHandler(this.allCheckBox_CheckedChanged);
             // 
             // endPicker
             // 
@@ -127,7 +116,7 @@
             // completedCheckBox
             // 
             this.completedCheckBox.AutoSize = true;
-            this.completedCheckBox.Location = new System.Drawing.Point(169, 79);
+            this.completedCheckBox.Location = new System.Drawing.Point(217, 79);
             this.completedCheckBox.Name = "completedCheckBox";
             this.completedCheckBox.Size = new System.Drawing.Size(133, 34);
             this.completedCheckBox.TabIndex = 63;
@@ -138,7 +127,7 @@
             // activeCheckBox
             // 
             this.activeCheckBox.AutoSize = true;
-            this.activeCheckBox.Location = new System.Drawing.Point(74, 79);
+            this.activeCheckBox.Location = new System.Drawing.Point(122, 79);
             this.activeCheckBox.Name = "activeCheckBox";
             this.activeCheckBox.Size = new System.Drawing.Size(89, 34);
             this.activeCheckBox.TabIndex = 62;
@@ -175,14 +164,25 @@
             this.deleteWithoutSubTaskButton.UseVisualStyleBackColor = true;
             this.deleteWithoutSubTaskButton.Click += new System.EventHandler(this.deleteWithoutSubTaskButton_Click);
             // 
+            // inactiveCheckBox
+            // 
+            this.inactiveCheckBox.AutoSize = true;
+            this.inactiveCheckBox.Location = new System.Drawing.Point(12, 79);
+            this.inactiveCheckBox.Name = "inactiveCheckBox";
+            this.inactiveCheckBox.Size = new System.Drawing.Size(104, 34);
+            this.inactiveCheckBox.TabIndex = 82;
+            this.inactiveCheckBox.Text = "Inactive";
+            this.inactiveCheckBox.UseVisualStyleBackColor = true;
+            this.inactiveCheckBox.CheckedChanged += new System.EventHandler(this.inactiveCheckBox_CheckedChanged);
+            // 
             // DeleteTaskForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 30F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
             this.ClientSize = new System.Drawing.Size(526, 496);
+            this.Controls.Add(this.inactiveCheckBox);
             this.Controls.Add(this.deleteWithoutSubTaskButton);
-            this.Controls.Add(this.allCheckBox);
             this.Controls.Add(this.endPicker);
             this.Controls.Add(this.startPicker);
             this.Controls.Add(this.endSelectionLabel);
@@ -207,7 +207,6 @@
         #endregion
         private System.Windows.Forms.Label deleteTaskLabel;
         private System.Windows.Forms.Button deleteWithSubTaskButton;
-        private System.Windows.Forms.CheckBox allCheckBox;
         private System.Windows.Forms.DateTimePicker endPicker;
         private System.Windows.Forms.DateTimePicker startPicker;
         private System.Windows.Forms.Label endSelectionLabel;
@@ -218,5 +217,6 @@
         private System.Windows.Forms.Label taskStatusSelectionLabel;
         private System.Windows.Forms.ListBox taskListBox;
         private System.Windows.Forms.Button deleteWithoutSubTaskButton;
+        private System.Windows.Forms.CheckBox inactiveCheckBox;
     }
 }
