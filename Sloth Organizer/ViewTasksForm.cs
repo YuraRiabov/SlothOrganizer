@@ -13,7 +13,7 @@ namespace Sloth_Organizer
 {
     public partial class ViewTasksForm : Form
     {
-        private TaskSelector taskSelector = new TaskSelector();
+        private List<TaskState> selectedStates = new List<TaskState>();
         public ViewTasksForm()
         {
             InitializeComponent();
@@ -21,13 +21,14 @@ namespace Sloth_Organizer
 
         private void taskListBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            List<Assignment> tasks = taskSelector.RefreshTaskList(inactiveCheckBox.Checked, activeCheckBox.Checked, completedCheckBox.Checked, partiallyCompletedChackBox.Checked,
-                                                                  failedCheckBox.Checked, startPicker.Value.Date, endPicker.Value.Date);
-            int selectedIndex = Math.Max(0, taskListBox.SelectedIndex);
-            startInfo.Text = tasks[selectedIndex].TimeLimits.Start.Date.ToString();
-            endInfo.Text = tasks[selectedIndex].TimeLimits.End.Date.ToString();
-            statusInfo.Text = tasks[selectedIndex].State.ToString();
-            RefreshSubTaskList(tasks[selectedIndex]);
+            Assignment selectedTask = (Assignment)taskListBox.SelectedItem;
+            if (taskListBox.SelectedIndex >= 0)
+            {
+                startInfo.Text = selectedTask.TimeLimits.Start.Date.ToString();
+                endInfo.Text = selectedTask.TimeLimits.End.Date.ToString();
+                statusInfo.Text = selectedTask.State.ToString();
+                RefreshSubTaskList(selectedTask); 
+            }
         }
         private void RefreshSubTaskList(Assignment task)
         {
@@ -36,39 +37,77 @@ namespace Sloth_Organizer
             subtaskListBox.DataSource = subtasks;
             subtaskListBox.DisplayMember = "Text";
         }
-        private void RefreshTaskList(DateTime start, DateTime end)
+        private void RefreshTaskList()
         {
             taskListBox.DataSource = null;
-            taskListBox.DataSource = taskSelector.RefreshTaskList(inactiveCheckBox.Checked, activeCheckBox.Checked, completedCheckBox.Checked, partiallyCompletedChackBox.Checked,
-                                                                  failedCheckBox.Checked, start, end);
+            taskListBox.DataSource = SelectTasks(startPicker.Value.Date, endPicker.Value.Date);
             taskListBox.DisplayMember = "Text";
+        }
+
+        public List<Assignment> SelectTasks(DateTime start, DateTime end)
+        {
+            List<Assignment> allTasks = SQLiteConnector.GetAllTasks();
+            List<Assignment> tasks = allTasks.Where(x => x.TimeLimits.Start >= start && x.TimeLimits.End <= end && selectedStates.Contains(x.State)).ToList();
+            return tasks;
         }
 
         private void activeCheckBox_CheckedChanged(object sender, EventArgs e)
         {
-            RefreshTaskList(startPicker.Value.Date, endPicker.Value.Date);
+            if (activeCheckBox.Checked)
+            {
+                selectedStates.Add(TaskState.Active);
+            }
+            else
+            {
+                selectedStates.Remove(TaskState.Active);
+            }
+            RefreshTaskList();
         }
 
         private void completedCheckBox_CheckedChanged(object sender, EventArgs e)
         {
-            RefreshTaskList(startPicker.Value.Date, endPicker.Value.Date);
+            if (completedCheckBox.Checked)
+            {
+                selectedStates.Add(TaskState.Completed);
+            }
+            else
+            {
+                selectedStates.Remove(TaskState.Completed);
+            }
+            RefreshTaskList();
         }
 
         private void partiallyCompletedChackBox_CheckedChanged(object sender, EventArgs e)
         {
-            RefreshTaskList(startPicker.Value.Date, endPicker.Value.Date);
+            if (partiallyCompletedChackBox.Checked)
+            {
+                selectedStates.Add(TaskState.PartiallyCompleted);
+            }
+            else
+            {
+                selectedStates.Remove(TaskState.PartiallyCompleted);
+            }
+            RefreshTaskList();
         }
 
         private void failedCheckBox_CheckedChanged(object sender, EventArgs e)
         {
-            RefreshTaskList(startPicker.Value.Date, endPicker.Value.Date);
+            if (failedCheckBox.Checked)
+            {
+                selectedStates.Add(TaskState.Failed);
+            }
+            else
+            {
+                selectedStates.Remove(TaskState.Failed);
+            }
+            RefreshTaskList();
         }
 
         private void endPicker_ValueChanged(object sender, EventArgs e)
         {
             if (startPicker.Value.Date <= endPicker.Value.Date)
             {
-                RefreshTaskList(startPicker.Value.Date, endPicker.Value.Date);
+                RefreshTaskList();
             }
             else
             {
@@ -77,14 +116,22 @@ namespace Sloth_Organizer
         }
         private void inactiveCheckBox_CheckedChanged(object sender, EventArgs e)
         {
-            RefreshTaskList(startPicker.Value.Date, endPicker.Value.Date);
+            if (inactiveCheckBox.Checked)
+            {
+                selectedStates.Add(TaskState.Inactive);
+            }
+            else
+            {
+                selectedStates.Remove(TaskState.Inactive);
+            }
+            RefreshTaskList();
         }
 
         private void startPicker_ValueChanged(object sender, EventArgs e)
         {
             if (startPicker.Value.Date < endPicker.Value.Date)
             {
-                RefreshTaskList(startPicker.Value.Date, endPicker.Value.Date);
+                RefreshTaskList();
             }
             else
             {

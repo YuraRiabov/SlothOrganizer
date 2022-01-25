@@ -13,44 +13,94 @@ namespace Sloth_Organizer
 {
     public partial class UpdateTaskForm : Form
     {
-        private TaskSelector taskSelector = new TaskSelector();
+        private List<TaskState> selectedStates = new List<TaskState>();
         public UpdateTaskForm()
         {
             InitializeComponent();
         }
-        private void RefreshTaskList(DateTime start, DateTime end)
+        private void RefreshTaskList()
         {
             taskListBox.DataSource = null;
-            taskListBox.DataSource = taskSelector.RefreshTaskList(inactiveCheckBox.Checked, activeCheckBox.Checked, completedCheckBox.Checked, partiallyCompletedChackBox.Checked,
-                                                                  failedCheckBox.Checked, start, end);
+            taskListBox.DataSource = SelectTasks(startPicker.Value.Date, endPicker.Value.Date);
             taskListBox.DisplayMember = "Text";
+        }
+
+        public List<Assignment> SelectTasks(DateTime start, DateTime end)
+        {
+            List<Assignment> allTasks = SQLiteConnector.GetAllTasks();
+            List<Assignment> tasks = allTasks.Where(x => x.TimeLimits.Start >= start && x.TimeLimits.End <= end && selectedStates.Contains(x.State)).ToList();
+            return tasks;
         }
 
         private void activeCheckBox_CheckedChanged(object sender, EventArgs e)
         {
-            RefreshTaskList(startPicker.Value.Date, endPicker.Value.Date);
+            if (activeCheckBox.Checked)
+            {
+                selectedStates.Add(TaskState.Active);
+            }
+            else
+            {
+                selectedStates.Remove(TaskState.Active);
+            }
+            RefreshTaskList();
         }
 
         private void completedCheckBox_CheckedChanged(object sender, EventArgs e)
         {
-            RefreshTaskList(startPicker.Value.Date, endPicker.Value.Date);
+            if (completedCheckBox.Checked)
+            {
+                selectedStates.Add(TaskState.Completed);
+            }
+            else
+            {
+                selectedStates.Remove(TaskState.Completed);
+            }
+            RefreshTaskList();
         }
 
         private void partiallyCompletedChackBox_CheckedChanged(object sender, EventArgs e)
         {
-            RefreshTaskList(startPicker.Value.Date, endPicker.Value.Date);
+            if (partiallyCompletedChackBox.Checked)
+            {
+                selectedStates.Add(TaskState.PartiallyCompleted);
+            }
+            else
+            {
+                selectedStates.Remove(TaskState.PartiallyCompleted);
+            }
+            RefreshTaskList();
         }
 
         private void failedCheckBox_CheckedChanged(object sender, EventArgs e)
         {
-            RefreshTaskList(startPicker.Value.Date, endPicker.Value.Date);
+            if (failedCheckBox.Checked)
+            {
+                selectedStates.Add(TaskState.Failed);
+            }
+            else
+            {
+                selectedStates.Remove(TaskState.Failed);
+            }
+            RefreshTaskList();
+        }
+        private void inactiveCheckBox_CheckedChanged(object sender, EventArgs e)
+        {
+            if (inactiveCheckBox.Checked)
+            {
+                selectedStates.Add(TaskState.Inactive);
+            }
+            else
+            {
+                selectedStates.Remove(TaskState.Inactive);
+            }
+            RefreshTaskList();
         }
 
         private void endPicker_ValueChanged(object sender, EventArgs e)
         {
             if (startPicker.Value.Date <= endPicker.Value.Date)
             {
-                RefreshTaskList(startPicker.Value.Date, endPicker.Value.Date);
+                RefreshTaskList();
             }
             else
             {
@@ -60,12 +110,9 @@ namespace Sloth_Organizer
 
         private void changeTermButton_Click(object sender, EventArgs e)
         {
-            List<Assignment> tasks = taskSelector.RefreshTaskList(inactiveCheckBox.Checked, activeCheckBox.Checked, completedCheckBox.Checked, partiallyCompletedChackBox.Checked,
-                                                                  failedCheckBox.Checked, startPicker.Value.Date, endPicker.Value.Date);
-            int index = taskListBox.SelectedIndex;
-            if (index >= 0)
+            Assignment selectedTask = (Assignment)taskListBox.SelectedItem;
+            if (taskListBox.SelectedIndex >= 0)
             {
-                Assignment selectedTask = tasks[index];
                 ChangeTermForm changeTermForm = new ChangeTermForm(selectedTask);
                 changeTermForm.ShowDialog(); 
             }
@@ -73,12 +120,9 @@ namespace Sloth_Organizer
 
         private void changeSubTasksButton_Click(object sender, EventArgs e)
         {
-            List<Assignment> tasks = taskSelector.RefreshTaskList(inactiveCheckBox.Checked, activeCheckBox.Checked, completedCheckBox.Checked, partiallyCompletedChackBox.Checked,
-                                                                  failedCheckBox.Checked, startPicker.Value.Date, endPicker.Value.Date);
-            int index = taskListBox.SelectedIndex;
-            if (index >= 0)
+            Assignment selectedTask = (Assignment)taskListBox.SelectedItem;
+            if (taskListBox.SelectedIndex >= 0)
             {
-                Assignment selectedTask = tasks[index];
                 ChangeSubTasksForm changeSubTasksForm = new ChangeSubTasksForm(selectedTask);
                 changeSubTasksForm.ShowDialog(); 
             }
@@ -86,41 +130,32 @@ namespace Sloth_Organizer
 
         private void markCompletedButton_Click(object sender, EventArgs e)
         {
-            List<Assignment> tasks = taskSelector.RefreshTaskList(inactiveCheckBox.Checked, activeCheckBox.Checked, completedCheckBox.Checked, partiallyCompletedChackBox.Checked,
-                                                                  failedCheckBox.Checked, startPicker.Value.Date, endPicker.Value.Date);
-            int index = taskListBox.SelectedIndex;
-            if (index >= 0)
+            Assignment selectedTask = (Assignment)taskListBox.SelectedItem;
+            if (taskListBox.SelectedIndex >= 0)
             {
-                Assignment selectedTask = tasks[index];
-                List<Assignment> subTasks = SQLiteConnector.GetSubTasks(selectedTask);
                 SQLiteConnector.UpdateTask(selectedTask, TaskState.Completed);
                 MarkSubtasksCompleted(selectedTask);
-                RefreshTaskList(startPicker.Value.Date, endPicker.Value.Date); 
+                RefreshTaskList(); 
             }
         }
         private void MarkSubtasksCompleted(Assignment task)
         {
             task.SubTasks = SQLiteConnector.GetSubTasks(task);
-            foreach (Assignment st in task.SubTasks)
+            foreach (Assignment subTask in task.SubTasks)
             {
-                if (st.SubTasks.Count != 0)
+                if (subTask.SubTasks.Count != 0)
                 {
-                    MarkSubtasksCompleted(st);
+                    MarkSubtasksCompleted(subTask);
                 }
-                SQLiteConnector.UpdateTask(st, TaskState.Completed);
+                SQLiteConnector.UpdateTask(subTask, TaskState.Completed);
             }
-        }
-
-        private void inactiveCheckBox_CheckedChanged(object sender, EventArgs e)
-        {
-            RefreshTaskList(startPicker.Value.Date, endPicker.Value.Date);
         }
 
         private void startPicker_ValueChanged(object sender, EventArgs e)
         {
             if (startPicker.Value.Date < endPicker.Value.Date)
             {
-                RefreshTaskList(startPicker.Value.Date, endPicker.Value.Date);
+                RefreshTaskList();
             }
             else
             {
