@@ -46,18 +46,6 @@ namespace Sloth_Organizer
             RefreshTaskList(startPicker.Value.Date, endPicker.Value.Date);
         }
 
-        private void startPicker_ValueChanged(object sender, EventArgs e)
-        {
-            if (startPicker.Value.Date < endPicker.Value.Date)
-            {
-                RefreshTaskList(startPicker.Value.Date, endPicker.Value.Date);
-            }
-            else
-            {
-                MessageBox.Show("Start date must be before end date");
-            }
-        }
-
         private void endPicker_ValueChanged(object sender, EventArgs e)
         {
             if (startPicker.Value.Date <= endPicker.Value.Date)
@@ -95,6 +83,18 @@ namespace Sloth_Organizer
         {
             SQLiteConnector.DeleteTask(task);
             RefreshTaskList(startPicker.Value.Date, endPicker.Value.Date);
+        }
+
+        private void startPicker_ValueChanged(object sender, EventArgs e)
+        {
+            if (startPicker.Value.Date < endPicker.Value.Date)
+            {
+                RefreshTaskList(startPicker.Value.Date, endPicker.Value.Date);
+            }
+            else
+            {
+                MessageBox.Show("Start date must be before end date");
+            }
         }
     }
 }

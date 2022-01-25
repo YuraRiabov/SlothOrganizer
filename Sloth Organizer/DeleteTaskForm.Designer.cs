@@ -172,6 +172,7 @@
             this.startPicker.Name = "startPicker";
             this.startPicker.Size = new System.Drawing.Size(374, 35);
             this.startPicker.TabIndex = 83;
+            this.startPicker.ValueChanged += new System.EventHandler(this.startPicker_ValueChanged);
             // 
             // DeleteTaskForm
             // 
