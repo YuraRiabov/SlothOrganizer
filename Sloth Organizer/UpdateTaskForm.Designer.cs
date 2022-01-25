@@ -34,7 +34,6 @@
             this.changeTermButton = new System.Windows.Forms.Button();
             this.changeSubTasksButton = new System.Windows.Forms.Button();
             this.endPicker = new System.Windows.Forms.DateTimePicker();
-            this.startPicker = new System.Windows.Forms.DateTimePicker();
             this.endSelectionLabel = new System.Windows.Forms.Label();
             this.failedCheckBox = new System.Windows.Forms.CheckBox();
             this.partiallyCompletedChackBox = new System.Windows.Forms.CheckBox();
@@ -43,6 +42,7 @@
             this.taskStatusSelectionLabel = new System.Windows.Forms.Label();
             this.taskListBox = new System.Windows.Forms.ListBox();
             this.inactiveCheckBox = new System.Windows.Forms.CheckBox();
+            this.startPicker = new System.Windows.Forms.DateTimePicker();
             this.SuspendLayout();
             // 
             // updateTaskLabel
@@ -95,15 +95,6 @@
             this.endPicker.Size = new System.Drawing.Size(375, 35);
             this.endPicker.TabIndex = 78;
             this.endPicker.ValueChanged += new System.EventHandler(this.endPicker_ValueChanged);
-            // 
-            // startPicker
-            // 
-            this.startPicker.Location = new System.Drawing.Point(12, 189);
-            this.startPicker.Name = "startPicker";
-            this.startPicker.Size = new System.Drawing.Size(375, 35);
-            this.startPicker.TabIndex = 77;
-            this.startPicker.Value = new System.DateTime(2022, 1, 18, 0, 0, 0, 0);
-            this.startPicker.ValueChanged += new System.EventHandler(this.startPicker_ValueChanged);
             // 
             // endSelectionLabel
             // 
@@ -187,15 +178,22 @@
             this.inactiveCheckBox.UseVisualStyleBackColor = true;
             this.inactiveCheckBox.CheckedChanged += new System.EventHandler(this.inactiveCheckBox_CheckedChanged);
             // 
+            // startPicker
+            // 
+            this.startPicker.Location = new System.Drawing.Point(12, 189);
+            this.startPicker.Name = "startPicker";
+            this.startPicker.Size = new System.Drawing.Size(374, 35);
+            this.startPicker.TabIndex = 81;
+            // 
             // UpdateTaskForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 30F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
             this.ClientSize = new System.Drawing.Size(433, 522);
+            this.Controls.Add(this.startPicker);
             this.Controls.Add(this.inactiveCheckBox);
             this.Controls.Add(this.endPicker);
-            this.Controls.Add(this.startPicker);
             this.Controls.Add(this.endSelectionLabel);
             this.Controls.Add(this.failedCheckBox);
             this.Controls.Add(this.partiallyCompletedChackBox);
@@ -223,7 +221,6 @@
         private System.Windows.Forms.Button changeTermButton;
         private System.Windows.Forms.Button changeSubTasksButton;
         private System.Windows.Forms.DateTimePicker endPicker;
-        private System.Windows.Forms.DateTimePicker startPicker;
         private System.Windows.Forms.Label endSelectionLabel;
         private System.Windows.Forms.CheckBox failedCheckBox;
         private System.Windows.Forms.CheckBox partiallyCompletedChackBox;
@@ -232,5 +229,6 @@
         private System.Windows.Forms.Label taskStatusSelectionLabel;
         private System.Windows.Forms.ListBox taskListBox;
         private System.Windows.Forms.CheckBox inactiveCheckBox;
+        private System.Windows.Forms.DateTimePicker startPicker;
     }
 }

@@ -28,7 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(CreateTaskForm));
             this.createTaskLabel = new System.Windows.Forms.Label();
             this.startSelectionLabel = new System.Windows.Forms.Label();
@@ -38,11 +37,10 @@
             this.deleteSubtaskButton = new System.Windows.Forms.Button();
             this.createSubtaskButton = new System.Windows.Forms.Button();
             this.createTaskButton = new System.Windows.Forms.Button();
-            this.startPicker = new System.Windows.Forms.DateTimePicker();
             this.endPicker = new System.Windows.Forms.DateTimePicker();
             this.textTextBox = new System.Windows.Forms.TextBox();
-            this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.textLabel = new System.Windows.Forms.Label();
+            this.startPicker = new System.Windows.Forms.DateTimePicker();
             this.SuspendLayout();
             // 
             // createTaskLabel
@@ -124,14 +122,6 @@
             this.createTaskButton.UseVisualStyleBackColor = true;
             this.createTaskButton.Click += new System.EventHandler(this.createTaskButton_Click);
             // 
-            // startPicker
-            // 
-            this.startPicker.Location = new System.Drawing.Point(17, 151);
-            this.startPicker.Name = "startPicker";
-            this.startPicker.Size = new System.Drawing.Size(375, 35);
-            this.startPicker.TabIndex = 54;
-            this.startPicker.Value = new System.DateTime(2022, 1, 18, 0, 0, 0, 0);
-            // 
             // endPicker
             // 
             this.endPicker.Location = new System.Drawing.Point(18, 236);
@@ -146,11 +136,6 @@
             this.textTextBox.Size = new System.Drawing.Size(374, 35);
             this.textTextBox.TabIndex = 56;
             // 
-            // contextMenuStrip1
-            // 
-            this.contextMenuStrip1.Name = "contextMenuStrip1";
-            this.contextMenuStrip1.Size = new System.Drawing.Size(61, 4);
-            // 
             // textLabel
             // 
             this.textLabel.AutoSize = true;
@@ -160,16 +145,23 @@
             this.textLabel.TabIndex = 57;
             this.textLabel.Text = "Enter text of the task:";
             // 
+            // startPicker
+            // 
+            this.startPicker.Location = new System.Drawing.Point(18, 151);
+            this.startPicker.Name = "startPicker";
+            this.startPicker.Size = new System.Drawing.Size(374, 35);
+            this.startPicker.TabIndex = 58;
+            // 
             // CreateTaskForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 30F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
             this.ClientSize = new System.Drawing.Size(411, 572);
+            this.Controls.Add(this.startPicker);
             this.Controls.Add(this.textLabel);
             this.Controls.Add(this.textTextBox);
             this.Controls.Add(this.endPicker);
-            this.Controls.Add(this.startPicker);
             this.Controls.Add(this.createTaskButton);
             this.Controls.Add(this.deleteSubtaskButton);
             this.Controls.Add(this.createSubtaskButton);
@@ -198,10 +190,9 @@
         private System.Windows.Forms.Button createSubtaskButton;
         private System.Windows.Forms.ListBox subTaskListBox;
         private System.Windows.Forms.Button createTaskButton;
-        private System.Windows.Forms.DateTimePicker startPicker;
         private System.Windows.Forms.DateTimePicker endPicker;
         private System.Windows.Forms.TextBox textTextBox;
-        private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
         private System.Windows.Forms.Label textLabel;
+        private System.Windows.Forms.DateTimePicker startPicker;
     }
 }

@@ -38,48 +38,54 @@ namespace SlothOrganizerLibrary
         public void UpdateState()
         {
             DateTime currentDate = DateTime.Now.Date;
-            if (currentDate < TimeLimits.Start)
+            int completed = 0;
+            int uncompleted = 0;
+            foreach (Assignment subTask in SubTasks)
             {
-                State = TaskState.Inactive;
-            }
-            else if (currentDate <= TimeLimits.End)
-            {
-                if (SubTasks.Count != 0)
+                if (subTask.State == TaskState.PartiallyCompleted || subTask.State == TaskState.Completed)
                 {
-                    int completed = 0;
-                    int uncompleted = 0;
-                    foreach (Assignment subTask in SubTasks)
-                    {
-                        if (subTask.State == TaskState.PartiallyCompleted || subTask.State == TaskState.Completed)
-                        {
-                            completed++;
-                        }
-                        else
-                        {
-                            uncompleted++;
-                        }
-                    }
-                    if (uncompleted == 0)
-                    {
-                        State = TaskState.Completed;
-                    }
-                    else if (completed == 0)
-                    {
-                        State = TaskState.Active;
-                    }
-                    else
-                    {
-                        State = TaskState.PartiallyCompleted;
-                    } 
+                    completed++;
                 }
                 else
                 {
-                    State = TaskState.Active;
+                    uncompleted++;
                 }
             }
-            else if (currentDate >= TimeLimits.End && State != TaskState.Completed && State != TaskState.PartiallyCompleted)
+            if (State != TaskState.Completed)
             {
-                State = TaskState.Failed;
+                if (currentDate < TimeLimits.Start)
+                {
+                    if (SubTasks.Count != 0 && completed != 0)
+                    {
+                        State = TaskState.PartiallyCompleted;
+                    }
+                    else
+                    {
+                        State = TaskState.Inactive;
+                    }
+                }
+                else if (currentDate <= TimeLimits.End)
+                {
+                    if (SubTasks.Count != 0 && completed != 0)
+                    {
+                        State = TaskState.PartiallyCompleted;
+                    }
+                    else
+                    {
+                        State = TaskState.Active;
+                    }
+                }
+                else if (currentDate >= TimeLimits.End && State != TaskState.Completed && State != TaskState.PartiallyCompleted)
+                {
+                    if (SubTasks.Count != 0 && completed != 0)
+                    {
+                        State = TaskState.PartiallyCompleted;
+                    }
+                    else
+                    {
+                        State = TaskState.Failed;
+                    }
+                } 
             }
         }
     }

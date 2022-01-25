@@ -45,9 +45,9 @@
             this.partiallyCompletedChackBox = new System.Windows.Forms.CheckBox();
             this.failedCheckBox = new System.Windows.Forms.CheckBox();
             this.endPicker = new System.Windows.Forms.DateTimePicker();
-            this.startPicker = new System.Windows.Forms.DateTimePicker();
             this.endSelectionLabel = new System.Windows.Forms.Label();
             this.inactiveCheckBox = new System.Windows.Forms.CheckBox();
+            this.startPicker = new System.Windows.Forms.DateTimePicker();
             this.SuspendLayout();
             // 
             // taskStatusSelectionLabel
@@ -198,15 +198,6 @@
             this.endPicker.TabIndex = 58;
             this.endPicker.ValueChanged += new System.EventHandler(this.endPicker_ValueChanged);
             // 
-            // startPicker
-            // 
-            this.startPicker.Location = new System.Drawing.Point(12, 189);
-            this.startPicker.Name = "startPicker";
-            this.startPicker.Size = new System.Drawing.Size(375, 35);
-            this.startPicker.TabIndex = 57;
-            this.startPicker.Value = new System.DateTime(2022, 1, 18, 0, 0, 0, 0);
-            this.startPicker.ValueChanged += new System.EventHandler(this.startPicker_ValueChanged);
-            // 
             // endSelectionLabel
             // 
             this.endSelectionLabel.AutoSize = true;
@@ -227,15 +218,22 @@
             this.inactiveCheckBox.UseVisualStyleBackColor = true;
             this.inactiveCheckBox.CheckedChanged += new System.EventHandler(this.inactiveCheckBox_CheckedChanged);
             // 
+            // startPicker
+            // 
+            this.startPicker.Location = new System.Drawing.Point(12, 189);
+            this.startPicker.Name = "startPicker";
+            this.startPicker.Size = new System.Drawing.Size(374, 35);
+            this.startPicker.TabIndex = 82;
+            // 
             // ViewTasksForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 30F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
             this.ClientSize = new System.Drawing.Size(523, 703);
+            this.Controls.Add(this.startPicker);
             this.Controls.Add(this.inactiveCheckBox);
             this.Controls.Add(this.endPicker);
-            this.Controls.Add(this.startPicker);
             this.Controls.Add(this.endSelectionLabel);
             this.Controls.Add(this.failedCheckBox);
             this.Controls.Add(this.partiallyCompletedChackBox);
@@ -280,8 +278,8 @@
         private System.Windows.Forms.CheckBox partiallyCompletedChackBox;
         private System.Windows.Forms.CheckBox failedCheckBox;
         private System.Windows.Forms.DateTimePicker endPicker;
-        private System.Windows.Forms.DateTimePicker startPicker;
         private System.Windows.Forms.Label endSelectionLabel;
         private System.Windows.Forms.CheckBox inactiveCheckBox;
+        private System.Windows.Forms.DateTimePicker startPicker;
     }
 }

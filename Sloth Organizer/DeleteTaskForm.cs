@@ -88,6 +88,7 @@ namespace Sloth_Organizer
             List<Assignment> tasks = taskSelector.RefreshTaskList(inactiveCheckBox.Checked, activeCheckBox.Checked, completedCheckBox.Checked, partiallyCompletedChackBox.Checked,
                                                                   failedCheckBox.Checked, startPicker.Value.Date, endPicker.Value.Date);
             Assignment selectedTask = tasks[taskListBox.SelectedIndex];
+            SQLiteConnector.DisconnectSubTasks(selectedTask);
             DeleteTask(selectedTask);
         }
         private void DeleteTask(Assignment task)
