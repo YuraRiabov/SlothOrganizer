@@ -125,7 +125,7 @@ namespace Sloth_Organizer
             if(year == null)
             {
                 CreateYear(yearBeginning.Year);
-                LoadYear(yearBeginning, monthIndex);
+                year = LoadYear(yearBeginning, monthIndex);
             }
             return year;
         }
