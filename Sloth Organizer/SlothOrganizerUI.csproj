@@ -203,6 +203,10 @@
       <Project>{ED1E42E9-943D-4C27-A67E-4DD7B58A433D}</Project>
       <Name>SlothOrganizerLibrary</Name>
     </ProjectReference>
+    <ProjectReference Include="..\SlothOrganizerLibrary\SlothOrganizerLibrary.csproj">
+      <Project>{ed1e42e9-943d-4c27-a67e-4dd7b58a433d}</Project>
+      <Name>SlothOrganizerLibrary</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="packages\Stub.System.Data.SQLite.Core.NetFramework.1.0.115.5\build\net46\Stub.System.Data.SQLite.Core.NetFramework.targets" Condition="Exists('packages\Stub.System.Data.SQLite.Core.NetFramework.1.0.115.5\build\net46\Stub.System.Data.SQLite.Core.NetFramework.targets')" />
