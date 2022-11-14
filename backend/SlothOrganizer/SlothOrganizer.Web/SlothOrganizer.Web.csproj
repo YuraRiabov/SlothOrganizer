@@ -1,0 +1,26 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <UserSecretsId>38d2752e-d383-4752-aef2-14485a25f3bc</UserSecretsId>
+    <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.17.0" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Middleware\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\SlothOrganizer.Persistence\SlothOrganizer.Persistence.csproj" />
+    <ProjectReference Include="..\SlothOrganizer.Presentation\SlothOrganizer.Presentation.csproj" />
+    <ProjectReference Include="..\SlothOrganizer.Services\SlothOrganizer.Services.csproj" />
+  </ItemGroup>
+
+</Project>
