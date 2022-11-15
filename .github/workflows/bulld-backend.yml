@@ -21,6 +21,6 @@ jobs:
       with:
         dotnet-version: 6.0.x
     - name: Restore dependencies
-      run: dotnet restore backend/SlothOrgainzer/SlothOrganizer.sln
+      run: dotnet restore backend/SlothOrganizer/SlothOrganizer.sln
     - name: Build
-      run: dotnet build backend/SlothOrgainzer/SlothOrganizer.sln --no-restore
+      run: dotnet build backend/SlothOrganizer/SlothOrganizer.sln --no-restore
