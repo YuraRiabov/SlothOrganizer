@@ -7,6 +7,12 @@ EXPOSE 443
 
 FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
 WORKDIR /src
+COPY ["SlothOrganizer.Contracts/SlothOrganizer.Contracts.csproj", "SlothOrganizer.Contracts/"]
+COPY ["SlothOrganizer.Domain/SlothOrganizer.Domain.csproj", "SlothOrganizer.Domain/"]
+COPY ["SlothOrganizer.Persistence/SlothOrganizer.Persistence.csproj", "SlothOrganizer.Persistence/"]
+COPY ["SlothOrganizer.Presentation/SlothOrganizer.Presentation.csproj", "SlothOrganizer.Presentation/"]
+COPY ["SlothOrganizer.Services/SlothOrganizer.Services.csproj", "SlothOrganizer.Services/"]
+COPY ["SlothOrganizer.Services.Abstractions/SlothOrganizer.Services.Abstractions.csproj", "SlothOrganizer.Services.Abstractions/"]
 COPY ["SlothOrganizer.Web/SlothOrganizer.Web.csproj", "SlothOrganizer.Web/"]
 RUN dotnet restore "SlothOrganizer.Web/SlothOrganizer.Web.csproj"
 COPY . .
