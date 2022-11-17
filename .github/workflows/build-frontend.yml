@@ -10,17 +10,16 @@ on:
     branches: [ "main", "development" ]
 
 jobs:
-  build:
+  build_frontend:
 
     runs-on: ubuntu-latest
 
     steps:
     - uses: actions/checkout@v3
-    - name: Use Node.js ${{ matrix.node-version }}
+    - name: Use Node.js
       uses: actions/setup-node@v3
       with:
         node-version: 18.x
-        cache: 'npm'
     - run: |
         cd frontend
         npm ci
