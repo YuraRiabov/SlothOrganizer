@@ -75,7 +75,7 @@ namespace SlothOrganizer.Persistence.Repositories
         public async Task Update(User user)
         {
             var command = "UPDATE Users SET FirstName=@FirstName, LastName=@LastName, Email=@Email," +
-                " Password=@Password, Salt=@Salt, EmailVerified=@EmailVerified, RefreshToken=@RefreshToken)";
+                " Password=@Password, Salt=@Salt, EmailVerified=@EmailVerified, RefreshToken=@RefreshToken) WHERE Id=@Id";
 
             var parameters = new DynamicParameters();
             parameters.Add("FirstName", user.FirstName);
@@ -85,6 +85,7 @@ namespace SlothOrganizer.Persistence.Repositories
             parameters.Add("Salt", user.Salt);
             parameters.Add("EmailVerified", user.EmailVerified);
             parameters.Add("RefreshToken", user.RefreshToken);
+            parameters.Add("Id", user.Id);
 
             using var connection = _dapperContext.CreateConnection();
             await connection.ExecuteAsync(command, parameters);
