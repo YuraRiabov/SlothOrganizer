@@ -9,11 +9,11 @@ namespace SlothOrganizer.Domain.Repositories
 {
     public interface IUserRepository
     {
-        public User GetById(long id);
-        public IEnumerable<User> GetAll();
-        public User GetByEmail(string email);
-        public User Insert(User user);
-        public User Update(User user);
-        public User Delete(long id);
+        public Task<User?> GetById(long id);
+        public Task<IEnumerable<User>> GetAll();
+        public Task<User?> GetByEmail(string email);
+        public Task<User> Insert(User user);
+        public Task Update(User user);
+        public Task Delete(long id);
     }
 }

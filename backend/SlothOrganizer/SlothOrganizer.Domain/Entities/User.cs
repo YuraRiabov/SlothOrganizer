@@ -15,6 +15,6 @@ namespace SlothOrganizer.Domain.Entities
         public string Password { get; set; } = string.Empty;
         public string Salt { get; set; } = string.Empty;
         public bool EmailVerified { get; set; }
-        public string RefreshToken { get; set; } = string.Empty;
+        public string? RefreshToken { get; set; }
     }
 }

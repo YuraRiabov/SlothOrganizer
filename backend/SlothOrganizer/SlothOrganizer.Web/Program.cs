@@ -1,6 +1,8 @@
 using FluentMigrator.Runner;
 using Microsoft.Extensions.Configuration;
+using SlothOrganizer.Domain.Repositories;
 using SlothOrganizer.Persistence;
+using SlothOrganizer.Persistence.Repositories;
 using SlothOrganizer.Web.Middleware;
 using System.Reflection;
 
@@ -10,6 +12,8 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddSingleton<DapperContext>();
 builder.Services.AddSingleton<DatabaseManager>();
+
+builder.Services.AddScoped<IUserRepository, UserRepository>();
 
 builder.Services.AddFluentMigratorCore()
     .ConfigureRunner(c => c.AddSqlServer()
