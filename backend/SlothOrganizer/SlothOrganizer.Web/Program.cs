@@ -3,6 +3,9 @@ using Microsoft.Extensions.Configuration;
 using SlothOrganizer.Domain.Repositories;
 using SlothOrganizer.Persistence;
 using SlothOrganizer.Persistence.Repositories;
+using SlothOrganizer.Services;
+using SlothOrganizer.Services.Abstractions;
+using SlothOrganizer.Services.MappingProfiles;
 using SlothOrganizer.Web.Middleware;
 using System.Reflection;
 
@@ -15,11 +18,16 @@ builder.Services.AddSingleton<DatabaseManager>();
 
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 
+builder.Services.AddScoped<IUserService, UserService>();
+builder.Services.AddScoped<ISecurityService, SecurityService>();
+
 builder.Services.AddFluentMigratorCore()
     .ConfigureRunner(c => c.AddSqlServer()
         .WithGlobalConnectionString(builder.Configuration.GetConnectionString("SqlConnection"))
         .ScanIn(typeof(DapperContext).Assembly).For.Migrations())
     .AddLogging(lb => lb.AddFluentMigratorConsole());
+
+builder.Services.AddAutoMapper(typeof(UserProfile).Assembly);
 
 builder.Services.AddControllers()
     .AddApplicationPart(typeof(SlothOrganizer.Presentation.AssemblyReference).Assembly);
