@@ -1,9 +1,11 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using SlothOrganizer.Contracts.DTO.User;
 using SlothOrganizer.Services.Abstractions;
 
 namespace SlothOrganizer.Presentation.Controllers
 {
+    [Authorize]
     [ApiController]
     [Route("[controller]")]
     public class UsersController : ControllerBase
@@ -15,6 +17,7 @@ namespace SlothOrganizer.Presentation.Controllers
             _userService = userService;
         }
 
+        [AllowAnonymous]
         [HttpPost("signup")]
         public async Task<IActionResult> SignUp([FromBody] NewUserDto newUserDto)
         {

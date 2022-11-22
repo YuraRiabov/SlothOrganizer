@@ -9,6 +9,7 @@ namespace SlothOrganizer.Services.MappingProfiles
         public UserProfile()
         {
             CreateMap<NewUserDto, User>();
+            CreateMap<User, UserDto>();
         }
     }
 }
