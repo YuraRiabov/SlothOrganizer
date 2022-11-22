@@ -35,20 +35,22 @@ namespace SlothOrganizer.Persistence.Repositories
             return connection.QueryAsync<User>(query);
         }
 
-        public Task<User?> GetByEmail(string email)
+        public async Task<User?> GetByEmail(string email)
         {
             var query = "SELECT TOP(1) * FROM Users WHERE Email=@Email";
 
             using var connection = _dapperContext.CreateConnection();
-            return connection.QuerySingleOrDefaultAsync<User?>(query, new { email });
+            var result = await connection.QuerySingleOrDefaultAsync<User?>(query, new { email });
+            return result;
         }
 
-        public Task<User?> GetById(long id)
+        public async Task<User?> GetById(long id)
         {
             var query = "SELECT TOP(1) * FROM Users WHERE Id=@Id";
 
             using var connection = _dapperContext.CreateConnection();
-            return connection.QuerySingleOrDefaultAsync<User?>(query, new { id });
+            var result = await connection.QuerySingleOrDefaultAsync<User?>(query, new { id });
+            return result;
         }
 
         public async Task<User> Insert(User user)

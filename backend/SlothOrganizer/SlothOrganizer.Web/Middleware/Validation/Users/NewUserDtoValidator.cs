@@ -19,7 +19,7 @@ namespace SlothOrganizer.Web.Middleware.Validation.Users
             RuleFor(u => u.Password)
                 .NotEmpty()
                 .MinimumLength(8)
-                .MinimumLength(16);
+                .MaximumLength(16);
         }
     }
 }

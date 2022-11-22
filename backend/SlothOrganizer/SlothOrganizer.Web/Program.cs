@@ -44,6 +44,8 @@ var app = builder.Build();
 
 app.MigrateDatabase();
 
+app.UseMiddleware<ExceptionMiddleware>();
+
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
