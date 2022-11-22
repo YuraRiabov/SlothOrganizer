@@ -6,7 +6,7 @@ namespace SlothOrganizer.Services.MappingProfiles
 {
     public class UserProfile : Profile
     {
-        UserProfile()
+        public UserProfile()
         {
             CreateMap<NewUserDto, User>();
         }

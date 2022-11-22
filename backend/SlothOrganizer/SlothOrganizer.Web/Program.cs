@@ -1,4 +1,6 @@
 using FluentMigrator.Runner;
+using FluentValidation;
+using FluentValidation.AspNetCore;
 using Microsoft.Extensions.Configuration;
 using SlothOrganizer.Domain.Repositories;
 using SlothOrganizer.Persistence;
@@ -7,6 +9,7 @@ using SlothOrganizer.Services;
 using SlothOrganizer.Services.Abstractions;
 using SlothOrganizer.Services.MappingProfiles;
 using SlothOrganizer.Web.Middleware;
+using SlothOrganizer.Web.Middleware.Validation.Users;
 using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -28,6 +31,8 @@ builder.Services.AddFluentMigratorCore()
     .AddLogging(lb => lb.AddFluentMigratorConsole());
 
 builder.Services.AddAutoMapper(typeof(UserProfile).Assembly);
+
+builder.Services.AddFluentValidation(cfg => cfg.RegisterValidatorsFromAssemblyContaining(typeof(NewUserDtoValidator)));
 
 builder.Services.AddControllers()
     .AddApplicationPart(typeof(SlothOrganizer.Presentation.AssemblyReference).Assembly);

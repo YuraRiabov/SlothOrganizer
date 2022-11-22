@@ -24,7 +24,7 @@ namespace SlothOrganizer.Persistence.Migrations
                 .WithColumn("Email").AsString(50).NotNullable()
                 .WithColumn("Password").AsString().NotNullable()
                 .WithColumn("Salt").AsString().NotNullable()
-                .WithColumn("EmailVerfied").AsBoolean().NotNullable()
+                .WithColumn("EmailVerified").AsBoolean().NotNullable()
                 .WithColumn("RefreshToken").AsString().Nullable();
         }
     }
