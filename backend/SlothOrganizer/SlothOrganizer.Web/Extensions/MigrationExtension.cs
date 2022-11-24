@@ -1,7 +1,7 @@
 ﻿using FluentMigrator.Runner;
 using SlothOrganizer.Persistence;
 
-namespace SlothOrganizer.Web.Middleware
+namespace SlothOrganizer.Web.Extensions
 {
     public static class MigrationExtension
     {

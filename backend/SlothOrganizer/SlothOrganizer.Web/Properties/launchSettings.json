@@ -4,9 +4,10 @@
       "commandName": "Project",
       "launchBrowser": true,
       "launchUrl": "swagger",
-      "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Development"
-      },
+        "environmentVariables": {
+            "ASPNETCORE_ENVIRONMENT": "Development",
+            "JwtKey": "A7kZKXXWXP3oRahhKGAW"
+        },
       "dotnetRunMessages": true,
       "applicationUrl": "https://localhost:7217;http://localhost:5217"
     },

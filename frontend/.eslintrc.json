@@ -46,7 +46,8 @@
             "ignoreMemberSort": false,
             "allowSeparatedGroups": false
           }
-        ]
+        ],
+        "no-unused-vars": 0
       }
     },
     {
