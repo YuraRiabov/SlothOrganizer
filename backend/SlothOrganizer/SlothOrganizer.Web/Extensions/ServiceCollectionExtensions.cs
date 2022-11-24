@@ -22,6 +22,7 @@ namespace SlothOrganizer.Web.Extensions
         {
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<ISecurityService, SecurityService>();
+            services.AddScoped<ITokenService, TokenService>();
             return services;
         }
 

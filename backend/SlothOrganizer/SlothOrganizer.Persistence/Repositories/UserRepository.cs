@@ -55,8 +55,8 @@ namespace SlothOrganizer.Persistence.Repositories
 
         public async Task<User> Insert(User user)
         {
-            var query = "INSERT INTO Users (FirstName, LastName, Email, Password, Salt, EmailVerified, RefreshToken)" +
-                " VALUES (@FirstName, @LastName, @Email, @Password, @Salt, @EmailVerified, @RefreshToken)" +
+            var query = "INSERT INTO Users (FirstName, LastName, Email, Password, Salt, EmailVerified)" +
+                " VALUES (@FirstName, @LastName, @Email, @Password, @Salt, @EmailVerified)" +
                 " SELECT CAST(SCOPE_IDENTITY() as bigint)";
 
             var parameters = new DynamicParameters();
@@ -66,7 +66,6 @@ namespace SlothOrganizer.Persistence.Repositories
             parameters.Add("Password", user.Password);
             parameters.Add("Salt", user.Salt);
             parameters.Add("EmailVerified", user.EmailVerified);
-            parameters.Add("RefreshToken", user.RefreshToken);
 
             using var connection = _dapperContext.CreateConnection();
             var id = await connection.QuerySingleAsync<long>(query, parameters);
@@ -77,7 +76,7 @@ namespace SlothOrganizer.Persistence.Repositories
         public async Task Update(User user)
         {
             var command = "UPDATE Users SET FirstName=@FirstName, LastName=@LastName, Email=@Email," +
-                " Password=@Password, Salt=@Salt, EmailVerified=@EmailVerified, RefreshToken=@RefreshToken) WHERE Id=@Id";
+                " Password=@Password, Salt=@Salt, EmailVerified=@EmailVerified) WHERE Id=@Id";
 
             var parameters = new DynamicParameters();
             parameters.Add("FirstName", user.FirstName);
@@ -86,7 +85,6 @@ namespace SlothOrganizer.Persistence.Repositories
             parameters.Add("Password", user.Password);
             parameters.Add("Salt", user.Salt);
             parameters.Add("EmailVerified", user.EmailVerified);
-            parameters.Add("RefreshToken", user.RefreshToken);
             parameters.Add("Id", user.Id);
 
             using var connection = _dapperContext.CreateConnection();
