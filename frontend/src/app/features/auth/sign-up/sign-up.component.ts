@@ -1,8 +1,8 @@
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 
+import { AuthService } from 'src/app/api/auth.service';
 import { Component } from '@angular/core';
 import { NewUser } from 'src/app/types/user/NewUser';
-import { UserService } from 'src/app/api/user.service';
 
 @Component({
   selector: 'app-sign-up',
@@ -44,7 +44,7 @@ export class SignUpComponent {
     repeatPassword: this.repeatPasswordControl
   });
 
-  constructor(private userService: UserService) {}
+  constructor(private userService: AuthService) {}
 
   public signUpClick() {
     if (this.passwordControl.value !== this.repeatPasswordControl.value) {

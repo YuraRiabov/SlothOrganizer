@@ -25,6 +25,7 @@ builder.Services.AddSingleton<DatabaseManager>();
 
 builder.Services.AddRepositories();
 builder.Services.AddCustomServices();
+builder.Services.AddEmailService(builder.Configuration);
 builder.Services.AddFluentMigrations(builder.Configuration);
 builder.Services.AddCustomAuthentication(builder.Configuration);
 

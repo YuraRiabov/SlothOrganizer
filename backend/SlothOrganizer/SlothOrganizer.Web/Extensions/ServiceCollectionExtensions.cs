@@ -7,6 +7,7 @@ using SlothOrganizer.Persistence;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
+using SlothOrganizer.Services.Options;
 
 namespace SlothOrganizer.Web.Extensions
 {
@@ -15,6 +16,7 @@ namespace SlothOrganizer.Web.Extensions
         public static IServiceCollection AddRepositories(this IServiceCollection services)
         {
             services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<IVerificationCodeRepository, VerificationCodeRepository>();
             return services;
         }
 
@@ -23,6 +25,21 @@ namespace SlothOrganizer.Web.Extensions
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<ISecurityService, SecurityService>();
             services.AddScoped<ITokenService, TokenService>();
+            services.AddScoped<IAuthService, AuthService>();
+            services.AddScoped<IEmailService, EmailService>();
+            services.AddScoped<IVerificationCodeService, VerificationCodeService>();
+            return services;
+        }
+
+        public static IServiceCollection AddEmailService(this IServiceCollection services, IConfiguration configuration)
+        {
+            var smtpSection = configuration.GetRequiredSection("Smtp");
+            services.Configure<SmtpOptions>(options =>
+            {
+                smtpSection.Bind(options);
+                options.Password = configuration["SmtpPassword"];
+            });
+            services.AddScoped<IEmailService, EmailService>();
             return services;
         }
 

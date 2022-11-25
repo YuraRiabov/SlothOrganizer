@@ -5,8 +5,8 @@ import { NewUser } from '../types/user/NewUser';
 @Injectable({
   providedIn: 'root'
 })
-export class UserService {
-  private baseUri: string = '/Users';
+export class AuthService {
+  private baseUri: string = '/auth';
 
   constructor(private httpService: HttpInternalService) {}
 

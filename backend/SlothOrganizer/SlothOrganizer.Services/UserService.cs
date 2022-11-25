@@ -25,7 +25,7 @@ namespace SlothOrganizer.Services
             _userRepository = userRepository;
         }
 
-        public async Task CreateUser(NewUserDto newUser)
+        public async Task<UserDto> CreateUser(NewUserDto newUser)
         {
             if (await _userRepository.GetByEmail(newUser.Email) is not null)
             {
@@ -37,7 +37,8 @@ namespace SlothOrganizer.Services
             user.Salt = Convert.ToBase64String(salt);
             user.Password = hashedPassword;
 
-            await _userRepository.Insert(user);
+            var createdUser = await _userRepository.Insert(user);
+            return _mapper.Map<UserDto>(createdUser);
         }
     }
 }

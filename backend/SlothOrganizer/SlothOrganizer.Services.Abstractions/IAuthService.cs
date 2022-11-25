@@ -7,8 +7,8 @@ using SlothOrganizer.Contracts.DTO.User;
 
 namespace SlothOrganizer.Services.Abstractions
 {
-    public interface IUserService
+    public interface IAuthService
     {
-        Task<UserDto> CreateUser(NewUserDto newUser);
+        Task<UserDto> SignUp(NewUserDto newUser);
     }
 }
