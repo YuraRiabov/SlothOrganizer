@@ -10,5 +10,9 @@ namespace SlothOrganizer.Services.Abstractions
     public interface IUserService
     {
         Task<UserDto> CreateUser(NewUserDto newUser);
+
+        Task<UserDto> GetUser(long id);
+
+        Task VerifyEmail(long userId);
     }
 }

@@ -45,9 +45,9 @@ namespace SlothOrganizer.Services
             var jwtSecurityToken = securityToken as JwtSecurityToken;
             if (jwtSecurityToken == null || !jwtSecurityToken.Header.Alg.Equals(SecurityAlgorithms.HmacSha256, StringComparison.InvariantCultureIgnoreCase))
             {
-                throw new InvalidTokenException("Invalid token");
+                throw new InvalidCredentialsException("Invalid token");
             }
-            return principal.FindFirst(ClaimTypes.Email)?.Value ?? throw new InvalidTokenException("Token doesn't contain email claim");
+            return principal.FindFirst(ClaimTypes.Email)?.Value ?? throw new InvalidCredentialsException("Token doesn't contain email claim");
         }
 
         public string GenerateAccessToken(string email)

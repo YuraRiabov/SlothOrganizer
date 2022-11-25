@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using SlothOrganizer.Contracts.DTO.Auth;
 using SlothOrganizer.Contracts.DTO.User;
+using SlothOrganizer.Domain.Exceptions;
 using SlothOrganizer.Services.Abstractions;
 
 namespace SlothOrganizer.Services
@@ -33,6 +35,16 @@ namespace SlothOrganizer.Services
             }
             catch (Exception) { }
             return user;
+        }
+
+        public async Task<TokenDto> VerifyEmail(long userId, int code)
+        {
+            var user = await _userService.GetUser(userId);
+            if (await _verificationCodeService.VerifyCode(userId, code))
+            {
+                return _tokenService.GenerateToken(user.Email);
+            }
+            throw new InvalidCredentialsException("Invalid verification code");
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using SlothOrganizer.Contracts.DTO.Auth;
 using SlothOrganizer.Contracts.DTO.User;
 using SlothOrganizer.Services.Abstractions;
 
@@ -23,6 +24,13 @@ namespace SlothOrganizer.Presentation.Controllers
         {
             var user = await _authService.SignUp(newUserDto);
             return Ok(user);
+        }
+
+        [AllowAnonymous]
+        [HttpPut("verifyEmail/{userId}/{code}")]
+        public async Task<ActionResult<TokenDto>> VerifyEmail(long userId, int code)
+        {
+            return Ok(await _authService.VerifyEmail(userId, code));
         }
     }
 }

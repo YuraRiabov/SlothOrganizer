@@ -30,7 +30,7 @@ namespace SlothOrganizer.Web.Middleware
             context.Response.StatusCode = exception switch
             {
                 DuplicateAccountException => 400,
-                InvalidTokenException => 403,
+                InvalidCredentialsException => 403,
                 _ => 500
             };
             await context.Response.WriteAsync(exception.Message);

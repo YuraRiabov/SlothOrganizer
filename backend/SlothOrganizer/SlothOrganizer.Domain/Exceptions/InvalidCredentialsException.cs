@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace SlothOrganizer.Domain.Exceptions
 {
-    public class InvalidTokenException : Exception
+    public class InvalidCredentialsException : Exception
     {
-        public InvalidTokenException(string message) : base(message)
+        public InvalidCredentialsException(string message) : base(message)
         { }
     }
 }

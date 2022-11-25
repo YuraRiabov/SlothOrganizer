@@ -40,5 +40,18 @@ namespace SlothOrganizer.Services
             var createdUser = await _userRepository.Insert(user);
             return _mapper.Map<UserDto>(createdUser);
         }
+
+        public async Task<UserDto> GetUser(long id)
+        {
+            var user = await _userRepository.GetById(id);
+            return _mapper.Map<UserDto>(user);
+        }
+
+        public async Task VerifyEmail(long userId)
+        {
+            var user = await _userRepository.GetById(userId);
+            user.EmailVerified = true;
+            await _userRepository.Update(user);
+        }
     }
 }

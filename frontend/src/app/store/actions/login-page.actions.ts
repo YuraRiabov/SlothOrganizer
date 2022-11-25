@@ -9,6 +9,6 @@ export const register = createAction(
 );
 
 export const verifyEmail = createAction(
-  '[Verify email page] Verigy email',
+  '[Verify email page] Verify email',
   props<{ token: Token }>()
 );
