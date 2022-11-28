@@ -1,4 +1,4 @@
-import { Token } from '../tokens/token';
+import { Token } from '../auth/token';
 import { User } from '../user/user';
 
 export interface AuthState {

@@ -27,10 +27,10 @@ namespace SlothOrganizer.Presentation.Controllers
         }
 
         [AllowAnonymous]
-        [HttpPut("verifyEmail/{userId}/{code}")]
-        public async Task<ActionResult<TokenDto>> VerifyEmail(long userId, int code)
+        [HttpPut("verifyEmail")]
+        public async Task<ActionResult<TokenDto>> VerifyEmail([FromBody] VerificationCodeDto verificationCode)
         {
-            return Ok(await _authService.VerifyEmail(userId, code));
+            return Ok(await _authService.VerifyEmail(verificationCode));
         }
     }
 }

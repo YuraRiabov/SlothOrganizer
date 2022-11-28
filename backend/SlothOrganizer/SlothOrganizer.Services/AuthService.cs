@@ -37,10 +37,10 @@ namespace SlothOrganizer.Services
             return user;
         }
 
-        public async Task<TokenDto> VerifyEmail(long userId, int code)
+        public async Task<TokenDto> VerifyEmail(VerificationCodeDto verificationCode)
         {
-            var user = await _userService.GetUser(userId);
-            if (await _verificationCodeService.VerifyCode(userId, code))
+            var user = await _userService.GetUser(verificationCode.UserId);
+            if (await _verificationCodeService.VerifyCode(verificationCode.UserId, verificationCode.VerificationCode))
             {
                 return _tokenService.GenerateToken(user.Email);
             }

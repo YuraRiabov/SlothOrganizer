@@ -1,8 +1,8 @@
+import { ActivatedRoute, Router } from '@angular/router';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 import { AuthService } from 'src/app/api/auth.service';
 import { Component } from '@angular/core';
-import { NewUser } from 'src/app/types/user/newUser';
 import { Store } from '@ngrx/store';
 import { register } from 'src/app/store/actions/login-page.actions';
 
@@ -46,14 +46,19 @@ export class SignUpComponent {
     repeatPassword: this.repeatPasswordControl
   });
 
-  constructor(private userService: AuthService, private store: Store) {}
+  constructor(
+    private authService: AuthService,
+    private store: Store,
+    private route: ActivatedRoute,
+    private router: Router
+  ) {}
 
   public signUpClick() {
     if (this.passwordControl.value !== this.repeatPasswordControl.value) {
       this.repeatPasswordControl.setErrors({ repeatPassword: true });
       return;
     }
-    this.userService
+    this.authService
       .signUp({
         firstName: this.firstNameControl.value!,
         lastName: this.lastNameControl.value!,
@@ -63,6 +68,9 @@ export class SignUpComponent {
       .subscribe(
         (user) => {
           this.store.dispatch(register({ user }));
+          this.router.navigate(['verify-email'], {
+            relativeTo: this.route.parent
+          });
         },
         (resp) => {
           if (resp.error === 'Account with this email already exists') {
