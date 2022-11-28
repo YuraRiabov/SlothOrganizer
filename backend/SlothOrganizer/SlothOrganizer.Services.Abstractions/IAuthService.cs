@@ -13,5 +13,7 @@ namespace SlothOrganizer.Services.Abstractions
         Task<UserDto> SignUp(NewUserDto newUser);
 
         Task<TokenDto> VerifyEmail(VerificationCodeDto verificationCode);
+
+        Task ResendVerificationCode(long userId);
     }
 }

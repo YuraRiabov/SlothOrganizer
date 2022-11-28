@@ -32,5 +32,13 @@ namespace SlothOrganizer.Presentation.Controllers
         {
             return Ok(await _authService.VerifyEmail(verificationCode));
         }
+
+        [AllowAnonymous]
+        [HttpPost("resendCode/{userId}")]
+        public async Task<IActionResult> ResendVerificationCode(long userId)
+        {
+            await _authService.ResendVerificationCode(userId);
+            return Ok();
+        }
     }
 }

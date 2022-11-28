@@ -23,4 +23,11 @@ export class AuthService {
       verificationCode
     );
   }
+
+  public resendCode(userId: number) {
+    return this.httpService.postRequest(
+      `${this.baseUri}/resendCode/${userId}`,
+      {}
+    );
+  }
 }

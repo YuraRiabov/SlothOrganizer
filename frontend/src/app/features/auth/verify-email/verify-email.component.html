@@ -3,6 +3,8 @@
     <h3>An email with verification code has been sent to your email. Enter it to start using the application</h3>
     <mat-form-field class="code-field">
         <input [formControl]="codeControl" matInput type="number"/>
+        <mat-error *ngIf="codeControl.hasError('invalidCode')">Invalid code</mat-error>
     </mat-form-field>
     <button class="submit-button" mat-flat-button color="primary" (click)="submit()">Submit</button>
+    <p class="resend-link" (click)="resendCode()">Send again</p>
 </div>

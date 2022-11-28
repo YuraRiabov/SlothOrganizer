@@ -35,6 +35,15 @@ export class VerifyEmailComponent {
           })
         )
       )
-      .subscribe((token) => this.store.dispatch(verifyEmail({ token })));
+      .subscribe(
+        (token) => this.store.dispatch(verifyEmail({ token })),
+        () => this.codeControl.setErrors({ invalidCode: true })
+      );
+  }
+
+  public resendCode() {
+    this.userId$
+      .pipe(concatMap((id) => this.authService.resendCode(id)))
+      .subscribe();
   }
 }

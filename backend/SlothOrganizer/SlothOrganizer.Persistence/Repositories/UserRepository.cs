@@ -76,7 +76,7 @@ namespace SlothOrganizer.Persistence.Repositories
         public async Task Update(User user)
         {
             var command = "UPDATE Users SET FirstName=@FirstName, LastName=@LastName, Email=@Email," +
-                " Password=@Password, Salt=@Salt, EmailVerified=@EmailVerified) WHERE Id=@Id";
+                " Password=@Password, Salt=@Salt, EmailVerified=@EmailVerified WHERE Id=@Id";
 
             var parameters = new DynamicParameters();
             parameters.Add("FirstName", user.FirstName);

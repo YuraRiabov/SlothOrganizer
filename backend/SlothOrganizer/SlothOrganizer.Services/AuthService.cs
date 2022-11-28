@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using SlothOrganizer.Contracts.DTO.Auth;
+﻿using SlothOrganizer.Contracts.DTO.Auth;
 using SlothOrganizer.Contracts.DTO.User;
 using SlothOrganizer.Domain.Exceptions;
 using SlothOrganizer.Services.Abstractions;
@@ -25,15 +20,16 @@ namespace SlothOrganizer.Services
             _emailService = emailService;
         }
 
+        public async Task ResendVerificationCode(long userId)
+        {
+            var user = await _userService.GetUser(userId);
+            await SendVerificationCode(user);
+        }
+
         public async Task<UserDto> SignUp(NewUserDto newUser)
         {
             var user = await _userService.CreateUser(newUser);
-            var code = await _verificationCodeService.GenerateCode(user.Id);
-            try
-            {
-                await _emailService.SendEmail(user.Email, "Verify your email", $"Your verification code is {code}");
-            }
-            catch (Exception) { }
+            await SendVerificationCode(user);
             return user;
         }
 
@@ -42,9 +38,16 @@ namespace SlothOrganizer.Services
             var user = await _userService.GetUser(verificationCode.UserId);
             if (await _verificationCodeService.VerifyCode(verificationCode.UserId, verificationCode.VerificationCode))
             {
+                await _userService.VerifyEmail(user.Id);
                 return _tokenService.GenerateToken(user.Email);
             }
             throw new InvalidCredentialsException("Invalid verification code");
+        }
+
+        private async Task SendVerificationCode(UserDto user)
+        {
+            var code = await _verificationCodeService.GenerateCode(user.Id);
+            await _emailService.SendEmail(user.Email, "Verify your email", $"Your verification code is {code}");
         }
     }
 }
