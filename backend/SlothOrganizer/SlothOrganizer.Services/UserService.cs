@@ -43,15 +43,25 @@ namespace SlothOrganizer.Services
 
         public async Task<UserDto> GetUser(long id)
         {
-            var user = await _userRepository.GetById(id);
+            var user = await GetByIdInternal(id);
             return _mapper.Map<UserDto>(user);
         }
 
         public async Task VerifyEmail(long userId)
         {
-            var user = await _userRepository.GetById(userId);
+            var user = await GetByIdInternal(userId);
             user.EmailVerified = true;
             await _userRepository.Update(user);
+        }
+
+        private async Task<User> GetByIdInternal(long userId)
+        {
+            var user = await _userRepository.GetById(userId);
+            if (user is null)
+            {
+                throw new EntityNotFoundException("Not found user with such id");
+            }
+            return user;
         }
     }
 }

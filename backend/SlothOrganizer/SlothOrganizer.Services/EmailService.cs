@@ -34,7 +34,6 @@ namespace SlothOrganizer.Services
             email.Subject = subject;
             email.Body = new TextPart(TextFormat.Html) { Text = message };
 
-            // send email
             using (var smtp = new SmtpClient())
             {
                 smtp.Connect(_options.HostAddress, _options.Port, _options.SecureSocketOptions);

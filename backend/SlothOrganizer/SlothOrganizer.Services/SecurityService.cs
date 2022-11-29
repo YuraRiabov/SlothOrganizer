@@ -16,6 +16,11 @@ namespace SlothOrganizer.Services
             return RandomNumberGenerator.GetBytes(length);
         }
 
+        public int GetRandomNumber(int digitCount = 6)
+        {
+            return RandomNumberGenerator.GetInt32((int)Math.Pow(10, digitCount - 1), (int)Math.Pow(10, digitCount));
+        }
+
         public string HashPassword(string password, byte[] salt)
         {
             return Convert.ToBase64String(KeyDerivation.Pbkdf2(

@@ -11,8 +11,6 @@ namespace SlothOrganizer.Services.Abstractions
     public interface ITokenService
     {
         TokenDto GenerateToken(string email);
-        string GetEmailFromExpiredToken(string token);
-        string GenerateAccessToken(string email);
-        string GenerateRefreshToken();
+        string GetEmailFromToken(string token);
     }
 }

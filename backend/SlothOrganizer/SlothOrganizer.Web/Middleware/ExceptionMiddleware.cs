@@ -31,6 +31,7 @@ namespace SlothOrganizer.Web.Middleware
             {
                 DuplicateAccountException => 400,
                 InvalidCredentialsException => 403,
+                EntityNotFoundException => 404,
                 _ => 500
             };
             await context.Response.WriteAsync(exception.Message);

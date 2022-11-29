@@ -9,7 +9,7 @@ namespace SlothOrganizer.Services.Abstractions
     public interface ISecurityService
     {
         byte[] GetRandomBytes(int length = 16);
-
         string HashPassword(string password, byte[] salt);
+        int GetRandomNumber(int digitCount = 6);
     }
 }

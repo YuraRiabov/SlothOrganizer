@@ -28,6 +28,7 @@ namespace SlothOrganizer.Web.Extensions
             services.AddScoped<IAuthService, AuthService>();
             services.AddScoped<IEmailService, EmailService>();
             services.AddScoped<IVerificationCodeService, VerificationCodeService>();
+            services.AddScoped<IDateTimeService, DateTimeService>();
             return services;
         }
 

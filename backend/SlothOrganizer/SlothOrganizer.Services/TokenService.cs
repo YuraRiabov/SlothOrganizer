@@ -29,7 +29,7 @@ namespace SlothOrganizer.Services
             };
         }
 
-        public string GetEmailFromExpiredToken(string token)
+        public string GetEmailFromToken(string token)
         {
             var tokenValidationParameters = new TokenValidationParameters
             {
@@ -50,7 +50,7 @@ namespace SlothOrganizer.Services
             return principal.FindFirst(ClaimTypes.Email)?.Value ?? throw new InvalidCredentialsException("Token doesn't contain email claim");
         }
 
-        public string GenerateAccessToken(string email)
+        private string GenerateAccessToken(string email)
         {
             var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["JwtKey"]));
             var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
@@ -68,7 +68,7 @@ namespace SlothOrganizer.Services
             return new JwtSecurityTokenHandler().WriteToken(token);
         }
 
-        public string GenerateRefreshToken()
+        private string GenerateRefreshToken()
         {
             return Convert.ToBase64String(_securityService.GetRandomBytes());
         }
