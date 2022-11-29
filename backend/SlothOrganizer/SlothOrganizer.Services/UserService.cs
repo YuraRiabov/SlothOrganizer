@@ -38,7 +38,8 @@ namespace SlothOrganizer.Services
             user.Password = hashedPassword;
 
             var createdUser = await _userRepository.Insert(user);
-            return _mapper.Map<UserDto>(createdUser);
+            user.Id = createdUser.Id;
+            return _mapper.Map<UserDto>(user);
         }
 
         public async Task<UserDto> GetUser(long id)
