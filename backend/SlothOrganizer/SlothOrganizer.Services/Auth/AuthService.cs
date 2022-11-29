@@ -1,9 +1,11 @@
 ﻿using SlothOrganizer.Contracts.DTO.Auth;
 using SlothOrganizer.Contracts.DTO.User;
 using SlothOrganizer.Domain.Exceptions;
-using SlothOrganizer.Services.Abstractions;
+using SlothOrganizer.Services.Abstractions.Auth;
+using SlothOrganizer.Services.Abstractions.Email;
+using SlothOrganizer.Services.Abstractions.Users;
 
-namespace SlothOrganizer.Services
+namespace SlothOrganizer.Services.Auth
 {
     public class AuthService : IAuthService
     {

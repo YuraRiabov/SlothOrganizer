@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using SlothOrganizer.Contracts.DTO.Auth;
 using SlothOrganizer.Contracts.DTO.User;
 
-namespace SlothOrganizer.Services.Abstractions
+namespace SlothOrganizer.Services.Abstractions.Auth
 {
     public interface ITokenService
     {

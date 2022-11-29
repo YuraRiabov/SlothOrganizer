@@ -1,13 +1,19 @@
 ﻿using SlothOrganizer.Domain.Repositories;
 using SlothOrganizer.Persistence.Repositories;
-using SlothOrganizer.Services.Abstractions;
-using SlothOrganizer.Services;
 using FluentMigrator.Runner;
 using SlothOrganizer.Persistence;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
-using SlothOrganizer.Services.Options;
+using SlothOrganizer.Services.Email.Options;
+using SlothOrganizer.Services.Email;
+using SlothOrganizer.Services.Auth;
+using SlothOrganizer.Services.Utility;
+using SlothOrganizer.Services.Abstractions.Auth;
+using SlothOrganizer.Services.Abstractions.Email;
+using SlothOrganizer.Services.Abstractions.Utility;
+using SlothOrganizer.Services.Users;
+using SlothOrganizer.Services.Abstractions.Users;
 
 namespace SlothOrganizer.Web.Extensions
 {

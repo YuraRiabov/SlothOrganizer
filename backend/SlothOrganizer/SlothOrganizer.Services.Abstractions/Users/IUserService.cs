@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using SlothOrganizer.Contracts.DTO.User;
 
-namespace SlothOrganizer.Services.Abstractions
+namespace SlothOrganizer.Services.Abstractions.Users
 {
     public interface IUserService
     {

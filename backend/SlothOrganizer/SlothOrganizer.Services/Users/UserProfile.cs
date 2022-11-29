@@ -2,7 +2,7 @@
 using SlothOrganizer.Contracts.DTO.User;
 using SlothOrganizer.Domain.Entities;
 
-namespace SlothOrganizer.Services.MappingProfiles
+namespace SlothOrganizer.Services.Users
 {
     public class UserProfile : Profile
     {

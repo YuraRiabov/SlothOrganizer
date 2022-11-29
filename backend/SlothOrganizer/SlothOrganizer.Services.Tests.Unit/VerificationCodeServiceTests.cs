@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 using FakeItEasy;
 using SlothOrganizer.Domain.Entities;
 using SlothOrganizer.Domain.Repositories;
-using SlothOrganizer.Services.Abstractions;
+using SlothOrganizer.Services.Abstractions.Utility;
+using SlothOrganizer.Services.Auth;
 using Xunit;
 
 namespace SlothOrganizer.Services.Tests.Unit

@@ -6,9 +6,10 @@ using System.Text;
 using System.Threading.Tasks;
 using SlothOrganizer.Domain.Entities;
 using SlothOrganizer.Domain.Repositories;
-using SlothOrganizer.Services.Abstractions;
+using SlothOrganizer.Services.Abstractions.Auth;
+using SlothOrganizer.Services.Abstractions.Utility;
 
-namespace SlothOrganizer.Services
+namespace SlothOrganizer.Services.Auth
 {
     public class VerificationCodeService : IVerificationCodeService
     {

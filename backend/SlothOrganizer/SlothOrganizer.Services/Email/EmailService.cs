@@ -5,12 +5,12 @@ using System.Text;
 using System.Threading.Tasks;
 using MimeKit.Text;
 using MimeKit;
-using SlothOrganizer.Services.Options;
+using SlothOrganizer.Services.Email.Options;
 using MailKit.Net.Smtp;
 using Microsoft.Extensions.Options;
-using SlothOrganizer.Services.Abstractions;
+using SlothOrganizer.Services.Abstractions.Email;
 
-namespace SlothOrganizer.Services
+namespace SlothOrganizer.Services.Email
 {
     public class EmailService : IEmailService
     {

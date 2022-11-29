@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using MailKit.Security;
 
-namespace SlothOrganizer.Services.Options
+namespace SlothOrganizer.Services.Email.Options
 {
     public class SmtpOptions
     {

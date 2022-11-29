@@ -9,8 +9,8 @@ using SlothOrganizer.Contracts.DTO.User;
 using SlothOrganizer.Domain.Entities;
 using SlothOrganizer.Domain.Exceptions;
 using SlothOrganizer.Domain.Repositories;
-using SlothOrganizer.Services.Abstractions;
-using SlothOrganizer.Services.MappingProfiles;
+using SlothOrganizer.Services.Abstractions.Utility;
+using SlothOrganizer.Services.Users;
 using Xunit;
 
 namespace SlothOrganizer.Services.Tests.Unit

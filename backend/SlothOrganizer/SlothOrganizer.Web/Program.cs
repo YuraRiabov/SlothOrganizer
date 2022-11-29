@@ -9,7 +9,7 @@ using SlothOrganizer.Persistence;
 using SlothOrganizer.Persistence.Repositories;
 using SlothOrganizer.Services;
 using SlothOrganizer.Services.Abstractions;
-using SlothOrganizer.Services.MappingProfiles;
+using SlothOrganizer.Services.Users;
 using SlothOrganizer.Web.Extensions;
 using SlothOrganizer.Web.Middleware;
 using SlothOrganizer.Web.Middleware.Validation.Users;

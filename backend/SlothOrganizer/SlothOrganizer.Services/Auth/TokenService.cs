@@ -5,9 +5,10 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using SlothOrganizer.Contracts.DTO.Auth;
 using SlothOrganizer.Domain.Exceptions;
-using SlothOrganizer.Services.Abstractions;
+using SlothOrganizer.Services.Abstractions.Auth;
+using SlothOrganizer.Services.Abstractions.Utility;
 
-namespace SlothOrganizer.Services
+namespace SlothOrganizer.Services.Auth
 {
     public class TokenService : ITokenService
     {

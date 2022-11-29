@@ -12,7 +12,8 @@ using Microsoft.IdentityModel.Tokens;
 using Newtonsoft.Json.Linq;
 using Org.BouncyCastle.Utilities;
 using SlothOrganizer.Domain.Exceptions;
-using SlothOrganizer.Services.Abstractions;
+using SlothOrganizer.Services.Abstractions.Utility;
+using SlothOrganizer.Services.Auth;
 using Xunit;
 using IConfiguration = Microsoft.Extensions.Configuration.IConfiguration;
 

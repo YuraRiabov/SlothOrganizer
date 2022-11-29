@@ -5,9 +5,9 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Cryptography.KeyDerivation;
-using SlothOrganizer.Services.Abstractions;
+using SlothOrganizer.Services.Abstractions.Utility;
 
-namespace SlothOrganizer.Services
+namespace SlothOrganizer.Services.Utility
 {
     public class SecurityService : ISecurityService
     {

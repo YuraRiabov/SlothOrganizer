@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using SlothOrganizer.Contracts.DTO.Auth;
 using SlothOrganizer.Contracts.DTO.User;
-using SlothOrganizer.Services.Abstractions;
+using SlothOrganizer.Services.Abstractions.Auth;
 
 namespace SlothOrganizer.Presentation.Controllers
 {

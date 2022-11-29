@@ -8,9 +8,10 @@ using SlothOrganizer.Contracts.DTO.User;
 using SlothOrganizer.Domain.Entities;
 using SlothOrganizer.Domain.Exceptions;
 using SlothOrganizer.Domain.Repositories;
-using SlothOrganizer.Services.Abstractions;
+using SlothOrganizer.Services.Abstractions.Users;
+using SlothOrganizer.Services.Abstractions.Utility;
 
-namespace SlothOrganizer.Services
+namespace SlothOrganizer.Services.Users
 {
     public class UserService : IUserService
     {
