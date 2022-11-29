@@ -13,11 +13,13 @@ namespace SlothOrganizer.Services
     {
         private readonly ISecurityService _securityService;
         private readonly IConfiguration _configuration;
+        private readonly IDateTimeService _dateTimeService;
 
-        public TokenService(IConfiguration configuration, ISecurityService securityService)
+        public TokenService(IConfiguration configuration, ISecurityService securityService, IDateTimeService dateTimeService)
         {
             _configuration = configuration;
             _securityService = securityService;
+            _dateTimeService = dateTimeService;
         }
 
         public TokenDto GenerateToken(string email)
@@ -41,13 +43,20 @@ namespace SlothOrganizer.Services
             };
             var tokenHandler = new JwtSecurityTokenHandler();
             SecurityToken securityToken;
-            var principal = tokenHandler.ValidateToken(token, tokenValidationParameters, out securityToken);
-            var jwtSecurityToken = securityToken as JwtSecurityToken;
-            if (jwtSecurityToken == null || !jwtSecurityToken.Header.Alg.Equals(SecurityAlgorithms.HmacSha256, StringComparison.InvariantCultureIgnoreCase))
+            try
+            {
+                var principal = tokenHandler.ValidateToken(token, tokenValidationParameters, out securityToken);
+                var jwtSecurityToken = securityToken as JwtSecurityToken;
+                if (jwtSecurityToken == null || !jwtSecurityToken.Header.Alg.Equals(SecurityAlgorithms.HmacSha256, StringComparison.InvariantCultureIgnoreCase))
+                {
+                    throw new Exception();
+                }
+                return principal.FindFirst(ClaimTypes.Email)?.Value ?? throw new InvalidCredentialsException("Token doesn't contain email claim");
+            }
+            catch (Exception)
             {
                 throw new InvalidCredentialsException("Invalid token");
             }
-            return principal.FindFirst(ClaimTypes.Email)?.Value ?? throw new InvalidCredentialsException("Token doesn't contain email claim");
         }
 
         private string GenerateAccessToken(string email)
@@ -61,7 +70,7 @@ namespace SlothOrganizer.Services
             var token = new JwtSecurityToken(_configuration["Jwt:Issuer"],
                 _configuration["Jwt:Audience"],
                 claims,
-                expires: DateTime.Now.AddMinutes(60),
+                expires: _dateTimeService.Now().AddMinutes(60),
                 signingCredentials: credentials);
 
 
