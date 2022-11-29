@@ -14,8 +14,8 @@ namespace SlothOrganizer.Services
     {
         private readonly IVerificationCodeRepository _verificationCodeRepository;
         private readonly IDateTimeService _dateTimeService;
-        private readonly SecurityService _securityService;
-        public VerificationCodeService(IVerificationCodeRepository verificationCodeRepository, IDateTimeService dateTimeService, SecurityService securityService)
+        private readonly ISecurityService _securityService;
+        public VerificationCodeService(IVerificationCodeRepository verificationCodeRepository, IDateTimeService dateTimeService, ISecurityService securityService)
         {
             _verificationCodeRepository = verificationCodeRepository;
             _dateTimeService = dateTimeService;
