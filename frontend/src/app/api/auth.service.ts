@@ -1,6 +1,6 @@
 import { HttpInternalService } from './http-internal.service';
 import { Injectable } from '@angular/core';
-import { NewUser } from 'src/app/types/user/newUser';
+import { NewUser } from 'src/app/types/user/NewUser';
 import { Token } from '../types/auth/token';
 import { User } from '../types/user/user';
 import { VerificationCode } from '../types/auth/verificationCode';
