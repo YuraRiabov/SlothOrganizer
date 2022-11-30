@@ -8,15 +8,15 @@ import { StoreModule } from '@ngrx/store';
 import { authPageReducer } from './store/reducers/auth-page.reducers';
 
 @NgModule({
-  declarations: [AppComponent],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    StoreModule.forRoot({ authState: authPageReducer }, {}),
-    BrowserAnimationsModule,
-    HttpClientModule
-  ],
-  providers: [],
-  bootstrap: [AppComponent]
+    declarations: [AppComponent],
+    imports: [
+        BrowserModule,
+        AppRoutingModule,
+        StoreModule.forRoot({ authState: authPageReducer }, {}),
+        BrowserAnimationsModule,
+        HttpClientModule
+    ],
+    providers: [],
+    bootstrap: [AppComponent]
 })
 export class AppModule {}

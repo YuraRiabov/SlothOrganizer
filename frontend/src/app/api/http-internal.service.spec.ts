@@ -3,14 +3,14 @@ import { HttpInternalService } from './http-internal.service';
 import { TestBed } from '@angular/core/testing';
 
 describe('HttpInternalService', () => {
-  let service: HttpInternalService;
+    let service: HttpInternalService;
 
-  beforeEach(() => {
-    TestBed.configureTestingModule({});
-    service = TestBed.inject(HttpInternalService);
-  });
+    beforeEach(() => {
+        TestBed.configureTestingModule({});
+        service = TestBed.inject(HttpInternalService);
+    });
 
-  it('should be created', () => {
-    expect(service).toBeTruthy();
-  });
+    it('should be created', () => {
+        expect(service).toBeTruthy();
+    });
 });

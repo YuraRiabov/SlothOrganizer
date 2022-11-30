@@ -9,14 +9,14 @@ import { SignUpComponent } from './sign-up/sign-up.component';
 import { VerifyEmailComponent } from './verify-email/verify-email.component';
 
 @NgModule({
-  declarations: [AuthPageComponent, SignUpComponent, VerifyEmailComponent],
-  imports: [
-    CommonModule,
-    AuthRoutingModule,
-    MaterialModule,
-    FormsModule,
-    ReactiveFormsModule
-  ],
-  exports: [ReactiveFormsModule]
+    declarations: [AuthPageComponent, SignUpComponent, VerifyEmailComponent],
+    imports: [
+        CommonModule,
+        AuthRoutingModule,
+        MaterialModule,
+        FormsModule,
+        ReactiveFormsModule
+    ],
+    exports: [ReactiveFormsModule]
 })
 export class AuthModule {}

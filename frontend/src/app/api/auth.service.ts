@@ -6,28 +6,28 @@ import { User } from '../types/user/user';
 import { VerificationCode } from '../types/auth/verificationCode';
 
 @Injectable({
-  providedIn: 'root'
+    providedIn: 'root'
 })
 export class AuthService {
-  private baseUri: string = '/auth';
+    private baseUri: string = '/auth';
 
-  constructor(private httpService: HttpInternalService) {}
+    constructor(private httpService: HttpInternalService) {}
 
-  public signUp(user: NewUser) {
-    return this.httpService.postRequest<User>(`${this.baseUri}/signup`, user);
-  }
+    public signUp(user: NewUser) {
+        return this.httpService.postRequest<User>(`${this.baseUri}/signup`, user);
+    }
 
-  public verifyEmail(verificationCode: VerificationCode) {
-    return this.httpService.putRequest<Token>(
-      `${this.baseUri}/verifyEmail`,
-      verificationCode
-    );
-  }
+    public verifyEmail(verificationCode: VerificationCode) {
+        return this.httpService.putRequest<Token>(
+            `${this.baseUri}/verifyEmail`,
+            verificationCode
+        );
+    }
 
-  public resendCode(userId: number) {
-    return this.httpService.postRequest(
-      `${this.baseUri}/resendCode/${userId}`,
-      {}
-    );
-  }
+    public resendCode(userId: number) {
+        return this.httpService.postRequest(
+            `${this.baseUri}/resendCode/${userId}`,
+            {}
+        );
+    }
 }

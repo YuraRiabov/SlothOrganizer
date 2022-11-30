@@ -4,8 +4,8 @@ import { MatInputModule } from '@angular/material/input';
 import { NgModule } from '@angular/core';
 
 @NgModule({
-  declarations: [],
-  imports: [CommonModule, MatInputModule, MatButtonModule],
-  exports: [MatInputModule, MatButtonModule]
+    declarations: [],
+    imports: [CommonModule, MatInputModule, MatButtonModule],
+    exports: [MatInputModule, MatButtonModule]
 })
 export class MaterialModule {}

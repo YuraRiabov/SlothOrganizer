@@ -7,21 +7,21 @@ import { User } from 'src/app/types/user/user';
 export const selectAuthState = createFeatureSelector<AuthState>('authState');
 
 export const selectUser = createSelector(
-  selectAuthState,
-  (state) => state.user
+    selectAuthState,
+    (state) => state.user
 );
 
 export const selectToken = createSelector(
-  selectAuthState,
-  (state) => state.token
+    selectAuthState,
+    (state) => state.token
 );
 
 export const selectUserId = createSelector(
-  selectUser,
-  (state: User) => state.id
+    selectUser,
+    (state: User) => state.id
 );
 
 export const selectAccessToken = createSelector(
-  selectToken,
-  (state: Token) => state.accessToken
+    selectToken,
+    (state: Token) => state.accessToken
 );

@@ -6,12 +6,12 @@ import { Token } from 'src/app/types/auth/token';
 import { User } from 'src/app/types/user/user';
 
 export const initialState: AuthState = {
-  user: {} as User,
-  token: {} as Token
+    user: {} as User,
+    token: {} as Token
 };
 
 export const authPageReducer = createReducer(
-  initialState,
-  on(register, (state, { user }): AuthState => ({ ...state, user })),
-  on(verifyEmail, (state, { token }): AuthState => ({ ...state, token }))
+    initialState,
+    on(register, (state, { user }): AuthState => ({ ...state, user })),
+    on(verifyEmail, (state, { token }): AuthState => ({ ...state, token }))
 );
