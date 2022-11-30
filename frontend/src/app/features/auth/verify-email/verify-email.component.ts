@@ -1,5 +1,5 @@
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { Observable, concatMap } from 'rxjs';
+import { Observable, catchError, concatMap, of } from 'rxjs';
 
 import { AuthService } from 'src/app/api/auth.service';
 import { AuthState } from 'src/app/types/states/authState';
@@ -26,19 +26,23 @@ export class VerifyEmailComponent {
     }
 
     public submit() {
-        this.userId$
-            .pipe(
-                concatMap((id) =>
-                    this.authService.verifyEmail({
-                        userId: id,
-                        verificationCode: this.codeControl.value
-                    })
-                )
-            )
-            .subscribe(
-                (token) => this.store.dispatch(verifyEmail({ token })),
-                () => this.codeControl.setErrors({ invalidCode: true })
-            );
+        this.userId$.pipe(
+            concatMap((id) =>
+                this.authService.verifyEmail({
+                    userId: id,
+                    verificationCode: this.codeControl.value
+                })
+            ),
+            catchError(() => {
+                this.codeControl.setErrors({ invalidCode: true });
+                return of(null);
+            })
+        ).subscribe((token) => {
+            if (token == null) {
+                return;
+            }
+            this.store.dispatch(verifyEmail({ token }));
+        });
     }
 
     public resendCode() {
