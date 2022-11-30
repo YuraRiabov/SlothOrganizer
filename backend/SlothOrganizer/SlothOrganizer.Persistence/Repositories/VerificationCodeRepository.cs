@@ -29,10 +29,13 @@ namespace SlothOrganizer.Persistence.Repositories
         {
             var query = "INSERT INTO VerificationCodes(UserId, Code, ExpirationTime) VALUES (@UserId, @Code, @ExpirationTime)" +
                 " SELECT CAST(SCOPE_IDENTITY() as bigint)";
-            var parameters = new DynamicParameters();
-            parameters.Add("UserId", verificationCode.UserId);
-            parameters.Add("Code", verificationCode.Code);
-            parameters.Add("ExpirationTime", verificationCode.ExpirationTime);
+
+            var parameters = new
+            {
+                UserId = verificationCode.UserId,
+                Code = verificationCode.Code,
+                ExpirationTime = verificationCode.ExpirationTime
+            };
 
             using var connection = _context.CreateConnection();
             var id = await connection.QuerySingleAsync<long>(query, parameters);

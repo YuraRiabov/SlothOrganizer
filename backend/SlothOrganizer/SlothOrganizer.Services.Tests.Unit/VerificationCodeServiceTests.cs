@@ -32,7 +32,6 @@ namespace SlothOrganizer.Services.Tests.Unit
         {
             // Arrange
             var code = 100000;
-            var userId = 1;
             A.CallTo(() => _dateTimeService.Now()).Returns(new DateTime(2022, 11, 29, 12, 0, 0));
             A.CallTo(() => _securityService.GetRandomNumber(6)).Returns(code);
 
