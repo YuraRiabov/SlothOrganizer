@@ -28,6 +28,17 @@ namespace SlothOrganizer.Services.Auth
             await SendVerificationCode(user);
         }
 
+        public async Task<UserAuthDto> SignIn(AuthorizationDto authorizationDto)
+        {
+            var user = await _userService.Authorize(authorizationDto);
+            var token = _tokenService.GenerateToken(user.Email);
+            return new UserAuthDto
+            {
+                User = user,
+                Token = token
+            };
+        }
+
         public async Task<UserDto> SignUp(NewUserDto newUser)
         {
             var user = await _userService.CreateUser(newUser);

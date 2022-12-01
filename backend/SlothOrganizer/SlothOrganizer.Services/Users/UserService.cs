@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using AutoMapper;
+using SlothOrganizer.Contracts.DTO.Auth;
 using SlothOrganizer.Contracts.DTO.User;
 using SlothOrganizer.Domain.Entities;
 using SlothOrganizer.Domain.Exceptions;
@@ -43,6 +44,7 @@ namespace SlothOrganizer.Services.Users
             return _mapper.Map<UserDto>(user);
         }
 
+
         public async Task<UserDto> GetUser(long id)
         {
             var user = await GetByIdInternal(id);
@@ -56,12 +58,32 @@ namespace SlothOrganizer.Services.Users
             await _userRepository.Update(user);
         }
 
+        public async Task<UserDto> Authorize(AuthorizationDto auth)
+        {
+            var user = await GetByEmailInternal(auth.Email);
+            if (_securityService.VerifyPassword(auth.Password, Convert.FromBase64String(user.Salt), user.Password))
+            {
+                return _mapper.Map<UserDto>(user);
+            }
+            throw new InvalidCredentialsException("Invalid password");
+        }
+
         private async Task<User> GetByIdInternal(long userId)
         {
             var user = await _userRepository.GetById(userId);
             if (user is null)
             {
                 throw new EntityNotFoundException("Not found user with such id");
+            }
+            return user;
+        }
+
+        private async Task<User> GetByEmailInternal(string email)
+        {
+            var user = await _userRepository.GetByEmail(email);
+            if (user is null)
+            {
+                throw new EntityNotFoundException("No user with such email");
             }
             return user;
         }

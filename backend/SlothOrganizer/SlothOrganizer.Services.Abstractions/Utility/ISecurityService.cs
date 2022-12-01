@@ -10,6 +10,7 @@ namespace SlothOrganizer.Services.Abstractions.Utility
     {
         byte[] GetRandomBytes(int length = 16);
         string HashPassword(string password, byte[] salt);
+        bool VerifyPassword(string password, byte[] salt, string hash);
         int GetRandomNumber(int digitCount = 6);
     }
 }

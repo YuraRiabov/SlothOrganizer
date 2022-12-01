@@ -34,6 +34,13 @@ namespace SlothOrganizer.Presentation.Controllers
         }
 
         [AllowAnonymous]
+        [HttpPost("signin")]
+        public async Task<ActionResult<UserAuthDto>> SignIn([FromBody] AuthorizationDto authorizationDto)
+        {
+            return Ok(await _authService.SignIn(authorizationDto));
+        }
+
+        [AllowAnonymous]
         [HttpPost("resendCode/{userId}")]
         public async Task<IActionResult> ResendVerificationCode(long userId)
         {
