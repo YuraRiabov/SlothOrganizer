@@ -16,5 +16,7 @@ namespace SlothOrganizer.Services.Abstractions.Auth
         Task<TokenDto> VerifyEmail(VerificationCodeDto verificationCode);
 
         Task ResendVerificationCode(long userId);
+
+        Task<TokenDto> RefreshToken(TokenDto expiredToken);
     }
 }

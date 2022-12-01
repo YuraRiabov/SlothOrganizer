@@ -47,5 +47,12 @@ namespace SlothOrganizer.Presentation.Controllers
             await _authService.ResendVerificationCode(userId);
             return Ok();
         }
+
+        [AllowAnonymous]
+        [HttpPut("refreshToken")]
+        public async Task<ActionResult<TokenDto>> RefreshToken([FromBody] TokenDto token)
+        {
+            return Ok(await _authService.RefreshToken(token));
+        }
     }
 }

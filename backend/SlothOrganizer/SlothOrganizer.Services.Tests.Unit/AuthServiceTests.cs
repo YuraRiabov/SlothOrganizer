@@ -20,18 +20,24 @@ namespace SlothOrganizer.Services.Tests.Unit
     {
         private readonly AuthService _sut;
         private readonly IUserService _userService;
-        private readonly ITokenService _tokenService;
+        private readonly IAccessTokenService _accessTokenService;
+        private readonly IRefreshTokenService _refreshTokenService;
         private readonly IVerificationCodeService _verificationCodeService;
         private readonly IEmailService _emailService;
 
         public AuthServiceTests()
         {
             _userService = A.Fake<IUserService>();
-            _tokenService = A.Fake<ITokenService>();
+            _accessTokenService = A.Fake<IAccessTokenService>();
+            _refreshTokenService = A.Fake<IRefreshTokenService>();
             _verificationCodeService = A.Fake<IVerificationCodeService>();
             _emailService = A.Fake<IEmailService>();
 
-            _sut = new AuthService(_tokenService, _userService, _verificationCodeService, _emailService);
+            _sut = new AuthService(_accessTokenService,
+                _userService,
+                _verificationCodeService,
+                _emailService,
+                _refreshTokenService);
         }
 
         [Fact]
@@ -45,7 +51,8 @@ namespace SlothOrganizer.Services.Tests.Unit
             };
             A.CallTo(() => _userService.GetUser(1)).Returns(Task.FromResult(new UserDto { Id = 1, Email = "test"}));
             A.CallTo(() => _verificationCodeService.VerifyCode(1, 111111)).Returns(true);
-            A.CallTo(() => _tokenService.GenerateToken("test")).Returns(new TokenDto { AccessToken = "test" });
+            A.CallTo(() => _accessTokenService.GenerateToken("test")).Returns("test");
+            A.CallTo(() => _refreshTokenService.GenerateRefreshToken(1)).Returns("test");
 
             // Act
             var result = await _sut.VerifyEmail(dto);
@@ -66,7 +73,8 @@ namespace SlothOrganizer.Services.Tests.Unit
             };
             A.CallTo(() => _userService.GetUser(1)).Returns(Task.FromResult(new UserDto { Id = 1, Email = "test" }));
             A.CallTo(() => _verificationCodeService.VerifyCode(1, 111111)).Returns(false);
-            A.CallTo(() => _tokenService.GenerateToken("test")).Returns(new TokenDto { AccessToken = "test" });
+            A.CallTo(() => _accessTokenService.GenerateToken("test")).Returns("test");
+            A.CallTo(() => _refreshTokenService.GenerateRefreshToken(1)).Returns("test");
 
             // Act
             var code = async () => await _sut.VerifyEmail(dto);

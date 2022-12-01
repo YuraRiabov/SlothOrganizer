@@ -16,5 +16,6 @@ namespace SlothOrganizer.Services.Abstractions.Users
         Task<UserDto> Authorize(AuthorizationDto auth);
 
         Task VerifyEmail(long userId);
+        Task<UserDto> GetByEmail(string email);
     }
 }

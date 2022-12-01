@@ -21,7 +21,7 @@ namespace SlothOrganizer.Services.Tests.Unit
 {
     public class TokenServiceTests
     {
-        private readonly TokenService _sut;
+        private readonly AccessTokenService _sut;
         private readonly IConfiguration _configuration;
         private readonly ISecurityService _securityService;
         private readonly IDateTimeService _dateTimeService;
@@ -36,19 +36,16 @@ namespace SlothOrganizer.Services.Tests.Unit
             };
             _configuration = new ConfigurationBuilder().AddInMemoryCollection(inMemorySettings).Build();
 
-            _securityService = A.Fake<ISecurityService>();
             _dateTimeService = A.Fake<IDateTimeService>();
 
-            _sut = new TokenService(_configuration, _securityService, _dateTimeService);
+            _sut = new AccessTokenService(_configuration, _dateTimeService);
         }
 
         [Fact]
         public void GenerateToken_ShouldGenerateValidToken()
         {
-            // Arrange
-            var bytes = new byte[] { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 };
+            // Arrange=
             var email = "test@test.com";
-            A.CallTo(() => _securityService.GetRandomBytes(16)).Returns(bytes);
             A.CallTo(() => _dateTimeService.Now()).Returns(new DateTime(1800, 1, 1));
 
             var tokenValidationParameters = new TokenValidationParameters
@@ -66,13 +63,12 @@ namespace SlothOrganizer.Services.Tests.Unit
 
             // Act
             var token = _sut.GenerateToken(email);
-            var principal = tokenHandler.ValidateToken(token.AccessToken, tokenValidationParameters, out securityToken);
+            var principal = tokenHandler.ValidateToken(token, tokenValidationParameters, out securityToken);
             var jwtSecurityToken = securityToken as JwtSecurityToken;
 
             //Assert
 
             Assert.NotNull(jwtSecurityToken);
-            Assert.Equal(Convert.ToBase64String(bytes), token.RefreshToken);
             Assert.Equal(email, principal.FindFirst(ClaimTypes.Email)?.Value);
         }
 
@@ -80,9 +76,7 @@ namespace SlothOrganizer.Services.Tests.Unit
         public void GenerateToken_WhenExpired_ShouldThrow()
         {
             // Arrange
-            var bytes = new byte[] { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 };
             var email = "test@test.com";
-            A.CallTo(() => _securityService.GetRandomBytes(16)).Returns(bytes);
             A.CallTo(() => _dateTimeService.Now()).Returns(new DateTime(1800, 1, 1));
 
             var tokenValidationParameters = new TokenValidationParameters
@@ -100,7 +94,7 @@ namespace SlothOrganizer.Services.Tests.Unit
 
             // Act
             var token = _sut.GenerateToken(email);
-            var code = () => tokenHandler.ValidateToken(token.AccessToken, tokenValidationParameters, out securityToken);
+            var code = () => tokenHandler.ValidateToken(token, tokenValidationParameters, out securityToken);
 
             //Assert
             Assert.Throws<SecurityTokenExpiredException>(code);
@@ -123,11 +117,9 @@ namespace SlothOrganizer.Services.Tests.Unit
         public void GetEmailFromToken_WhenValid_ShouldGet()
         {
             // Arrange
-            var bytes = new byte[] { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 };
             var email = "test@test.com";
-            A.CallTo(() => _securityService.GetRandomBytes(16)).Returns(bytes);
             A.CallTo(() => _dateTimeService.Now()).Returns(new DateTime(1800, 1, 1));
-            var token = _sut.GenerateToken(email).AccessToken;
+            var token = _sut.GenerateToken(email);
 
             // Act
             var result = _sut.GetEmailFromToken(token);

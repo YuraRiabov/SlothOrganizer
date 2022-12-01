@@ -10,26 +10,15 @@ using SlothOrganizer.Services.Abstractions.Utility;
 
 namespace SlothOrganizer.Services.Auth
 {
-    public class TokenService : ITokenService
+    public class AccessTokenService : IAccessTokenService
     {
-        private readonly ISecurityService _securityService;
         private readonly IConfiguration _configuration;
         private readonly IDateTimeService _dateTimeService;
 
-        public TokenService(IConfiguration configuration, ISecurityService securityService, IDateTimeService dateTimeService)
+        public AccessTokenService(IConfiguration configuration, IDateTimeService dateTimeService)
         {
             _configuration = configuration;
-            _securityService = securityService;
             _dateTimeService = dateTimeService;
-        }
-
-        public TokenDto GenerateToken(string email)
-        {
-            return new TokenDto
-            {
-                AccessToken = GenerateAccessToken(email),
-                RefreshToken = GenerateRefreshToken()
-            };
         }
 
         public string GetEmailFromToken(string token)
@@ -60,7 +49,7 @@ namespace SlothOrganizer.Services.Auth
             }
         }
 
-        private string GenerateAccessToken(string email)
+        public string GenerateToken(string email)
         {
             var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["JwtKey"]));
             var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
@@ -76,11 +65,6 @@ namespace SlothOrganizer.Services.Auth
 
 
             return new JwtSecurityTokenHandler().WriteToken(token);
-        }
-
-        private string GenerateRefreshToken()
-        {
-            return Convert.ToBase64String(_securityService.GetRandomBytes());
         }
     }
 }

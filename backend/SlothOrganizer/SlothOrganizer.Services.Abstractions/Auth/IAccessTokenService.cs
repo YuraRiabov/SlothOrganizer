@@ -8,9 +8,9 @@ using SlothOrganizer.Contracts.DTO.User;
 
 namespace SlothOrganizer.Services.Abstractions.Auth
 {
-    public interface ITokenService
+    public interface IAccessTokenService
     {
-        TokenDto GenerateToken(string email);
+        string GenerateToken(string email);
         string GetEmailFromToken(string token);
     }
 }

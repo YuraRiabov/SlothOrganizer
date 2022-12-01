@@ -51,6 +51,12 @@ namespace SlothOrganizer.Services.Users
             return _mapper.Map<UserDto>(user);
         }
 
+        public async Task<UserDto> GetByEmail(string email)
+        {
+            var user = await GetByEmailInternal(email);
+            return _mapper.Map<UserDto>(user);
+        }
+
         public async Task VerifyEmail(long userId)
         {
             var user = await GetByIdInternal(userId);
