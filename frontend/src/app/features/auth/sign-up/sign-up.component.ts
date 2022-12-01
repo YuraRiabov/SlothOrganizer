@@ -20,10 +20,13 @@ export class SignUpComponent {
     constructor(
         private authService: AuthService,
         private store: Store,
-        private route: ActivatedRoute,
         private router: Router
     ) {
         this.signUpGroup = this.buildSignUpGroup();
+    }
+
+    public redirectTo(route: string) : void {
+        this.router.navigate([route]);
     }
 
     public signUpClick() {
@@ -45,9 +48,7 @@ export class SignUpComponent {
                     return;
                 }
                 this.store.dispatch(register({ user }));
-                this.router.navigate(['verify-email'], {
-                    relativeTo: this.route.parent
-                });
+                this.redirectTo('auth/verify-email');
             }
         );
     }

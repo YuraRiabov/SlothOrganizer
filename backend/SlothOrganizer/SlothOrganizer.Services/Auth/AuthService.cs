@@ -31,6 +31,13 @@ namespace SlothOrganizer.Services.Auth
         public async Task<UserAuthDto> SignIn(AuthorizationDto authorizationDto)
         {
             var user = await _userService.Authorize(authorizationDto);
+            if (!user.EmailVerified)
+            {
+                return new UserAuthDto
+                {
+                    User = user
+                };
+            }
             var token = _tokenService.GenerateToken(user.Email);
             return new UserAuthDto
             {

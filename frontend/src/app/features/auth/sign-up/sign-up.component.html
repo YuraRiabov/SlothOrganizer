@@ -46,6 +46,6 @@
     </mat-form-field>
     <button [disabled]="!signUpGroup.valid" class="sign-up-button" (click)="signUpClick()" mat-flat-button color="primary">Sign up</button>
     <p class="sign-in-reference">
-        Already have an account? <span class="sign-in-link" routerLink="sign-in">Sign in</span>
+        Already have an account? <span class="sign-in-link" (click)="redirectTo('auth/sign-in')">Sign in</span>
     </p>
 </form>

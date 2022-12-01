@@ -4,6 +4,7 @@ import { Observable, catchError, concatMap, of } from 'rxjs';
 import { AuthService } from 'src/app/api/auth.service';
 import { AuthState } from 'src/app/types/states/authState';
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { selectUserId } from 'src/app/store/selectors/auth-page.selectors';
 import { verifyEmail } from 'src/app/store/actions/login-page.actions';
@@ -21,8 +22,12 @@ export class VerifyEmailComponent {
         Validators.pattern('[0-9]*')
     ]);
 
-    constructor(private authService: AuthService, private store: Store) {
+    constructor(private authService: AuthService, private store: Store, private router: Router) {
         this.userId$ = store.select(selectUserId);
+    }
+
+    public redirectTo(route: string) : void {
+        this.router.navigate([route]);
     }
 
     public submit() {
@@ -42,6 +47,7 @@ export class VerifyEmailComponent {
                 return;
             }
             this.store.dispatch(verifyEmail({ token }));
+            this.redirectTo('');
         });
     }
 

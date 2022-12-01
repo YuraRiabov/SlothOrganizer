@@ -1,0 +1,28 @@
+<form class="sign-in-wrapper" [formGroup]="signInGroup">
+    <h1>Log into your account</h1>
+    <mat-form-field class="sign-in-field">
+        <mat-label>Email</mat-label>
+        <input formControlName="email" matInput type="text"/>
+        <mat-error *ngIf="signInGroup.get('email')?.hasError('email')">
+            Invalid email address
+        </mat-error>
+        <mat-error *ngIf="signInGroup.get('email')?.hasError('invalidLogin')">
+            Either email or password is invalid, try again
+        </mat-error>
+    </mat-form-field>
+    <mat-form-field class="sign-in-field">
+        <mat-label>Password</mat-label>
+        <input formControlName="password" matInput type="password"/>
+        <mat-error *ngIf="!signInGroup.get('password')?.hasError('pattern') &&
+         (signInGroup.get('password')?.hasError('minlength') || signInGroup.get('password')?.hasError('maxlength'))">
+            Must be 8 to 16 characters
+        </mat-error>
+        <mat-error *ngIf="signInGroup.get('password')?.hasError('pattern')">
+            Must contain letters and numbers
+        </mat-error>
+    </mat-form-field>
+    <button [disabled]="!signInGroup.valid" class="sign-in-button" (click)="signInClick()" mat-flat-button color="primary">Sign in</button>
+    <p class="sign-in-reference">
+        Don't have an account? <span class="sign-up-link" (click)="redirectTo('auth/sign-up')" >Sign up</span>
+    </p>
+</form>

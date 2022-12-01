@@ -2,6 +2,7 @@ import { RouterModule, Routes } from '@angular/router';
 
 import { AuthPageComponent } from '../features/auth/auth-page/auth-page.component';
 import { NgModule } from '@angular/core';
+import { SignInComponent } from '../features/auth/sign-in/sign-in.component';
 import { SignUpComponent } from '../features/auth/sign-up/sign-up.component';
 import { VerifyEmailComponent } from '../features/auth/verify-email/verify-email.component';
 
@@ -17,6 +18,10 @@ const routes: Routes = [
             {
                 path: 'verify-email',
                 component: VerifyEmailComponent
+            },
+            {
+                path: 'sign-in',
+                component: SignInComponent
             }
         ]
     }
