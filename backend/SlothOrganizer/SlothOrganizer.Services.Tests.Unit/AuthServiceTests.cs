@@ -105,5 +105,128 @@ namespace SlothOrganizer.Services.Tests.Unit
             A.CallTo(() => _emailService.SendEmail("test@test.com", "Verify your email", "Your verification code is 111111"))
                 .MustHaveHappenedOnceExactly();
         }
+
+        [Fact]
+        public async Task RefreshToken_WhenTokenValid_ShouldRefresh()
+        {
+            //Arrange
+            var token = new TokenDto
+            {
+                AccessToken = "expired",
+                RefreshToken = "notExpired"
+            };
+            var email = "test";
+            var user = new UserDto
+            {
+                Email = email,
+                Id = 1
+            };
+            var accessToken = "access";
+            var refreshToken = "refresh";
+            A.CallTo(() => _accessTokenService.GetEmailFromToken(token.AccessToken)).Returns(email);
+            A.CallTo(() => _userService.GetByEmail(email)).Returns(user);
+            A.CallTo(() => _refreshTokenService.ValidateRefreshToken(user.Id, token.RefreshToken)).Returns(true);
+            A.CallTo(() => _accessTokenService.GenerateToken(email)).Returns(accessToken);
+            A.CallTo(() => _refreshTokenService.GenerateRefreshToken(user.Id)).Returns(refreshToken);
+
+            //Act
+            var result = await _sut.RefreshToken(token);
+
+            //Assert
+            Assert.Equal(accessToken, result.AccessToken);
+            Assert.Equal(refreshToken, result.RefreshToken);
+        }
+
+        [Fact]
+        public async Task RefreshToken_WhenTokenInvalid_ShouldThrow()
+        {
+            //Arrange
+            var token = new TokenDto
+            {
+                AccessToken = "expired",
+                RefreshToken = "notExpired"
+            };
+            var email = "test";
+            var user = new UserDto
+            {
+                Email = email,
+                Id = 1
+            };
+            A.CallTo(() => _accessTokenService.GetEmailFromToken(token.AccessToken)).Returns(email);
+            A.CallTo(() => _userService.GetByEmail(email)).Returns(user);
+            A.CallTo(() => _refreshTokenService.ValidateRefreshToken(user.Id, token.RefreshToken)).Returns(false);
+
+            //Act
+            var code = async () => await _sut.RefreshToken(token);
+
+            //Assert
+            await Assert.ThrowsAsync<InvalidCredentialsException>(code);
+        }
+
+        [Fact]
+        public async Task SignIn_WhenEmailVerified_ShouldReturnWithToken()
+        {
+            //Arrange
+            var auth = new AuthorizationDto
+            {
+                Email = "test",
+                Password = "password"
+            };
+            var token = new TokenDto
+            {
+                AccessToken = "expired",
+                RefreshToken = "notExpired"
+            };
+            var user = new UserDto
+            {
+                Email = auth.Email,
+                Id = 1,
+                EmailVerified = true
+            };
+            var accessToken = "access";
+            var refreshToken = "refresh";
+            A.CallTo(() => _userService.Authorize(auth)).Returns(user);
+            A.CallTo(() => _accessTokenService.GenerateToken(user.Email)).Returns(accessToken);
+            A.CallTo(() => _refreshTokenService.GenerateRefreshToken(user.Id)).Returns(refreshToken);
+
+            //Act
+            var result = await _sut.SignIn(auth);
+
+            //Assert
+            Assert.NotNull(result.Token);
+            Assert.Equal(user, result.User);
+            Assert.Equal(accessToken, result.Token!.AccessToken);
+            Assert.Equal(refreshToken, result.Token.RefreshToken);
+        }
+
+        [Fact]
+        public async Task SignIn_WhenEmailNotVerified_ShouldReturnWithoutToken()
+        {
+            //Arrange
+            var auth = new AuthorizationDto
+            {
+                Email = "test",
+                Password = "password"
+            };
+            var token = new TokenDto
+            {
+                AccessToken = "expired",
+                RefreshToken = "notExpired"
+            };
+            var user = new UserDto
+            {
+                Email = auth.Email,
+                Id = 1,
+                EmailVerified = false
+            };
+            A.CallTo(() => _userService.Authorize(auth)).Returns(user);
+
+            //Act
+            var result = await _sut.SignIn(auth);
+
+            //Assert
+            Assert.Null(result.Token);
+            Assert.Equal(user, result.User);
+        }
     }
 }

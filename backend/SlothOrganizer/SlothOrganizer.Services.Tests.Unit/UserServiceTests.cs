@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using AutoMapper;
 using FakeItEasy;
+using SlothOrganizer.Contracts.DTO.Auth;
 using SlothOrganizer.Contracts.DTO.User;
 using SlothOrganizer.Domain.Entities;
 using SlothOrganizer.Domain.Exceptions;
@@ -151,6 +152,94 @@ namespace SlothOrganizer.Services.Tests.Unit
 
             //Act
             var code = async () => await _sut.VerifyEmail(1);
+
+            //Assert
+            await Assert.ThrowsAsync<EntityNotFoundException>(code);
+        }
+
+        [Fact]
+        public async Task Authorize_WhenValid_ShouldReturn()
+        {
+            //Arrange
+            var bytes = new byte[] { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 };
+            var auth = new AuthorizationDto
+            {
+                Email = "test@test.com",
+                Password = "test"
+            };
+            var user = new User
+            {
+                Email = "test@test.com",
+                Salt = Convert.ToBase64String(bytes),
+                Password = "hashedTest"
+            };
+            A.CallTo(() => _userRepository.GetByEmail("test@test.com")).Returns(Task.FromResult<User?>(user));
+            A.CallTo(() => _securityService.VerifyPassword(auth.Password, A<byte[]>._, user.Password)).Returns(true);
+
+            //Act
+            var result = await _sut.Authorize(auth);
+
+            //Assert
+            Assert.Equal(auth.Email, result.Email);
+            A.CallTo(() => _securityService.VerifyPassword(auth.Password, A<byte[]>._, user.Password)).MustHaveHappenedOnceExactly();
+        }
+
+        [Fact]
+        public async Task Authorize_WhenInValid_ShouldThrow()
+        {
+            //Arrange
+            var bytes = new byte[] { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 };
+            var auth = new AuthorizationDto
+            {
+                Email = "test@test.com",
+                Password = "test"
+            };
+            var user = new User
+            {
+                Email = "test@test.com",
+                Salt = Convert.ToBase64String(bytes),
+                Password = "hashedTest"
+            };
+            A.CallTo(() => _userRepository.GetByEmail("test@test.com")).Returns(Task.FromResult<User?>(user));
+            A.CallTo(() => _securityService.VerifyPassword(auth.Password, A<byte[]>._, user.Password)).Returns(false);
+
+            //Act
+            var code = async () => await _sut.Authorize(auth);
+
+            //Assert
+            await Assert.ThrowsAsync<InvalidCredentialsException>(code);
+            A.CallTo(() => _securityService.VerifyPassword(auth.Password, A<byte[]>._, user.Password)).MustHaveHappenedOnceExactly();
+        }
+
+        [Fact]
+        public async Task GetByEmail_WhenExists_ShouldReturn()
+        {
+            // Arrange
+            var user = new User
+            {
+                Id = 1,
+                FirstName = "test",
+                LastName = "user",
+                Email = "test@test.com",
+            };
+            A.CallTo(() => _userRepository.GetByEmail(user.Email)).Returns(Task.FromResult<User?>(user));
+
+            //Act
+            var result = await _sut.GetByEmail("test@test.com");
+
+            //Assert
+            Assert.Equal(user.Id, result.Id);
+            Assert.Equal(user.Email, result.Email);
+        }
+
+        [Fact]
+        public async Task GetByEmail_WhenAbsent_ShouldThrow()
+        {
+            // Arrange
+            A.CallTo(() => _userRepository.GetByEmail("test")).Returns(Task.FromResult<User?>(null));
+
+            //Act
+            var code = async () => await _sut.GetByEmail("test");
 
             //Assert
             await Assert.ThrowsAsync<EntityNotFoundException>(code);

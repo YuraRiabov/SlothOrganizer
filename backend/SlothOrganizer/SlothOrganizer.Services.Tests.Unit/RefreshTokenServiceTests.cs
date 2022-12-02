@@ -12,146 +12,154 @@ using Xunit;
 
 namespace SlothOrganizer.Services.Tests.Unit
 {
-    public class VerificationCodeServiceTests
+    public class RefreshTokenServiceTests
     {
-        private readonly VerificationCodeService _sut;
-        private readonly IVerificationCodeRepository _verificationCodeRepository;
-        private readonly IDateTimeService _dateTimeService;
+        private readonly RefreshTokenService _sut;
+        private readonly IRefreshTokenRepository _refreshTokenRepository;
         private readonly ISecurityService _securityService;
+        private readonly IDateTimeService _dateTimeService;
 
-        public VerificationCodeServiceTests()
+        public RefreshTokenServiceTests()
         {
-            _verificationCodeRepository = A.Fake<IVerificationCodeRepository>();
-            _dateTimeService = A.Fake<IDateTimeService>();
+            _refreshTokenRepository = A.Fake<IRefreshTokenRepository>();
             _securityService = A.Fake<ISecurityService>();
-            _sut = new VerificationCodeService(_verificationCodeRepository, _dateTimeService, _securityService);
+            _dateTimeService = A.Fake<IDateTimeService>();
+
+            _sut = new RefreshTokenService(_dateTimeService, _securityService, _refreshTokenRepository);
         }
 
         [Fact]
-        public async Task GenerateCode_ShouldAdd()
+        public async Task GenerateRefreshToken_ShouldGenerate()
         {
-            // Arrange
-            var code = 100000;
-            A.CallTo(() => _dateTimeService.Now()).Returns(new DateTime(2022, 11, 29, 12, 0, 0));
-            A.CallTo(() => _securityService.GetRandomNumber(6)).Returns(code);
+            //Arrange
+            var userId = 1;
+            var token = new RefreshToken
+            {
+                UserId = userId,
+                Token = "test",
+                ExpirationTime = new DateTime(2022, 12, 2)
+            };
+            A.CallTo(() => _securityService.GetRandomBytes(16)).Returns(Convert.FromBase64String(token.Token));
+            A.CallTo(() => _dateTimeService.Now()).Returns(token.ExpirationTime);
 
             //Act
-            var result = await _sut.GenerateCode(1);
+            var result = await _sut.GenerateRefreshToken(userId);
 
-            // Assert
-            Assert.Equal(code, result);
-            A.CallTo(() => _verificationCodeRepository.Insert(A<VerificationCode>._)).MustHaveHappenedOnceExactly();
+            //Assert
+            Assert.Equal(token.Token, result);
+            A.CallTo(() => _refreshTokenRepository.Insert(A<RefreshToken>._)).MustHaveHappenedOnceExactly();
         }
 
         [Fact]
-        public async Task VerifyCode_WhenIsValid_ShouldBeTrue()
+        public async Task ValidateRefreshToken_WhenIsValid_ShouldBeTrue()
         {
             // Arrange
-            var code = 100000;
+            var token = "test";
             var userId = 1;
-            var codes = new List<VerificationCode>()
+            var tokens = new List<RefreshToken>()
             {
                 new()
                 {
-                    Code = code,
+                    Token = token,
                     UserId = userId,
                     ExpirationTime = new DateTime(2022, 11, 29, 11, 59, 0)
                 },
                 new()
                 {
-                    Code = code,
+                    Token = token,
                     UserId = userId,
                     ExpirationTime = new DateTime(2022, 11, 29, 12, 1, 0)
                 },
                 new()
                 {
-                    Code = 3,
+                    Token = token + "1",
                     UserId = userId,
                     ExpirationTime = new DateTime(2022, 11, 30, 11, 59, 0)
                 }
             };
             A.CallTo(() => _dateTimeService.Now()).Returns(new DateTime(2022, 11, 29, 12, 0, 0));
-            A.CallTo(() => _verificationCodeRepository.GetByUserId(userId)).Returns(codes);
+            A.CallTo(() => _refreshTokenRepository.GetByUserId(userId)).Returns(tokens);
 
             //Act
-            var result = await _sut.VerifyCode(userId, code);
+            var result = await _sut.ValidateRefreshToken(userId, token);
 
             // Assert
             Assert.True(result);
         }
 
         [Fact]
-        public async Task VerifyCode_WhenExpired_ShouldBeFalse()
+        public async Task ValidateRefreshToken_WhenExpired_ShouldBeFalse()
         {
             // Arrange
-            var code = 100000;
+            var token = "test";
             var userId = 1;
-            var codes = new List<VerificationCode>()
+            var tokens = new List<RefreshToken>()
             {
                 new()
                 {
-                    Code = code,
+                    Token = token,
                     UserId = userId,
                     ExpirationTime = new DateTime(2022, 11, 29, 11, 59, 0)
                 },
                 new()
                 {
-                    Code = code,
+                    Token = token,
                     UserId = userId,
-                    ExpirationTime = new DateTime(2022, 11, 29, 11, 1, 0)
+                    ExpirationTime = new DateTime(2022, 11, 29, 12, 1, 0)
                 },
                 new()
                 {
-                    Code = 3,
+                    Token = token + "1",
                     UserId = userId,
                     ExpirationTime = new DateTime(2022, 11, 30, 11, 59, 0)
                 }
             };
-            A.CallTo(() => _dateTimeService.Now()).Returns(new DateTime(2022, 11, 29, 12, 0, 0));
-            A.CallTo(() => _verificationCodeRepository.GetByUserId(userId)).Returns(codes);
+            A.CallTo(() => _dateTimeService.Now()).Returns(new DateTime(2022, 11, 30, 12, 0, 0));
+            A.CallTo(() => _refreshTokenRepository.GetByUserId(userId)).Returns(tokens);
 
             //Act
-            var result = await _sut.VerifyCode(userId, code);
+            var result = await _sut.ValidateRefreshToken(userId, token);
 
             // Assert
             Assert.False(result);
         }
 
         [Fact]
-        public async Task VerifyCode_WhenIsNotEqual_ShouldBeFalse()
+        public async Task ValidateRefreshToken_WhenIsNotEqual_ShouldBeFalse()
         {
             // Arrange
-            var code = 100000;
+            var token = "test";
             var userId = 1;
-            var codes = new List<VerificationCode>()
+            var tokens = new List<RefreshToken>()
             {
                 new()
                 {
-                    Code = code + 1,
+                    Token = token,
                     UserId = userId,
                     ExpirationTime = new DateTime(2022, 11, 29, 11, 59, 0)
                 },
                 new()
                 {
-                    Code = code + 3,
+                    Token = token,
                     UserId = userId,
                     ExpirationTime = new DateTime(2022, 11, 29, 12, 1, 0)
                 },
                 new()
                 {
-                    Code = 3,
+                    Token = token + "1",
                     UserId = userId,
                     ExpirationTime = new DateTime(2022, 11, 30, 11, 59, 0)
                 }
             };
             A.CallTo(() => _dateTimeService.Now()).Returns(new DateTime(2022, 11, 29, 12, 0, 0));
-            A.CallTo(() => _verificationCodeRepository.GetByUserId(userId)).Returns(codes);
+            A.CallTo(() => _refreshTokenRepository.GetByUserId(userId)).Returns(tokens);
 
             //Act
-            var result = await _sut.VerifyCode(userId, code);
+            var result = await _sut.ValidateRefreshToken(userId, token + "2");
 
             // Assert
             Assert.False(result);
         }
     }
 }
+

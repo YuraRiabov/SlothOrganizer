@@ -19,14 +19,13 @@ using IConfiguration = Microsoft.Extensions.Configuration.IConfiguration;
 
 namespace SlothOrganizer.Services.Tests.Unit
 {
-    public class TokenServiceTests
+    public class AccessTokenServiceTests
     {
         private readonly AccessTokenService _sut;
         private readonly IConfiguration _configuration;
-        private readonly ISecurityService _securityService;
         private readonly IDateTimeService _dateTimeService;
 
-        public TokenServiceTests()
+        public AccessTokenServiceTests()
         {
             var inMemorySettings = new Dictionary<string, string?>
             {
