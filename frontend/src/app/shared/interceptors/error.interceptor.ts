@@ -5,8 +5,8 @@ import { AuthService } from 'src/app/api/auth.service';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
+import { addToken } from 'src/app/store/actions/login-page.actions';
 import { selectToken } from 'src/app/store/selectors/auth-page.selectors';
-import { verifyEmail } from 'src/app/store/actions/login-page.actions';
 
 @Injectable()
 export class ErrorInterceptor implements HttpInterceptor {
@@ -20,7 +20,7 @@ export class ErrorInterceptor implements HttpInterceptor {
                             return this.authService.refreshToken(token);
                         }),
                         switchMap((token) => {
-                            this.store.dispatch(verifyEmail({token}));
+                            this.store.dispatch(addToken({token}));
                             req = req.clone({
                                 setHeaders: {
                                     Authorization: `Bearer ${token.accessToken}`

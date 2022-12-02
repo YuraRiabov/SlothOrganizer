@@ -1,5 +1,5 @@
+import { addToken, addUser, login } from '../actions/login-page.actions';
 import { createReducer, on } from '@ngrx/store';
-import { login, register, verifyEmail } from '../actions/login-page.actions';
 
 import { AuthState } from 'src/app/types/states/authState';
 import { Token } from 'src/app/types/auth/token';
@@ -12,7 +12,7 @@ export const initialState: AuthState = {
 
 export const authPageReducer = createReducer(
     initialState,
-    on(register, (state, { user }): AuthState => ({ ...state, user })),
-    on(verifyEmail, (state, { token }): AuthState => ({ ...state, token })),
+    on(addUser, (state, { user }): AuthState => ({ ...state, user })),
+    on(addToken, (state, { token }): AuthState => ({ ...state, token })),
     on(login, (state, { authState }): AuthState => (authState))
 );

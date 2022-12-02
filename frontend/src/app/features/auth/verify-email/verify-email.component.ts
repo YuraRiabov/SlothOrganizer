@@ -6,8 +6,8 @@ import { AuthState } from 'src/app/types/states/authState';
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
+import { addToken } from 'src/app/store/actions/login-page.actions';
 import { selectUserId } from 'src/app/store/selectors/auth-page.selectors';
-import { verifyEmail } from 'src/app/store/actions/login-page.actions';
 
 @Component({
     selector: 'app-verify-email',
@@ -46,7 +46,7 @@ export class VerifyEmailComponent {
             if (token == null) {
                 return;
             }
-            this.store.dispatch(verifyEmail({ token }));
+            this.store.dispatch(addToken({ token }));
             this.redirectTo('');
         });
     }

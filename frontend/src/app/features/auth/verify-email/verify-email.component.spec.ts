@@ -13,7 +13,7 @@ import { Store } from '@ngrx/store';
 import { Token } from 'src/app/types/auth/token';
 import { User } from 'src/app/types/user/user';
 import { VerifyEmailComponent } from './verify-email.component';
-import { verifyEmail } from 'src/app/store/actions/login-page.actions';
+import { addToken } from 'src/app/store/actions/login-page.actions';
 
 describe('VerifyEmailComponent', () => {
     let component: VerifyEmailComponent;
@@ -80,7 +80,7 @@ describe('VerifyEmailComponent', () => {
 
         expect(mockStore.select).toHaveBeenCalledTimes(1);
         expect(mockAuthService.verifyEmail).toHaveBeenCalledTimes(1);
-        expect(mockStore.dispatch).toHaveBeenCalledOnceWith(verifyEmail({token}));
+        expect(mockStore.dispatch).toHaveBeenCalledOnceWith(addToken({token}));
     });
 
     it('should set error when invalid code', () => {

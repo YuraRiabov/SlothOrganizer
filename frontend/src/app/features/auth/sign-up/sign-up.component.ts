@@ -5,7 +5,7 @@ import { catchError, of } from 'rxjs';
 import { AuthService } from 'src/app/api/auth.service';
 import { Component } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { register } from 'src/app/store/actions/login-page.actions';
+import { addUser } from 'src/app/store/actions/login-page.actions';
 
 @Component({
     selector: 'app-sign-up',
@@ -47,7 +47,7 @@ export class SignUpComponent {
                 if (user == null) {
                     return;
                 }
-                this.store.dispatch(register({ user }));
+                this.store.dispatch(addUser({ user }));
                 this.redirectTo('auth/verify-email');
             }
         );

@@ -1,8 +1,8 @@
 import { ActivatedRoute, Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { addUser, login } from 'src/app/store/actions/login-page.actions';
 import { catchError, of } from 'rxjs';
-import { login, register } from 'src/app/store/actions/login-page.actions';
 
 import { AuthService } from 'src/app/api/auth.service';
 import { Store } from '@ngrx/store';
@@ -43,7 +43,7 @@ export class SignInComponent implements OnInit {
                 return;
             }
             if (auth.token == null) {
-                this.store.dispatch(register( { user: auth.user }));
+                this.store.dispatch(addUser( { user: auth.user }));
                 this.redirectTo('auth/verify-email');
                 return;
             }

@@ -4,12 +4,12 @@ import { AuthState } from 'src/app/types/states/authState';
 import { Token } from 'src/app/types/auth/token';
 import { User } from 'src/app/types/user/user';
 
-export const register = createAction(
+export const addUser = createAction(
     '[Sign up, Sign in page] Register',
     props<{ user: User }>()
 );
 
-export const verifyEmail = createAction(
+export const addToken = createAction(
     '[Verify email page] Verify email',
     props<{ token: Token }>()
 );
