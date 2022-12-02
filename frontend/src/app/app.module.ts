@@ -6,13 +6,14 @@ import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { StoreModule } from '@ngrx/store';
 import { authPageReducer } from './store/reducers/auth-page.reducers';
+import { metaReducers } from './store/reducers/metareducers';
 
 @NgModule({
     declarations: [AppComponent],
     imports: [
         BrowserModule,
         AppRoutingModule,
-        StoreModule.forRoot({ authState: authPageReducer }, {}),
+        StoreModule.forRoot({ authState: authPageReducer }, { metaReducers }),
         BrowserAnimationsModule,
         HttpClientModule
     ],
