@@ -36,4 +36,8 @@ export class AuthService {
             {}
         );
     }
+
+    public refreshToken(token: Token) {
+        return this.httpService.putRequest<Token>(`${this.baseUri}/refreshToken`, token);
+    }
 }
