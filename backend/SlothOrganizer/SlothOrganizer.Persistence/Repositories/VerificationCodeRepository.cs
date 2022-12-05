@@ -1,6 +1,7 @@
 ﻿using Dapper;
 using SlothOrganizer.Domain.Entities;
 using SlothOrganizer.Domain.Repositories;
+using SlothOrganizer.Persistence.Properties;
 
 namespace SlothOrganizer.Persistence.Repositories
 {
@@ -15,15 +16,14 @@ namespace SlothOrganizer.Persistence.Repositories
 
         public async Task<IEnumerable<VerificationCode>> GetByUserId(long userId)
         {
-            var query = "SELECT * FROM VerificationCodes WHERE UserId=@UserId";
+            var query = Resources.GetVerificationCodeByUserId;
             using var connection = _context.CreateConnection();
             return await connection.QueryAsync<VerificationCode>(query, new { userId });
         }
 
         public async Task<VerificationCode> Insert(VerificationCode verificationCode)
         {
-            var query = "INSERT INTO VerificationCodes(UserId, Code, ExpirationTime) VALUES (@UserId, @Code, @ExpirationTime)" +
-                " SELECT CAST(SCOPE_IDENTITY() as bigint)";
+            var query = Resources.InsertVerificationCode;
 
             var parameters = new
             {
