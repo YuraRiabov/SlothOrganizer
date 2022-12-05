@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using MimeKit.Text;
+﻿using MimeKit.Text;
 using MimeKit;
 using SlothOrganizer.Services.Email.Options;
 using MailKit.Net.Smtp;

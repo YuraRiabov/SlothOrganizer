@@ -1,5 +1,4 @@
-﻿using System.Net;
-using SlothOrganizer.Domain.Exceptions;
+﻿using SlothOrganizer.Domain.Exceptions;
 
 namespace SlothOrganizer.Web.Middleware
 {
@@ -27,13 +26,14 @@ namespace SlothOrganizer.Web.Middleware
         private async Task HandleExceptionAsync(HttpContext context, Exception exception)
         {
             context.Response.ContentType = "application/json";
-            context.Response.StatusCode = exception switch
+            if (exception is BaseException customException)
             {
-                DuplicateAccountException => 400,
-                InvalidCredentialsException => 403,
-                EntityNotFoundException => 404,
-                _ => 500
-            };
+                context.Response.StatusCode = customException.StatusCode;
+            }
+            else
+            {
+                context.Response.StatusCode = 500;
+            }
             await context.Response.WriteAsync(exception.Message);
         }
     }

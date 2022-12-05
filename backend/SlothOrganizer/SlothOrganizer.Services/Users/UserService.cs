@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using AutoMapper;
+﻿using AutoMapper;
 using SlothOrganizer.Contracts.DTO.User;
 using SlothOrganizer.Domain.Entities;
 using SlothOrganizer.Domain.Exceptions;
@@ -17,23 +12,25 @@ namespace SlothOrganizer.Services.Users
     {
         private readonly IUserRepository _userRepository;
         private readonly IMapper _mapper;
-        private readonly ISecurityService _securityService;
+        private readonly IRandomService _randomService;
+        private readonly IHashService _hashService;
 
-        public UserService(ISecurityService securityService, IMapper mapper, IUserRepository userRepository)
+        public UserService(IRandomService randomService, IMapper mapper, IUserRepository userRepository, IHashService hashService)
         {
-            _securityService = securityService;
+            _randomService = randomService;
             _mapper = mapper;
             _userRepository = userRepository;
+            _hashService = hashService;
         }
 
-        public async Task<UserDto> CreateUser(NewUserDto newUser)
+        public async Task<UserDto> Create(NewUserDto newUser)
         {
-            if (await _userRepository.GetByEmail(newUser.Email) is not null)
+            if (await _userRepository.Get(newUser.Email) is not null)
             {
-                throw new DuplicateAccountException("Account with this email already exists");
+                throw new DuplicateAccountException();
             }
-            var salt = _securityService.GetRandomBytes();
-            var hashedPassword = _securityService.HashPassword(newUser.Password, salt);
+            var salt = _randomService.GetRandomBytes();
+            var hashedPassword = _hashService.HashPassword(newUser.Password, salt);
             var user = _mapper.Map<User>(newUser);
             user.Salt = Convert.ToBase64String(salt);
             user.Password = hashedPassword;
@@ -43,7 +40,7 @@ namespace SlothOrganizer.Services.Users
             return _mapper.Map<UserDto>(user);
         }
 
-        public async Task<UserDto> GetUser(long id)
+        public async Task<UserDto> Get(long id)
         {
             var user = await GetByIdInternal(id);
             return _mapper.Map<UserDto>(user);
@@ -58,7 +55,7 @@ namespace SlothOrganizer.Services.Users
 
         private async Task<User> GetByIdInternal(long userId)
         {
-            var user = await _userRepository.GetById(userId);
+            var user = await _userRepository.Get(userId);
             if (user is null)
             {
                 throw new EntityNotFoundException("Not found user with such id");

@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Dapper;
+﻿using Dapper;
 using SlothOrganizer.Domain.Entities;
 using SlothOrganizer.Domain.Repositories;
 
@@ -35,7 +29,7 @@ namespace SlothOrganizer.Persistence.Repositories
             return connection.QueryAsync<User>(query);
         }
 
-        public async Task<User?> GetByEmail(string email)
+        public async Task<User?> Get(string email)
         {
             var query = "SELECT TOP(1) * FROM Users WHERE Email=@Email";
 
@@ -44,7 +38,7 @@ namespace SlothOrganizer.Persistence.Repositories
             return result;
         }
 
-        public async Task<User?> GetById(long id)
+        public async Task<User?> Get(long id)
         {
             var query = "SELECT TOP(1) * FROM Users WHERE Id=@Id";
 

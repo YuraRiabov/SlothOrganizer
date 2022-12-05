@@ -1,13 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace SlothOrganizer.Domain.Exceptions
+﻿namespace SlothOrganizer.Domain.Exceptions
 {
-    public class InvalidCredentialsException : Exception
+    public class InvalidCredentialsException : BaseException
     {
+        public override int StatusCode { get; protected set; } = 403;
         public InvalidCredentialsException(string message) : base(message)
         { }
     }

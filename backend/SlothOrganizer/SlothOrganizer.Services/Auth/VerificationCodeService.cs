@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Security.Cryptography;
-using System.Text;
-using System.Threading.Tasks;
-using SlothOrganizer.Domain.Entities;
+﻿using SlothOrganizer.Domain.Entities;
 using SlothOrganizer.Domain.Repositories;
 using SlothOrganizer.Services.Abstractions.Auth;
 using SlothOrganizer.Services.Abstractions.Utility;
@@ -15,27 +9,27 @@ namespace SlothOrganizer.Services.Auth
     {
         private readonly IVerificationCodeRepository _verificationCodeRepository;
         private readonly IDateTimeService _dateTimeService;
-        private readonly ISecurityService _securityService;
-        public VerificationCodeService(IVerificationCodeRepository verificationCodeRepository, IDateTimeService dateTimeService, ISecurityService securityService)
+        private readonly IRandomService _randomService;
+        public VerificationCodeService(IVerificationCodeRepository verificationCodeRepository, IDateTimeService dateTimeService, IRandomService randomService)
         {
             _verificationCodeRepository = verificationCodeRepository;
             _dateTimeService = dateTimeService;
-            _securityService = securityService;
+            _randomService = randomService;
         }
 
-        public async Task<int> GenerateCode(long userId)
+        public async Task<int> Generate(long userId)
         {
             var code = new VerificationCode
             {
                 UserId = userId,
-                Code = _securityService.GetRandomNumber(),
+                Code = _randomService.GetRandomNumber(),
                 ExpirationTime = _dateTimeService.Now().AddMinutes(2)
             };
             await _verificationCodeRepository.Insert(code);
             return code.Code;
         }
 
-        public async Task<bool> VerifyCode(long userId, int code)
+        public async Task<bool> Verify(long userId, int code)
         {
             var userCodes = await _verificationCodeRepository.GetByUserId(userId);
             return userCodes.Count(c => c.Code == code && c.ExpirationTime > _dateTimeService.Now()) > 0;

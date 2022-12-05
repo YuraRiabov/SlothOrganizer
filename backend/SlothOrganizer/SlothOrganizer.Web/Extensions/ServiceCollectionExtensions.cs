@@ -14,6 +14,9 @@ using SlothOrganizer.Services.Abstractions.Email;
 using SlothOrganizer.Services.Abstractions.Utility;
 using SlothOrganizer.Services.Users;
 using SlothOrganizer.Services.Abstractions.Users;
+using SlothOrganizer.Services.Abstractions.Auth.Tokens;
+using SlothOrganizer.Services.Auth.Tokens;
+using SlothOrganizer.Services.Auth.Tokens.Options;
 
 namespace SlothOrganizer.Web.Extensions
 {
@@ -29,12 +32,24 @@ namespace SlothOrganizer.Web.Extensions
         public static IServiceCollection AddCustomServices(this IServiceCollection services)
         {
             services.AddScoped<IUserService, UserService>();
-            services.AddScoped<ISecurityService, SecurityService>();
+            services.AddScoped<IHashService, HashService>();
+            services.AddScoped<IRandomService, RandomService>();
             services.AddScoped<ITokenService, TokenService>();
             services.AddScoped<IAuthService, AuthService>();
             services.AddScoped<IEmailService, EmailService>();
             services.AddScoped<IVerificationCodeService, VerificationCodeService>();
             services.AddScoped<IDateTimeService, DateTimeService>();
+            return services;
+        }
+
+        public static IServiceCollection AddJwtOptions(this IServiceCollection services, IConfiguration configuration)
+        {
+            var jwtSection = configuration.GetRequiredSection("Jwt");
+            services.Configure<JwtOptions>(options =>
+            {
+                jwtSection.Bind(options);
+                options.Secret = configuration["JwtKey"];
+            });
             return services;
         }
 
