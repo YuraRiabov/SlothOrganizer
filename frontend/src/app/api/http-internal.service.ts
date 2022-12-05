@@ -6,31 +6,31 @@ import { environment } from 'src/environments/environment';
 @Injectable({
     providedIn: 'root'
 })
-export class HttpInternalService {
+export class HttpService {
     private apiUrl: string = environment.apiUrl;
 
     constructor(private http: HttpClient) {}
 
-    public getRequest<T>(url: string, httpParams?: any): Observable<T> {
+    public get<T>(url: string, httpParams?: any): Observable<T> {
         return this.http.get<T>(this.buildUrl(url), { params: httpParams });
     }
 
-    public getStringRequest(url: string, httpParams?: any): Observable<string> {
+    public getString(url: string, httpParams?: any): Observable<string> {
         return this.http.get(this.buildUrl(url), {
             params: httpParams,
             responseType: 'text'
         });
     }
 
-    public deleteRequest<T>(url: string, httpParams?: any): Observable<T> {
+    public delete<T>(url: string, httpParams?: any): Observable<T> {
         return this.http.delete<T>(this.buildUrl(url), {
             params: httpParams
         });
     }
 
-    public postRequest<T>(
+    public post<T>(
         url: string,
-        payload: object,
+        payload?: object,
         httpParams?: any
     ): Observable<T> {
         return this.http.post<T>(this.buildUrl(url), payload, {
@@ -38,9 +38,9 @@ export class HttpInternalService {
         });
     }
 
-    public putRequest<T>(
+    public put<T>(
         url: string,
-        payload: object,
+        payload?: object,
         httpParams?: any
     ): Observable<T> {
         return this.http.put<T>(this.buildUrl(url), payload, {
@@ -48,7 +48,7 @@ export class HttpInternalService {
         });
     }
 
-    private buildUrl(url: string) {
+    private buildUrl(url: string) : string {
         if (url.includes('http')) {
             return url;
         }

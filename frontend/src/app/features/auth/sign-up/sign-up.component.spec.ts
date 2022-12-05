@@ -23,6 +23,14 @@ describe('SignUpComponent', () => {
     let mockRouter : jasmine.SpyObj<Router>;
     let button : HTMLElement;
 
+    const setUpValidForm = (component: SignUpComponent) => {
+        component.signUpGroup.controls['firstName'].setValue('test');
+        component.signUpGroup.controls['lastName'].setValue('test');
+        component.signUpGroup.controls['email'].setValue('test@test.com');
+        component.signUpGroup.controls['password'].setValue('testtest8');
+        component.signUpGroup.controls['repeatPassword'].setValue('testtest8');
+    };
+
     beforeEach(async () => {
         mockAuthService = jasmine.createSpyObj('AuthService', ['signUp']);
         mockStore = jasmine.createSpyObj(['dispatch']);
@@ -58,21 +66,13 @@ describe('SignUpComponent', () => {
     });
 
     it('should be valid if valid data', () => {
-        component.signUpGroup.controls['firstName'].setValue('test');
-        component.signUpGroup.controls['lastName'].setValue('test');
-        component.signUpGroup.controls['email'].setValue('test@test.com');
-        component.signUpGroup.controls['password'].setValue('testtest8');
-        component.signUpGroup.controls['repeatPassword'].setValue('testtest8');
+        setUpValidForm(component);
 
         expect(component.signUpGroup.valid).toBeTruthy();
     });
 
     it('should call store on submit if valid data', () => {
-        component.signUpGroup.controls['firstName'].setValue('test');
-        component.signUpGroup.controls['lastName'].setValue('test');
-        component.signUpGroup.controls['email'].setValue('test@test.com');
-        component.signUpGroup.controls['password'].setValue('testtest8');
-        component.signUpGroup.controls['repeatPassword'].setValue('testtest8');
+        setUpValidForm(component);
         fixture.detectChanges();
 
         const testUser : User = {
@@ -93,11 +93,7 @@ describe('SignUpComponent', () => {
     });
 
     it('should set error if email taken', () => {
-        component.signUpGroup.controls['firstName'].setValue('test');
-        component.signUpGroup.controls['lastName'].setValue('test');
-        component.signUpGroup.controls['email'].setValue('test@test.com');
-        component.signUpGroup.controls['password'].setValue('testtest8');
-        component.signUpGroup.controls['repeatPassword'].setValue('testtest8');
+        setUpValidForm(component);
         fixture.detectChanges();
 
         mockAuthService.signUp.and.returnValue(throwError(() => ({ error: 'Account with this email already exists'})));
@@ -112,10 +108,7 @@ describe('SignUpComponent', () => {
     });
 
     it('should be disabled if passwords dont match', () => {
-        component.signUpGroup.controls['firstName'].setValue('test');
-        component.signUpGroup.controls['lastName'].setValue('test');
-        component.signUpGroup.controls['email'].setValue('test@test.com');
-        component.signUpGroup.controls['password'].setValue('testtest8');
+        setUpValidForm(component);
         component.signUpGroup.controls['repeatPassword'].setValue('testtest88');
         fixture.detectChanges();
 
@@ -127,11 +120,8 @@ describe('SignUpComponent', () => {
     });
 
     it('should be disabled if any field is empty', () => {
+        setUpValidForm(component);
         component.signUpGroup.controls['firstName'].setValue('');
-        component.signUpGroup.controls['lastName'].setValue('test');
-        component.signUpGroup.controls['email'].setValue('test@test.com');
-        component.signUpGroup.controls['password'].setValue('testtest8');
-        component.signUpGroup.controls['repeatPassword'].setValue('testtest88');
         fixture.detectChanges();
 
         button.click();
@@ -142,9 +132,7 @@ describe('SignUpComponent', () => {
     });
 
     it('should be disabled if password doesnt follow pattern', () => {
-        component.signUpGroup.controls['firstName'].setValue('test');
-        component.signUpGroup.controls['lastName'].setValue('test');
-        component.signUpGroup.controls['email'].setValue('test@test.com');
+        setUpValidForm(component);
         component.signUpGroup.controls['password'].setValue('testtest');
         component.signUpGroup.controls['repeatPassword'].setValue('testtest');
         fixture.detectChanges();
@@ -157,11 +145,10 @@ describe('SignUpComponent', () => {
     });
 
     it('should be disabled if name or email invalid', () => {
+        setUpValidForm(component);
         component.signUpGroup.controls['firstName'].setValue('t');
         component.signUpGroup.controls['lastName'].setValue('testttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt');
         component.signUpGroup.controls['email'].setValue('testtest.com');
-        component.signUpGroup.controls['password'].setValue('testtest');
-        component.signUpGroup.controls['repeatPassword'].setValue('testtest');
         fixture.detectChanges();
 
         button.click();

@@ -16,7 +16,6 @@ import { VerifyEmailComponent } from './verify-email/verify-email.component';
         MaterialModule,
         FormsModule,
         ReactiveFormsModule
-    ],
-    exports: [ReactiveFormsModule]
+    ]
 })
 export class AuthModule {}

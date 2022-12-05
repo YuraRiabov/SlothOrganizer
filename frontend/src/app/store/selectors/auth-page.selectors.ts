@@ -1,6 +1,6 @@
 import { createFeatureSelector, createSelector } from '@ngrx/store';
 
-import { AuthState } from 'src/app/types/states/authState';
+import { AuthState } from '../states/auth-state';
 import { Token } from 'src/app/types/auth/token';
 import { User } from 'src/app/types/user/user';
 
@@ -18,10 +18,10 @@ export const selectToken = createSelector(
 
 export const selectUserId = createSelector(
     selectUser,
-    (state: User) => state.id
+    (user: User) => user.id
 );
 
 export const selectAccessToken = createSelector(
     selectToken,
-    (state: Token) => state.accessToken
+    (token: Token) => token.accessToken
 );

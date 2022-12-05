@@ -1,7 +1,7 @@
 import { createReducer, on } from '@ngrx/store';
 import { register, verifyEmail } from '../actions/login-page.actions';
 
-import { AuthState } from 'src/app/types/states/authState';
+import { AuthState } from '../states/auth-state';
 import { Token } from 'src/app/types/auth/token';
 import { User } from 'src/app/types/user/user';
 
