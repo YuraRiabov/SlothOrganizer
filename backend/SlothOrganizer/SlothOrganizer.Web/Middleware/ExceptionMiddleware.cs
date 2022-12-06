@@ -26,7 +26,7 @@ namespace SlothOrganizer.Web.Middleware
         private async Task HandleExceptionAsync(HttpContext context, Exception exception)
         {
             context.Response.ContentType = "application/json";
-            if (exception is BaseException customException)
+            if (exception is BaseException customException && customException.StatusCode != 0)
             {
                 context.Response.StatusCode = customException.StatusCode;
             }

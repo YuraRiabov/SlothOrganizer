@@ -47,9 +47,7 @@ export class SignUpComponent extends BaseComponent {
                 return of(null);
             }),
             catchError((resp) => {
-                if (resp.error === 'Account with this email already exists') {
-                    this.signUpGroup.get('email')?.setErrors({ emailTaken: true });
-                }
+                this.signUpGroup.get('email')?.setErrors({ emailTaken: true });
                 return of(null);
             })
         ).subscribe();
