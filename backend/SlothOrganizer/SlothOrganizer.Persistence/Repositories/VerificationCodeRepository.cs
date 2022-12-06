@@ -14,7 +14,7 @@ namespace SlothOrganizer.Persistence.Repositories
             _context = context;
         }
 
-        public async Task<IEnumerable<VerificationCode>> GetByUserId(long userId)
+        public async Task<IEnumerable<VerificationCode>> Get(long userId)
         {
             var query = Resources.GetVerificationCodeByUserId;
             using var connection = _context.CreateConnection();

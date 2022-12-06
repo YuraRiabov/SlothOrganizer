@@ -31,7 +31,7 @@ namespace SlothOrganizer.Services.Auth
 
         public async Task<bool> Verify(long userId, int code)
         {
-            var userCodes = await _verificationCodeRepository.GetByUserId(userId);
+            var userCodes = await _verificationCodeRepository.Get(userId);
             return userCodes.Count(c => c.Code == code && c.ExpirationTime > _dateTimeService.Now()) > 0;
         }
     }
