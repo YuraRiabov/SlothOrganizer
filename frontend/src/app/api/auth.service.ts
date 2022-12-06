@@ -1,10 +1,10 @@
 import { HttpService } from './http-internal.service';
 import { Injectable } from '@angular/core';
-import { NewUser } from 'src/app/types/user/new-user';
+import { NewUser } from '#types/user/new-user';
 import { Observable } from 'rxjs';
-import { Token } from '../types/auth/token';
-import { User } from '../types/user/user';
-import { VerificationCode } from '../types/auth/verification-code';
+import { Token } from '#types/auth/token';
+import { User } from '#types/user/user';
+import { VerificationCode } from '#types/auth/verification-code';
 
 @Injectable({
     providedIn: 'root'

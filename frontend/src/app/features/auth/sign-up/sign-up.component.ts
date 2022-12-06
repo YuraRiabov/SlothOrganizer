@@ -1,13 +1,13 @@
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { catchError, map, of } from 'rxjs';
-import { getEmailValidators, getNameValidators, getPasswordValidators, passwordMatchingValidator } from 'src/app/utils/validators/user-validators.helper';
+import { getEmailValidators, getNameValidators, getPasswordValidators, passwordMatchingValidator } from '@utils/validators/user-validators.helper';
 
-import { AuthService } from 'src/app/api/auth.service';
-import { BaseComponent } from 'src/app/shared/components/base/base.component';
+import { AuthService } from '@api/auth.service';
+import { BaseComponent } from '@shared/components/base/base.component';
 import { Component } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { register } from 'src/app/store/actions/login-page.actions';
+import { register } from '@store/actions/login-page.actions';
 
 @Component({
     selector: 'app-sign-up',

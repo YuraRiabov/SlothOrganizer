@@ -7,7 +7,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule } from '@angular/common/http';
 import { StoreModule } from '@ngrx/store';
 import { TestBed } from '@angular/core/testing';
-import { authPageReducer } from '../store/reducers/auth-page.reducers';
+import { authPageReducer } from '@store/reducers/auth-page.reducers';
 
 describe('AppComponent', () => {
     beforeEach(async () => {

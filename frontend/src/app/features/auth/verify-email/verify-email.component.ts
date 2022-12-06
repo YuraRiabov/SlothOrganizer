@@ -1,12 +1,12 @@
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormControl, Validators } from '@angular/forms';
 import { Observable, catchError, concatMap, map, of } from 'rxjs';
 
-import { AuthService } from 'src/app/api/auth.service';
-import { BaseComponent } from 'src/app/shared/components/base/base.component';
+import { AuthService } from '@api/auth.service';
+import { BaseComponent } from '@shared/components/base/base.component';
 import { Component } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { selectUserId } from 'src/app/store/selectors/auth-page.selectors';
-import { verifyEmail } from 'src/app/store/actions/login-page.actions';
+import { selectUserId } from '@store/selectors/auth-page.selectors';
+import { verifyEmail } from '@store/actions/login-page.actions';
 
 @Component({
     selector: 'app-verify-email',
