@@ -1,12 +1,12 @@
 import { HttpEvent, HttpHandler, HttpInterceptor, HttpRequest } from '@angular/common/http';
 import { Observable, catchError, switchMap } from 'rxjs';
 
-import { AuthService } from 'src/app/api/auth.service';
+import { AuthService } from '@api/auth.service';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { addToken } from 'src/app/store/actions/login-page.actions';
-import { selectToken } from 'src/app/store/selectors/auth-page.selectors';
+import { addToken } from '@store/actions/login-page.actions';
+import { selectToken } from '@store/selectors/auth-page.selectors';
 
 @Injectable()
 export class ErrorInterceptor implements HttpInterceptor {

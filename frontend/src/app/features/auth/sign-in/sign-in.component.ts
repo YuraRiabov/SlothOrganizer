@@ -1,10 +1,12 @@
-import { ActivatedRoute, Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { addUser, login } from 'src/app/store/actions/login-page.actions';
-import { catchError, of } from 'rxjs';
+import { FormControl, FormGroup } from '@angular/forms';
+import { addUser, login } from '@store/actions/login-page.actions';
+import { catchError, map, of } from 'rxjs';
+import { getEmailValidators, getPasswordValidators } from '@utils/validators/user-validators.helper';
 
-import { AuthService } from 'src/app/api/auth.service';
+import { AuthService } from '@api/auth.service';
+import { BaseComponent } from '@shared/components/base/base.component';
+import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 
 @Component({
@@ -12,18 +14,20 @@ import { Store } from '@ngrx/store';
     templateUrl: './sign-in.component.html',
     styleUrls: ['./sign-in.component.sass']
 })
-export class SignInComponent implements OnInit {
+export class SignInComponent extends BaseComponent implements OnInit {
     signInGroup: FormGroup = {} as FormGroup;
 
     constructor(private authService: AuthService,
         private store: Store,
-        private router: Router) {}
+        private router: Router) {
+        super();
+    }
 
     ngOnInit(): void {
         this.signInGroup = this.buildSignInForm();
     }
 
-    public redirectTo(route: string) : void {
+    public redirectTo(route: string): void {
         this.router.navigate([route]);
     }
 
@@ -32,38 +36,36 @@ export class SignInComponent implements OnInit {
             email: this.signInGroup.get('email')?.value,
             password: this.signInGroup.get('password')?.value
         }).pipe(
-            catchError((resp) => {
-                if (resp.error === 'No user with such email' || resp.error === 'Invalid password') {
-                    this.signInGroup.get('email')?.setErrors({ invalidLogin: true});
+            this.untilThis,
+            map((auth) => {
+                if (auth.token == null) {
+                    this.store.dispatch(addUser({ user: auth.user }));
+                    this.redirectTo('auth/verify-email');
+                    return of(null);
                 }
+                this.store.dispatch(login({ authState: auth }));
+                this.redirectTo('');
+                return of(null);
+            }),
+            catchError(() => {
+                this.signInGroup.get('email')?.setErrors({ invalidLogin: true });
+                this.signInGroup.get('password')?.setErrors({ invalidLogin: true });
                 return of(null);
             })
-        ).subscribe((auth) => {
-            if (auth == null) {
-                return;
-            }
-            if (auth.token == null) {
-                this.store.dispatch(addUser( { user: auth.user }));
-                this.redirectTo('auth/verify-email');
-                return;
-            }
-            this.store.dispatch(login({authState: auth}));
-            this.redirectTo('');
-        });
+        ).subscribe();
+    }
+
+    public updateLoginErrors() {
+        this.signInGroup.get('email')?.setErrors({ invalidLogin: false });
+        this.signInGroup.get('password')?.setErrors({ invalidLogin: false });
+        this.signInGroup.get('email')?.updateValueAndValidity();
+        this.signInGroup.get('password')?.updateValueAndValidity();
     }
 
     private buildSignInForm(): FormGroup {
-        const emailControl = new FormControl('', [
-            Validators.required,
-            Validators.email
-        ]);
+        const emailControl = new FormControl('', getEmailValidators());
 
-        const passwordControl = new FormControl('', [
-            Validators.required,
-            Validators.minLength(8),
-            Validators.maxLength(16),
-            Validators.pattern('([0-9].*[a-zA-Z])|([a-zA-Z].*[0-9])')
-        ]);
+        const passwordControl = new FormControl('', getPasswordValidators());
 
         return new FormGroup({
             email: emailControl,

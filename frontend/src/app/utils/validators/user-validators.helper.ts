@@ -10,7 +10,7 @@ export const getPasswordValidators = () => [
     Validators.required,
     Validators.minLength(8),
     Validators.maxLength(16),
-    Validators.pattern('([0-9].*[a-zA-Z])|([a-zA-Z].*[0-9])')
+    Validators.pattern('([0-9]+[a-zA-Z]+[0-9a-zA-Z]*)|([a-zA-Z]+[0-9]+[0-9a-zA-Z]*)')
 ];
 
 export const getEmailValidators = () => [

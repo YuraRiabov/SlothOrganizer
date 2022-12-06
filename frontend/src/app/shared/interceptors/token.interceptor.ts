@@ -3,7 +3,7 @@ import { Observable, switchMap } from 'rxjs';
 
 import { Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { selectAccessToken } from 'src/app/store/selectors/auth-page.selectors';
+import { selectAccessToken } from '@store/selectors/auth-page.selectors';
 
 @Injectable()
 export class TokenInterceptor implements HttpInterceptor {
