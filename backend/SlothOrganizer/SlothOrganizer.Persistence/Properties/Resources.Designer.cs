@@ -141,5 +141,24 @@ namespace SlothOrganizer.Persistence.Properties {
                 return ResourceManager.GetString("UpdateUser", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to UPDATE Users 
+        ///SET EmailVerified=&apos;TRUE&apos;
+        ///WHERE Id=@Id AND EXISTS 
+        ///	(SELECT * FROM VerificationCodes AS vc WHERE 
+        ///		vc.Id=Users.Id AND
+        ///		vc.Code=@Code AND
+        ///		vc.ExpirationTime&gt;GETDATE())
+        ///IF @@ROWCOUNT &gt; 0
+        ///	SELECT &apos;TRUE&apos;
+        ///ELSE
+        ///	SELECT &apos;FALSE&apos;.
+        /// </summary>
+        internal static string VerifyEmailByCode {
+            get {
+                return ResourceManager.GetString("VerifyEmailByCode", resourceCulture);
+            }
+        }
     }
 }

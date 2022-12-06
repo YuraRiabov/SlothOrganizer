@@ -10,5 +10,6 @@ namespace SlothOrganizer.Domain.Repositories
         public Task<User> Insert(User user);
         public Task Update(User user);
         public Task Delete(long id);
+        Task<string?> VerifyEmail(long id, int code);
     }
 }

@@ -38,11 +38,10 @@ namespace SlothOrganizer.Services.Auth
 
         public async Task<TokenDto> VerifyEmail(VerificationCodeDto verificationCode)
         {
-            var user = await _userService.Get(verificationCode.UserId);
-            if (await _verificationCodeService.Verify(verificationCode.UserId, verificationCode.VerificationCode))
+            var email = await _userService.VerifyEmail(verificationCode.UserId, verificationCode.VerificationCode);
+            if (email is not null)
             {
-                await _userService.VerifyEmail(user.Id);
-                return _tokenService.GenerateToken(user.Email);
+                return _tokenService.GenerateToken(email);
             }
             throw new InvalidCredentialsException("Invalid verification code");
         }

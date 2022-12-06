@@ -7,7 +7,6 @@ namespace SlothOrganizer.Services.Abstractions.Users
         Task<UserDto> Create(NewUserDto newUser);
 
         Task<UserDto> Get(long id);
-
-        Task VerifyEmail(long userId);
+        Task<string?> VerifyEmail(long userId, int code);
     }
 }

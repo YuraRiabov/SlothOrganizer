@@ -93,24 +93,25 @@ namespace SlothOrganizer.Services.Tests.Unit.Users
         [Fact]
         public async Task VerifyEmail_WhenExists_ShouldUpdate()
         {
-            User user = GetUser();
-            A.CallTo(() => _userRepository.Get(1)).Returns(Task.FromResult<User?>(user));
+            var id = 1;
+            var code = 111111;
+            A.CallTo(() => _userRepository.VerifyEmail(id, code)).Returns("test");
 
-            await _userService.VerifyEmail(1);
+            var result = await _userService.VerifyEmail(id, code);
 
-            Assert.True(user.EmailVerified);
-            A.CallTo(() => _userRepository.Update(A<User>._)).MustHaveHappenedOnceExactly();
+            Assert.NotNull(result);
+            Assert.Equal("test", result);
+            A.CallTo(() => _userRepository.VerifyEmail(id, code)).MustHaveHappenedOnceExactly();
         }
 
         [Fact]
-        public async Task VerifyEmail_WhenAbsent_ShouldThrow()
+        public async Task VerifyEmail_WhenAbsent_ShouldReturnNull()
         {
-            A.CallTo(() => _userRepository.Get(1)).Returns(Task.FromResult<User?>(null));
+            A.CallTo(() => _userRepository.VerifyEmail(1, 111111)).Returns(Task.FromResult<string?>(null));
 
-            var code = async () => await _userService.VerifyEmail(1);
+            var result = await _userService.VerifyEmail(1, 111111);
 
-            var exception = await Assert.ThrowsAsync<EntityNotFoundException>(code);
-            Assert.Equal("Not found user with such id", exception.Message);
+            Assert.Null(result);
         }
 
         private byte[] GetBytes()

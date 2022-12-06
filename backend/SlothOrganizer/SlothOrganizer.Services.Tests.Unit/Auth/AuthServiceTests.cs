@@ -33,22 +33,20 @@ namespace SlothOrganizer.Services.Tests.Unit.Auth
         public async Task VerifyEmail_WhenValid_ShouldVerify()
         {
             var dto = GetVerificationCodeDto();
-            A.CallTo(() => _userService.Get(1)).Returns(Task.FromResult(new UserDto { Id = 1, Email = "test" }));
-            A.CallTo(() => _verificationCodeService.Verify(1, 111111)).Returns(true);
+            A.CallTo(() => _userService.VerifyEmail(1, 111111)).Returns("test");
             A.CallTo(() => _tokenService.GenerateToken("test")).Returns(new TokenDto { AccessToken = "test" });
 
             var result = await _authService.VerifyEmail(dto);
 
             Assert.Equal("test", result.AccessToken);
-            A.CallTo(() => _userService.VerifyEmail(1)).MustHaveHappenedOnceExactly();
+            A.CallTo(() => _userService.VerifyEmail(1, 111111)).MustHaveHappenedOnceExactly();
         }
 
         [Fact]
         public async Task VerifyEmail_WhenInvalid_ShouldThrow()
         {
             var dto = GetVerificationCodeDto();
-            A.CallTo(() => _userService.Get(1)).Returns(Task.FromResult(new UserDto { Id = 1, Email = "test" }));
-            A.CallTo(() => _verificationCodeService.Verify(1, 111111)).Returns(false);
+            A.CallTo(() => _userService.VerifyEmail(1, 111111)).Returns(Task.FromResult<string?>(null));
 
             var code = async () => await _authService.VerifyEmail(dto);
 
