@@ -79,6 +79,15 @@ namespace SlothOrganizer.Persistence.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to SELECT * FROM RefreshTokens WHERE UserId=@UserId.
+        /// </summary>
+        internal static string GetRefreshTokenByUserId {
+            get {
+                return ResourceManager.GetString("GetRefreshTokenByUserId", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to SELECT TOP(1) * FROM Users WHERE Email=@Email.
         /// </summary>
         internal static string GetUserByEmail {
@@ -93,6 +102,17 @@ namespace SlothOrganizer.Persistence.Properties {
         internal static string GetVerificationCodeByUserId {
             get {
                 return ResourceManager.GetString("GetVerificationCodeByUserId", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to INSERT INTO RefreshTokens(UserId, Token, ExpirationTime)
+        ///VALUES (@UserId, @Token, @ExpirationTime)
+        ///SELECT CAST(SCOPE_IDENTITY() as bigint).
+        /// </summary>
+        internal static string InsertRefreshToken {
+            get {
+                return ResourceManager.GetString("InsertRefreshToken", resourceCulture);
             }
         }
         

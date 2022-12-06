@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using SlothOrganizer.Domain.Entities;
+﻿using SlothOrganizer.Domain.Entities;
 using SlothOrganizer.Domain.Repositories;
 using SlothOrganizer.Services.Abstractions.Auth.Tokens;
 using SlothOrganizer.Services.Abstractions.Utility;
@@ -23,21 +18,20 @@ namespace SlothOrganizer.Services.Auth.Tokens
             _refreshTokenRepository = refreshTokenRepository;
         }
 
-        public async Task<string> GenerateRefreshToken(long userId)
+        public async Task<string> Generate(string userEmail)
         {
             var token = new RefreshToken
             {
-                UserId = userId,
                 Token = GenerateToken(),
                 ExpirationTime = _dateTimeService.Now().AddDays(7)
             };
-            await _refreshTokenRepository.Insert(token);
+            await _refreshTokenRepository.Insert(token, userEmail);
             return token.Token;
         }
 
-        public async Task<bool> ValidateRefreshToken(long userId, string token)
+        public async Task<bool> Validate(string userEmail, string token)
         {
-            var userTokens = await _refreshTokenRepository.GetByUserId(userId);
+            var userTokens = await _refreshTokenRepository.Get(userEmail);
             return userTokens.Any(t => t.Token == token && t.ExpirationTime > _dateTimeService.Now());
         }
 

@@ -49,7 +49,7 @@ namespace SlothOrganizer.Services.Auth.Tokens
             }
         }
 
-        public string GenerateToken(string email)
+        public string Generate(string email)
         {
             var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_jwtOptions.Secret));
             var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);

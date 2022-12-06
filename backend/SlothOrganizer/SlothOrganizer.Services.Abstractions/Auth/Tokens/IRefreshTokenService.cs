@@ -1,14 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace SlothOrganizer.Services.Abstractions.Auth.Tokens
+﻿namespace SlothOrganizer.Services.Abstractions.Auth.Tokens
 {
     public interface IRefreshTokenService
     {
-        public Task<string> GenerateRefreshToken(long userId);
-        public Task<bool> ValidateRefreshToken(long userId, string token);
+        public Task<string> Generate(string userEmail);
+        public Task<bool> Validate(string userEmail, string token);
     }
 }

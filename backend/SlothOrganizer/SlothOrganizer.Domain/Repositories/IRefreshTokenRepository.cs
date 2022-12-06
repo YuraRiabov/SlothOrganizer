@@ -9,8 +9,8 @@ namespace SlothOrganizer.Domain.Repositories
 {
     public interface IRefreshTokenRepository
     {
-        Task<IEnumerable<RefreshToken>> GetByUserId(long userId);
+        Task<IEnumerable<RefreshToken>> Get(string userEmail);
 
-        Task<RefreshToken> Insert(RefreshToken refreshToken);
+        Task Insert(RefreshToken refreshToken, string userEmail);
     }
 }

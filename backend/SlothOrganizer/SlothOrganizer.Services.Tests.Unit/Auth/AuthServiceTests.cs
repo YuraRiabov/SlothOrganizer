@@ -7,7 +7,6 @@ using SlothOrganizer.Services.Abstractions.Auth.Tokens;
 using SlothOrganizer.Services.Abstractions.Email;
 using SlothOrganizer.Services.Abstractions.Users;
 using SlothOrganizer.Services.Auth;
-using SlothOrganizer.Services.Auth.Tokens;
 using Xunit;
 
 namespace SlothOrganizer.Services.Tests.Unit.Auth
@@ -41,7 +40,7 @@ namespace SlothOrganizer.Services.Tests.Unit.Auth
         {
             var dto = GetVerificationCodeDto();
             A.CallTo(() => _userService.VerifyEmail(1, 111111)).Returns("test");
-            A.CallTo(() => _accessTokenService.GenerateToken("test")).Returns("test");
+            A.CallTo(() => _accessTokenService.Generate("test")).Returns("test");
 
             var result = await _authService.VerifyEmail(dto);
 
@@ -104,30 +103,17 @@ namespace SlothOrganizer.Services.Tests.Unit.Auth
         [Fact]
         public async Task RefreshToken_WhenTokenValid_ShouldRefresh()
         {
-            //Arrange
-            var token = new TokenDto
-            {
-                AccessToken = "expired",
-                RefreshToken = "notExpired"
-            };
+            var token = GetTokenDto();
             var email = "test";
-            var user = new UserDto
-            {
-                Email = email,
-                Id = 1
-            };
             var accessToken = "access";
             var refreshToken = "refresh";
             A.CallTo(() => _accessTokenService.GetEmailFromToken(token.AccessToken)).Returns(email);
-            A.CallTo(() => _userService.Get(email)).Returns(user);
-            A.CallTo(() => _refreshTokenService.ValidateRefreshToken(user.Id, token.RefreshToken)).Returns(true);
-            A.CallTo(() => _accessTokenService.GenerateToken(email)).Returns(accessToken);
-            A.CallTo(() => _refreshTokenService.GenerateRefreshToken(user.Id)).Returns(refreshToken);
+            A.CallTo(() => _refreshTokenService.Validate(email, token.RefreshToken)).Returns(true);
+            A.CallTo(() => _accessTokenService.Generate(email)).Returns(accessToken);
+            A.CallTo(() => _refreshTokenService.Generate(email)).Returns(refreshToken);
 
-            //Act
             var result = await _authService.RefreshToken(token);
 
-            //Assert
             Assert.Equal(accessToken, result.AccessToken);
             Assert.Equal(refreshToken, result.RefreshToken);
         }
@@ -135,59 +121,31 @@ namespace SlothOrganizer.Services.Tests.Unit.Auth
         [Fact]
         public async Task RefreshToken_WhenTokenInvalid_ShouldThrow()
         {
-            //Arrange
-            var token = new TokenDto
-            {
-                AccessToken = "expired",
-                RefreshToken = "notExpired"
-            };
+            var token = GetTokenDto();
             var email = "test";
-            var user = new UserDto
-            {
-                Email = email,
-                Id = 1
-            };
             A.CallTo(() => _accessTokenService.GetEmailFromToken(token.AccessToken)).Returns(email);
-            A.CallTo(() => _userService.Get(email)).Returns(user);
-            A.CallTo(() => _refreshTokenService.ValidateRefreshToken(user.Id, token.RefreshToken)).Returns(false);
+            A.CallTo(() => _refreshTokenService.Validate(email, token.RefreshToken)).Returns(false);
 
-            //Act
             var code = async () => await _authService.RefreshToken(token);
 
-            //Assert
-            await Assert.ThrowsAsync<InvalidCredentialsException>(code);
+            var exception = await Assert.ThrowsAsync<InvalidCredentialsException>(code);
+            Assert.Equal("Invalid refresh token", exception.Message);
         }
 
         [Fact]
         public async Task SignIn_WhenEmailVerified_ShouldReturnWithToken()
         {
-            //Arrange
-            var auth = new AuthorizationDto
-            {
-                Email = "test",
-                Password = "password"
-            };
-            var token = new TokenDto
-            {
-                AccessToken = "expired",
-                RefreshToken = "notExpired"
-            };
-            var user = new UserDto
-            {
-                Email = auth.Email,
-                Id = 1,
-                EmailVerified = true
-            };
+            AuthorizationDto auth = GetAuthDto();
+            var token = GetTokenDto();
+            var user = GetUser(auth.Email, true);
             var accessToken = "access";
             var refreshToken = "refresh";
             A.CallTo(() => _userService.Authorize(auth)).Returns(user);
-            A.CallTo(() => _accessTokenService.GenerateToken(user.Email)).Returns(accessToken);
-            A.CallTo(() => _refreshTokenService.GenerateRefreshToken(user.Id)).Returns(refreshToken);
+            A.CallTo(() => _accessTokenService.Generate(user.Email)).Returns(accessToken);
+            A.CallTo(() => _refreshTokenService.Generate(user.Email)).Returns(refreshToken);
 
-            //Act
             var result = await _authService.SignIn(auth);
 
-            //Assert
             Assert.NotNull(result.Token);
             Assert.Equal(user, result.User);
             Assert.Equal(accessToken, result.Token!.AccessToken);
@@ -197,29 +155,12 @@ namespace SlothOrganizer.Services.Tests.Unit.Auth
         [Fact]
         public async Task SignIn_WhenEmailNotVerified_ShouldReturnWithoutToken()
         {
-            //Arrange
-            var auth = new AuthorizationDto
-            {
-                Email = "test",
-                Password = "password"
-            };
-            var token = new TokenDto
-            {
-                AccessToken = "expired",
-                RefreshToken = "notExpired"
-            };
-            var user = new UserDto
-            {
-                Email = auth.Email,
-                Id = 1,
-                EmailVerified = false
-            };
+            var auth = GetAuthDto();
+            var user = GetUser(auth.Email, false);
             A.CallTo(() => _userService.Authorize(auth)).Returns(user);
 
-            //Act
             var result = await _authService.SignIn(auth);
 
-            //Assert
             Assert.Null(result.Token);
             Assert.Equal(user, result.User);
         }
@@ -229,6 +170,34 @@ namespace SlothOrganizer.Services.Tests.Unit.Auth
             {
                 UserId = 1,
                 VerificationCode = 111111
+            };
+        }
+
+        private static UserDto GetUser(string email, bool emailVerified)
+        {
+            return new UserDto
+            {
+                Email = email,
+                Id = 1,
+                EmailVerified = emailVerified
+            };
+        }
+
+        private static AuthorizationDto GetAuthDto()
+        {
+            return new AuthorizationDto
+            {
+                Email = "test",
+                Password = "password"
+            };
+        }
+
+        private static TokenDto GetTokenDto()
+        {
+            return new TokenDto
+            {
+                AccessToken = "expired",
+                RefreshToken = "notExpired"
             };
         }
     }

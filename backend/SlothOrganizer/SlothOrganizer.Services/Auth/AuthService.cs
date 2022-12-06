@@ -38,10 +38,9 @@ namespace SlothOrganizer.Services.Auth
         public async Task<TokenDto> RefreshToken(TokenDto expiredToken)
         {
             var email = _accessTokenService.GetEmailFromToken(expiredToken.AccessToken);
-            var user = await _userService.Get(email);
-            if (await _refreshTokenService.ValidateRefreshToken(user.Id, expiredToken.RefreshToken))
+            if (await _refreshTokenService.Validate(email, expiredToken.RefreshToken))
             {
-                return await GenerateToken(user.Id, user.Email);
+                return await GenerateToken(email);
             }
             throw new InvalidCredentialsException("Invalid refresh token");
         }
@@ -56,7 +55,7 @@ namespace SlothOrganizer.Services.Auth
                     User = user
                 };
             }
-            var token = await GenerateToken(user.Id, user.Email);
+            var token = await GenerateToken(user.Email);
             return new UserAuthDto
             {
                 User = user,
@@ -76,7 +75,7 @@ namespace SlothOrganizer.Services.Auth
             var email = await _userService.VerifyEmail(verificationCode.UserId, verificationCode.VerificationCode);
             if (email is not null)
             {
-                return await GenerateToken(verificationCode.UserId, email);
+                return await GenerateToken(email);
             }
             throw new InvalidCredentialsException("Invalid verification code");
         }
@@ -87,12 +86,12 @@ namespace SlothOrganizer.Services.Auth
             await _emailService.SendEmail(user.Email, "Verify your email", $"Your verification code is {code}");
         }
 
-        private async Task<TokenDto> GenerateToken(long id, string email)
+        private async Task<TokenDto> GenerateToken(string email)
         {
             return new TokenDto
             {
-                AccessToken = _accessTokenService.GenerateToken(email),
-                RefreshToken = await _refreshTokenService.GenerateRefreshToken(id)
+                AccessToken = _accessTokenService.Generate(email),
+                RefreshToken = await _refreshTokenService.Generate(email)
             };
         }
     }

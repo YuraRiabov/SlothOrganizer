@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Dapper;
 using SlothOrganizer.Domain.Entities;
 using SlothOrganizer.Domain.Repositories;
+using SlothOrganizer.Persistence.Properties;
 
 namespace SlothOrganizer.Persistence.Repositories
 {
@@ -18,29 +19,26 @@ namespace SlothOrganizer.Persistence.Repositories
             _context = context;
         }
 
-        public async Task<IEnumerable<RefreshToken>> GetByUserId(long userId)
+        public async Task<IEnumerable<RefreshToken>> Get(string userEmail)
         {
-            var query = "SELECT * FROM RefreshTokens WHERE UserId=@UserId";
+            var query = Resources.GetRefreshTokenByUserId;
             using var connection = _context.CreateConnection();
-            return await connection.QueryAsync<RefreshToken>(query, new { userId });
+            return await connection.QueryAsync<RefreshToken>(query, new { userEmail });
         }
 
-        public async Task<RefreshToken> Insert(RefreshToken refreshToken)
+        public async Task Insert(RefreshToken refreshToken, string userEmail)
         {
-            var query = "INSERT INTO RefreshTokens(UserId, Token, ExpirationTime) VALUES (@UserId, @Token, @ExpirationTime)" +
-                " SELECT CAST(SCOPE_IDENTITY() as bigint)";
+            var query = Resources.InsertRefreshToken;
 
             var parameters = new
             {
-                UserId = refreshToken.UserId,
+                UserEmail = userEmail,
                 Token = refreshToken.Token,
                 ExpirationTime = refreshToken.ExpirationTime
             };
 
             using var connection = _context.CreateConnection();
-            var id = await connection.QuerySingleAsync<long>(query, parameters);
-            refreshToken.Id = id;
-            return refreshToken;
+            await connection.QueryAsync<long>(query, parameters);
         }
     }
 }
