@@ -1,25 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Security.Cryptography;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Security.Cryptography;
 using Microsoft.AspNetCore.Cryptography.KeyDerivation;
 using SlothOrganizer.Services.Abstractions.Utility;
 
 namespace SlothOrganizer.Services.Utility
 {
-    public class SecurityService : ISecurityService
+    public class HashService : IHashService
     {
-        public byte[] GetRandomBytes(int length = 16)
-        {
-            return RandomNumberGenerator.GetBytes(length);
-        }
-
-        public int GetRandomNumber(int digitCount = 6)
-        {
-            return RandomNumberGenerator.GetInt32((int)Math.Pow(10, digitCount - 1), (int)Math.Pow(10, digitCount));
-        }
 
         public string HashPassword(string password, byte[] salt)
         {
@@ -33,7 +19,7 @@ namespace SlothOrganizer.Services.Utility
 
         public bool VerifyPassword(string password, byte[] salt, string hash)
         {
-            return HashPassword(password, salt) == hash;
+            return hash.Equals(HashPassword(password, salt));
         }
     }
 }

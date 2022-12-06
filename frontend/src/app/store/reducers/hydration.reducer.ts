@@ -1,6 +1,6 @@
 import { ActionReducer, INIT, UPDATE } from '@ngrx/store';
 
-import { AuthState } from 'src/app/types/states/authState';
+import { AuthState } from '@store/states/auth-state';
 
 export const hydrationMetaReducer = (
     reducer: ActionReducer<AuthState>

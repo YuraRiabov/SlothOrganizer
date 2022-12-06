@@ -1,18 +1,19 @@
-import { ActivatedRoute, Router } from '@angular/router';
 /* eslint-disable no-undef */
+
+import { ActivatedRoute, Router } from '@angular/router';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { of, throwError } from 'rxjs';
 
-import { AuthRoutingModule } from 'src/app/routes/auth-routing.module';
-import { AuthService } from 'src/app/api/auth.service';
+import { AuthRoutingModule } from '@routes/auth-routing.module';
+import { AuthService } from '@api/auth.service';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { By } from '@angular/platform-browser';
 import { CommonModule } from '@angular/common';
-import { MaterialModule } from 'src/app/shared/material/material.module';
+import { MaterialModule } from '@shared/material/material.module';
 import { SignUpComponent } from './sign-up.component';
 import { Store } from '@ngrx/store';
-import { User } from 'src/app/types/user/user';
+import { User } from '#types/user/user';
 
 describe('SignUpComponent', () => {
     let component: SignUpComponent;
@@ -22,6 +23,14 @@ describe('SignUpComponent', () => {
     let mockActivatedRoute : jasmine.SpyObj<ActivatedRoute>;
     let mockRouter : jasmine.SpyObj<Router>;
     let button : HTMLElement;
+
+    const setUpValidForm = (component: SignUpComponent) => {
+        component.signUpGroup.controls['firstName'].setValue('test');
+        component.signUpGroup.controls['lastName'].setValue('test');
+        component.signUpGroup.controls['email'].setValue('test@test.com');
+        component.signUpGroup.controls['password'].setValue('testtest8');
+        component.signUpGroup.controls['repeatPassword'].setValue('testtest8');
+    };
 
     beforeEach(async () => {
         mockAuthService = jasmine.createSpyObj('AuthService', ['signUp']);
@@ -58,21 +67,13 @@ describe('SignUpComponent', () => {
     });
 
     it('should be valid if valid data', () => {
-        component.signUpGroup.controls['firstName'].setValue('test');
-        component.signUpGroup.controls['lastName'].setValue('test');
-        component.signUpGroup.controls['email'].setValue('test@test.com');
-        component.signUpGroup.controls['password'].setValue('testtest8');
-        component.signUpGroup.controls['repeatPassword'].setValue('testtest8');
+        setUpValidForm(component);
 
         expect(component.signUpGroup.valid).toBeTruthy();
     });
 
     it('should call store on submit if valid data', () => {
-        component.signUpGroup.controls['firstName'].setValue('test');
-        component.signUpGroup.controls['lastName'].setValue('test');
-        component.signUpGroup.controls['email'].setValue('test@test.com');
-        component.signUpGroup.controls['password'].setValue('testtest8');
-        component.signUpGroup.controls['repeatPassword'].setValue('testtest8');
+        setUpValidForm(component);
         fixture.detectChanges();
 
         const testUser : User = {
@@ -93,11 +94,7 @@ describe('SignUpComponent', () => {
     });
 
     it('should set error if email taken', () => {
-        component.signUpGroup.controls['firstName'].setValue('test');
-        component.signUpGroup.controls['lastName'].setValue('test');
-        component.signUpGroup.controls['email'].setValue('test@test.com');
-        component.signUpGroup.controls['password'].setValue('testtest8');
-        component.signUpGroup.controls['repeatPassword'].setValue('testtest8');
+        setUpValidForm(component);
         fixture.detectChanges();
 
         mockAuthService.signUp.and.returnValue(throwError(() => ({ error: 'Account with this email already exists'})));
@@ -112,10 +109,7 @@ describe('SignUpComponent', () => {
     });
 
     it('should be disabled if passwords dont match', () => {
-        component.signUpGroup.controls['firstName'].setValue('test');
-        component.signUpGroup.controls['lastName'].setValue('test');
-        component.signUpGroup.controls['email'].setValue('test@test.com');
-        component.signUpGroup.controls['password'].setValue('testtest8');
+        setUpValidForm(component);
         component.signUpGroup.controls['repeatPassword'].setValue('testtest88');
         fixture.detectChanges();
 
@@ -127,11 +121,8 @@ describe('SignUpComponent', () => {
     });
 
     it('should be disabled if any field is empty', () => {
+        setUpValidForm(component);
         component.signUpGroup.controls['firstName'].setValue('');
-        component.signUpGroup.controls['lastName'].setValue('test');
-        component.signUpGroup.controls['email'].setValue('test@test.com');
-        component.signUpGroup.controls['password'].setValue('testtest8');
-        component.signUpGroup.controls['repeatPassword'].setValue('testtest88');
         fixture.detectChanges();
 
         button.click();
@@ -142,9 +133,7 @@ describe('SignUpComponent', () => {
     });
 
     it('should be disabled if password doesnt follow pattern', () => {
-        component.signUpGroup.controls['firstName'].setValue('test');
-        component.signUpGroup.controls['lastName'].setValue('test');
-        component.signUpGroup.controls['email'].setValue('test@test.com');
+        setUpValidForm(component);
         component.signUpGroup.controls['password'].setValue('testtest');
         component.signUpGroup.controls['repeatPassword'].setValue('testtest');
         fixture.detectChanges();
@@ -157,11 +146,10 @@ describe('SignUpComponent', () => {
     });
 
     it('should be disabled if name or email invalid', () => {
+        setUpValidForm(component);
         component.signUpGroup.controls['firstName'].setValue('t');
         component.signUpGroup.controls['lastName'].setValue('testttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt');
         component.signUpGroup.controls['email'].setValue('testtest.com');
-        component.signUpGroup.controls['password'].setValue('testtest');
-        component.signUpGroup.controls['repeatPassword'].setValue('testtest');
         fixture.detectChanges();
 
         button.click();

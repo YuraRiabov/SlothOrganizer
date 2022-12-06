@@ -2,6 +2,7 @@
 using SlothOrganizer.Contracts.DTO.User;
 using SlothOrganizer.Domain.Exceptions;
 using SlothOrganizer.Services.Abstractions.Auth;
+using SlothOrganizer.Services.Abstractions.Auth.Tokens;
 using SlothOrganizer.Services.Abstractions.Email;
 using SlothOrganizer.Services.Abstractions.Users;
 
@@ -30,17 +31,17 @@ namespace SlothOrganizer.Services.Auth
 
         public async Task ResendVerificationCode(long userId)
         {
-            var user = await _userService.GetUser(userId);
+            var user = await _userService.Get(userId);
             await SendVerificationCode(user);
         }
 
         public async Task<TokenDto> RefreshToken(TokenDto expiredToken)
         {
             var email = _accessTokenService.GetEmailFromToken(expiredToken.AccessToken);
-            var user = await _userService.GetByEmail(email);
+            var user = await _userService.Get(email);
             if (await _refreshTokenService.ValidateRefreshToken(user.Id, expiredToken.RefreshToken))
             {
-                return await GenerateToken(user);
+                return await GenerateToken(user.Id, user.Email);
             }
             throw new InvalidCredentialsException("Invalid refresh token");
         }
@@ -55,7 +56,7 @@ namespace SlothOrganizer.Services.Auth
                     User = user
                 };
             }
-            var token = await GenerateToken(user);
+            var token = await GenerateToken(user.Id, user.Email);
             return new UserAuthDto
             {
                 User = user,
@@ -65,34 +66,33 @@ namespace SlothOrganizer.Services.Auth
 
         public async Task<UserDto> SignUp(NewUserDto newUser)
         {
-            var user = await _userService.CreateUser(newUser);
+            var user = await _userService.Create(newUser);
             await SendVerificationCode(user);
             return user;
         }
 
         public async Task<TokenDto> VerifyEmail(VerificationCodeDto verificationCode)
         {
-            var user = await _userService.GetUser(verificationCode.UserId);
-            if (await _verificationCodeService.VerifyCode(verificationCode.UserId, verificationCode.VerificationCode))
+            var email = await _userService.VerifyEmail(verificationCode.UserId, verificationCode.VerificationCode);
+            if (email is not null)
             {
-                await _userService.VerifyEmail(user.Id);
-                return await GenerateToken(user);
+                return await GenerateToken(verificationCode.UserId, email);
             }
             throw new InvalidCredentialsException("Invalid verification code");
         }
 
         private async Task SendVerificationCode(UserDto user)
         {
-            var code = await _verificationCodeService.GenerateCode(user.Id);
+            var code = await _verificationCodeService.Generate(user.Id);
             await _emailService.SendEmail(user.Email, "Verify your email", $"Your verification code is {code}");
         }
 
-        private async Task<TokenDto> GenerateToken(UserDto user)
+        private async Task<TokenDto> GenerateToken(long id, string email)
         {
             return new TokenDto
             {
-                AccessToken = _accessTokenService.GenerateToken(user.Email),
-                RefreshToken = await _refreshTokenService.GenerateRefreshToken(user.Id)
+                AccessToken = _accessTokenService.GenerateToken(email),
+                RefreshToken = await _refreshTokenService.GenerateRefreshToken(id)
             };
         }
     }

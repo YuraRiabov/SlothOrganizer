@@ -20,17 +20,17 @@ namespace SlothOrganizer.Presentation.Controllers
 
         [AllowAnonymous]
         [HttpPost("signup")]
-        public async Task<ActionResult<UserDto>> SignUp([FromBody] NewUserDto newUserDto)
+        public async Task<UserDto> SignUp([FromBody] NewUserDto newUserDto)
         {
             var user = await _authService.SignUp(newUserDto);
-            return Ok(user);
+            return user;
         }
 
         [AllowAnonymous]
         [HttpPut("verifyEmail")]
-        public async Task<ActionResult<TokenDto>> VerifyEmail([FromBody] VerificationCodeDto verificationCode)
+        public async Task<TokenDto> VerifyEmail([FromBody] VerificationCodeDto verificationCode)
         {
-            return Ok(await _authService.VerifyEmail(verificationCode));
+            return await _authService.VerifyEmail(verificationCode);
         }
 
         [AllowAnonymous]
@@ -42,10 +42,9 @@ namespace SlothOrganizer.Presentation.Controllers
 
         [AllowAnonymous]
         [HttpPost("resendCode/{userId}")]
-        public async Task<IActionResult> ResendVerificationCode(long userId)
+        public async Task ResendVerificationCode(long userId)
         {
             await _authService.ResendVerificationCode(userId);
-            return Ok();
         }
 
         [AllowAnonymous]

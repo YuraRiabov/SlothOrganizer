@@ -1,24 +1,20 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Security.Authentication;
-using System.Text;
-using System.Threading.Tasks;
-using FakeItEasy;
+﻿using FakeItEasy;
 using SlothOrganizer.Contracts.DTO.Auth;
 using SlothOrganizer.Contracts.DTO.User;
 using SlothOrganizer.Domain.Exceptions;
 using SlothOrganizer.Services.Abstractions.Auth;
+using SlothOrganizer.Services.Abstractions.Auth.Tokens;
 using SlothOrganizer.Services.Abstractions.Email;
 using SlothOrganizer.Services.Abstractions.Users;
 using SlothOrganizer.Services.Auth;
+using SlothOrganizer.Services.Auth.Tokens;
 using Xunit;
 
-namespace SlothOrganizer.Services.Tests.Unit
+namespace SlothOrganizer.Services.Tests.Unit.Auth
 {
     public class AuthServiceTests
     {
-        private readonly AuthService _sut;
+        private readonly AuthService _authService;
         private readonly IUserService _userService;
         private readonly IAccessTokenService _accessTokenService;
         private readonly IRefreshTokenService _refreshTokenService;
@@ -33,7 +29,7 @@ namespace SlothOrganizer.Services.Tests.Unit
             _verificationCodeService = A.Fake<IVerificationCodeService>();
             _emailService = A.Fake<IEmailService>();
 
-            _sut = new AuthService(_accessTokenService,
+            _authService = new AuthService(_accessTokenService,
                 _userService,
                 _verificationCodeService,
                 _emailService,
@@ -43,50 +39,31 @@ namespace SlothOrganizer.Services.Tests.Unit
         [Fact]
         public async Task VerifyEmail_WhenValid_ShouldVerify()
         {
-            // Arrange
-            var dto = new VerificationCodeDto
-            {
-                UserId = 1,
-                VerificationCode = 111111
-            };
-            A.CallTo(() => _userService.GetUser(1)).Returns(Task.FromResult(new UserDto { Id = 1, Email = "test"}));
-            A.CallTo(() => _verificationCodeService.VerifyCode(1, 111111)).Returns(true);
+            var dto = GetVerificationCodeDto();
+            A.CallTo(() => _userService.VerifyEmail(1, 111111)).Returns("test");
             A.CallTo(() => _accessTokenService.GenerateToken("test")).Returns("test");
-            A.CallTo(() => _refreshTokenService.GenerateRefreshToken(1)).Returns("test");
 
-            // Act
-            var result = await _sut.VerifyEmail(dto);
+            var result = await _authService.VerifyEmail(dto);
 
-            // Assert
             Assert.Equal("test", result.AccessToken);
-            A.CallTo(() => _userService.VerifyEmail(1)).MustHaveHappenedOnceExactly();
+            A.CallTo(() => _userService.VerifyEmail(1, 111111)).MustHaveHappenedOnceExactly();
         }
 
         [Fact]
         public async Task VerifyEmail_WhenInvalid_ShouldThrow()
         {
-            // Arrange
-            var dto = new VerificationCodeDto
-            {
-                UserId = 1,
-                VerificationCode = 111111
-            };
-            A.CallTo(() => _userService.GetUser(1)).Returns(Task.FromResult(new UserDto { Id = 1, Email = "test" }));
-            A.CallTo(() => _verificationCodeService.VerifyCode(1, 111111)).Returns(false);
-            A.CallTo(() => _accessTokenService.GenerateToken("test")).Returns("test");
-            A.CallTo(() => _refreshTokenService.GenerateRefreshToken(1)).Returns("test");
+            var dto = GetVerificationCodeDto();
+            A.CallTo(() => _userService.VerifyEmail(1, 111111)).Returns(Task.FromResult<string?>(null));
 
-            // Act
-            var code = async () => await _sut.VerifyEmail(dto);
+            var code = async () => await _authService.VerifyEmail(dto);
 
-            // Assert
-            await Assert.ThrowsAsync<InvalidCredentialsException>(code);
+            var exception = await Assert.ThrowsAsync<InvalidCredentialsException>(code);
+            Assert.Equal("Invalid verification code", exception.Message);
         }
 
         [Fact]
         public async Task SignUp_ShouldCreateAndSendEmail()
         {
-            // Arrange
             var newUser = new NewUserDto
             {
                 FirstName = "test",
@@ -94,18 +71,36 @@ namespace SlothOrganizer.Services.Tests.Unit
                 Email = "test@test.com",
                 Password = "password"
             };
-            A.CallTo(() => _userService.CreateUser(newUser)).Returns(Task.FromResult(new UserDto { Id = 1, Email = "test@test.com" }));
-            A.CallTo(() => _verificationCodeService.GenerateCode(1)).Returns(111111);
+            A.CallTo(() => _userService.Create(newUser)).Returns(Task.FromResult(new UserDto { Id = 1, Email = "test@test.com" }));
+            A.CallTo(() => _verificationCodeService.Generate(1)).Returns(111111);
 
-            // Act
-            await _sut.SignUp(newUser);
+            await _authService.SignUp(newUser);
 
-            // Assert
-            A.CallTo(() => _userService.CreateUser(newUser)).MustHaveHappenedOnceExactly();
+            A.CallTo(() => _userService.Create(newUser)).MustHaveHappenedOnceExactly();
             A.CallTo(() => _emailService.SendEmail("test@test.com", "Verify your email", "Your verification code is 111111"))
                 .MustHaveHappenedOnceExactly();
         }
 
+        [Fact]
+        public async Task ResendVerificationCode_ShouldSendEmail()
+        {
+            var userId = 1;
+            var user = new UserDto
+            {
+                Id = userId,
+                FirstName = "test",
+                LastName = "user",
+                Email = "test@test.com"
+            };
+            A.CallTo(() => _userService.Get(userId)).Returns(user);
+            A.CallTo(() => _verificationCodeService.Generate(userId)).Returns(111111);
+
+            await _authService.ResendVerificationCode(userId);
+
+            A.CallTo(() => _userService.Get(userId)).MustHaveHappenedOnceExactly();
+            A.CallTo(() => _emailService.SendEmail("test@test.com", "Verify your email", "Your verification code is 111111"))
+                .MustHaveHappenedOnceExactly();
+        }
         [Fact]
         public async Task RefreshToken_WhenTokenValid_ShouldRefresh()
         {
@@ -124,13 +119,13 @@ namespace SlothOrganizer.Services.Tests.Unit
             var accessToken = "access";
             var refreshToken = "refresh";
             A.CallTo(() => _accessTokenService.GetEmailFromToken(token.AccessToken)).Returns(email);
-            A.CallTo(() => _userService.GetByEmail(email)).Returns(user);
+            A.CallTo(() => _userService.Get(email)).Returns(user);
             A.CallTo(() => _refreshTokenService.ValidateRefreshToken(user.Id, token.RefreshToken)).Returns(true);
             A.CallTo(() => _accessTokenService.GenerateToken(email)).Returns(accessToken);
             A.CallTo(() => _refreshTokenService.GenerateRefreshToken(user.Id)).Returns(refreshToken);
 
             //Act
-            var result = await _sut.RefreshToken(token);
+            var result = await _authService.RefreshToken(token);
 
             //Assert
             Assert.Equal(accessToken, result.AccessToken);
@@ -153,11 +148,11 @@ namespace SlothOrganizer.Services.Tests.Unit
                 Id = 1
             };
             A.CallTo(() => _accessTokenService.GetEmailFromToken(token.AccessToken)).Returns(email);
-            A.CallTo(() => _userService.GetByEmail(email)).Returns(user);
+            A.CallTo(() => _userService.Get(email)).Returns(user);
             A.CallTo(() => _refreshTokenService.ValidateRefreshToken(user.Id, token.RefreshToken)).Returns(false);
 
             //Act
-            var code = async () => await _sut.RefreshToken(token);
+            var code = async () => await _authService.RefreshToken(token);
 
             //Assert
             await Assert.ThrowsAsync<InvalidCredentialsException>(code);
@@ -190,7 +185,7 @@ namespace SlothOrganizer.Services.Tests.Unit
             A.CallTo(() => _refreshTokenService.GenerateRefreshToken(user.Id)).Returns(refreshToken);
 
             //Act
-            var result = await _sut.SignIn(auth);
+            var result = await _authService.SignIn(auth);
 
             //Assert
             Assert.NotNull(result.Token);
@@ -222,11 +217,19 @@ namespace SlothOrganizer.Services.Tests.Unit
             A.CallTo(() => _userService.Authorize(auth)).Returns(user);
 
             //Act
-            var result = await _sut.SignIn(auth);
+            var result = await _authService.SignIn(auth);
 
             //Assert
             Assert.Null(result.Token);
             Assert.Equal(user, result.User);
+        }
+        private VerificationCodeDto GetVerificationCodeDto()
+        {
+            return new VerificationCodeDto
+            {
+                UserId = 1,
+                VerificationCode = 111111
+            };
         }
     }
 }

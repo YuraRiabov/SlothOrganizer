@@ -1,21 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using SlothOrganizer.Contracts.DTO.Auth;
+﻿using SlothOrganizer.Contracts.DTO.Auth;
 using SlothOrganizer.Contracts.DTO.User;
 
 namespace SlothOrganizer.Services.Abstractions.Users
 {
     public interface IUserService
     {
-        Task<UserDto> CreateUser(NewUserDto newUser);
-
-        Task<UserDto> GetUser(long id);
+        Task<UserDto> Create(NewUserDto newUser);
         Task<UserDto> Authorize(AuthorizationDto auth);
 
-        Task VerifyEmail(long userId);
-        Task<UserDto> GetByEmail(string email);
+        Task<UserDto> Get(long id);
+        Task<string?> VerifyEmail(long userId, int code);
+        Task<UserDto> Get(string email);
     }
 }

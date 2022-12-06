@@ -5,21 +5,21 @@ using System.Text;
 using System.Threading.Tasks;
 using SlothOrganizer.Domain.Entities;
 using SlothOrganizer.Domain.Repositories;
-using SlothOrganizer.Services.Abstractions.Auth;
+using SlothOrganizer.Services.Abstractions.Auth.Tokens;
 using SlothOrganizer.Services.Abstractions.Utility;
 
-namespace SlothOrganizer.Services.Auth
+namespace SlothOrganizer.Services.Auth.Tokens
 {
     public class RefreshTokenService : IRefreshTokenService
     {
         private readonly IRefreshTokenRepository _refreshTokenRepository;
-        private readonly ISecurityService _securityService;
+        private readonly IRandomService _randomService;
         private readonly IDateTimeService _dateTimeService;
 
-        public RefreshTokenService(IDateTimeService dateTimeService, ISecurityService securityService, IRefreshTokenRepository refreshTokenRepository)
+        public RefreshTokenService(IDateTimeService dateTimeService, IRandomService randomService, IRefreshTokenRepository refreshTokenRepository)
         {
             _dateTimeService = dateTimeService;
-            _securityService = securityService;
+            _randomService = randomService;
             _refreshTokenRepository = refreshTokenRepository;
         }
 
@@ -41,10 +41,9 @@ namespace SlothOrganizer.Services.Auth
             return userTokens.Any(t => t.Token == token && t.ExpirationTime > _dateTimeService.Now());
         }
 
-
         private string GenerateToken()
         {
-            return Convert.ToBase64String(_securityService.GetRandomBytes());
+            return Convert.ToBase64String(_randomService.GetRandomBytes());
         }
     }
 }

@@ -1,8 +1,8 @@
 import { createAction, props } from '@ngrx/store';
 
-import { AuthState } from 'src/app/types/states/authState';
-import { Token } from 'src/app/types/auth/token';
-import { User } from 'src/app/types/user/user';
+import { AuthState } from '@store/states/auth-state';
+import { Token } from '#types/auth/token';
+import { User } from '#types/user/user';
 
 export const addUser = createAction(
     '[Sign up, Sign in page] Register',

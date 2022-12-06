@@ -1,19 +1,20 @@
-import { AbstractControl, FormControl, FormGroup, ValidatorFn, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { catchError, of } from 'rxjs';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { catchError, map, of } from 'rxjs';
+import { getEmailValidators, getNameValidators, getPasswordValidators, passwordMatchingValidator } from '@utils/validators/user-validators.helper';
 
-import { AuthService } from 'src/app/api/auth.service';
+import { AuthService } from '@api/auth.service';
+import { BaseComponent } from '@shared/components/base/base.component';
 import { Component } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { addUser } from 'src/app/store/actions/login-page.actions';
+import { addUser } from '@store/actions/login-page.actions';
 
 @Component({
     selector: 'app-sign-up',
     templateUrl: './sign-up.component.html',
     styleUrls: ['./sign-up.component.sass']
 })
-export class SignUpComponent {
-
+export class SignUpComponent extends BaseComponent {
 
     public signUpGroup: FormGroup;
 
@@ -22,6 +23,7 @@ export class SignUpComponent {
         private store: Store,
         private router: Router
     ) {
+        super();
         this.signUpGroup = this.buildSignUpGroup();
     }
 
@@ -36,49 +38,29 @@ export class SignUpComponent {
             email: this.signUpGroup.get('email')?.value!,
             password: this.signUpGroup.get('password')?.value!
         }).pipe(
-            catchError((resp) => {
-                if (resp.error === 'Account with this email already exists') {
-                    this.signUpGroup.get('email')?.setErrors({ emailTaken: true });
-                }
-                return of(null);
-            })
-        ).subscribe(
-            (user) => {
-                if (user == null) {
-                    return;
-                }
+            this.untilThis,
+            map((user) => {
                 this.store.dispatch(addUser({ user }));
                 this.redirectTo('auth/verify-email');
-            }
-        );
+                return of(null);
+            }),
+            catchError((resp) => {
+                this.signUpGroup.get('email')?.setErrors({ emailTaken: true });
+                return of(null);
+            })
+        ).subscribe();
     }
 
     private buildSignUpGroup() : FormGroup {
-        const firstNameControl = new FormControl('', [
-            Validators.required,
-            Validators.minLength(2),
-            Validators.maxLength(30)
-        ]);
+        const firstNameControl = new FormControl('', getNameValidators());
 
-        const lastNameControl = new FormControl('', [
-            Validators.required,
-            Validators.minLength(2),
-            Validators.maxLength(30)
-        ]);
+        const lastNameControl = new FormControl('', getNameValidators());
 
-        const emailControl = new FormControl('', [
-            Validators.required,
-            Validators.email
-        ]);
+        const emailControl = new FormControl('', getEmailValidators());
 
-        const passwordControl = new FormControl('', [
-            Validators.required,
-            Validators.minLength(8),
-            Validators.maxLength(16),
-            Validators.pattern('([0-9].*[a-zA-Z])|([a-zA-Z].*[0-9])')
-        ]);
+        const passwordControl = new FormControl('', getPasswordValidators());
 
-        const repeatPasswordControl = new FormControl('', [Validators.required]);
+        const repeatPasswordControl = new FormControl('', Validators.required);
 
         return new FormGroup({
             firstName: firstNameControl,
@@ -87,18 +69,7 @@ export class SignUpComponent {
             password: passwordControl,
             repeatPassword: repeatPasswordControl
         }, {
-            validators: this.passwordValidator()
+            validators: passwordMatchingValidator()
         });
-    }
-
-    private passwordValidator() : ValidatorFn {
-        return (group: AbstractControl) => {
-            const passwordControl = group.get('password');
-            const repeatPasswordControl = group.get('repeatPassword');
-            if ( passwordControl?.value !== repeatPasswordControl?.value ) {
-                repeatPasswordControl?.setErrors({ passwordMismatch: true });
-            }
-            return null;
-        };
     }
 }

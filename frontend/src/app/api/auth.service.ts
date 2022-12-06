@@ -1,11 +1,12 @@
-import { AuthState } from '../types/states/authState';
-import { HttpInternalService } from './http-internal.service';
+import { AuthState } from '@store/states/auth-state';
+import { HttpService } from './http-internal.service';
 import { Injectable } from '@angular/core';
-import { NewUser } from 'src/app/types/user/NewUser';
-import { Token } from '../types/auth/token';
-import { User } from '../types/user/user';
-import { UserAuthorization } from '../types/auth/userAuthorization';
-import { VerificationCode } from '../types/auth/verificationCode';
+import { NewUser } from '#types/user/new-user';
+import { Observable } from 'rxjs';
+import { Token } from '#types/auth/token';
+import { User } from '#types/user/user';
+import { UserAuthorization } from '#types/auth/userAuthorization';
+import { VerificationCode } from '#types/auth/verification-code';
 
 @Injectable({
     providedIn: 'root'
@@ -13,31 +14,27 @@ import { VerificationCode } from '../types/auth/verificationCode';
 export class AuthService {
     private baseUri: string = '/auth';
 
-    constructor(private httpService: HttpInternalService) {}
+    constructor(private httpService: HttpService) {}
 
-    public signUp(user: NewUser) {
-        return this.httpService.postRequest<User>(`${this.baseUri}/signup`, user);
+    public signUp(user: NewUser) : Observable<User> {
+        return this.httpService.post<User>(`${this.baseUri}/signup`, user);
     }
 
     public signIn(user: UserAuthorization) {
-        return this.httpService.postRequest<AuthState>(`${this.baseUri}/signin`, user);
+        return this.httpService.post<AuthState>(`${this.baseUri}/signin`, user);
     }
-
-    public verifyEmail(verificationCode: VerificationCode) {
-        return this.httpService.putRequest<Token>(
+    public verifyEmail(verificationCode: VerificationCode) : Observable<Token> {
+        return this.httpService.put<Token>(
             `${this.baseUri}/verifyEmail`,
             verificationCode
         );
     }
 
-    public resendCode(userId: number) {
-        return this.httpService.postRequest(
-            `${this.baseUri}/resendCode/${userId}`,
-            {}
-        );
+    public resendCode(userId: number) : Observable<null> {
+        return this.httpService.post(`${this.baseUri}/resendCode/${userId}`);
     }
 
     public refreshToken(token: Token) {
-        return this.httpService.putRequest<Token>(`${this.baseUri}/refreshToken`, token);
+        return this.httpService.put<Token>(`${this.baseUri}/refreshToken`, token);
     }
 }

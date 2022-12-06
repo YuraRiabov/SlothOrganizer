@@ -7,25 +7,25 @@ using FakeItEasy;
 using SlothOrganizer.Domain.Entities;
 using SlothOrganizer.Domain.Repositories;
 using SlothOrganizer.Services.Abstractions.Utility;
-using SlothOrganizer.Services.Auth;
+using SlothOrganizer.Services.Auth.Tokens;
 using Xunit;
 
-namespace SlothOrganizer.Services.Tests.Unit
+namespace SlothOrganizer.Services.Tests.Unit.Auth.Tokens
 {
     public class RefreshTokenServiceTests
     {
         private readonly RefreshTokenService _sut;
         private readonly IRefreshTokenRepository _refreshTokenRepository;
-        private readonly ISecurityService _securityService;
+        private readonly IRandomService _randomService;
         private readonly IDateTimeService _dateTimeService;
 
         public RefreshTokenServiceTests()
         {
             _refreshTokenRepository = A.Fake<IRefreshTokenRepository>();
-            _securityService = A.Fake<ISecurityService>();
+            _randomService = A.Fake<IRandomService>();
             _dateTimeService = A.Fake<IDateTimeService>();
 
-            _sut = new RefreshTokenService(_dateTimeService, _securityService, _refreshTokenRepository);
+            _sut = new RefreshTokenService(_dateTimeService, _randomService, _refreshTokenRepository);
         }
 
         [Fact]
@@ -39,7 +39,7 @@ namespace SlothOrganizer.Services.Tests.Unit
                 Token = "test",
                 ExpirationTime = new DateTime(2022, 12, 2)
             };
-            A.CallTo(() => _securityService.GetRandomBytes(16)).Returns(Convert.FromBase64String(token.Token));
+            A.CallTo(() => _randomService.GetRandomBytes(16)).Returns(Convert.FromBase64String(token.Token));
             A.CallTo(() => _dateTimeService.Now()).Returns(token.ExpirationTime);
 
             //Act

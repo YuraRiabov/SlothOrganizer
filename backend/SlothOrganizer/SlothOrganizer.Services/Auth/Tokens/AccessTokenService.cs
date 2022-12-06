@@ -1,23 +1,23 @@
 ﻿using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
-using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using SlothOrganizer.Contracts.DTO.Auth;
 using SlothOrganizer.Domain.Exceptions;
-using SlothOrganizer.Services.Abstractions.Auth;
+using SlothOrganizer.Services.Abstractions.Auth.Tokens;
 using SlothOrganizer.Services.Abstractions.Utility;
+using SlothOrganizer.Services.Auth.Tokens.Options;
 
-namespace SlothOrganizer.Services.Auth
+namespace SlothOrganizer.Services.Auth.Tokens
 {
     public class AccessTokenService : IAccessTokenService
     {
-        private readonly IConfiguration _configuration;
         private readonly IDateTimeService _dateTimeService;
-
-        public AccessTokenService(IConfiguration configuration, IDateTimeService dateTimeService)
+        private readonly JwtOptions _jwtOptions;
+        public AccessTokenService(IOptions<JwtOptions> options, IDateTimeService dateTimeService)
         {
-            _configuration = configuration;
+            _jwtOptions = options.Value;
             _dateTimeService = dateTimeService;
         }
 
@@ -28,7 +28,7 @@ namespace SlothOrganizer.Services.Auth
                 ValidateAudience = false,
                 ValidateIssuer = false,
                 ValidateIssuerSigningKey = true,
-                IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["JwtKey"])),
+                IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_jwtOptions.Secret)),
                 ValidateLifetime = false
             };
             var tokenHandler = new JwtSecurityTokenHandler();
@@ -51,14 +51,14 @@ namespace SlothOrganizer.Services.Auth
 
         public string GenerateToken(string email)
         {
-            var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["JwtKey"]));
+            var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_jwtOptions.Secret));
             var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
             var claims = new[]
             {
                 new Claim(ClaimTypes.Email, email)
             };
-            var token = new JwtSecurityToken(_configuration["Jwt:Issuer"],
-                _configuration["Jwt:Audience"],
+            var token = new JwtSecurityToken(_jwtOptions.Issuer,
+                _jwtOptions.Audience,
                 claims,
                 expires: _dateTimeService.Now().AddMinutes(60),
                 signingCredentials: credentials);

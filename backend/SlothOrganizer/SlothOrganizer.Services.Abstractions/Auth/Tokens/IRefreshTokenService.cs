@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SlothOrganizer.Services.Abstractions.Auth
+namespace SlothOrganizer.Services.Abstractions.Auth.Tokens
 {
     public interface IRefreshTokenService
     {

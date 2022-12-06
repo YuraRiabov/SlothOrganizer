@@ -1,15 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace SlothOrganizer.Services.Abstractions.Auth
+﻿namespace SlothOrganizer.Services.Abstractions.Auth
 {
     public interface IVerificationCodeService
     {
-        Task<int> GenerateCode(long userId);
+        Task<int> Generate(long userId);
 
-        Task<bool> VerifyCode(long userId, int code);
+        Task<bool> Verify(long userId, int code);
     }
 }

@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using AutoMapper;
+﻿using AutoMapper;
 using SlothOrganizer.Contracts.DTO.Auth;
 using SlothOrganizer.Contracts.DTO.User;
 using SlothOrganizer.Domain.Entities;
@@ -18,23 +13,25 @@ namespace SlothOrganizer.Services.Users
     {
         private readonly IUserRepository _userRepository;
         private readonly IMapper _mapper;
-        private readonly ISecurityService _securityService;
+        private readonly IRandomService _randomService;
+        private readonly IHashService _hashService;
 
-        public UserService(ISecurityService securityService, IMapper mapper, IUserRepository userRepository)
+        public UserService(IRandomService randomService, IMapper mapper, IUserRepository userRepository, IHashService hashService)
         {
-            _securityService = securityService;
+            _randomService = randomService;
             _mapper = mapper;
             _userRepository = userRepository;
+            _hashService = hashService;
         }
 
-        public async Task<UserDto> CreateUser(NewUserDto newUser)
+        public async Task<UserDto> Create(NewUserDto newUser)
         {
-            if (await _userRepository.GetByEmail(newUser.Email) is not null)
+            if (await _userRepository.Get(newUser.Email) is not null)
             {
-                throw new DuplicateAccountException("Account with this email already exists");
+                throw new DuplicateAccountException();
             }
-            var salt = _securityService.GetRandomBytes();
-            var hashedPassword = _securityService.HashPassword(newUser.Password, salt);
+            var salt = _randomService.GetRandomBytes();
+            var hashedPassword = _hashService.HashPassword(newUser.Password, salt);
             var user = _mapper.Map<User>(newUser);
             user.Salt = Convert.ToBase64String(salt);
             user.Password = hashedPassword;
@@ -44,30 +41,27 @@ namespace SlothOrganizer.Services.Users
             return _mapper.Map<UserDto>(user);
         }
 
-
-        public async Task<UserDto> GetUser(long id)
+        public async Task<UserDto> Get(long id)
         {
             var user = await GetByIdInternal(id);
             return _mapper.Map<UserDto>(user);
         }
 
-        public async Task<UserDto> GetByEmail(string email)
+        public async Task<UserDto> Get(string email)
         {
             var user = await GetByEmailInternal(email);
             return _mapper.Map<UserDto>(user);
         }
 
-        public async Task VerifyEmail(long userId)
+        public async Task<string?> VerifyEmail(long userId, int code)
         {
-            var user = await GetByIdInternal(userId);
-            user.EmailVerified = true;
-            await _userRepository.Update(user);
+            return await _userRepository.VerifyEmail(userId, code);
         }
 
         public async Task<UserDto> Authorize(AuthorizationDto auth)
         {
             var user = await GetByEmailInternal(auth.Email);
-            if (_securityService.VerifyPassword(auth.Password, Convert.FromBase64String(user.Salt), user.Password))
+            if (_hashService.VerifyPassword(auth.Password, Convert.FromBase64String(user.Salt), user.Password))
             {
                 return _mapper.Map<UserDto>(user);
             }
@@ -76,7 +70,7 @@ namespace SlothOrganizer.Services.Users
 
         private async Task<User> GetByIdInternal(long userId)
         {
-            var user = await _userRepository.GetById(userId);
+            var user = await _userRepository.Get(userId);
             if (user is null)
             {
                 throw new EntityNotFoundException("Not found user with such id");
@@ -86,7 +80,7 @@ namespace SlothOrganizer.Services.Users
 
         private async Task<User> GetByEmailInternal(string email)
         {
-            var user = await _userRepository.GetByEmail(email);
+            var user = await _userRepository.Get(email);
             if (user is null)
             {
                 throw new EntityNotFoundException("No user with such email");

@@ -8,36 +8,38 @@ using System.Threading.Tasks;
 using Castle.Core.Configuration;
 using FakeItEasy;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using Newtonsoft.Json.Linq;
 using Org.BouncyCastle.Utilities;
 using SlothOrganizer.Domain.Exceptions;
 using SlothOrganizer.Services.Abstractions.Utility;
 using SlothOrganizer.Services.Auth;
+using SlothOrganizer.Services.Auth.Tokens;
+using SlothOrganizer.Services.Auth.Tokens.Options;
+using SlothOrganizer.Services.Utility;
 using Xunit;
 using IConfiguration = Microsoft.Extensions.Configuration.IConfiguration;
 
-namespace SlothOrganizer.Services.Tests.Unit
+namespace SlothOrganizer.Services.Tests.Unit.Auth.Tokens
 {
     public class AccessTokenServiceTests
     {
         private readonly AccessTokenService _sut;
-        private readonly IConfiguration _configuration;
         private readonly IDateTimeService _dateTimeService;
 
         public AccessTokenServiceTests()
         {
-            var inMemorySettings = new Dictionary<string, string?>
+            var options = Options.Create(new JwtOptions
             {
-                { "JwtKey", "SecretKeyOfRightLength" },
-                { "Jwt:Issuer", "tests" },
-                { "Jwt:Audience", "tests" }
-            };
-            _configuration = new ConfigurationBuilder().AddInMemoryCollection(inMemorySettings).Build();
+                Secret = "SecretKeyOfRightLength",
+                Issuer = "tests",
+                Audience = "tests"
+            });
 
             _dateTimeService = A.Fake<IDateTimeService>();
 
-            _sut = new AccessTokenService(_configuration, _dateTimeService);
+            _sut = new AccessTokenService(options, _dateTimeService);
         }
 
         [Fact]
@@ -47,16 +49,7 @@ namespace SlothOrganizer.Services.Tests.Unit
             var email = "test@test.com";
             A.CallTo(() => _dateTimeService.Now()).Returns(new DateTime(1800, 1, 1));
 
-            var tokenValidationParameters = new TokenValidationParameters
-            {
-                ValidateAudience = true,
-                ValidateIssuer = true,
-                ValidateIssuerSigningKey = true,
-                ValidAudience = "tests",
-                ValidIssuer = "tests",
-                IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("SecretKeyOfRightLength")),
-                ValidateLifetime = false
-            };
+            var tokenValidationParameters = GetTokenParameters(false);
             var tokenHandler = new JwtSecurityTokenHandler();
             SecurityToken securityToken;
 
@@ -78,16 +71,7 @@ namespace SlothOrganizer.Services.Tests.Unit
             var email = "test@test.com";
             A.CallTo(() => _dateTimeService.Now()).Returns(new DateTime(1800, 1, 1));
 
-            var tokenValidationParameters = new TokenValidationParameters
-            {
-                ValidateAudience = true,
-                ValidateIssuer = true,
-                ValidateIssuerSigningKey = true,
-                ValidAudience = "tests",
-                ValidIssuer = "tests",
-                IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("SecretKeyOfRightLength")),
-                ValidateLifetime = true
-            };
+            var tokenValidationParameters = GetTokenParameters(true);
             var tokenHandler = new JwtSecurityTokenHandler();
             SecurityToken securityToken;
 
@@ -125,6 +109,20 @@ namespace SlothOrganizer.Services.Tests.Unit
 
             //Assert
             Assert.Equal(email, result);
+        }
+
+        private TokenValidationParameters GetTokenParameters(bool validateLifetime)
+        {
+            return new TokenValidationParameters
+            {
+                ValidateAudience = true,
+                ValidateIssuer = true,
+                ValidateIssuerSigningKey = true,
+                ValidAudience = "tests",
+                ValidIssuer = "tests",
+                IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("SecretKeyOfRightLength")),
+                ValidateLifetime = validateLifetime
+            };
         }
     }
 }

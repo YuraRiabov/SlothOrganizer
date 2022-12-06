@@ -1,20 +1,9 @@
-using FluentMigrator.Runner;
-using FluentValidation;
 using FluentValidation.AspNetCore;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.Extensions.Configuration;
-using Microsoft.IdentityModel.Tokens;
-using SlothOrganizer.Domain.Repositories;
 using SlothOrganizer.Persistence;
-using SlothOrganizer.Persistence.Repositories;
-using SlothOrganizer.Services;
-using SlothOrganizer.Services.Abstractions;
 using SlothOrganizer.Services.Users;
 using SlothOrganizer.Web.Extensions;
 using SlothOrganizer.Web.Middleware;
 using SlothOrganizer.Web.Middleware.Validation.Users;
-using System.Reflection;
-using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -26,11 +15,12 @@ builder.Services.AddSingleton<DatabaseManager>();
 builder.Services.AddRepositories();
 builder.Services.AddCustomServices();
 builder.Services.AddEmailService(builder.Configuration);
+builder.Services.AddJwtOptions(builder.Configuration);
 builder.Services.AddFluentMigrations(builder.Configuration);
 builder.Services.AddCustomAuthentication(builder.Configuration);
 
 
-builder.Services.AddAutoMapper(typeof(UserProfile).Assembly);
+builder.Services.AddAutoMapper(typeof(UserMappingProfile).Assembly);
 
 builder.Services.AddFluentValidation(cfg => cfg.RegisterValidatorsFromAssemblyContaining(typeof(NewUserDtoValidator)));
 

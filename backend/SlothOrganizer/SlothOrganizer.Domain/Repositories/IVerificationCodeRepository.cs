@@ -4,7 +4,7 @@ namespace SlothOrganizer.Domain.Repositories
 {
     public interface IVerificationCodeRepository
     {
-        Task<IEnumerable<VerificationCode>> GetByUserId(long userId);
+        Task<IEnumerable<VerificationCode>> Get(long userId);
 
         Task<VerificationCode> Insert(VerificationCode verificationCode);
     }

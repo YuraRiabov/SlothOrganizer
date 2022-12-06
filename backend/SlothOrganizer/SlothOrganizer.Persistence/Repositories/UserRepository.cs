@@ -1,12 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Dapper;
+﻿using Dapper;
 using SlothOrganizer.Domain.Entities;
 using SlothOrganizer.Domain.Repositories;
+using SlothOrganizer.Persistence.Properties;
 
 namespace SlothOrganizer.Persistence.Repositories
 {
@@ -21,7 +16,7 @@ namespace SlothOrganizer.Persistence.Repositories
 
         public async Task Delete(long id)
         {
-            var command = "DELETE FROM Users WHERE Id=@Id";
+            var command = Resources.DeleteUser;
 
             using var connection = _dapperContext.CreateConnection();
             await connection.ExecuteAsync(command, new { id });
@@ -29,24 +24,24 @@ namespace SlothOrganizer.Persistence.Repositories
 
         public Task<IEnumerable<User>> GetAll()
         {
-            var query = "SELECT * FROM Users";
+            var query = Resources.SelectAllUsers;
 
             using var connection = _dapperContext.CreateConnection();
             return connection.QueryAsync<User>(query);
         }
 
-        public async Task<User?> GetByEmail(string email)
+        public async Task<User?> Get(string email)
         {
-            var query = "SELECT TOP(1) * FROM Users WHERE Email=@Email";
+            var query = Resources.GetUserByEmail;
 
             using var connection = _dapperContext.CreateConnection();
             var result = await connection.QuerySingleOrDefaultAsync<User?>(query, new { email });
             return result;
         }
 
-        public async Task<User?> GetById(long id)
+        public async Task<User?> Get(long id)
         {
-            var query = "SELECT TOP(1) * FROM Users WHERE Id=@Id";
+            var query = Resources.GetByUserId;
 
             using var connection = _dapperContext.CreateConnection();
             var result = await connection.QuerySingleOrDefaultAsync<User?>(query, new { id });
@@ -55,9 +50,7 @@ namespace SlothOrganizer.Persistence.Repositories
 
         public async Task<User> Insert(User user)
         {
-            var query = "INSERT INTO Users (FirstName, LastName, Email, Password, Salt, EmailVerified)" +
-                " VALUES (@FirstName, @LastName, @Email, @Password, @Salt, @EmailVerified)" +
-                " SELECT CAST(SCOPE_IDENTITY() as bigint)";
+            var query = Resources.InsertUser;
 
             var parameters = new
             {
@@ -77,8 +70,7 @@ namespace SlothOrganizer.Persistence.Repositories
 
         public async Task Update(User user)
         {
-            var command = "UPDATE Users SET FirstName=@FirstName, LastName=@LastName, Email=@Email," +
-                " Password=@Password, Salt=@Salt, EmailVerified=@EmailVerified WHERE Id=@Id";
+            var command = Resources.UpdateUser;
 
             var parameters = new
             {
@@ -93,6 +85,20 @@ namespace SlothOrganizer.Persistence.Repositories
 
             using var connection = _dapperContext.CreateConnection();
             await connection.ExecuteAsync(command, parameters);
+        }
+
+        public async Task<string?> VerifyEmail(long id, int code)
+        {
+            var command = Resources.VerifyEmailByCode;
+
+            var parameters = new
+            {
+                Id = id,
+                Code = code
+            };
+
+            using var connection = _dapperContext.CreateConnection();
+            return await connection.QuerySingleAsync<string?>(command, parameters);
         }
     }
 }

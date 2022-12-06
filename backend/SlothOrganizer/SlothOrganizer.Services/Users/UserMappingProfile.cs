@@ -4,9 +4,9 @@ using SlothOrganizer.Domain.Entities;
 
 namespace SlothOrganizer.Services.Users
 {
-    public class UserProfile : Profile
+    public class UserMappingProfile : Profile
     {
-        public UserProfile()
+        public UserMappingProfile()
         {
             CreateMap<NewUserDto, User>();
             CreateMap<User, UserDto>();

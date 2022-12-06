@@ -1,19 +1,19 @@
 /* eslint-disable no-undef */
+
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { of, throwError } from 'rxjs';
 
-import { AuthRoutingModule } from 'src/app/routes/auth-routing.module';
-import { AuthService } from 'src/app/api/auth.service';
+import { AuthRoutingModule } from '@routes/auth-routing.module';
+import { AuthService } from '@api/auth.service';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { By } from '@angular/platform-browser';
 import { CommonModule } from '@angular/common';
-import { MaterialModule } from 'src/app/shared/material/material.module';
+import { MaterialModule } from '@shared/material/material.module';
 import { Store } from '@ngrx/store';
-import { Token } from 'src/app/types/auth/token';
-import { User } from 'src/app/types/user/user';
+import { Token } from '#types/auth/token';
 import { VerifyEmailComponent } from './verify-email.component';
-import { addToken } from 'src/app/store/actions/login-page.actions';
+import { addToken } from '@store/actions/login-page.actions';
 
 describe('VerifyEmailComponent', () => {
     let component: VerifyEmailComponent;
