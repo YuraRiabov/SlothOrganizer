@@ -3,11 +3,11 @@ using Xunit;
 
 namespace SlothOrganizer.Services.Tests.Unit.Utility
 {
-    public class SecurityServiceTests
+    public class HashServiceTests
     {
         private readonly HashService _hashService;
 
-        public SecurityServiceTests()
+        public HashServiceTests()
         {
             _hashService = new HashService();
         }
