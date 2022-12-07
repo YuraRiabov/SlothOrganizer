@@ -35,9 +35,9 @@ namespace SlothOrganizer.Presentation.Controllers
 
         [AllowAnonymous]
         [HttpPost("signin")]
-        public async Task<ActionResult<UserAuthDto>> SignIn([FromBody] AuthorizationDto authorizationDto)
+        public async Task<ActionResult<UserAuthDto>> SignIn([FromBody] LoginDto loginDto)
         {
-            return Ok(await _authService.SignIn(authorizationDto));
+            return Ok(await _authService.SignIn(loginDto));
         }
 
         [AllowAnonymous]

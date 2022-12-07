@@ -45,9 +45,9 @@ namespace SlothOrganizer.Services.Auth
             throw new InvalidCredentialsException("Invalid refresh token");
         }
 
-        public async Task<UserAuthDto> SignIn(AuthorizationDto authorizationDto)
+        public async Task<UserAuthDto> SignIn(LoginDto login)
         {
-            var user = await _userService.Authorize(authorizationDto);
+            var user = await _userService.Authorize(login);
             if (!user.EmailVerified)
             {
                 return new UserAuthDto

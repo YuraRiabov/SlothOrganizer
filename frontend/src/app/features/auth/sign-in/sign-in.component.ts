@@ -48,16 +48,15 @@ export class SignInComponent extends BaseComponent implements OnInit {
                 return of(null);
             }),
             catchError(() => {
-                this.signInGroup.get('email')?.setErrors({ invalidLogin: true });
-                this.signInGroup.get('password')?.setErrors({ invalidLogin: true });
+                this.updateLoginErrors(true);
                 return of(null);
             })
         ).subscribe();
     }
 
-    public updateLoginErrors() {
-        this.signInGroup.get('email')?.setErrors({ invalidLogin: false });
-        this.signInGroup.get('password')?.setErrors({ invalidLogin: false });
+    public updateLoginErrors(invalidLogin: boolean) : void {
+        this.signInGroup.get('email')?.setErrors({ invalidLogin: invalidLogin });
+        this.signInGroup.get('password')?.setErrors({ invalidLogin: invalidLogin });
         this.signInGroup.get('email')?.updateValueAndValidity();
         this.signInGroup.get('password')?.updateValueAndValidity();
     }

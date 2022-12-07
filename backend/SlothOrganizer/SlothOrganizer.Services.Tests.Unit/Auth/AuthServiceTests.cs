@@ -135,16 +135,16 @@ namespace SlothOrganizer.Services.Tests.Unit.Auth
         [Fact]
         public async Task SignIn_WhenEmailVerified_ShouldReturnWithToken()
         {
-            AuthorizationDto auth = GetAuthDto();
+            LoginDto login = GetLoginDto();
             var token = GetTokenDto();
-            var user = GetUser(auth.Email, true);
+            var user = GetUser(login.Email, true);
             var accessToken = "access";
             var refreshToken = "refresh";
-            A.CallTo(() => _userService.Authorize(auth)).Returns(user);
+            A.CallTo(() => _userService.Authorize(login)).Returns(user);
             A.CallTo(() => _accessTokenService.Generate(user.Email)).Returns(accessToken);
             A.CallTo(() => _refreshTokenService.Generate(user.Email)).Returns(refreshToken);
 
-            var result = await _authService.SignIn(auth);
+            var result = await _authService.SignIn(login);
 
             Assert.NotNull(result.Token);
             Assert.Equal(user, result.User);
@@ -155,7 +155,7 @@ namespace SlothOrganizer.Services.Tests.Unit.Auth
         [Fact]
         public async Task SignIn_WhenEmailNotVerified_ShouldReturnWithoutToken()
         {
-            var auth = GetAuthDto();
+            var auth = GetLoginDto();
             var user = GetUser(auth.Email, false);
             A.CallTo(() => _userService.Authorize(auth)).Returns(user);
 
@@ -183,9 +183,9 @@ namespace SlothOrganizer.Services.Tests.Unit.Auth
             };
         }
 
-        private static AuthorizationDto GetAuthDto()
+        private static LoginDto GetLoginDto()
         {
-            return new AuthorizationDto
+            return new LoginDto
             {
                 Email = "test",
                 Password = "password"

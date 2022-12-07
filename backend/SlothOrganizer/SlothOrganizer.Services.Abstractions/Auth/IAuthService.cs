@@ -6,7 +6,7 @@ namespace SlothOrganizer.Services.Abstractions.Auth
     public interface IAuthService
     {
         Task<UserDto> SignUp(NewUserDto newUser);
-        Task<UserAuthDto> SignIn(AuthorizationDto authorizationDto);
+        Task<UserAuthDto> SignIn(LoginDto login);
 
         Task<TokenDto> VerifyEmail(VerificationCodeDto verificationCode);
 

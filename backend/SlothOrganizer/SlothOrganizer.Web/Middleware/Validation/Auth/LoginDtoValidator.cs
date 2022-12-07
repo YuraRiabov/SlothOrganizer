@@ -4,9 +4,9 @@ using SlothOrganizer.Contracts.DTO.Auth;
 
 namespace SlothOrganizer.Web.Middleware.Validation.Auth
 {
-    public class AuthorizationDtoValidator : AbstractValidator<AuthorizationDto>
+    public class LoginDtoValidator : AbstractValidator<LoginDto>
     {
-        public AuthorizationDtoValidator()
+        public LoginDtoValidator()
         {
             RuleFor(u => u.Email).EmailAddress();
             RuleFor(u => u.Password)

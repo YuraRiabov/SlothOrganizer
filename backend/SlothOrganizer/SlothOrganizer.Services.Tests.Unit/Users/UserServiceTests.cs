@@ -120,7 +120,7 @@ namespace SlothOrganizer.Services.Tests.Unit.Users
         {
             //Arrange
             var bytes = GetBytes();
-            var auth = new AuthorizationDto
+            var login = new LoginDto
             {
                 Email = "test@test.com",
                 Password = "test"
@@ -132,14 +132,14 @@ namespace SlothOrganizer.Services.Tests.Unit.Users
                 Password = "hashedTest"
             };
             A.CallTo(() => _userRepository.Get("test@test.com")).Returns(Task.FromResult<User?>(user));
-            A.CallTo(() => _hashService.VerifyPassword(auth.Password, A<byte[]>._, user.Password)).Returns(true);
+            A.CallTo(() => _hashService.VerifyPassword(login.Password, A<byte[]>._, user.Password)).Returns(true);
 
             //Act
-            var result = await _userService.Authorize(auth);
+            var result = await _userService.Authorize(login);
 
             //Assert
-            Assert.Equal(auth.Email, result.Email);
-            A.CallTo(() => _hashService.VerifyPassword(auth.Password, A<byte[]>._, user.Password)).MustHaveHappenedOnceExactly();
+            Assert.Equal(login.Email, result.Email);
+            A.CallTo(() => _hashService.VerifyPassword(login.Password, A<byte[]>._, user.Password)).MustHaveHappenedOnceExactly();
         }
 
         [Fact]
@@ -147,7 +147,7 @@ namespace SlothOrganizer.Services.Tests.Unit.Users
         {
             //Arrange
             var bytes = new byte[] { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 };
-            var auth = new AuthorizationDto
+            var auth = new LoginDto
             {
                 Email = "test@test.com",
                 Password = "test"

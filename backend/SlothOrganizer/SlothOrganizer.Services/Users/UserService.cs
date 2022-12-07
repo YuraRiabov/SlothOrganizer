@@ -58,10 +58,10 @@ namespace SlothOrganizer.Services.Users
             return await _userRepository.VerifyEmail(userId, code);
         }
 
-        public async Task<UserDto> Authorize(AuthorizationDto auth)
+        public async Task<UserDto> Authorize(LoginDto login)
         {
-            var user = await GetByEmailInternal(auth.Email);
-            if (_hashService.VerifyPassword(auth.Password, Convert.FromBase64String(user.Salt), user.Password))
+            var user = await GetByEmailInternal(login.Email);
+            if (_hashService.VerifyPassword(login.Password, Convert.FromBase64String(user.Salt), user.Password))
             {
                 return _mapper.Map<UserDto>(user);
             }

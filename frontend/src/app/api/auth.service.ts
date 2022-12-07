@@ -1,11 +1,11 @@
 import { AuthState } from '@store/states/auth-state';
 import { HttpService } from './http-internal.service';
 import { Injectable } from '@angular/core';
+import { Login } from '#types/auth/login';
 import { NewUser } from '#types/user/new-user';
 import { Observable } from 'rxjs';
 import { Token } from '#types/auth/token';
 import { User } from '#types/user/user';
-import { UserAuthorization } from '#types/auth/userAuthorization';
 import { VerificationCode } from '#types/auth/verification-code';
 
 @Injectable({
@@ -20,8 +20,8 @@ export class AuthService {
         return this.httpService.post<User>(`${this.baseUri}/signup`, user);
     }
 
-    public signIn(user: UserAuthorization) {
-        return this.httpService.post<AuthState>(`${this.baseUri}/signin`, user);
+    public signIn(login: Login): Observable<AuthState> {
+        return this.httpService.post<AuthState>(`${this.baseUri}/signin`, login);
     }
     public verifyEmail(verificationCode: VerificationCode) : Observable<Token> {
         return this.httpService.put<Token>(
@@ -34,7 +34,7 @@ export class AuthService {
         return this.httpService.post(`${this.baseUri}/resendCode/${userId}`);
     }
 
-    public refreshToken(token: Token) {
+    public refreshToken(token: Token) : Observable<Token> {
         return this.httpService.put<Token>(`${this.baseUri}/refreshToken`, token);
     }
 }
