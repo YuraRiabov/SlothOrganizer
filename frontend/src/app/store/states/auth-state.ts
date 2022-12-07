@@ -3,5 +3,5 @@ import { User } from '#types/user/user';
 
 export interface AuthState {
     user: User;
-    token: Token;
+    token?: Token;
 }

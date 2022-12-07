@@ -13,7 +13,7 @@ export const selectUser = createSelector(
 
 export const selectToken = createSelector(
     selectAuthState,
-    (state) => state.token
+    (state) => state.token ?? {} as Token
 );
 
 export const selectUserId = createSelector(

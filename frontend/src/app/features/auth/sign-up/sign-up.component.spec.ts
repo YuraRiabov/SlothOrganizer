@@ -20,7 +20,6 @@ describe('SignUpComponent', () => {
     let fixture: ComponentFixture<SignUpComponent>;
     let mockAuthService : jasmine.SpyObj<AuthService>;
     let mockStore : jasmine.SpyObj<Store>;
-    let mockActivatedRoute : jasmine.SpyObj<ActivatedRoute>;
     let mockRouter : jasmine.SpyObj<Router>;
     let button : HTMLElement;
 
@@ -35,7 +34,6 @@ describe('SignUpComponent', () => {
     beforeEach(async () => {
         mockAuthService = jasmine.createSpyObj('AuthService', ['signUp']);
         mockStore = jasmine.createSpyObj(['dispatch']);
-        mockActivatedRoute = jasmine.createSpyObj(['parent']);
         mockRouter = jasmine.createSpyObj(['navigate']);
 
         await TestBed.configureTestingModule({
@@ -51,7 +49,6 @@ describe('SignUpComponent', () => {
             providers: [
                 { provide: AuthService, useValue: mockAuthService },
                 { provide: Store, useValue: mockStore },
-                { provide: ActivatedRoute, useValue: mockActivatedRoute },
                 { provide: Router, useValue: mockRouter }
             ]
         }).compileComponents();
@@ -87,9 +84,7 @@ describe('SignUpComponent', () => {
 
         button.click();
 
-        expect(mockRouter.navigate).toHaveBeenCalledOnceWith(['verify-email'], {
-            relativeTo: mockActivatedRoute.parent
-        });
+        expect(mockRouter.navigate).toHaveBeenCalledOnceWith(['auth/verify-email']);
         expect(mockStore.dispatch).toHaveBeenCalled();
     });
 
@@ -159,5 +154,14 @@ describe('SignUpComponent', () => {
         expect(component.signUpGroup.get('firstName')?.hasError('minlength')).toBeTrue();
         expect(component.signUpGroup.get('lastName')?.hasError('maxlength')).toBeTrue();
         expect(component.signUpGroup.get('email')?.hasError('email')).toBeTrue();
+    });
+
+    it('should redirect to sign-up on link click', () => {
+        const link = fixture.debugElement.query(By.css('.sign-in-link')).nativeElement;
+
+        link.click();
+        fixture.detectChanges();
+
+        expect(mockRouter.navigate).toHaveBeenCalledOnceWith(['auth/sign-in']);
     });
 });
