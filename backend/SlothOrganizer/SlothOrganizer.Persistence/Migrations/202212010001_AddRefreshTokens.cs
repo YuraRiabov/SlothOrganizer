@@ -7,8 +7,8 @@ using FluentMigrator;
 
 namespace SlothOrganizer.Persistence.Migrations
 {
-    [Migration(20221201)]
-    public class AddRefreshTokens_20221201 : Migration
+    [Migration(202212010001)]
+    public class AddRefreshTokens_202212010001 : Migration
     {
         public override void Down()
         {

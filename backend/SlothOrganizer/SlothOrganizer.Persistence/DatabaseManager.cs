@@ -27,14 +27,13 @@ namespace SlothOrganizer.Persistence
 
         public void Drop(string name)
         {
-            var command = "DROP DATABASE @name";
             var query = "SELECT * FROM sys.databases WHERE name = @name";
             using (var connection = _context.CreateMasterConnection())
             {
                 var records = connection.Query(query, new { name });
                 if (records.Any())
                 {
-                    connection.Execute(command, new { name });
+                    connection.Execute($"ALTER DATABASE {name} SET SINGLE_USER WITH ROLLBACK IMMEDIATE DROP DATABASE {name}");
                 }
             }
         }

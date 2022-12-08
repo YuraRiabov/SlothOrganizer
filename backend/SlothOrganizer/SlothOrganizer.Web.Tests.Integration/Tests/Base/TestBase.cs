@@ -1,15 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Dapper;
-using System.Xml.Linq;
+﻿using System.Text;
 using FakeItEasy;
 using Microsoft.Extensions.Configuration;
+using Newtonsoft.Json;
 using SlothOrganizer.Persistence;
 using SlothOrganizer.Services.Abstractions.Email;
 using SlothOrganizer.Services.Abstractions.Utility;
+using SlothOrganizer.Services.Utility;
 using SlothOrganizer.Web.Tests.Integration.Setup;
 
 namespace SlothOrganizer.Web.Tests.Integration.Base
@@ -18,14 +14,20 @@ namespace SlothOrganizer.Web.Tests.Integration.Base
     {
         protected IEmailService EmailSerivce { get; }
         protected IRandomService RandomService { get; }
+        protected IRandomService RealRandomService { get; }
         protected IDateTimeService DateTimeService { get; }
         protected HttpClient Client { get; }
         protected DapperContext Context { get; }
         public TestBase()
         {
             EmailSerivce = A.Fake<IEmailService>();
-            RandomService = A.Fake<IRandomService>();
+            A.CallTo(() => EmailSerivce.SendEmail(A<string>._, A<string>._, A<string>._)).Returns(Task.FromResult(1));
             DateTimeService = A.Fake<IDateTimeService>();
+            A.CallTo(() => DateTimeService.Now()).Returns(new DateTime(2022, 12, 8, 12, 0, 0));
+            RandomService = A.Fake<IRandomService>();
+            RealRandomService = new RandomService();
+            A.CallTo(() => RandomService.GetRandomBytes(16)).Returns(RealRandomService.GetRandomBytes(16));
+            A.CallTo(() => RandomService.GetRandomNumber(6)).Returns(RealRandomService.GetRandomNumber(6));
             var factory = new CustomWebApplicationFactory<Startup>(EmailSerivce, RandomService, DateTimeService);
             Client = factory.CreateClient();
 
@@ -40,6 +42,17 @@ namespace SlothOrganizer.Web.Tests.Integration.Base
         {
             var dbManager = new DatabaseManager(Context);
             dbManager.Drop("SlothOrganizerDBTest");
+        }
+
+        protected StringContent GetStringContent<T>(T payload)
+        {
+            return new StringContent(JsonConvert.SerializeObject(payload), Encoding.UTF8, "application/json");
+        }
+
+        protected async Task<T> GetResponse<T>(HttpResponseMessage response)
+        {
+            var contentString = await response.Content.ReadAsStringAsync();
+            return JsonConvert.DeserializeObject<T>(contentString);
         }
     }
 }
