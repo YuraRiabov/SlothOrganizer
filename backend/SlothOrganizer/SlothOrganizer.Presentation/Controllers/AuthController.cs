@@ -35,9 +35,9 @@ namespace SlothOrganizer.Presentation.Controllers
 
         [AllowAnonymous]
         [HttpPost("signin")]
-        public async Task<ActionResult<UserAuthDto>> SignIn([FromBody] LoginDto loginDto)
+        public async Task<UserAuthDto> SignIn([FromBody] LoginDto loginDto)
         {
-            return Ok(await _authService.SignIn(loginDto));
+            return await _authService.SignIn(loginDto);
         }
 
         [AllowAnonymous]
@@ -49,9 +49,9 @@ namespace SlothOrganizer.Presentation.Controllers
 
         [AllowAnonymous]
         [HttpPut("refreshToken")]
-        public async Task<ActionResult<TokenDto>> RefreshToken([FromBody] TokenDto token)
+        public async Task<TokenDto> RefreshToken([FromBody] TokenDto token)
         {
-            return Ok(await _authService.RefreshToken(token));
+            return await _authService.RefreshToken(token);
         }
     }
 }
