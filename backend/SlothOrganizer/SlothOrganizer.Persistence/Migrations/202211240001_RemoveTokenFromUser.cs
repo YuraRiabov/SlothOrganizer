@@ -2,8 +2,8 @@
 
 namespace SlothOrganizer.Persistence.Migrations
 {
-    [Migration(20221124)]
-    public class RemoveTokenFromUser_20221124 : Migration
+    [Migration(202211240001)]
+    public class RemoveTokenFromUser_202211240001 : Migration
     {
         public override void Down()
         {
