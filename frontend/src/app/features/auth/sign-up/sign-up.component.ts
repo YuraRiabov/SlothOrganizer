@@ -41,7 +41,7 @@ export class SignUpComponent extends BaseComponent {
             this.untilThis,
             map((user) => {
                 this.store.dispatch(addUser({ user }));
-                this.redirectTo('auth/verify-email');
+                this.redirectTo('auth/verify-email/false');
                 return of(null);
             }),
             catchError((resp) => {

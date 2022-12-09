@@ -2,7 +2,6 @@
 
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { addToken, login } from '@store/actions/login-page.actions';
 import { of, throwError } from 'rxjs';
 
 import { AuthRoutingModule } from '@routes/auth-routing.module';
@@ -13,8 +12,8 @@ import { By } from '@angular/platform-browser';
 import { CommonModule } from '@angular/common';
 import { MaterialModule } from '@shared/material/material.module';
 import { Store } from '@ngrx/store';
-import { Token } from '#types/auth/token';
 import { VerifyEmailComponent } from './verify-email.component';
+import { login } from '@store/actions/login-page.actions';
 
 describe('VerifyEmailComponent', () => {
     let component: VerifyEmailComponent;

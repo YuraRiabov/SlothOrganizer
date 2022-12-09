@@ -8,9 +8,11 @@ import { NgModule } from '@angular/core';
 import { SignInComponent } from './sign-in/sign-in.component';
 import { SignUpComponent } from './sign-up/sign-up.component';
 import { VerifyEmailComponent } from './verify-email/verify-email.component';
+import { EnterEmailComponent } from './enter-email/enter-email.component';
+import { ResetPasswordComponent } from './reset-password/reset-password.component';
 
 @NgModule({
-    declarations: [AuthPageComponent, SignInComponent, SignUpComponent, VerifyEmailComponent],
+    declarations: [AuthPageComponent, SignInComponent, SignUpComponent, VerifyEmailComponent, EnterEmailComponent, ResetPasswordComponent],
     imports: [
         CommonModule,
         AuthRoutingModule,

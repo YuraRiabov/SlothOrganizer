@@ -1,0 +1,12 @@
+<form class="enter-email-wrapper">
+    <h1 i18n>Enter your email</h1>
+    <mat-form-field class="email-field">
+        <input [formControl]="emailControl" matInput type="text">
+        <mat-error *ngIf="emailControl.hasError('email')" i18n>
+            Invalid email address
+        </mat-error>
+    </mat-form-field>
+    <button i18n mat-flat-button color="primary" class="submit-button" (click)="submitClick()" [disabled]="!emailControl.valid">
+        Submit
+    </button>
+</form>
