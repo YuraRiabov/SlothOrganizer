@@ -59,6 +59,14 @@ namespace SlothOrganizer.Services.Users
             return _mapper.Map<UserDto>(user);
         }
 
+        public async Task ResetPassword(ResetPasswordDto resetPasswordDto)
+        {
+            var user = await GetByEmailInternal(resetPasswordDto.Email);
+            var hash = _hashService.HashPassword(resetPasswordDto.Password, Convert.FromBase64String(user.Salt));
+            user.Password = hash;
+            await _userRepository.Update(user);
+        }
+
         public async Task<UserDto> Authorize(LoginDto login)
         {
             var user = await GetByEmailInternal(login.Email);
