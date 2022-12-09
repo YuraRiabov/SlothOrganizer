@@ -2,10 +2,12 @@
 
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { addToken, login } from '@store/actions/login-page.actions';
 import { of, throwError } from 'rxjs';
 
 import { AuthRoutingModule } from '@routes/auth-routing.module';
 import { AuthService } from '@api/auth.service';
+import { AuthState } from '@store/states/auth-state';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { By } from '@angular/platform-browser';
 import { CommonModule } from '@angular/common';
@@ -13,7 +15,6 @@ import { MaterialModule } from '@shared/material/material.module';
 import { Store } from '@ngrx/store';
 import { Token } from '#types/auth/token';
 import { VerifyEmailComponent } from './verify-email.component';
-import { addToken } from '@store/actions/login-page.actions';
 
 describe('VerifyEmailComponent', () => {
     let component: VerifyEmailComponent;
@@ -70,17 +71,25 @@ describe('VerifyEmailComponent', () => {
         component.codeControl.setValue(111111);
         fixture.detectChanges();
 
-        const token : Token = {
-            accessToken: 'test',
-            refreshToken: 'test'
+        const auth: AuthState = {
+            token: {
+                accessToken: 'test',
+                refreshToken: 'test'
+            },
+            user: {
+                email: 'test@test.com',
+                firstName: 'test',
+                lastName: 'test',
+                id: 1
+            }
         };
-        mockAuthService.verifyEmail.and.returnValue(of(token));
+        mockAuthService.verifyEmail.and.returnValue(of(auth));
 
         button.click();
 
         expect(mockStore.select).toHaveBeenCalledTimes(1);
         expect(mockAuthService.verifyEmail).toHaveBeenCalledTimes(1);
-        expect(mockStore.dispatch).toHaveBeenCalledOnceWith(addToken({token}));
+        expect(mockStore.dispatch).toHaveBeenCalledOnceWith(login({ authState: auth }));
     });
 
     it('should set error when invalid code', () => {

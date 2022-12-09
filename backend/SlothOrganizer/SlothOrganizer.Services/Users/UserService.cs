@@ -53,9 +53,10 @@ namespace SlothOrganizer.Services.Users
             return _mapper.Map<UserDto>(user);
         }
 
-        public async Task<string?> VerifyEmail(long userId, int code)
+        public async Task<UserDto?> VerifyEmail(string email, int code)
         {
-            return await _userRepository.VerifyEmail(userId, code);
+            var user = await _userRepository.VerifyEmail(email, code);
+            return _mapper.Map<UserDto>(user);
         }
 
         public async Task<UserDto> Authorize(LoginDto login)

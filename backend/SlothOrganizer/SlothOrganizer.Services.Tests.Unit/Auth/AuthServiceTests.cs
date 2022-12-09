@@ -39,20 +39,21 @@ namespace SlothOrganizer.Services.Tests.Unit.Auth
         public async Task VerifyEmail_WhenValid_ShouldVerify()
         {
             var dto = GetVerificationCodeDto();
-            A.CallTo(() => _userService.VerifyEmail(1, 111111)).Returns("test");
-            A.CallTo(() => _accessTokenService.Generate("test")).Returns("test");
+            var user = GetUser(dto.Email, true);
+            A.CallTo(() => _userService.VerifyEmail(dto.Email, 111111)).Returns(user);
+            A.CallTo(() => _accessTokenService.Generate(dto.Email)).Returns("test");
 
             var result = await _authService.VerifyEmail(dto);
 
-            Assert.Equal("test", result.AccessToken);
-            A.CallTo(() => _userService.VerifyEmail(1, 111111)).MustHaveHappenedOnceExactly();
+            Assert.Equal("test", result.Token.AccessToken);
+            A.CallTo(() => _userService.VerifyEmail(dto.Email, 111111)).MustHaveHappenedOnceExactly();
         }
 
         [Fact]
         public async Task VerifyEmail_WhenInvalid_ShouldThrow()
         {
             var dto = GetVerificationCodeDto();
-            A.CallTo(() => _userService.VerifyEmail(1, 111111)).Returns(Task.FromResult<string?>(null));
+            A.CallTo(() => _userService.VerifyEmail(dto.Email, 111111)).Returns(Task.FromResult<UserDto?>(null));
 
             var code = async () => await _authService.VerifyEmail(dto);
 
@@ -91,12 +92,12 @@ namespace SlothOrganizer.Services.Tests.Unit.Auth
                 LastName = "user",
                 Email = "test@test.com"
             };
-            A.CallTo(() => _userService.Get(userId)).Returns(user);
+            A.CallTo(() => _userService.Get(user.Email)).Returns(user);
             A.CallTo(() => _verificationCodeService.Generate(userId)).Returns(111111);
 
-            await _authService.ResendVerificationCode(userId);
+            await _authService.ResendVerificationCode(user.Email);
 
-            A.CallTo(() => _userService.Get(userId)).MustHaveHappenedOnceExactly();
+            A.CallTo(() => _userService.Get(user.Email)).MustHaveHappenedOnceExactly();
             A.CallTo(() => _emailService.SendEmail("test@test.com", "Verify your email", "Your verification code is 111111"))
                 .MustHaveHappenedOnceExactly();
         }
@@ -168,7 +169,7 @@ namespace SlothOrganizer.Services.Tests.Unit.Auth
         {
             return new VerificationCodeDto
             {
-                UserId = 1,
+                Email = "test@test.com",
                 VerificationCode = 111111
             };
         }

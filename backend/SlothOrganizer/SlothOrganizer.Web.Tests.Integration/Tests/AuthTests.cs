@@ -70,7 +70,7 @@ namespace SlothOrganizer.Web.Tests.Integration.Tests
             var signUpResponse = await Client.PostAsync($"{ControllerRoute}/signup", GetStringContent(newUser));
             var user = await GetResponse<UserDto>(signUpResponse);
 
-            var verificationCode = GetVerificationCode(user.Id);
+            var verificationCode = GetVerificationCode(user.Email);
 
             var verificationResponse = await Client.PutAsync($"{ControllerRoute}/verifyEmail", GetStringContent(verificationCode));
             var result = await GetResponse<TokenDto>(verificationResponse);
@@ -91,7 +91,7 @@ namespace SlothOrganizer.Web.Tests.Integration.Tests
             var signUpResponse = await Client.PostAsync($"{ControllerRoute}/signup", GetStringContent(newUser));
             var user = await GetResponse<UserDto>(signUpResponse);
 
-            var verificationCode = GetVerificationCode(user.Id);
+            var verificationCode = GetVerificationCode(user.Email);
 
             var verificationResponse = await Client.PutAsync($"{ControllerRoute}/verifyEmail", GetStringContent(verificationCode));
 
@@ -101,7 +101,7 @@ namespace SlothOrganizer.Web.Tests.Integration.Tests
         [Fact]
         public async Task VerifyEmail_NoMatching_Forbidden()
         {
-            VerificationCodeDto verificationCode = GetVerificationCode(1);
+            VerificationCodeDto verificationCode = GetVerificationCode("test@test.com");
 
             var verificationResponse = await Client.PutAsync($"{ControllerRoute}/verifyEmail", GetStringContent(verificationCode));
 
@@ -113,7 +113,7 @@ namespace SlothOrganizer.Web.Tests.Integration.Tests
         {
             var user = await SetupUser();
 
-            var response = await Client.PostAsync($"{ControllerRoute}/resendCode/{user.Id}", null);
+            var response = await Client.PostAsync($"{ControllerRoute}/resendCode/{user.Email}", null);
 
             Assert.Equal(HttpStatusCode.OK, response.StatusCode);
             var codes = await new VerificationCodeRepository(Context).Get(user.Id);
@@ -131,17 +131,17 @@ namespace SlothOrganizer.Web.Tests.Integration.Tests
         [Fact]
         public async Task SignIn_WhenValidDataAndVerified_ShouldReturnWithToken()
         {
-            await SetupVerifiedUser();
+            var userAuth = await SetupVerifiedUser();
 
             var loginDto = GetLogin();
 
             var response = await Client.PostAsync($"{ControllerRoute}/signIn", GetStringContent(loginDto));
-            var userAuth = await GetResponse<UserAuthDto>(response);
+            var result = await GetResponse<UserAuthDto>(response);
 
             Assert.Equal(HttpStatusCode.OK, response.StatusCode);
-            Assert.NotNull(userAuth.Token);
-            Assert.Equal(GetNewUser().Email, userAuth.User.Email);
-            var tokens = await new RefreshTokenRepository(Context).Get(GetNewUser().Email);
+            Assert.NotNull(result.Token);
+            Assert.Equal(userAuth.User.Email, result.User.Email);
+            var tokens = await new RefreshTokenRepository(Context).Get(result.User.Email);
             Assert.Equal(2, tokens.Count());
         }
 
@@ -199,9 +199,9 @@ namespace SlothOrganizer.Web.Tests.Integration.Tests
         [Fact]
         public async Task RefreshToken_WhenValid_ShouldRefresh()
         {
-            var token = await SetupVerifiedUser();
+            var userAuth = await SetupVerifiedUser();
 
-            var response = await Client.PutAsync($"{ControllerRoute}/refreshToken", GetStringContent(token));
+            var response = await Client.PutAsync($"{ControllerRoute}/refreshToken", GetStringContent(userAuth.Token));
 
             Assert.Equal(HttpStatusCode.OK, response.StatusCode);
             var tokens = await new RefreshTokenRepository(Context).Get(GetNewUser().Email);
@@ -218,7 +218,7 @@ namespace SlothOrganizer.Web.Tests.Integration.Tests
             var signUpResponse = await Client.PostAsync($"{ControllerRoute}/signup", GetStringContent(newUser));
             var user = await GetResponse<UserDto>(signUpResponse);
 
-            var verificationCode = GetVerificationCode(user.Id);
+            var verificationCode = GetVerificationCode(user.Email);
 
             var verificationResponse = await Client.PutAsync($"{ControllerRoute}/verifyEmail", GetStringContent(verificationCode));
             var token = new { accessToken = "access", refreshToken = "refresh" };
@@ -228,12 +228,12 @@ namespace SlothOrganizer.Web.Tests.Integration.Tests
             Assert.Equal(HttpStatusCode.Forbidden, response.StatusCode);
         }
 
-        private async Task<TokenDto> SetupVerifiedUser()
+        private async Task<UserAuthDto> SetupVerifiedUser()
         {
             var user = await SetupUser();
-            var verificationCode = GetVerificationCode(user.Id);
+            var verificationCode = GetVerificationCode(user.Email);
             var verificationResponse = await Client.PutAsync($"{ControllerRoute}/verifyEmail", GetStringContent(verificationCode));
-            return await GetResponse<TokenDto>(verificationResponse);
+            return await GetResponse<UserAuthDto>(verificationResponse);
         }
 
         private async Task<UserDto> SetupUser()
@@ -254,12 +254,12 @@ namespace SlothOrganizer.Web.Tests.Integration.Tests
             };
         }
 
-        private static VerificationCodeDto GetVerificationCode(long userId)
+        private static VerificationCodeDto GetVerificationCode(string email)
         {
             return new VerificationCodeDto
             {
                 VerificationCode = 111111,
-                UserId = userId
+                Email = email
             };
         }
 

@@ -87,18 +87,18 @@ namespace SlothOrganizer.Persistence.Repositories
             await connection.ExecuteAsync(command, parameters);
         }
 
-        public async Task<string?> VerifyEmail(long id, int code)
+        public async Task<User?> VerifyEmail(string email, int code)
         {
             var command = Resources.VerifyEmailByCode;
 
             var parameters = new
             {
-                Id = id,
+                Email = email,
                 Code = code
             };
 
             using var connection = _dapperContext.CreateConnection();
-            return await connection.QuerySingleAsync<string?>(command, parameters);
+            return await connection.QuerySingleOrDefaultAsync<User?>(command, parameters);
         }
     }
 }

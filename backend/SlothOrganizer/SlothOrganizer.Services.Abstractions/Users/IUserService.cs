@@ -9,7 +9,7 @@ namespace SlothOrganizer.Services.Abstractions.Users
         Task<UserDto> Authorize(LoginDto login);
 
         Task<UserDto> Get(long id);
-        Task<string?> VerifyEmail(long userId, int code);
+        Task<UserDto?> VerifyEmail(string email, int code);
         Task<UserDto> Get(string email);
     }
 }

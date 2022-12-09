@@ -8,9 +8,9 @@ namespace SlothOrganizer.Services.Abstractions.Auth
         Task<UserDto> SignUp(NewUserDto newUser);
         Task<UserAuthDto> SignIn(LoginDto login);
 
-        Task<TokenDto> VerifyEmail(VerificationCodeDto verificationCode);
+        Task<UserAuthDto> VerifyEmail(VerificationCodeDto verificationCode);
 
-        Task ResendVerificationCode(long userId);
+        Task ResendVerificationCode(string email);
 
         Task<TokenDto> RefreshToken(TokenDto expiredToken);
     }

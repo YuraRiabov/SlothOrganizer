@@ -1,4 +1,4 @@
 export interface VerificationCode {
-  userId: number;
+  email: string;
   verificationCode: number;
 }

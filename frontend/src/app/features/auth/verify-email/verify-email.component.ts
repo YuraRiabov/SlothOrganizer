@@ -1,13 +1,13 @@
 import { FormControl, Validators } from '@angular/forms';
 import { Observable, catchError, concatMap, map, of } from 'rxjs';
+import { addToken, login } from '@store/actions/login-page.actions';
 
 import { AuthService } from '@api/auth.service';
 import { BaseComponent } from '@shared/components/base/base.component';
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { addToken } from '@store/actions/login-page.actions';
-import { selectUserId } from '@store/selectors/auth-page.selectors';
+import { selectUserEmail } from '@store/selectors/auth-page.selectors';
 
 @Component({
     selector: 'app-verify-email',
@@ -15,7 +15,7 @@ import { selectUserId } from '@store/selectors/auth-page.selectors';
     styleUrls: ['./verify-email.component.sass']
 })
 export class VerifyEmailComponent extends BaseComponent {
-    private userId$: Observable<number>;
+    private email$: Observable<string>;
 
     public codeControl: FormControl = new FormControl('', [
         Validators.required,
@@ -24,7 +24,7 @@ export class VerifyEmailComponent extends BaseComponent {
 
     constructor(private authService: AuthService, private store: Store, private router: Router) {
         super();
-        this.userId$ = store.select(selectUserId);
+        this.email$ = store.select(selectUserEmail);
     }
 
     public redirectTo(route: string) : void {
@@ -32,16 +32,17 @@ export class VerifyEmailComponent extends BaseComponent {
     }
 
     public submit() {
-        this.userId$.pipe(
+        this.email$.pipe(
             this.untilThis,
-            concatMap((id) =>
+            concatMap((email) =>
                 this.authService.verifyEmail({
-                    userId: id,
+                    email,
                     verificationCode: this.codeControl.value
                 })
             ),
-            map((token) => {
-                this.store.dispatch(addToken({ token }));
+            map((auth) => {
+                this.store.dispatch(login({authState: auth}));
+                this.redirectTo('');
                 return of(null);
             }),
             catchError(() => {
@@ -52,10 +53,10 @@ export class VerifyEmailComponent extends BaseComponent {
     }
 
     public resendCode() {
-        this.userId$
+        this.email$
             .pipe(
                 this.untilThis,
-                concatMap((id) => this.authService.resendCode(id))
+                concatMap((email) => this.authService.resendCode(email))
             ).subscribe();
     }
 }

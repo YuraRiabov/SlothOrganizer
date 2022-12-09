@@ -79,7 +79,12 @@ namespace SlothOrganizer.Persistence.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to SELECT * FROM RefreshTokens WHERE UserId=@UserId.
+        ///   Looks up a localized string similar to SELECT * FROM RefreshTokens 
+        ///WHERE EXISTS(
+        ///	SELECT * FROM Users
+        ///	WHERE Users.Id=RefreshTokens.UserId
+        ///	AND Users.Email=@UserEmail
+        ///).
         /// </summary>
         internal static string GetRefreshTokenByUserId {
             get {
@@ -107,8 +112,11 @@ namespace SlothOrganizer.Persistence.Properties {
         
         /// <summary>
         ///   Looks up a localized string similar to INSERT INTO RefreshTokens(UserId, Token, ExpirationTime)
-        ///VALUES (@UserId, @Token, @ExpirationTime)
-        ///SELECT CAST(SCOPE_IDENTITY() as bigint).
+        ///VALUES (
+        ///	(SELECT TOP(1) Id FROM Users WHERE Email=@UserEmail),
+        ///	@Token,
+        ///	@ExpirationTime
+        ///).
         /// </summary>
         internal static string InsertRefreshToken {
             get {
@@ -165,15 +173,13 @@ namespace SlothOrganizer.Persistence.Properties {
         /// <summary>
         ///   Looks up a localized string similar to UPDATE Users 
         ///SET EmailVerified=1
-        ///WHERE Id=@Id AND EXISTS 
+        ///WHERE Email=@Email AND EXISTS 
         ///	(SELECT * FROM VerificationCodes AS vc WHERE 
         ///		vc.UserId=Users.Id AND
         ///		vc.Code=@Code AND
         ///		vc.ExpirationTime&gt;GETDATE())
         ///IF @@ROWCOUNT &gt; 0
-        ///	SELECT TOP(1) Email FROM Users WHERE Id=@Id
-        ///ELSE
-        ///	SELECT NULL.
+        ///	SELECT TOP(1) * FROM Users WHERE Email=@Email.
         /// </summary>
         internal static string VerifyEmailByCode {
             get {

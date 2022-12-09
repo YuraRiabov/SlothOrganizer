@@ -28,7 +28,7 @@ namespace SlothOrganizer.Presentation.Controllers
 
         [AllowAnonymous]
         [HttpPut("verifyEmail")]
-        public async Task<TokenDto> VerifyEmail([FromBody] VerificationCodeDto verificationCode)
+        public async Task<UserAuthDto> VerifyEmail([FromBody] VerificationCodeDto verificationCode)
         {
             return await _authService.VerifyEmail(verificationCode);
         }
@@ -41,10 +41,10 @@ namespace SlothOrganizer.Presentation.Controllers
         }
 
         [AllowAnonymous]
-        [HttpPost("resendCode/{userId}")]
-        public async Task ResendVerificationCode(long userId)
+        [HttpPost("resendCode/{email}")]
+        public async Task ResendVerificationCode(string email)
         {
-            await _authService.ResendVerificationCode(userId);
+            await _authService.ResendVerificationCode(email);
         }
 
         [AllowAnonymous]

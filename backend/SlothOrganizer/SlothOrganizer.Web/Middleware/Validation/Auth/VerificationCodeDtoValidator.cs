@@ -11,9 +11,9 @@ namespace SlothOrganizer.Web.Middleware.Validation.Auth
                 .NotEmpty()
                 .GreaterThan(99_999)
                 .LessThan(1_000_000);
-            RuleFor(x => x.UserId)
+            RuleFor(x => x.Email)
                 .NotEmpty()
-                .GreaterThan(0);
+                .EmailAddress();
         }
     }
 }

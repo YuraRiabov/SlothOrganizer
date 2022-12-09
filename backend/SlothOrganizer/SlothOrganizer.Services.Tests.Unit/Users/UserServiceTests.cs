@@ -94,23 +94,23 @@ namespace SlothOrganizer.Services.Tests.Unit.Users
         [Fact]
         public async Task VerifyEmail_WhenExists_ShouldUpdate()
         {
-            var id = 1;
             var code = 111111;
-            A.CallTo(() => _userRepository.VerifyEmail(id, code)).Returns("test");
+            var user = GetUser();
+            A.CallTo(() => _userRepository.VerifyEmail(user.Email, code)).Returns(user);
 
-            var result = await _userService.VerifyEmail(id, code);
+            var result = await _userService.VerifyEmail(user.Email, code);
 
             Assert.NotNull(result);
-            Assert.Equal("test", result);
-            A.CallTo(() => _userRepository.VerifyEmail(id, code)).MustHaveHappenedOnceExactly();
+            Assert.Equal(user.Email, result.Email);
+            A.CallTo(() => _userRepository.VerifyEmail(user.Email, code)).MustHaveHappenedOnceExactly();
         }
 
         [Fact]
         public async Task VerifyEmail_WhenAbsent_ShouldReturnNull()
         {
-            A.CallTo(() => _userRepository.VerifyEmail(1, 111111)).Returns(Task.FromResult<string?>(null));
+            A.CallTo(() => _userRepository.VerifyEmail(A<string>._, 111111)).Returns(Task.FromResult<User?>(null));
 
-            var result = await _userService.VerifyEmail(1, 111111);
+            var result = await _userService.VerifyEmail("email", 111111);
 
             Assert.Null(result);
         }

@@ -29,9 +29,9 @@ namespace SlothOrganizer.Services.Auth
             _refreshTokenService = refreshTokenService;
         }
 
-        public async Task ResendVerificationCode(long userId)
+        public async Task ResendVerificationCode(string email)
         {
-            var user = await _userService.Get(userId);
+            var user = await _userService.Get(email);
             await SendVerificationCode(user);
         }
 
@@ -70,12 +70,16 @@ namespace SlothOrganizer.Services.Auth
             return user;
         }
 
-        public async Task<TokenDto> VerifyEmail(VerificationCodeDto verificationCode)
+        public async Task<UserAuthDto> VerifyEmail(VerificationCodeDto verificationCode)
         {
-            var email = await _userService.VerifyEmail(verificationCode.UserId, verificationCode.VerificationCode);
-            if (email is not null)
+            var user = await _userService.VerifyEmail(verificationCode.Email, verificationCode.VerificationCode);
+            if (user is not null)
             {
-                return await GenerateToken(email);
+                return new UserAuthDto
+                {
+                    User = user,
+                    Token = await GenerateToken(user.Email)
+                };
             }
             throw new InvalidCredentialsException("Invalid verification code");
         }

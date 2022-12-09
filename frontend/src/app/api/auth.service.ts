@@ -23,15 +23,15 @@ export class AuthService {
     public signIn(login: Login): Observable<AuthState> {
         return this.httpService.post<AuthState>(`${this.baseUri}/signin`, login);
     }
-    public verifyEmail(verificationCode: VerificationCode) : Observable<Token> {
-        return this.httpService.put<Token>(
+    public verifyEmail(verificationCode: VerificationCode) : Observable<AuthState> {
+        return this.httpService.put<AuthState>(
             `${this.baseUri}/verifyEmail`,
             verificationCode
         );
     }
 
-    public resendCode(userId: number) : Observable<null> {
-        return this.httpService.post(`${this.baseUri}/resendCode/${userId}`);
+    public resendCode(email: string) : Observable<null> {
+        return this.httpService.post(`${this.baseUri}/resendCode/${email}`);
     }
 
     public refreshToken(token: Token) : Observable<Token> {
