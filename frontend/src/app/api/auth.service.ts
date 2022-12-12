@@ -1,5 +1,5 @@
 import { AuthState } from '@store/states/auth-state';
-import { HttpService } from './http-internal.service';
+import { HttpService } from './http.service';
 import { Injectable } from '@angular/core';
 import { Login } from '#types/auth/login';
 import { NewUser } from '#types/user/new-user';
