@@ -5,7 +5,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { addUser, login } from '@store/actions/login-page.actions';
 import { of, throwError } from 'rxjs';
 
-import { AuthRoutingModule } from '@routes/auth-routing.module';
+import { AuthRoutingModule } from '../auth-routing.module';
 import { AuthService } from '@api/auth.service';
 import { AuthState } from '@store/states/auth-state';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';

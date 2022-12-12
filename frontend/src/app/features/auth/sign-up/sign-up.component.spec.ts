@@ -1,16 +1,16 @@
 /* eslint-disable no-undef */
 
-import { ActivatedRoute, Router } from '@angular/router';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { of, throwError } from 'rxjs';
 
-import { AuthRoutingModule } from '@routes/auth-routing.module';
+import { AuthRoutingModule } from '../auth-routing.module';
 import { AuthService } from '@api/auth.service';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { By } from '@angular/platform-browser';
 import { CommonModule } from '@angular/common';
 import { MaterialModule } from '@shared/material/material.module';
+import { Router } from '@angular/router';
 import { SignUpComponent } from './sign-up.component';
 import { Store } from '@ngrx/store';
 import { User } from '#types/user/user';

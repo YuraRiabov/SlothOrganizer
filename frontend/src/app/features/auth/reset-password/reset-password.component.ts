@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { Observable, concatMap, map } from 'rxjs';
+import { Observable, concatMap } from 'rxjs';
 import { getPasswordValidators, passwordMatchingValidator } from '@utils/validators/user-validators.helper';
 
 import { BaseComponent } from '@shared/components/base/base.component';
@@ -30,17 +30,16 @@ export class ResetPasswordComponent extends BaseComponent implements OnInit {
 
     public submitClick() : void {
         this.userEmail$.pipe(
-            this.untilThis,
+            this.untilDestroyed,
             concatMap((email) => {
                 return this.userService.resetPassword({
                     password: this.resetPassowordGroup.get('password')?.value,
                     email
                 });
             }),
-            map(() => {
-                this.router.navigate(['']);
-            })
-        ).subscribe();
+        ).subscribe(() => {
+            this.router.navigate(['']);
+        });
     }
 
     private buildResetPasswordGroup() : FormGroup {

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { catchError, map, of } from 'rxjs';
+import { catchError, filter, map, of } from 'rxjs';
 
 import { AuthService } from '@api/auth.service';
 import { BaseComponent } from '@shared/components/base/base.component';
@@ -27,18 +27,20 @@ export class EnterEmailComponent extends BaseComponent implements OnInit {
 
     public submitClick(): void {
         this.authService.resendCode(this.emailControl.value).pipe(
-            this.untilThis,
-            map(() => {
-                this.store.dispatch(addEmail({email: this.emailControl.value}));
-                this.redirectTo('auth/verify-email/true');
-            }),
+            this.untilDestroyed,
             catchError((resp) => {
                 if (resp.status === 404) {
                     this.emailControl.setErrors({ email: true });
                 }
                 return of(null);
             })
-        ).subscribe();
+        ).subscribe(() => {
+            if (!this.emailControl.valid) {
+                return;
+            }
+            this.store.dispatch(addEmail({email: this.emailControl.value}));
+            this.redirectTo('auth/verify-email/true');
+        });
     }
 
     private redirectTo(path: string): void {

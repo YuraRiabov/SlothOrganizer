@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { addUser, login } from '@store/actions/login-page.actions';
-import { catchError, map, of } from 'rxjs';
+import { catchError, filter, map, of } from 'rxjs';
 import { getEmailValidators, getPasswordValidators } from '@utils/validators/user-validators.helper';
 
 import { AuthService } from '@api/auth.service';
+import { AuthState } from '@store/states/auth-state';
 import { BaseComponent } from '@shared/components/base/base.component';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
@@ -36,23 +37,23 @@ export class SignInComponent extends BaseComponent implements OnInit {
             email: this.signInGroup.get('email')?.value,
             password: this.signInGroup.get('password')?.value
         }).pipe(
-            this.untilThis,
-            map((auth) => {
-                if (auth.token == null) {
-                    this.store.dispatch(addUser({ user: auth.user }));
-                    this.redirectTo('auth/verify-email');
-                    return of(null);
-                }
-                this.store.dispatch(login({ authState: auth }));
-                this.redirectTo('');
-                return of(null);
-            }),
+            this.untilDestroyed,
             catchError(() => {
                 this.signInGroup.get('email')?.setErrors({ invalidLogin: true });
                 this.signInGroup.get('password')?.setErrors({ invalidLogin: true });
                 return of(null);
-            })
-        ).subscribe();
+            }),
+            filter(auth => auth != null),
+            map(auth => auth as AuthState)
+        ).subscribe((auth) => {
+            if (auth.token == null) {
+                this.store.dispatch(addUser({ user: auth.user }));
+                this.redirectTo('auth/verify-email');
+                return;
+            }
+            this.store.dispatch(login({ authState: auth }));
+            this.redirectTo('');
+        });
     }
 
     public updateLoginErrors() : void {

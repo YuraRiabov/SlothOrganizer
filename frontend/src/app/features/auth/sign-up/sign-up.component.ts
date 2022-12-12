@@ -1,12 +1,13 @@
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { catchError, map, of } from 'rxjs';
+import { catchError, filter, map, of } from 'rxjs';
 import { getEmailValidators, getNameValidators, getPasswordValidators, passwordMatchingValidator } from '@utils/validators/user-validators.helper';
 
 import { AuthService } from '@api/auth.service';
 import { BaseComponent } from '@shared/components/base/base.component';
 import { Component } from '@angular/core';
 import { Store } from '@ngrx/store';
+import { User } from '#types/user/user';
 import { addUser } from '@store/actions/login-page.actions';
 
 @Component({
@@ -38,17 +39,17 @@ export class SignUpComponent extends BaseComponent {
             email: this.signUpGroup.get('email')?.value!,
             password: this.signUpGroup.get('password')?.value!
         }).pipe(
-            this.untilThis,
-            map((user) => {
-                this.store.dispatch(addUser({ user }));
-                this.redirectTo('auth/verify-email/false');
-                return of(null);
-            }),
-            catchError((resp) => {
+            this.untilDestroyed,
+            catchError(() => {
                 this.signUpGroup.get('email')?.setErrors({ emailTaken: true });
                 return of(null);
-            })
-        ).subscribe();
+            }),
+            filter(user => user != null),
+            map(user => user as User)
+        ).subscribe((user) => {
+            this.store.dispatch(addUser({ user }));
+            this.redirectTo('auth/verify-email/false');
+        });
     }
 
     private buildSignUpGroup() : FormGroup {

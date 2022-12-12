@@ -1,8 +1,9 @@
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormControl, Validators } from '@angular/forms';
-import { Observable, catchError, concatMap, map, of } from 'rxjs';
+import { Observable, catchError, concatMap, filter, map, of } from 'rxjs';
 
 import { AuthService } from '@api/auth.service';
+import { AuthState } from '@store/states/auth-state';
 import { BaseComponent } from '@shared/components/base/base.component';
 import { Component } from '@angular/core';
 import { Store } from '@ngrx/store';
@@ -40,29 +41,29 @@ export class VerifyEmailComponent extends BaseComponent {
 
     public submit() {
         this.email$.pipe(
-            this.untilThis,
+            this.untilDestroyed,
             concatMap((email) =>
                 this.authService.verifyEmail({
                     email,
                     verificationCode: this.codeControl.value
                 })
             ),
-            map((auth) => {
-                this.store.dispatch(login({ authState: auth }));
-                this.redirectTo(this.redirectUri);
-                return of(null);
-            }),
             catchError(() => {
                 this.codeControl.setErrors({ invalidCode: true });
                 return of(null);
-            })
-        ).subscribe();
+            }),
+            filter(auth => auth != null),
+            map(auth => auth as AuthState)
+        ).subscribe((auth) => {
+            this.store.dispatch(login({ authState: auth }));
+            this.router.navigate([this.redirectUri]);
+        });
     }
 
     public resendCode() {
         this.email$
             .pipe(
-                this.untilThis,
+                this.untilDestroyed,
                 concatMap((email) => this.authService.resendCode(email))
             ).subscribe();
     }
