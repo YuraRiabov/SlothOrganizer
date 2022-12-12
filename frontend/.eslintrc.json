@@ -18,8 +18,7 @@
       "extends": [
         "eslint:recommended",
         "plugin:@angular-eslint/recommended",
-        "plugin:@angular-eslint/template/process-inline-templates",
-        "plugin:prettier/recommended"
+        "plugin:@angular-eslint/template/process-inline-templates"
       ],
       "rules": {
         "@angular-eslint/component-selector": [
@@ -46,7 +45,12 @@
             "ignoreMemberSort": false,
             "allowSeparatedGroups": false
           }
-        ]
+        ],
+        "no-unused-vars": 0,
+        "indent": ["error", 4],
+        "no-trailing-spaces": "error",
+        "semi": ["error", "always"],
+        "quotes": ["error", "single", { "allowTemplateLiterals": true }]
       }
     },
     {
@@ -57,6 +61,14 @@
         "plugin:@angular-eslint/template/recommended"
       ],
       "rules": {}
+    },
+    {
+      "files": [
+        "*.ts"
+      ],
+      "extends": [
+        "plugin:@ngrx/recommended"
+      ]
     }
   ]
 }

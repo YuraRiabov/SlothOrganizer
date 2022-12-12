@@ -1,0 +1,51 @@
+<form class="sign-up-wrapper" [formGroup]="signUpGroup">
+    <h1 i18n>Join now</h1>
+    <div class="name-inputs">
+        <mat-form-field class="name-field">
+            <mat-label i18n>First name</mat-label>
+            <input formControlName="firstName" matInput type="text"/>
+            <mat-error i18n *ngIf="signUpGroup.get('firstName')?.hasError('minlength') || signUpGroup.get('firstName')?.hasError('maxlength')">
+                Must be between  2 and 30 characters
+            </mat-error>
+        </mat-form-field>
+        <mat-form-field class="name-field">
+            <mat-label i18n>Last name</mat-label>
+            <input formControlName="lastName" matInput type="text"/>
+            <mat-error i18n *ngIf="signUpGroup.get('lastName')?.hasError('minlength') || signUpGroup.get('lastName')?.hasError('maxlength')">
+                Must be between  2 and 30 characters
+            </mat-error>
+        </mat-form-field>
+    </div>
+    <mat-form-field class="sign-up-field">
+        <mat-label i18n>Email</mat-label>
+        <input formControlName="email" matInput type="text"/>
+        <mat-error i18n *ngIf="signUpGroup.get('email')?.hasError('email')">
+            Invalid email address
+        </mat-error>
+        <mat-error i18n *ngIf="signUpGroup.get('email')?.hasError('emailTaken')">
+            There already is an account with this address
+        </mat-error>
+    </mat-form-field>
+    <mat-form-field class="sign-up-field">
+        <mat-label i18n>Password</mat-label>
+        <input formControlName="password" matInput type="password"/>
+        <mat-error i18n *ngIf="!signUpGroup.get('password')?.hasError('pattern') &&
+         (signUpGroup.get('password')?.hasError('minlength') || signUpGroup.get('password')?.hasError('maxlength'))">
+            Must be 8 to 16 characters
+        </mat-error>
+        <mat-error i18n *ngIf="signUpGroup.get('password')?.hasError('pattern')">
+            Must contain letters and numbers
+        </mat-error>
+    </mat-form-field>
+    <mat-form-field class="sign-up-field">
+        <mat-label i18n>Repeat password</mat-label>
+        <input formControlName="repeatPassword" matInput type="password"/>
+        <mat-error i18n *ngIf="signUpGroup.get('repeatPassword')?.hasError('passwordMismatch')">
+            Passwords must match
+        </mat-error>
+    </mat-form-field>
+    <button [disabled]="!signUpGroup.valid" class="sign-up-button" (click)="signUpClick()" mat-flat-button color="primary">Sign up</button>
+    <p i18n class="sign-in-reference">
+        Already have an account? <span class="sign-in-link" routerLink="sign-in">Sign in</span>
+    </p>
+</form>
