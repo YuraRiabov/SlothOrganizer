@@ -177,7 +177,44 @@ namespace SlothOrganizer.Services.Tests.Unit.Users
             await Assert.ThrowsAsync<EntityNotFoundException>(code);
         }
 
-        private byte[] GetBytes()
+        [Fact]
+        public async Task ResetPassword_WhenValidEmail_ShouldRefresh()
+        {
+            var dto = GetResetPasswordDto();
+            var user = GetUser();
+
+            A.CallTo(() => _userRepository.Get(dto.Email)).Returns(user);
+            A.CallTo(() => _hashService.HashPassword(dto.Password, A<byte[]>._)).Returns("hashed");
+
+            await _userService.ResetPassword(dto);
+
+            A.CallTo(() => _userRepository.Update(user)).MustHaveHappenedOnceExactly();
+            Assert.Equal("hashed", user.Password);
+        }
+
+        [Fact]
+        public async Task ResetPassword_WhenInvalidEmail_ShouldThrow()
+        {
+            var dto = GetResetPasswordDto();
+
+            A.CallTo(() => _userRepository.Get(dto.Email)).Returns(Task.FromResult<User?>(null));
+
+            var code = async () => await _userService.ResetPassword(dto);
+
+            var exception = await Assert.ThrowsAsync<EntityNotFoundException>(code);
+            Assert.Equal("No user with such email", exception.Message);
+        }
+
+        private ResetPasswordDto GetResetPasswordDto()
+        {
+            return new ResetPasswordDto
+            {
+                Email = "test@test.com",
+                Password = "test"
+            };
+        }
+
+        private static byte[] GetBytes()
         {
             return new byte[] { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 };
         }
@@ -199,6 +236,7 @@ namespace SlothOrganizer.Services.Tests.Unit.Users
                 FirstName = "test",
                 LastName = "user",
                 Email = "test@test.com",
+                Salt = Convert.ToBase64String(GetBytes())
             };
         }
 
