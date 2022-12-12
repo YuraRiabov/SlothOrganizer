@@ -118,13 +118,8 @@ namespace SlothOrganizer.Services.Tests.Unit.Users
         [Fact]
         public async Task Authorize_WhenValid_ShouldReturn()
         {
-            //Arrange
             var bytes = GetBytes();
-            var login = new LoginDto
-            {
-                Email = "test@test.com",
-                Password = "test"
-            };
+            LoginDto login = GetLoginDto();
             var user = new User
             {
                 Email = "test@test.com",
@@ -134,10 +129,8 @@ namespace SlothOrganizer.Services.Tests.Unit.Users
             A.CallTo(() => _userRepository.Get("test@test.com")).Returns(Task.FromResult<User?>(user));
             A.CallTo(() => _hashService.VerifyPassword(login.Password, A<byte[]>._, user.Password)).Returns(true);
 
-            //Act
             var result = await _userService.Authorize(login);
 
-            //Assert
             Assert.Equal(login.Email, result.Email);
             A.CallTo(() => _hashService.VerifyPassword(login.Password, A<byte[]>._, user.Password)).MustHaveHappenedOnceExactly();
         }
@@ -145,13 +138,8 @@ namespace SlothOrganizer.Services.Tests.Unit.Users
         [Fact]
         public async Task Authorize_WhenInValid_ShouldThrow()
         {
-            //Arrange
             var bytes = new byte[] { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 };
-            var auth = new LoginDto
-            {
-                Email = "test@test.com",
-                Password = "test"
-            };
+            var login = GetLoginDto();
             var user = new User
             {
                 Email = "test@test.com",
@@ -159,27 +147,22 @@ namespace SlothOrganizer.Services.Tests.Unit.Users
                 Password = "hashedTest"
             };
             A.CallTo(() => _userRepository.Get("test@test.com")).Returns(Task.FromResult<User?>(user));
-            A.CallTo(() => _hashService.VerifyPassword(auth.Password, A<byte[]>._, user.Password)).Returns(false);
+            A.CallTo(() => _hashService.VerifyPassword(login.Password, A<byte[]>._, user.Password)).Returns(false);
 
-            //Act
-            var code = async () => await _userService.Authorize(auth);
+            var code = async () => await _userService.Authorize(login);
 
-            //Assert
             await Assert.ThrowsAsync<InvalidCredentialsException>(code);
-            A.CallTo(() => _hashService.VerifyPassword(auth.Password, A<byte[]>._, user.Password)).MustHaveHappenedOnceExactly();
+            A.CallTo(() => _hashService.VerifyPassword(login.Password, A<byte[]>._, user.Password)).MustHaveHappenedOnceExactly();
         }
 
         [Fact]
         public async Task GetByEmail_WhenExists_ShouldReturn()
         {
-            // Arrange
             var user = GetUser();
             A.CallTo(() => _userRepository.Get(user.Email)).Returns(Task.FromResult<User?>(user));
 
-            //Act
             var result = await _userService.Get("test@test.com");
 
-            //Assert
             Assert.Equal(user.Id, result.Id);
             Assert.Equal(user.Email, result.Email);
         }
@@ -187,13 +170,10 @@ namespace SlothOrganizer.Services.Tests.Unit.Users
         [Fact]
         public async Task GetByEmail_WhenAbsent_ShouldThrow()
         {
-            // Arrange
             A.CallTo(() => _userRepository.Get("test")).Returns(Task.FromResult<User?>(null));
 
-            //Act
             var code = async () => await _userService.Get("test");
 
-            //Assert
             await Assert.ThrowsAsync<EntityNotFoundException>(code);
         }
 
@@ -219,6 +199,15 @@ namespace SlothOrganizer.Services.Tests.Unit.Users
                 FirstName = "test",
                 LastName = "user",
                 Email = "test@test.com",
+            };
+        }
+
+        private static LoginDto GetLoginDto()
+        {
+            return new LoginDto
+            {
+                Email = "test@test.com",
+                Password = "test"
             };
         }
     }
