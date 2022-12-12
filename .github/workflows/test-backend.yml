@@ -20,4 +20,4 @@ jobs:
     - name: Restore dependencies
       run: dotnet restore backend/SlothOrganizer/SlothOrganizer.sln
     - name: Test
-      run: dotnet test backend\SlothOrganizer\SlothOrganizer.Services.Tests.Unit\SlothOrganizer.Services.Tests.Unit.csproj
+      run: dotnet test backend/SlothOrganizer/SlothOrganizer.Services.Tests.Unit/SlothOrganizer.Services.Tests.Unit.csproj
