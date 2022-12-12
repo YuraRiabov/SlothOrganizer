@@ -47,22 +47,9 @@ export class SignUpComponent extends BaseComponent {
             filter(user => user != null),
             map(user => user as User)
         ).subscribe((user) => {
-            this.store.dispatch(register({ user }));
-            this.router.navigate(['verify-email'], {
-                relativeTo: this.route.parent
-            });
+            this.store.dispatch(addUser({ user }));
+            this.redirectTo('auth/verify-email');
         });
-            this.untilThis,
-            map((user) => {
-                this.store.dispatch(addUser({ user }));
-                this.redirectTo('auth/verify-email');
-                return of(null);
-            }),
-            catchError((resp) => {
-                this.signUpGroup.get('email')?.setErrors({ emailTaken: true });
-                return of(null);
-            })
-        ).subscribe();
     }
 
     private buildSignUpGroup() : FormGroup {
