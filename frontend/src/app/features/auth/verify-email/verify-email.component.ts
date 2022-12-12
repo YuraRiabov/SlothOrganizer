@@ -18,8 +18,6 @@ import { selectUserEmail } from '@store/selectors/auth-page.selectors';
 export class VerifyEmailComponent extends BaseComponent {
     private email$: Observable<string>;
 
-    private redirectUri: string;
-
     public codeControl: FormControl = new FormControl('', [
         Validators.required,
         Validators.pattern('[0-9]*')
@@ -31,8 +29,6 @@ export class VerifyEmailComponent extends BaseComponent {
         private router: Router) {
         super();
         this.email$ = store.select(selectUserEmail);
-        const resetPassword = Boolean(activatedRoute.snapshot.paramMap.get('resetPassword'));
-        this.redirectUri = resetPassword ? 'auth/reset-password' : '';
     }
 
     public redirectTo(route: string): void {
@@ -56,15 +52,20 @@ export class VerifyEmailComponent extends BaseComponent {
             map(auth => auth as AuthState)
         ).subscribe((auth) => {
             this.store.dispatch(login({ authState: auth }));
-            this.router.navigate([this.redirectUri]);
+            this.router.navigate([this.getRedirectUri()]);
         });
     }
 
-    public resendCode() {
+    public resendCode(): void {
         this.email$
             .pipe(
                 this.untilDestroyed,
                 concatMap((email) => this.authService.resendCode(email))
             ).subscribe();
+    }
+
+    private getRedirectUri(): string {
+        const resetPassword = this.activatedRoute.snapshot.paramMap.get('resetPassword');
+        return resetPassword === 'true' ? 'auth/reset-password' : '';
     }
 }

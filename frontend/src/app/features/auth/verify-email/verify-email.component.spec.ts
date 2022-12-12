@@ -1,5 +1,6 @@
 /* eslint-disable no-undef */
 
+import { ActivatedRoute, ActivatedRouteSnapshot, ParamMap, Router } from '@angular/router';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { of, throwError } from 'rxjs';
@@ -20,12 +21,30 @@ describe('VerifyEmailComponent', () => {
     let fixture: ComponentFixture<VerifyEmailComponent>;
     let mockAuthService: jasmine.SpyObj<AuthService>;
     let mockStore: jasmine.SpyObj<Store>;
+    let router: jasmine.SpyObj<Router>;
+    let paramMap: jasmine.SpyObj<ParamMap>;
     let button: HTMLElement;
+
+    const getAuthState = () => ({
+        token: {
+            accessToken: 'test',
+            refreshToken: 'test'
+        },
+        user: {
+            email: 'test@test.com',
+            firstName: 'test',
+            lastName: 'test',
+            id: 1
+        }
+    });
 
     beforeEach(async () => {
         mockAuthService = jasmine.createSpyObj(['verifyEmail', 'resendCode']);
         mockStore = jasmine.createSpyObj(['select', 'dispatch']);
+        router = jasmine.createSpyObj(['navigate']);
         mockStore.select.and.returnValue(of(1));
+        paramMap = jasmine.createSpyObj(['get']);
+        paramMap.get.and.returnValue('false');
         await TestBed.configureTestingModule({
             imports: [
                 CommonModule,
@@ -39,6 +58,14 @@ describe('VerifyEmailComponent', () => {
             providers: [
                 { provide: AuthService, useValue: mockAuthService },
                 { provide: Store, useValue: mockStore },
+                { provide: Router, useValue: router },
+                {
+                    provide: ActivatedRoute, useValue: {
+                        snapshot: {
+                            paramMap
+                        }
+                    }
+                }
             ]
         }).compileComponents();
 
@@ -70,18 +97,7 @@ describe('VerifyEmailComponent', () => {
         component.codeControl.setValue(111111);
         fixture.detectChanges();
 
-        const auth: AuthState = {
-            token: {
-                accessToken: 'test',
-                refreshToken: 'test'
-            },
-            user: {
-                email: 'test@test.com',
-                firstName: 'test',
-                lastName: 'test',
-                id: 1
-            }
-        };
+        const auth: AuthState = getAuthState();
         mockAuthService.verifyEmail.and.returnValue(of(auth));
 
         button.click();
@@ -89,6 +105,31 @@ describe('VerifyEmailComponent', () => {
         expect(mockStore.select).toHaveBeenCalledTimes(1);
         expect(mockAuthService.verifyEmail).toHaveBeenCalledTimes(1);
         expect(mockStore.dispatch).toHaveBeenCalledOnceWith(login({ authState: auth }));
+    });
+
+    it('should redirect to root when not resetting password', () => {
+        component.codeControl.setValue(111111);
+        fixture.detectChanges();
+
+        const auth: AuthState = getAuthState();
+        mockAuthService.verifyEmail.and.returnValue(of(auth));
+
+        button.click();
+
+        expect(router.navigate).toHaveBeenCalledOnceWith(['']);
+    });
+
+    it('should redirect to reset password when resetting password', () => {
+        paramMap.get.and.returnValue('true');
+        component.codeControl.setValue(111111);
+        fixture.detectChanges();
+
+        const auth: AuthState = getAuthState();
+        mockAuthService.verifyEmail.and.returnValue(of(auth));
+
+        button.click();
+
+        expect(router.navigate).toHaveBeenCalledOnceWith(['auth/reset-password']);
     });
 
     it('should set error when invalid code', () => {

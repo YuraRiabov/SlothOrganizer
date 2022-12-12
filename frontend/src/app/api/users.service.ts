@@ -7,7 +7,7 @@ import { ResetPassword } from '#types/user/reset-password';
     providedIn: 'root'
 })
 export class UsersService {
-    readonly baseUri = '/users';
+    private readonly baseUri = '/users';
 
     constructor(private http: HttpService) { }
 

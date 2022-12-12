@@ -84,7 +84,7 @@ describe('SignUpComponent', () => {
 
         button.click();
 
-        expect(mockRouter.navigate).toHaveBeenCalledOnceWith(['auth/verify-email']);
+        expect(mockRouter.navigate).toHaveBeenCalledOnceWith(['auth/verify-email/false']);
         expect(mockStore.dispatch).toHaveBeenCalled();
     });
 

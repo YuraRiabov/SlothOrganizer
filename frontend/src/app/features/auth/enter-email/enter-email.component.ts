@@ -29,9 +29,7 @@ export class EnterEmailComponent extends BaseComponent implements OnInit {
         this.authService.resendCode(this.emailControl.value).pipe(
             this.untilDestroyed,
             catchError((resp) => {
-                if (resp.status === 404) {
-                    this.emailControl.setErrors({ email: true });
-                }
+                this.emailControl.setErrors({ email: true });
                 return of(null);
             })
         ).subscribe(() => {

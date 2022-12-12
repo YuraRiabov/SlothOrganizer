@@ -12,7 +12,7 @@ import { VerificationCode } from '#types/auth/verification-code';
     providedIn: 'root'
 })
 export class AuthService {
-    readonly baseUri: string = '/auth';
+    private readonly baseUri: string = '/auth';
 
     constructor(private httpService: HttpService) {}
 
