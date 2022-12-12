@@ -1,7 +1,7 @@
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { AuthPageComponent } from './auth-page/auth-page.component';
-import { AuthRoutingModule } from '@routes/auth-routing.module';
+import { AuthRoutingModule } from './auth-routing.module';
 import { CommonModule } from '@angular/common';
 import { MaterialModule } from '@shared/material/material.module';
 import { NgModule } from '@angular/core';

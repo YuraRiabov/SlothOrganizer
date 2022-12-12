@@ -26,7 +26,6 @@
       "@store/*": ["src/app/store/*"],
       "@shared/*": ["src/app/shared/*"],
       "#types/*": ["src/app/types/*"],
-      "@routes/*": ["src/app/routes/*"],
       "@api/*": ["src/app/api/*"],
       "@utils/*": ["src/app/utils/*"]
     }
