@@ -8,7 +8,7 @@ import { Observable, Subject, takeUntil } from 'rxjs';
 export class BaseComponent implements OnDestroy {
     protected destroyed$ = new Subject<void>;
 
-    readonly untilThis = <T>(source: Observable<T>) => source.pipe(takeUntil(this.destroyed$));
+    protected readonly untilDestroyed = <T>(source: Observable<T>) => source.pipe(takeUntil(this.destroyed$));
 
     ngOnDestroy(): void {
         this.destroyed$.next();
