@@ -74,7 +74,7 @@ namespace SlothOrganizer.Web.Tests.Integration.Tests
         [InlineData("11111111111")]
         public async Task ResetPassword_WhenInvalidPassword_BadRequest(string password)
         {
-
+            await AddAuthorizationHeader();
             var dto = DtoProvider.GetResetPasswordDto();
             dto.Password = password;
 
