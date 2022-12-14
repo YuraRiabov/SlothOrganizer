@@ -18,7 +18,7 @@ const routes: Routes = [
                 component: SignUpComponent
             },
             {
-                path: 'verify-email/:resetPassword',
+                path: 'verify-email',
                 component: VerifyEmailComponent
             },
             {

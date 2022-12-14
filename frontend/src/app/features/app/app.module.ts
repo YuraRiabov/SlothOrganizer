@@ -5,6 +5,8 @@ import { AppRoutingModule } from './app-routing.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { BrowserModule } from '@angular/platform-browser';
 import { ErrorInterceptor } from '@shared/interceptors/error.interceptor';
+import { LoadingInterceptor } from '@shared/interceptors/loading.interceptor';
+import { MaterialModule } from '@shared/material/material.module';
 import { NgModule } from '@angular/core';
 import { StoreModule } from '@ngrx/store';
 import { TokenInterceptor } from '@shared/interceptors/token.interceptor';
@@ -18,11 +20,13 @@ import { metaReducers } from '@store/reducers/metareducers';
         AppRoutingModule,
         StoreModule.forRoot({ authState: authPageReducer }, { metaReducers }),
         BrowserAnimationsModule,
-        HttpClientModule
+        HttpClientModule,
+        MaterialModule
     ],
     providers: [
         { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true},
-        { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true}
+        { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true},
+        { provide: HTTP_INTERCEPTORS, useClass: LoadingInterceptor, multi: true}
     ],
     bootstrap: [AppComponent]
 })

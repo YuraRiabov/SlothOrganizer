@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { LoadingService } from '@shared/services/loading.service';
+import { Observable } from 'rxjs';
 
 @Component({
     selector: 'app-root',
@@ -6,5 +8,8 @@ import { Component } from '@angular/core';
     styleUrls: ['./app.component.sass']
 })
 export class AppComponent {
-    title = 'Sloth Organizer';
+    public title = 'Sloth Organizer';
+    public loading$ : Observable<boolean> = this.loader.loading$;
+
+    constructor(private loader: LoadingService) {}
 }

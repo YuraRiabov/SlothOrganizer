@@ -25,7 +25,6 @@ export class VerifyEmailComponent extends BaseComponent {
 
     constructor(private authService: AuthService,
         private store: Store,
-        private activatedRoute: ActivatedRoute,
         private router: Router) {
         super();
         this.email$ = store.select(selectUserEmail);
@@ -52,7 +51,7 @@ export class VerifyEmailComponent extends BaseComponent {
             map(auth => auth as AuthState)
         ).subscribe((auth) => {
             this.store.dispatch(login({ authState: auth }));
-            this.router.navigate([this.getRedirectUri()]);
+            this.router.navigate(['']);
         });
     }
 
@@ -62,10 +61,5 @@ export class VerifyEmailComponent extends BaseComponent {
                 this.untilDestroyed,
                 concatMap((email) => this.authService.resendCode(email))
             ).subscribe();
-    }
-
-    private getRedirectUri(): string {
-        const resetPassword = this.activatedRoute.snapshot.paramMap.get('resetPassword');
-        return resetPassword === 'true' ? 'auth/reset-password' : '';
     }
 }
