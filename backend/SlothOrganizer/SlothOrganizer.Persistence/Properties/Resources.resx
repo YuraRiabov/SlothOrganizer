@@ -124,14 +124,14 @@
   <data name="GetByUserId" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>User\GetByUserId.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
-  <data name="GetRefreshTokenByUserId" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>RefreshTokens\GetRefreshTokenByUserId.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  <data name="GetRefreshTokenByUserEmail" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>RefreshTokens\GetRefreshTokenByUserEmail.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
   <data name="GetUserByEmail" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>User\GetUserByEmail.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
-  <data name="GetVerificationCodeByUserId" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>VerificationCode\GetVerificationCodeByUserId.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  <data name="GetVerificationCodeByUserEmail" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>VerificationCode\GetVerificationCodeByUserEmail.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
   <data name="InsertRefreshToken" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>RefreshTokens\InsertRefreshToken.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>

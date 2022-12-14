@@ -17,6 +17,8 @@ using SlothOrganizer.Services.Abstractions.Users;
 using SlothOrganizer.Services.Abstractions.Auth.Tokens;
 using SlothOrganizer.Services.Auth.Tokens;
 using SlothOrganizer.Services.Auth.Tokens.Options;
+using SlothOrganizer.Services.Auth.UserVerification;
+using SlothOrganizer.Services.Abstractions.Auth.UserVerification;
 
 namespace SlothOrganizer.Web.Extensions
 {
@@ -39,6 +41,7 @@ namespace SlothOrganizer.Web.Extensions
             services.AddScoped<IRandomService, RandomService>();
             services.AddScoped<IAuthService, AuthService>();
             services.AddScoped<IVerificationCodeService, VerificationCodeService>();
+            services.AddScoped<IUserVerificationService, UserVerificationService>();
             services.AddScoped<IDateTimeService, DateTimeService>();
             return services;
         }

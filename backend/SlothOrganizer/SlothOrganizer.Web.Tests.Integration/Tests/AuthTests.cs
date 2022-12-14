@@ -28,7 +28,7 @@ namespace SlothOrganizer.Web.Tests.Integration.Tests
             Assert.False(result.EmailVerified);
 
             Assert.Single(await new UserRepository(Context).GetAll());
-            Assert.Single(await new VerificationCodeRepository(Context).Get(result.Id));
+            Assert.Single(await new VerificationCodeRepository(Context).Get(result.Email));
         }
 
         [Theory]
@@ -117,7 +117,7 @@ namespace SlothOrganizer.Web.Tests.Integration.Tests
             var response = await Client.PostAsync($"{ControllerRoute}/resendCode/{user.Email}", null);
 
             Assert.Equal(HttpStatusCode.OK, response.StatusCode);
-            var codes = await new VerificationCodeRepository(Context).Get(user.Id);
+            var codes = await new VerificationCodeRepository(Context).Get(user.Email);
             Assert.Equal(2, codes.Count());
         }
 

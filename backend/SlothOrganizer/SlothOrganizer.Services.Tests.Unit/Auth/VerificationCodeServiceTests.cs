@@ -2,7 +2,7 @@
 using SlothOrganizer.Domain.Entities;
 using SlothOrganizer.Domain.Repositories;
 using SlothOrganizer.Services.Abstractions.Utility;
-using SlothOrganizer.Services.Auth;
+using SlothOrganizer.Services.Auth.UserVerification;
 using Xunit;
 
 namespace SlothOrganizer.Services.Tests.Unit.Auth
@@ -29,10 +29,10 @@ namespace SlothOrganizer.Services.Tests.Unit.Auth
             A.CallTo(() => _dateTimeService.Now()).Returns(new DateTime(2022, 11, 29, 12, 0, 0));
             A.CallTo(() => _randomService.GetRandomNumber(6)).Returns(code);
 
-            var result = await _verificationCodeService.Generate(1);
+            var result = await _verificationCodeService.Generate("email");
 
             Assert.Equal(code, result);
-            A.CallTo(() => _verificationCodeRepository.Insert(A<VerificationCode>._)).MustHaveHappenedOnceExactly();
+            A.CallTo(() => _verificationCodeRepository.Insert(A<VerificationCode>._, "email")).MustHaveHappenedOnceExactly();
         }
 
         [Fact]

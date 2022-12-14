@@ -14,20 +14,20 @@ namespace SlothOrganizer.Persistence.Repositories
             _context = context;
         }
 
-        public async Task<IEnumerable<VerificationCode>> Get(long userId)
+        public async Task<IEnumerable<VerificationCode>> Get(string userEmail)
         {
-            var query = Resources.GetVerificationCodeByUserId;
+            var query = Resources.GetVerificationCodeByUserEmail;
             using var connection = _context.CreateConnection();
-            return await connection.QueryAsync<VerificationCode>(query, new { userId });
+            return await connection.QueryAsync<VerificationCode>(query, new { userEmail });
         }
 
-        public async Task<VerificationCode> Insert(VerificationCode verificationCode)
+        public async Task<VerificationCode> Insert(VerificationCode verificationCode, string userEmail)
         {
             var query = Resources.InsertVerificationCode;
 
             var parameters = new
             {
-                UserId = verificationCode.UserId,
+                UserEmail = userEmail,
                 Code = verificationCode.Code,
                 ExpirationTime = verificationCode.ExpirationTime
             };

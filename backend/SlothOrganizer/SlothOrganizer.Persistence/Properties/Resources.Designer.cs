@@ -86,9 +86,9 @@ namespace SlothOrganizer.Persistence.Properties {
         ///	AND Users.Email=@UserEmail
         ///).
         /// </summary>
-        internal static string GetRefreshTokenByUserId {
+        internal static string GetRefreshTokenByUserEmail {
             get {
-                return ResourceManager.GetString("GetRefreshTokenByUserId", resourceCulture);
+                return ResourceManager.GetString("GetRefreshTokenByUserEmail", resourceCulture);
             }
         }
         
@@ -102,11 +102,16 @@ namespace SlothOrganizer.Persistence.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to SELECT * FROM VerificationCodes WHERE UserId=@UserId.
+        ///   Looks up a localized string similar to SELECT * FROM VerificationCodes 
+        ///WHERE EXISTS(
+        ///	SELECT * FROM Users
+        ///	WHERE Users.Id=VerificationCodes.UserId
+        ///	AND Users.Email=@UserEmail
+        ///).
         /// </summary>
-        internal static string GetVerificationCodeByUserId {
+        internal static string GetVerificationCodeByUserEmail {
             get {
-                return ResourceManager.GetString("GetVerificationCodeByUserId", resourceCulture);
+                return ResourceManager.GetString("GetVerificationCodeByUserEmail", resourceCulture);
             }
         }
         
@@ -137,7 +142,7 @@ namespace SlothOrganizer.Persistence.Properties {
         
         /// <summary>
         ///   Looks up a localized string similar to INSERT INTO VerificationCodes(UserId, Code, ExpirationTime) 
-        ///VALUES (@UserId, @Code, @ExpirationTime)
+        ///VALUES ((SELECT TOP(1) Id FROM Users WHERE Email=@UserEmail), @Code, @ExpirationTime)
         ///SELECT CAST(SCOPE_IDENTITY() as bigint).
         /// </summary>
         internal static string InsertVerificationCode {
