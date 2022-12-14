@@ -11,6 +11,6 @@ namespace SlothOrganizer.Services.Abstractions.Users
         Task<UserDto> Get(long id);
         Task<UserDto?> VerifyEmail(string email, int code);
         Task<UserDto> Get(string email);
-        Task ResetPassword(ResetPasswordDto resetPasswordDto);
+        Task<UserDto> ResetPassword(ResetPasswordDto resetPasswordDto);
     }
 }

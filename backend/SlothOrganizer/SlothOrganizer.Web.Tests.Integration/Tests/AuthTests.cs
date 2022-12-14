@@ -1,5 +1,6 @@
 ﻿using System.Net;
 using FakeItEasy;
+using Microsoft.AspNetCore.Mvc;
 using SlothOrganizer.Contracts.DTO.Auth;
 using SlothOrganizer.Contracts.DTO.User;
 using SlothOrganizer.Persistence.Repositories;
@@ -74,7 +75,7 @@ namespace SlothOrganizer.Web.Tests.Integration.Tests
             var verificationCode = DtoProvider.GetVerificationCode(user.Email);
 
             var verificationResponse = await Client.PutAsync($"{ControllerRoute}/verifyEmail", GetStringContent(verificationCode));
-            var result = await GetResponse<TokenDto>(verificationResponse);
+            var result = await GetResponse<UserAuthDto>(verificationResponse);
 
             Assert.Equal(HttpStatusCode.OK, verificationResponse.StatusCode);
             Assert.Single(await new RefreshTokenRepository(Context).Get(user.Email));
@@ -227,6 +228,69 @@ namespace SlothOrganizer.Web.Tests.Integration.Tests
             var response = await Client.PutAsync($"{ControllerRoute}/refreshToken", GetStringContent(token));
 
             Assert.Equal(HttpStatusCode.Forbidden, response.StatusCode);
+        }
+
+        [Fact]
+        public async Task ResetPassword_WhenValidTokenAndUserExists_ShouldReset()
+        {
+            await AddAuthorizationHeader();
+            var dto = DtoProvider.GetResetPasswordDto();
+
+            var response = await Client.PutAsync($"{ControllerRoute}/resetPassword", GetStringContent(dto));
+
+            Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+
+            var login = DtoProvider.GetLogin();
+            var oldAuthResult = await Client.PostAsync("auth/signIn", GetStringContent(login));
+            Assert.Equal(HttpStatusCode.Forbidden, oldAuthResult.StatusCode);
+
+            login.Password = dto.Password;
+            var newAuthResult = await Client.PostAsync("auth/signIn", GetStringContent(login));
+            Assert.Equal(HttpStatusCode.OK, newAuthResult.StatusCode);
+        }
+
+        [Fact]
+        public async Task ResetPassword_WhenValidTokenAndUserAbsent_NotFound()
+        {
+            await SetupVerifiedUser();
+            var dto = DtoProvider.GetResetPasswordDto();
+            dto.Email = "test@testing.com";
+
+            var response = await Client.PutAsync($"{ControllerRoute}/resetPassword", GetStringContent(dto));
+
+            Assert.Equal(HttpStatusCode.NotFound, response.StatusCode);
+
+            var login = DtoProvider.GetLogin();
+            var authResult = await Client.PostAsync("auth/signIn", GetStringContent(login));
+            Assert.Equal(HttpStatusCode.OK, authResult.StatusCode);
+        }
+
+        [Fact]
+        public async Task ResetPassword_WhenInvalidEmail_BadRequest()
+        {
+            await SetupVerifiedUser();
+            var dto = DtoProvider.GetResetPasswordDto();
+            dto.Email = "testtesting.com";
+
+            var response = await Client.PutAsync($"{ControllerRoute}/resetPassword", GetStringContent(dto));
+
+            Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
+        }
+
+        [Theory]
+        [InlineData("short1")]
+        [InlineData("loooooooooooooong1")]
+        [InlineData("invalidpattern")]
+        [InlineData("11111111111")]
+        public async Task ResetPassword_WhenInvalidPassword_BadRequest(string password)
+        {
+            await SetupVerifiedUser();
+            var dto = DtoProvider.GetResetPasswordDto();
+            dto.Password = password;
+
+            var response = await Client.PutAsync($"{ControllerRoute}/resetPassword", GetStringContent(dto));
+
+            Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
         }
     }
 }

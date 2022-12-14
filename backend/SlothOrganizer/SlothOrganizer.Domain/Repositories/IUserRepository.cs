@@ -11,5 +11,6 @@ namespace SlothOrganizer.Domain.Repositories
         public Task Update(User user);
         public Task Delete(long id);
         Task<User?> VerifyEmail(string email, int code);
+        Task<User?> Get(string email, int verificationCode);
     }
 }

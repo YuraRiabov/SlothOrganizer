@@ -48,6 +48,19 @@ namespace SlothOrganizer.Persistence.Repositories
             return result;
         }
 
+        public async Task<User?> Get(string email, int verificationCode)
+        {
+            var query = Resources.GetUserByEmailAndCode;
+
+            var parameters = new
+            {
+                Email = email,
+                Code = verificationCode
+            };
+            using var connection = _dapperContext.CreateConnection();
+            return await connection.QuerySingleOrDefaultAsync<User?>(query, parameters);
+        }
+
         public async Task<User> Insert(User user)
         {
             var query = Resources.InsertUser;

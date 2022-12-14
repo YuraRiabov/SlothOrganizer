@@ -81,6 +81,22 @@ namespace SlothOrganizer.Services.Auth
             throw new InvalidCredentialsException("Invalid verification code");
         }
 
+        public async Task<UserAuthDto> ResetPassword(ResetPasswordDto resetPasswordDto)
+        {
+            var user = await _userService.ResetPassword(resetPasswordDto);
+            return new UserAuthDto
+            {
+                User = user,
+                Token = await GenerateToken(user.Email)
+            };
+        }
+
+        public async Task SendResetPassword(string email)
+        {
+            var user = await _userService.Get(email);
+            await _userVerificationService.SendPasswordReset(user.Email);
+        }
+
         private async Task<TokenDto> GenerateToken(string email)
         {
             return new TokenDto

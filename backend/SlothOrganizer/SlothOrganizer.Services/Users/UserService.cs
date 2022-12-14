@@ -15,13 +15,15 @@ namespace SlothOrganizer.Services.Users
         private readonly IMapper _mapper;
         private readonly IRandomService _randomService;
         private readonly IHashService _hashService;
+        private readonly ICryptoService _cryptoService;
 
-        public UserService(IRandomService randomService, IMapper mapper, IUserRepository userRepository, IHashService hashService)
+        public UserService(IRandomService randomService, IMapper mapper, IUserRepository userRepository, IHashService hashService, ICryptoService cryptoService)
         {
             _randomService = randomService;
             _mapper = mapper;
             _userRepository = userRepository;
             _hashService = hashService;
+            _cryptoService = cryptoService;
         }
 
         public async Task<UserDto> Create(NewUserDto newUser)
@@ -59,12 +61,23 @@ namespace SlothOrganizer.Services.Users
             return _mapper.Map<UserDto>(user);
         }
 
-        public async Task ResetPassword(ResetPasswordDto resetPasswordDto)
+        public async Task<UserDto> ResetPassword(ResetPasswordDto resetPasswordDto)
         {
-            var user = await GetByEmailInternal(resetPasswordDto.Email);
+            if(!int.TryParse(_cryptoService.Decrypt(resetPasswordDto.Code), out var code))
+            {
+                throw new InvalidCredentialsException("Invalid verification code");
+            }
+            var email = _cryptoService.Decrypt(resetPasswordDto.Email);
+            var user = await _userRepository.Get(email, code);
+            if (user is null)
+            {
+                throw new EntityNotFoundException("No user found with such email and code");
+            }
             var hash = _hashService.HashPassword(resetPasswordDto.Password, Convert.FromBase64String(user.Salt));
             user.Password = hash;
+            user.EmailVerified = true;
             await _userRepository.Update(user);
+            return _mapper.Map<UserDto>(user);
         }
 
         public async Task<UserDto> Authorize(LoginDto login)

@@ -39,7 +39,8 @@ namespace SlothOrganizer.Web.Tests.Integration.Setup
             return new ResetPasswordDto
             {
                 Email = "test@test.com",
-                Password = "newpassw0rd"
+                Password = "newpassw0rd",
+                Code = "111111"
             };
         }
     }

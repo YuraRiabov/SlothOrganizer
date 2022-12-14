@@ -8,7 +8,6 @@ namespace SlothOrganizer.Web.Middleware.Validation.Users
     {
         public ResetPasswordDtoValidator()
         {
-            RuleFor(u => u.Email).EmailAddress();
             RuleFor(u => u.Password)
                 .NotEmpty()
                 .MinimumLength(8)

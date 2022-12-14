@@ -17,6 +17,7 @@ namespace SlothOrganizer.Services.Tests.Unit.Users
         private readonly IHashService _hashService;
         private readonly IRandomService _randomService;
         private readonly IUserRepository _userRepository;
+        private readonly ICryptoService _cryptoService;
         private readonly IMapper _mapper;
 
         public UserServiceTests()
@@ -24,11 +25,12 @@ namespace SlothOrganizer.Services.Tests.Unit.Users
             _hashService = A.Fake<IHashService>();
             _randomService = A.Fake<IRandomService>();
             _userRepository = A.Fake<IUserRepository>();
+            _cryptoService = A.Fake<ICryptoService>();
 
             var config = new MapperConfiguration(cfg => cfg.AddProfile<UserMappingProfile>());
             _mapper = config.CreateMapper();
 
-            _userService = new UserService(_randomService, _mapper, _userRepository, _hashService);
+            _userService = new UserService(_randomService, _mapper, _userRepository, _hashService, _cryptoService);
         }
 
         [Fact]
@@ -183,7 +185,9 @@ namespace SlothOrganizer.Services.Tests.Unit.Users
             var dto = GetResetPasswordDto();
             var user = GetUser();
 
-            A.CallTo(() => _userRepository.Get(dto.Email)).Returns(user);
+            A.CallTo(() => _cryptoService.Decrypt(dto.Code)).Returns(dto.Code);
+            A.CallTo(() => _cryptoService.Decrypt(dto.Email)).Returns(dto.Email);
+            A.CallTo(() => _userRepository.Get(dto.Email, int.Parse(dto.Code))).Returns(user);
             A.CallTo(() => _hashService.HashPassword(dto.Password, A<byte[]>._)).Returns("hashed");
 
             await _userService.ResetPassword(dto);
@@ -197,12 +201,14 @@ namespace SlothOrganizer.Services.Tests.Unit.Users
         {
             var dto = GetResetPasswordDto();
 
-            A.CallTo(() => _userRepository.Get(dto.Email)).Returns(Task.FromResult<User?>(null));
+            A.CallTo(() => _cryptoService.Decrypt(dto.Code)).Returns(dto.Code);
+            A.CallTo(() => _cryptoService.Decrypt(dto.Email)).Returns(dto.Email);
+            A.CallTo(() => _userRepository.Get(dto.Email, int.Parse(dto.Code))).Returns(Task.FromResult<User?>(null));
 
             var code = async () => await _userService.ResetPassword(dto);
 
             var exception = await Assert.ThrowsAsync<EntityNotFoundException>(code);
-            Assert.Equal("No user with such email", exception.Message);
+            Assert.Equal("No user found with such email and code", exception.Message);
         }
 
         private ResetPasswordDto GetResetPasswordDto()
@@ -210,7 +216,8 @@ namespace SlothOrganizer.Services.Tests.Unit.Users
             return new ResetPasswordDto
             {
                 Email = "test@test.com",
-                Password = "test"
+                Password = "test",
+                Code = "111111"
             };
         }
 

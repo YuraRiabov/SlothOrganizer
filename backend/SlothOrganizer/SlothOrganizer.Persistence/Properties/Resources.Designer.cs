@@ -102,6 +102,21 @@ namespace SlothOrganizer.Persistence.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to SELECT TOP(1) * FROM Users
+        ///WHERE Email=@Email AND
+        ///EXISTS(
+        ///	SELECT * FROM VerificationCodes
+        ///	WHERE Code=@Code AND
+        ///	Users.Id=VerificationCodes.UserId
+        ///).
+        /// </summary>
+        internal static string GetUserByEmailAndCode {
+            get {
+                return ResourceManager.GetString("GetUserByEmailAndCode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to SELECT * FROM VerificationCodes 
         ///WHERE EXISTS(
         ///	SELECT * FROM Users
