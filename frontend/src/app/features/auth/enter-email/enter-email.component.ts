@@ -1,12 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { catchError, filter, map, of } from 'rxjs';
+import { catchError, of } from 'rxjs';
 
 import { AuthService } from '@api/auth.service';
 import { BaseComponent } from '@shared/components/base/base.component';
 import { FormControl } from '@angular/forms';
-import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { addEmail } from '@store/actions/login-page.actions';
 import { getEmailValidators } from '@utils/validators/user-validators.helper';
 
 @Component({
@@ -17,7 +15,7 @@ import { getEmailValidators } from '@utils/validators/user-validators.helper';
 export class EnterEmailComponent extends BaseComponent implements OnInit {
     public emailControl: FormControl = {} as FormControl;
 
-    constructor(private router: Router, private authService: AuthService, private store: Store) {
+    constructor(private authService: AuthService, private store: Store) {
         super();
     }
 
@@ -26,22 +24,12 @@ export class EnterEmailComponent extends BaseComponent implements OnInit {
     }
 
     public submitClick(): void {
-        this.authService.resendCode(this.emailControl.value).pipe(
+        this.authService.sendPasswordReset(this.emailControl.value).pipe(
             this.untilDestroyed,
-            catchError((resp) => {
+            catchError(() => {
                 this.emailControl.setErrors({ email: true });
                 return of(null);
             })
-        ).subscribe(() => {
-            if (!this.emailControl.valid) {
-                return;
-            }
-            this.store.dispatch(addEmail({email: this.emailControl.value}));
-            this.redirectTo('auth/verify-email/true');
-        });
-    }
-
-    private redirectTo(path: string): void {
-        this.router.navigate([ path ]);
+        ).subscribe();
     }
 }

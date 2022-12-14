@@ -48,7 +48,7 @@ export class SignUpComponent extends BaseComponent {
             map(user => user as User)
         ).subscribe((user) => {
             this.store.dispatch(addUser({ user }));
-            this.redirectTo('auth/verify-email/false');
+            this.redirectTo('auth/verify-email');
         });
     }
 
