@@ -5,7 +5,7 @@ using SlothOrganizer.Services.Abstractions.Utility;
 using SlothOrganizer.Services.Auth.UserVerification;
 using Xunit;
 
-namespace SlothOrganizer.Services.Tests.Unit.Auth
+namespace SlothOrganizer.Services.Tests.Unit.Auth.UserVerification
 {
     public class VerificationCodeServiceTests
     {

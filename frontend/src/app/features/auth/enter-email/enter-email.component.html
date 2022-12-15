@@ -1,6 +1,8 @@
 <form class="enter-email-wrapper">
-    <h1 i18n>Enter your email</h1>
+    <h1 i18n>Password recovery</h1>
+    <h2 i18n>In order to reset your password, follow the link that will be sent to your email</h2>
     <mat-form-field class="email-field">
+        <mat-label>Enter your email</mat-label>
         <input [formControl]="emailControl" matInput type="text">
         <mat-error *ngIf="emailControl.hasError('email')" i18n>
             Invalid email address

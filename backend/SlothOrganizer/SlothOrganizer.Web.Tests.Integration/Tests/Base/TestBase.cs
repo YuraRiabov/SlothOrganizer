@@ -19,6 +19,7 @@ namespace SlothOrganizer.Web.Tests.Integration.Base
         protected IRandomService RandomService { get; }
         protected IRandomService RealRandomService { get; }
         protected IDateTimeService DateTimeService { get; }
+        protected ICryptoService CryptoService { get; }
         protected HttpClient Client { get; }
         protected DapperContext Context { get; }
         public TestBase()
@@ -31,7 +32,8 @@ namespace SlothOrganizer.Web.Tests.Integration.Base
             RealRandomService = new RandomService();
             A.CallTo(() => RandomService.GetRandomBytes(16)).Returns(RealRandomService.GetRandomBytes(16));
             A.CallTo(() => RandomService.GetRandomNumber(6)).Returns(RealRandomService.GetRandomNumber(6));
-            var factory = new CustomWebApplicationFactory<Startup>(EmailSerivce, RandomService, DateTimeService);
+            CryptoService = A.Fake<ICryptoService>();
+            var factory = new CustomWebApplicationFactory<Startup>(EmailSerivce, RandomService, DateTimeService, CryptoService);
             Client = factory.CreateClient();
 
             var dapperConfiguration = new Dictionary<string, string>

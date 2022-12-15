@@ -231,10 +231,12 @@ namespace SlothOrganizer.Web.Tests.Integration.Tests
         }
 
         [Fact]
-        public async Task ResetPassword_WhenValidTokenAndUserExists_ShouldReset()
+        public async Task ResetPassword_WhenValid_ShouldReset()
         {
-            await AddAuthorizationHeader();
+            await SetupVerifiedUser();
             var dto = DtoProvider.GetResetPasswordDto();
+            A.CallTo(() => CryptoService.Decrypt(dto.Code)).Returns(dto.Code);
+            A.CallTo(() => CryptoService.Decrypt(dto.Email)).Returns(dto.Email);
 
             var response = await Client.PutAsync($"{ControllerRoute}/resetPassword", GetStringContent(dto));
 
@@ -250,11 +252,12 @@ namespace SlothOrganizer.Web.Tests.Integration.Tests
         }
 
         [Fact]
-        public async Task ResetPassword_WhenValidTokenAndUserAbsent_NotFound()
+        public async Task ResetPassword_WhenUserAbsent_NotFound()
         {
             await SetupVerifiedUser();
             var dto = DtoProvider.GetResetPasswordDto();
-            dto.Email = "test@testing.com";
+            A.CallTo(() => CryptoService.Decrypt(dto.Code)).Returns(dto.Code);
+            A.CallTo(() => CryptoService.Decrypt(dto.Email)).Returns("invalid email");
 
             var response = await Client.PutAsync($"{ControllerRoute}/resetPassword", GetStringContent(dto));
 
@@ -266,15 +269,15 @@ namespace SlothOrganizer.Web.Tests.Integration.Tests
         }
 
         [Fact]
-        public async Task ResetPassword_WhenInvalidEmail_BadRequest()
+        public async Task ResetPassword_WhenInvalidCode_Forbidden()
         {
             await SetupVerifiedUser();
             var dto = DtoProvider.GetResetPasswordDto();
-            dto.Email = "testtesting.com";
+            A.CallTo(() => CryptoService.Decrypt(dto.Code)).Returns("not a number");
 
             var response = await Client.PutAsync($"{ControllerRoute}/resetPassword", GetStringContent(dto));
 
-            Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
+            Assert.Equal(HttpStatusCode.Forbidden, response.StatusCode);
         }
 
         [Theory]
@@ -291,6 +294,25 @@ namespace SlothOrganizer.Web.Tests.Integration.Tests
             var response = await Client.PutAsync($"{ControllerRoute}/resetPassword", GetStringContent(dto));
 
             Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
+        }
+
+        [Fact]
+        public async Task SendPasswordReset_WhenUserExists_ShouldSend()
+        {
+            var auth = await SetupVerifiedUser();
+
+            var response = await Client.PostAsync($"{ControllerRoute}/sendPasswordReset/{auth.User.Email}", null);
+
+            Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+            A.CallTo(() => EmailSerivce.SendEmail(auth.User.Email, "Follow the link to reset your password", A<string>._)).MustHaveHappenedOnceExactly();
+        }
+
+        [Fact]
+        public async Task SendPasswordReset_WhenUserAbsent_NotFound()
+        {
+            var response = await Client.PostAsync($"{ControllerRoute}/sendPasswordReset/test@test.com", null);
+
+            Assert.Equal(HttpStatusCode.NotFound, response.StatusCode);
         }
     }
 }

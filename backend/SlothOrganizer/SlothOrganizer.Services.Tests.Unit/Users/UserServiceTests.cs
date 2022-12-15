@@ -211,6 +211,19 @@ namespace SlothOrganizer.Services.Tests.Unit.Users
             Assert.Equal("No user found with such email and code", exception.Message);
         }
 
+        [Fact]
+        public async Task ResetPassword_WhenInvalidCode_ShouldThrow()
+        {
+            var dto = GetResetPasswordDto();
+
+            A.CallTo(() => _cryptoService.Decrypt(dto.Code)).Returns("not a number");
+
+            var code = async () => await _userService.ResetPassword(dto);
+
+            var exception = await Assert.ThrowsAsync<InvalidCredentialsException>(code);
+            Assert.Equal("Invalid verification code", exception.Message);
+        }
+
         private ResetPasswordDto GetResetPasswordDto()
         {
             return new ResetPasswordDto
