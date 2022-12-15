@@ -1,16 +1,18 @@
+import { ActivatedRoute, Router } from '@angular/router';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { map, of } from 'rxjs';
 
 import { AuthRoutingModule } from '../auth-routing.module';
 import { AuthService } from '@api/auth.service';
+import { AuthState } from '@store/states/auth-state';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { By } from '@angular/platform-browser';
 import { CommonModule } from '@angular/common';
 import { MaterialModule } from '@shared/material/material.module';
 import { ResetPasswordComponent } from './reset-password.component';
-import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { of } from 'rxjs';
+import { login } from '@store/actions/login-page.actions';
 
 describe('ResetPasswordComponent', () => {
     let component: ResetPasswordComponent;
@@ -20,15 +22,27 @@ describe('ResetPasswordComponent', () => {
     let router: jasmine.SpyObj<Router>;
     let button: HTMLElement;
 
+    const mockAuth: AuthState = {
+        user: {
+            id: 1,
+            email: 'test@test.com',
+            firstName: 'test',
+            lastName: 'test'
+        },
+        token: {
+            accessToken: 'access',
+            refreshToken: 'refresh'
+        }
+    };
+
     const setUpValidForm = () => {
         component.resetPassowordGroup.get('password')?.setValue('testtest8');
         component.resetPassowordGroup.get('repeatPassword')?.setValue('testtest8');
     };
     beforeEach(async () => {
         authService = jasmine.createSpyObj(['resetPassword']);
-        store = jasmine.createSpyObj(['select']);
         router = jasmine.createSpyObj(['navigate']);
-        store.select.and.returnValue(of('test@test.com'));
+        store = jasmine.createSpyObj(['dispatch']);
         await TestBed.configureTestingModule({
             declarations: [ResetPasswordComponent],
             imports: [
@@ -42,7 +56,12 @@ describe('ResetPasswordComponent', () => {
             providers: [
                 { provide: AuthService, useValue: authService },
                 { provide: Store, useValue: store },
-                { provide: Router, useValue: router }
+                { provide: Router, useValue: router },
+                {
+                    provide: ActivatedRoute, useValue: {
+                        queryParams: of({ code: '111111', email: 'test@test.com' })
+                    }
+                }
             ]
         })
             .compileComponents();
@@ -68,10 +87,12 @@ describe('ResetPasswordComponent', () => {
     it('should redirect when valid data', () => {
         setUpValidForm();
         fixture.detectChanges();
+        authService.resetPassword.and.returnValue(of(mockAuth));
 
         button.click();
 
         expect(authService.resetPassword).toHaveBeenCalledTimes(1);
+        expect(store.dispatch).toHaveBeenCalledOnceWith(login({ authState: mockAuth }));
         expect(router.navigate).toHaveBeenCalledOnceWith(['']);
     });
 

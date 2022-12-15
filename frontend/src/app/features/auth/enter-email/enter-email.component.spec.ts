@@ -24,10 +24,10 @@ describe('EnterEmailComponent', () => {
     const setupEmail = (value: string = 'test@test.com') => component.emailControl.setValue(value);
 
     beforeEach(async () => {
-        authService = jasmine.createSpyObj('AuthService', ['resendCode']);
+        authService = jasmine.createSpyObj('AuthService', ['sendPasswordReset']);
         store = jasmine.createSpyObj(['dispatch']);
         router = jasmine.createSpyObj(['navigate']);
-        authService.resendCode.and.returnValue(of(null));
+        authService.sendPasswordReset.and.returnValue(of(null));
         await TestBed.configureTestingModule({
             declarations: [EnterEmailComponent],
             imports: [
@@ -61,29 +61,25 @@ describe('EnterEmailComponent', () => {
         expect(component.emailControl.valid).toBeTrue();
     });
 
-    it('should call store and redirect when valid email', () => {
+    it('should send when valid email', () => {
         setupEmail();
         fixture.detectChanges();
 
         button.click();
 
         expect(component.emailControl.valid).toBeTrue();
-        expect(authService.resendCode).toHaveBeenCalledTimes(1);
-        expect(store.dispatch).toHaveBeenCalledOnceWith(addEmail({email: 'test@test.com'}));
-        expect(router.navigate).toHaveBeenCalledTimes(1);
+        expect(authService.sendPasswordReset).toHaveBeenCalledTimes(1);
     });
 
-    it('should not call store and redirect when email absent', () => {
-        authService.resendCode.and.returnValue(throwError(() => new Error()));
+    it('should not send when email absent', () => {
+        authService.sendPasswordReset.and.returnValue(throwError(() => new Error()));
         setupEmail();
         fixture.detectChanges();
 
         expect(component.emailControl.valid).toBeTrue();
         button.click();
 
-        expect(authService.resendCode).toHaveBeenCalledTimes(1);
-        expect(store.dispatch).toHaveBeenCalledTimes(0);
-        expect(router.navigate).toHaveBeenCalledTimes(0);
+        expect(authService.sendPasswordReset).toHaveBeenCalledTimes(1);
 
         fixture.detectChanges();
         expect(component.emailControl.hasError('email')).toBeTrue();
@@ -96,9 +92,7 @@ describe('EnterEmailComponent', () => {
         button.click();
 
         expect(component.emailControl.hasError('required')).toBeTrue();
-        expect(authService.resendCode).toHaveBeenCalledTimes(0);
-        expect(store.dispatch).toHaveBeenCalledTimes(0);
-        expect(router.navigate).toHaveBeenCalledTimes(0);
+        expect(authService.sendPasswordReset).toHaveBeenCalledTimes(0);
     });
 
     it('should be invalid when invalid email', () => {
@@ -108,8 +102,6 @@ describe('EnterEmailComponent', () => {
         button.click();
 
         expect(component.emailControl.hasError('email')).toBeTrue();
-        expect(authService.resendCode).toHaveBeenCalledTimes(0);
-        expect(store.dispatch).toHaveBeenCalledTimes(0);
-        expect(router.navigate).toHaveBeenCalledTimes(0);
+        expect(authService.sendPasswordReset).toHaveBeenCalledTimes(0);
     });
 });
