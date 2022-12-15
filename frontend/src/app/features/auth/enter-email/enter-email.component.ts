@@ -13,6 +13,10 @@ import { getEmailValidators } from '@utils/validators/user-validators.helper';
     styleUrls: ['./enter-email.component.sass']
 })
 export class EnterEmailComponent extends BaseComponent implements OnInit {
+    public submittedEmail: string = '';
+
+    public emailSent: boolean = false;
+
     public emailControl: FormControl = {} as FormControl;
 
     constructor(private authService: AuthService, private store: Store) {
@@ -30,6 +34,12 @@ export class EnterEmailComponent extends BaseComponent implements OnInit {
                 this.emailControl.setErrors({ email: true });
                 return of(null);
             })
-        ).subscribe();
+        ).subscribe(() => {
+            if(!this.emailControl.valid) {
+                return;
+            }
+            this.submittedEmail = this.emailControl.value;
+            this.emailSent = true;
+        });
     }
 }

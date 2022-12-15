@@ -47,8 +47,8 @@ describe('EnterEmailComponent', () => {
 
         fixture = TestBed.createComponent(EnterEmailComponent);
         component = fixture.componentInstance;
-        button = fixture.debugElement.query(By.css('button')).nativeElement;
         fixture.detectChanges();
+        button = fixture.debugElement.query(By.css('button')).nativeElement;
     });
 
     it('should create', () => {
