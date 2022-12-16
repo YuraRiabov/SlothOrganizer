@@ -1,0 +1,7 @@
+<div class="timeline-container" [ngStyle]="{'grid-template-columns' : 'repeat(' + columnNumber + ', 1fr'}">
+    <div class="task-block" 
+    *ngFor="let task of tasks"
+    [ngStyle]="{'grid-column': getStartColumn(task) + '/' + getEndColumn(task)}">
+        {{task.title}}
+    </div>
+</div>

@@ -12,9 +12,13 @@ const routes: Routes = [
         canActivate: [UnauthorizedGuard]
     },
     {
-        path: '**',
-        component: AppComponent,
+        path: 'dashboard',
+        loadChildren: () => import('../dashboard/dashboard.module').then((m) => m.DashboardModule),
         canActivate: [AuthorizedGuard]
+    },
+    {
+        path: '**',
+        redirectTo: 'dashboard'
     }
 ];
 
