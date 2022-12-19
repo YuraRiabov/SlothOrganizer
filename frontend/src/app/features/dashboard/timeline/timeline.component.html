@@ -1,7 +1,12 @@
-<div class="timeline-container" [ngStyle]="{'grid-template-columns' : 'repeat(' + columnNumber + ', 1fr'}">
-    <div class="task-block" 
-    *ngFor="let task of tasks"
-    [ngStyle]="{'grid-column': getStartColumn(task) + '/' + getEndColumn(task)}">
+<div class="timeline-container">
+    <div class="subsections-container" [ngStyle]="{'grid-template-columns' : 'repeat(' + timelineSubsections.length+ ', 1fr'}">
+        <div class="timeline-subsection" *ngFor="let subsection of timelineSubsections"></div>
+    </div>
+    <div class="timeline-row" *ngFor="let taskRow of tasksByRows; index as i"
+         [ngStyle]="{'grid-template-columns' : 'repeat(' + columnNumber + ', 1fr', 'grid-row': i+3}">
+        <div class="task-block" *ngFor="let task of tasksByRows[i]"
+            [ngStyle]="{'grid-column': getStartColumn(task) + '/' + getEndColumn(task)}">
         {{task.title}}
+    </div>
     </div>
 </div>
