@@ -1,6 +1,9 @@
 <div class="timeline-container">
     <div class="subsections-container" [ngStyle]="{'grid-template-columns' : 'repeat(' + timelineSubsections.length+ ', 1fr'}">
-        <div class="timeline-subsection" *ngFor="let subsection of timelineSubsections">{{getSubsectionTitle(subsection)}}</div>
+        <div class="timeline-subsection" *ngFor="let subsection of timelineSubsections; index as i" 
+        (click)="increaseScale(timelineSubsections[i-1])">
+        {{getSubsectionTitle(subsection)}}
+    </div>
     </div>
     <div class="timeline-row" *ngFor="let taskRow of tasksByRows; index as i"
          [ngStyle]="{'grid-template-columns' : 'repeat(' + columnNumber + ', 1fr', 'grid-row': i+3}">

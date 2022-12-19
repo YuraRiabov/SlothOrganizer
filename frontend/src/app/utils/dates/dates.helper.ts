@@ -12,9 +12,9 @@ export const getWeekStart = (date: Date) => {
 };
 
 export const getMonthStart = (date: Date) => {
-    return new Date(date.getFullYear(), date.getMonth(), 0);
+    return new Date(date.getFullYear(), date.getMonth(), 1);
 };
 
 export const getYearStart = (date: Date) => {
-    return new Date(date.getFullYear(), 0, 0);
+    return new Date(date.getFullYear(), 0, 1);
 };

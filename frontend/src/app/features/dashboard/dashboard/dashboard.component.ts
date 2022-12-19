@@ -39,4 +39,11 @@ export class DashboardComponent {
     public currentDate = new Date(2022, 12, 16, 23);
     public timelineScale = TimelineScale.Month;
     constructor() { }
+
+    public increaseScale(date? : Date) {
+        this.currentDate = date ?? this.currentDate;
+        if (this.timelineScale != TimelineScale.Day) {
+            this.timelineScale--;
+        }
+    }
 }
