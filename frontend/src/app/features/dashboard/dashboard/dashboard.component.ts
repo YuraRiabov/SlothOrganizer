@@ -37,6 +37,6 @@ export class DashboardComponent {
     ];
 
     public currentDate = new Date(2022, 12, 16, 23);
-    public timelineScale = TimelineScale.Week;
+    public timelineScale = TimelineScale.Month;
     constructor() { }
 }

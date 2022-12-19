@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { getTimelineBoundaries, getTimelineSubsections } from '@utils/dates/timeline.helper';
+import { getSubsectionTitle, getTimelineBoundaries, getTimelineSubsections } from '@utils/dates/timeline.helper';
 
 import { Task } from '#types/tasks/task';
 import { TimelineBoundaries } from '#types/tasks/timeline-boundaries';
@@ -43,7 +43,11 @@ export class TimelineComponent implements OnInit {
         return this.tasks.filter(t => this.isVisible(t));
     }
 
-    public isVisible(task: Task) : boolean {
+    public getSubsectionTitle(subsection: Date): string {
+        return getSubsectionTitle(subsection, this.scale);
+    }
+
+    private isVisible(task: Task) : boolean {
         return this.getEndColumn(task) - this.getStartColumn(task) >= this.minimumColumnNumber;
     }
 

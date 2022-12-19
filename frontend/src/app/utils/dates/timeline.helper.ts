@@ -1,45 +1,45 @@
 import { addDays, addHours, addMonths, addWeeks, addYears, differenceInHours } from 'date-fns';
 import { getDayStart, getMonthStart, getWeekStart, getYearStart } from './dates.helper';
 
+import { DatePipe } from '@angular/common';
 import { TimelineBoundaries } from '#types/tasks/timeline-boundaries';
 import { TimelineScale } from '#types/tasks/enums/timeline-scale';
 
 export const getTimelineBoundaries = (currentDate: Date, scale: TimelineScale): TimelineBoundaries => {
     let start: Date;
-    if (scale === TimelineScale.Day) {
+    switch (scale) {
+    case TimelineScale.Day:
         start = getDayStart(currentDate);
         return {
             start,
             end: addDays(start, 1)
         };
-    }
-    if (scale === TimelineScale.Week) {
+    case TimelineScale.Week:
         start = getWeekStart(currentDate);
         return {
             start,
             end: addWeeks(start, 1)
         };
-    }
-    if (scale === TimelineScale.Month) {
+    case TimelineScale.Month:
         start = getMonthStart(currentDate);
         return {
             start,
             end: addMonths(start, 1)
         };
-    }
-    if (scale === TimelineScale.Year) {
+    case TimelineScale.Year:
         start = getYearStart(currentDate);
         return {
             start,
             end: addYears(start, 1)
         };
+    default:
+        throw new Error('Invalid scale');
     }
-    throw new Error('Invalid scale');
 };
 
 export const getTimelineSubsections = (boundaries: TimelineBoundaries, scale: TimelineScale): Date[] => {
-    let sectionSize: number = getSubsectionSize(scale, boundaries);
-    const sectionsCount : number = differenceInHours(boundaries.start, boundaries.end) / sectionSize;
+    let sectionSize: number = getSubsectionSize(scale);
+    const sectionsCount : number = differenceInHours(boundaries.end, boundaries.start) / sectionSize;
     let sections: Date[] = [];
     for (let i = 0; i < sectionsCount; i++) {
         sections.push(addHours(boundaries.start, sectionSize * (i + 1)));
@@ -47,21 +47,35 @@ export const getTimelineSubsections = (boundaries: TimelineBoundaries, scale: Ti
     return sections;
 };
 
-const getSubsectionSize = (scale: TimelineScale, boundaries: TimelineBoundaries) => {
-    let sectionSize: number;
+export const getSubsectionTitle = (subsection: Date, scale: TimelineScale): string => {
+    let datePipe = new DatePipe('en-US');
+    let sectionHours = getSubsectionSize(scale);
     switch (scale) {
     case TimelineScale.Day:
-        sectionSize = differenceInHours(boundaries.start, addHours(boundaries.start, 4));
-        break;
+        return `${datePipe.transform(addHours(subsection, -1 * sectionHours), 'HH:mm')} - ${datePipe.transform(subsection, 'HH:mm')}`;
     case TimelineScale.Week:
-        sectionSize = differenceInHours(boundaries.start, addDays(boundaries.start, 1));
-        break;
+        return datePipe.transform(addHours(subsection, -1), 'EEEE')!;
     case TimelineScale.Month:
-        sectionSize = differenceInHours(boundaries.start, addWeeks(boundaries.start, 1));
-        break;
+        return `${datePipe.transform(addDays(addHours(subsection, -1 * sectionHours), 1), 'MM/dd')} - ${datePipe.transform(subsection, 'MM/dd')}`;
     case TimelineScale.Year:
-        sectionSize = differenceInHours(boundaries.start, addMonths(boundaries.start, 1));
-        break;
+        return datePipe.transform(addHours(subsection, -1), 'MMMM')!;
+    default:
+        throw new Error('Invalid scale');
     }
-    return sectionSize;
+};
+
+const getSubsectionSize = (scale: TimelineScale) => {
+    let mockDate: Date = new Date();
+    switch (scale) {
+    case TimelineScale.Day:
+        return differenceInHours(addHours(mockDate, 4), mockDate);
+    case TimelineScale.Week:
+        return differenceInHours(addDays(mockDate, 1), mockDate);
+    case TimelineScale.Month:
+        return differenceInHours(addWeeks(mockDate, 1), mockDate);
+    case TimelineScale.Year:
+        return differenceInHours(addMonths(mockDate, 1), mockDate);
+    default:
+        throw new Error('Invalid scale');
+    }
 };
