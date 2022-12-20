@@ -1,3 +1,13 @@
 <div class="dashboard-wrapper">
-    <app-timeline [tasks]="tasks" [currentDate]="currentDate" [scale]="timelineScale" (scaleIncreased)="increaseScale($event)"></app-timeline>
+    <app-timeline [tasks]="tasks" [currentDate]="currentDate"
+     [scale]="timelineScale" (scaleIncreased)="zoomIn($event)">
+    </app-timeline>
+    <div class="zoom-buttons">
+        <button mat-fab color="primary" (click)="zoomIn()">
+            <mat-icon>zoom_in</mat-icon>
+        </button>
+        <button mat-fab color="primary" (click)="zoomOut()">
+            <mat-icon>zoom_out</mat-icon>
+        </button>
+    </div>
 </div>

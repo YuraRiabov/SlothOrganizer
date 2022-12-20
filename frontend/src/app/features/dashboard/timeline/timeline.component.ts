@@ -2,8 +2,8 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { getSubsectionTitle, getTimelineBoundaries, getTimelineSubsections } from '@utils/dates/timeline.helper';
 
 import { Task } from '#types/tasks/task';
-import { TimelineBoundaries } from '#types/tasks/timeline-boundaries';
 import { TimelineScale } from '#types/tasks/enums/timeline-scale';
+import { TimelineSection } from '#types/tasks/timeline-section';
 import { addDays } from 'date-fns';
 import { isBetween } from '@utils/dates/dates.helper';
 
@@ -13,8 +13,8 @@ import { isBetween } from '@utils/dates/dates.helper';
     styleUrls: ['./timeline.component.sass']
 })
 export class TimelineComponent implements OnInit {
-    private readonly minimumColumnNumber = 4;
-    public readonly columnNumber = 84;
+    private readonly minimumColumnNumber = 25;
+    public readonly columnNumber = 500;
 
     private timelineScale: TimelineScale = TimelineScale.Day;
 
@@ -28,8 +28,8 @@ export class TimelineComponent implements OnInit {
     @Output() scaleIncreased = new EventEmitter<Date>();
 
     public tasksByRows: Task[][] = [];
-    public timelineBoundaries: TimelineBoundaries = {} as TimelineBoundaries;
-    public timelineSubsections: Date[] = [];
+    public timelineBoundaries: TimelineSection = {} as TimelineSection;
+    public timelineSubsections: TimelineSection[] = [];
 
     constructor() { }
 
@@ -37,19 +37,16 @@ export class TimelineComponent implements OnInit {
         this.initializeTimeline();
     }
 
-    public getStartColumn(task: Task): number {
-        return Math.floor((task.start.getTime() - this.timelineBoundaries.start.getTime()) / this.getTimelineLength() * this.columnNumber);
-    }
-
-    public getEndColumn(task: Task): number {
-        return Math.ceil((task.end.getTime() - this.timelineBoundaries.start.getTime()) / this.getTimelineLength() * this.columnNumber);
+    public getColumn(date: Date): number {
+        const result = Math.round((date.getTime() - this.timelineBoundaries.start.getTime()) / this.getTimelineLength() * this.columnNumber);
+        return result > 0 ? result + 1 : 1;
     }
 
     public getVisibleTasks(): Task[] {
         return this.tasks.filter(t => this.isVisible(t));
     }
 
-    public getSubsectionTitle(subsection: Date): string {
+    public getSubsectionTitle(subsection: TimelineSection): string {
         return getSubsectionTitle(subsection, this.timelineScale);
     }
 
@@ -68,7 +65,7 @@ export class TimelineComponent implements OnInit {
     }
 
     private isVisible(task: Task): boolean {
-        return this.getEndColumn(task) - this.getStartColumn(task) >= this.minimumColumnNumber;
+        return this.getColumn(task.end) - this.getColumn(task.start) >= this.minimumColumnNumber;
     }
 
     private getTimelineLength(): number {

@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { DashboardRoutingModule } from './dashboard-routing.module';
+import { MaterialModule } from '@shared/material/material.module';
 import { NgModule } from '@angular/core';
 import { TimelineComponent } from './timeline/timeline.component';
 
@@ -11,7 +12,8 @@ import { TimelineComponent } from './timeline/timeline.component';
     ],
     imports: [
         CommonModule,
-        DashboardRoutingModule
+        DashboardRoutingModule,
+        MaterialModule
     ]
 })
 export class DashboardModule { }

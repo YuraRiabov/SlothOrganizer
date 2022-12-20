@@ -1,11 +1,11 @@
-import { addDays, addHours, addMonths, addWeeks, addYears, differenceInHours } from 'date-fns';
+import { addDays, addHours, addMonths, addWeeks, addYears, differenceInHours, endOfMonth, startOfMonth, sub } from 'date-fns';
 import { getDayStart, getMonthStart, getWeekStart, getYearStart } from './dates.helper';
 
 import { DatePipe } from '@angular/common';
-import { TimelineBoundaries } from '#types/tasks/timeline-boundaries';
 import { TimelineScale } from '#types/tasks/enums/timeline-scale';
+import { TimelineSection } from '#types/tasks/timeline-section';
 
-export const getTimelineBoundaries = (currentDate: Date, scale: TimelineScale): TimelineBoundaries => {
+export const getTimelineBoundaries = (currentDate: Date, scale: TimelineScale): TimelineSection => {
     let start: Date;
     switch (scale) {
     case TimelineScale.Day:
@@ -37,28 +37,39 @@ export const getTimelineBoundaries = (currentDate: Date, scale: TimelineScale): 
     }
 };
 
-export const getTimelineSubsections = (boundaries: TimelineBoundaries, scale: TimelineScale): Date[] => {
+export const getTimelineSubsections = (boundaries: TimelineSection, scale: TimelineScale): TimelineSection[] => {
     let sectionSize: number = getSubsectionSize(scale);
     const sectionsCount : number = differenceInHours(boundaries.end, boundaries.start) / sectionSize;
-    let sections: Date[] = [];
+    let sections: TimelineSection[] = [];
     for (let i = 0; i < sectionsCount; i++) {
-        sections.push(addHours(boundaries.start, sectionSize * (i + 1)));
+        let section: TimelineSection;
+        if (scale === TimelineScale.Year) {
+            section = {
+                start: startOfMonth(addHours(boundaries.start, sectionSize * i)),
+                end: endOfMonth(addHours(boundaries.start, sectionSize * i)),
+            };
+        } else {
+            section = {
+                start: addHours(boundaries.start, sectionSize * i),
+                end: addHours(boundaries.start, sectionSize * (i + 1))
+            };
+        }
+        sections.push(section);
     }
     return sections;
 };
 
-export const getSubsectionTitle = (subsection: Date, scale: TimelineScale): string => {
+export const getSubsectionTitle = (subsection: TimelineSection, scale: TimelineScale): string => {
     let datePipe = new DatePipe('en-US');
-    let sectionHours = getSubsectionSize(scale);
     switch (scale) {
     case TimelineScale.Day:
-        return `${datePipe.transform(addHours(subsection, -1 * sectionHours), 'HH:mm')} - ${datePipe.transform(subsection, 'HH:mm')}`;
+        return `${datePipe.transform(subsection.start, 'HH:mm')} - ${datePipe.transform(subsection.end, 'HH:mm')}`;
     case TimelineScale.Week:
-        return datePipe.transform(addHours(subsection, -1), 'EEEE')!;
+        return datePipe.transform(subsection.start, 'EEEE')!;
     case TimelineScale.Month:
-        return `${datePipe.transform(addDays(addHours(subsection, -1 * sectionHours), 1), 'MM/dd')} - ${datePipe.transform(subsection, 'MM/dd')}`;
+        return `${datePipe.transform(subsection.start, 'MM/dd')} - ${datePipe.transform(subsection.end, 'MM/dd')}`;
     case TimelineScale.Year:
-        return datePipe.transform(addHours(subsection, -1), 'MMMM')!;
+        return datePipe.transform(subsection.start, 'MMMM')!;
     default:
         throw new Error('Invalid scale');
     }
@@ -68,13 +79,13 @@ const getSubsectionSize = (scale: TimelineScale) => {
     let mockDate: Date = new Date();
     switch (scale) {
     case TimelineScale.Day:
-        return differenceInHours(addHours(mockDate, 4), mockDate);
+        return 4;
     case TimelineScale.Week:
-        return differenceInHours(addDays(mockDate, 1), mockDate);
+        return 24;
     case TimelineScale.Month:
-        return differenceInHours(addWeeks(mockDate, 1), mockDate);
+        return 24 * 7;
     case TimelineScale.Year:
-        return differenceInHours(addMonths(mockDate, 1), mockDate);
+        return 24 * 32;
     default:
         throw new Error('Invalid scale');
     }

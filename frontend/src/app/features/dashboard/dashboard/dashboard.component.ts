@@ -37,13 +37,19 @@ export class DashboardComponent {
     ];
 
     public currentDate = new Date(2022, 12, 16, 23);
-    public timelineScale = TimelineScale.Month;
+    public timelineScale = TimelineScale.Year;
     constructor() { }
 
-    public increaseScale(date? : Date) {
+    public zoomIn(date? : Date) : void {
         this.currentDate = date ?? this.currentDate;
         if (this.timelineScale != TimelineScale.Day) {
             this.timelineScale--;
+        }
+    }
+
+    public zoomOut() : void {
+        if (this.timelineScale != TimelineScale.Year) {
+            this.timelineScale++;
         }
     }
 }
