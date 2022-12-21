@@ -1,17 +1,26 @@
-<div class="timeline-container">
-    <div class="subsections-container" [ngStyle]="{'grid-template-columns' : 'repeat(' + columnNumber + ', 1fr'}">
-        <div class="timeline-subsection" *ngFor="let subsection of timelineSubsections; index as i"
-        [ngStyle]="{'grid-column': getColumn(subsection.start) + '/' + getColumn(subsection.end)}">
-        <p (click)="increaseScale(timelineSubsections[i].start)">
-            {{getSubsectionTitle(subsection)}}
-        </p>
+<div class="timeline-scrolling-wrapper" #timelineScroll>
+    <div class="timeline-container" [ngStyle]="{'width': 100 * pageNumber + '%'}">
+        <div class="sections-container"
+            [ngStyle]="{'grid-template-columns' : 'repeat(' + pageColumnNumber * pageNumber + ', 1fr'}">
+            <div class="timeline-section" *ngFor="let section of timelineSections; index as i"
+                [ngStyle]="{'grid-column': getColumn(section.start) + '/' + getColumn(section.end)}">
+                {{getSectionTitle(section)}}
+            </div>
+        </div>
+        <div class="subsections-container"
+            [ngStyle]="{'grid-template-columns' : 'repeat(' + pageColumnNumber * pageNumber + ', 1fr'}">
+            <div class="timeline-section" *ngFor="let subsection of timelineSubsections; index as i"
+                [ngStyle]="{'grid-column': getColumn(subsection.start) + '/' + getColumn(subsection.end)}">
+                <p (click)="increaseScale(timelineSubsections[i])">
+                    {{getSubsectionTitle(subsection)}}
+                </p>
+            </div>
+        </div>
+        <div class="timeline-row" *ngFor="let taskRow of tasksByRows; index as i"
+            [ngStyle]="{'grid-template-columns' : 'repeat(' + pageColumnNumber * pageNumber + ', 1fr', 'grid-row': i+3}">
+            <div class="task-block" *ngFor="let task of tasksByRows[i]"
+                [ngStyle]="{'grid-column': getColumn(task.start) + '/' + getColumn(task.end)}">
+                {{task.title}}
+            </div>
+        </div>
     </div>
-    </div>
-    <div class="timeline-row" *ngFor="let taskRow of tasksByRows; index as i"
-         [ngStyle]="{'grid-template-columns' : 'repeat(' + columnNumber + ', 1fr', 'grid-row': i+3}">
-        <div class="task-block" *ngFor="let task of tasksByRows[i]"
-            [ngStyle]="{'grid-column': getColumn(task.start) + '/' + getColumn(task.end)}">
-        {{task.title}}
-    </div>
-    </div>
-</div>

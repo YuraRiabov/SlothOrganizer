@@ -1,25 +1,42 @@
 @import 'src/styles/color-variables'
-    
+
+.timeline-scrolling-wrapper
+    width: 100%
+    width: 100%
+    height: 100%
+    overflow-x: scroll
+
+    &::-webkit-scrollbar
+        display: none
+
 .timeline-container
     width: 100%
     height: 100%
     display: grid
-    grid-template-rows: 30px 30px repeat(8, 1fr)
+    grid-template-rows: 30px 30px repeat(6, 1fr)
     row-gap: 10px
 
-    .subsections-container
-        grid-row: 2 / 11
+    .subsections-container, .sections-container
         grid-column: 1
         display: grid
-        .timeline-subsection
+
+        .timeline-section
             display: grid
             grid-template-rows: 30px 1fr
-            border-right: 1px solid black
             text-align: center
             z-index: 1
 
             p
                 cursor: pointer
+
+    .sections-container
+        grid-row: 1
+
+    .subsections-container
+        grid-row: 2 / 11
+
+        .timeline-section
+            border-right: 1px solid black
 
     .timeline-row
         grid-column: 1

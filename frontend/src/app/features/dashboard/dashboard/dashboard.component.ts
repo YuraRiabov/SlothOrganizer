@@ -11,7 +11,7 @@ export class DashboardComponent {
     public tasks: Task[] = [
         {
             start: new Date(2022, 12, 16, 8),
-            end: new Date(2022, 12, 21, 18),
+            end: new Date(2022, 12, 22, 0),
             title: 'big block'
         },
         {
@@ -36,8 +36,8 @@ export class DashboardComponent {
         }
     ];
 
-    public currentDate = new Date(2022, 12, 16, 23);
-    public timelineScale = TimelineScale.Year;
+    public currentDate: Date = new Date(2022, 12, 16, 23);
+    public timelineScale = TimelineScale.Day;
     constructor() { }
 
     public zoomIn(date? : Date) : void {

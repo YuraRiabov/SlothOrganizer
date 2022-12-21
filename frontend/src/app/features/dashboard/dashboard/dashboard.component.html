@@ -1,6 +1,15 @@
 <div class="dashboard-wrapper">
-    <app-timeline [tasks]="tasks" [currentDate]="currentDate"
-     [scale]="timelineScale" (scaleIncreased)="zoomIn($event)">
+    <div class="header">
+
+    </div>
+    <div class="toolbar">
+        <div class="go-to-date-button">
+            <input hidden [(ngModel)]="currentDate" [matDatepicker]="picker">
+            <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+        </div>
+    </div>
+    <app-timeline [tasks]="tasks" [date]="currentDate" [scale]="timelineScale" (scaleIncreased)="zoomIn($event)">
     </app-timeline>
     <div class="zoom-buttons">
         <button mat-fab color="primary" (click)="zoomIn()">
