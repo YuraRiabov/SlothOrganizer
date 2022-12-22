@@ -29,9 +29,13 @@
         <div class="timeline-row"
             [ngStyle]="{'grid-template-columns' : 'repeat(' + pageColumnNumber * pageNumber + ', 1fr', 'grid-row': 8 }">
             <div class="task-block" *ngFor="let block of exceedingTaskBlocks"
-                [ngStyle]="{'grid-column': getColumn(getBlockStart(block)) + '/' + getColumn(getBlockEnd(block))}"
-                (click)="openExceedingTasks(block)">
-                {{ block.length }} more
+                [ngStyle]="{'grid-column': getColumn(getBlockStart(block)) + '/' + getColumn(getBlockEnd(block))}">
+                <div *ngIf="block.length > 1" (click)="openExceedingTasks(block)">
+                    {{ block.length }} more
+                </div>
+                <div *ngIf="block.length === 1">
+                    {{block[0].title}}
+                </div>
             </div>
         </div>
         <button class="right-more-button" mat-fab color="primary" (click)="loadMore(false)">

@@ -75,11 +75,6 @@ export class DashboardComponent {
             start: new Date(2022, 12, 16, 10),
             end: new Date(2022, 12, 16, 12, 30),
             title: 'sixth block'
-        },
-        {
-            start: new Date(2022, 12, 16, 10, 30),
-            end: new Date(2022, 12, 16, 13, 30),
-            title: 'sixth block'
         }
     ];
 

@@ -159,7 +159,7 @@ export class TimelineComponent implements OnInit, AfterViewInit {
         }
 
         this.tasksByRows = tasksByRows;
-
+        this.exceedingTaskBlocks = [];
         if (exceeding.length > 0) {
             exceeding = exceeding.sort(
                 (firstBlock, secondBlock) => this.getBlockStart(firstBlock).getTime() - this.getBlockStart(secondBlock).getTime()
