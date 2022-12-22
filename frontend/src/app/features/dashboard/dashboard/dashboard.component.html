@@ -4,7 +4,7 @@
     </div>
     <div class="toolbar">
         <div class="go-to-date-button">
-            <input hidden [(ngModel)]="currentDate" [matDatepicker]="picker">
+            <input hidden [value]="currentDate" (dateChange)="goToDate($event)" [matDatepicker]="picker">
             <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
             <mat-datepicker #picker></mat-datepicker>
         </div>

@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
+import { MatDatepickerInputEvent } from '@angular/material/datepicker';
 import { Task } from '#types/tasks/task';
 import { TimelineScale } from '#types/tasks/enums/timeline-scale';
+import { addHours } from 'date-fns';
 
 @Component({
     selector: 'app-dashboard',
@@ -78,11 +80,6 @@ export class DashboardComponent {
             start: new Date(2022, 12, 16, 10, 30),
             end: new Date(2022, 12, 16, 13, 30),
             title: 'sixth block'
-        },
-        {
-            start: new Date(2022, 12, 16, 13),
-            end: new Date(2022, 12, 16, 13, 30),
-            title: 'sixth block'
         }
     ];
 
@@ -101,5 +98,9 @@ export class DashboardComponent {
         if (this.timelineScale != TimelineScale.Year) {
             this.timelineScale++;
         }
+    }
+
+    public goToDate(event: MatDatepickerInputEvent<Date>) {
+        this.currentDate = addHours(event.value!, 12);
     }
 }
