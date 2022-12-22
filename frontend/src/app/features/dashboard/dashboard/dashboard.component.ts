@@ -10,6 +10,11 @@ import { TimelineScale } from '#types/tasks/enums/timeline-scale';
 export class DashboardComponent {
     public tasks: Task[] = [
         {
+            start: new Date(2022, 11, 16, 8),
+            end: new Date(2022, 13, 1, 0),
+            title: 'month block'
+        },
+        {
             start: new Date(2022, 12, 16, 8),
             end: new Date(2022, 12, 22, 0),
             title: 'big block'
@@ -32,7 +37,52 @@ export class DashboardComponent {
         {
             start: new Date(2022, 12, 16, 12),
             end: new Date(2022, 12, 16, 18),
-            title: 'second block'
+            title: 'fourth block'
+        },
+        {
+            start: new Date(2022, 12, 16, 13),
+            end: new Date(2022, 12, 16, 20),
+            title: 'fifth block'
+        },
+        {
+            start: new Date(2022, 12, 16, 14),
+            end: new Date(2022, 12, 16, 15),
+            title: 'sixth block'
+        },
+        {
+            start: new Date(2022, 12, 16, 14),
+            end: new Date(2022, 12, 16, 15),
+            title: 'sixth block'
+        },
+        {
+            start: new Date(2022, 12, 16, 14),
+            end: new Date(2022, 12, 16, 15),
+            title: 'sixth block'
+        },
+        {
+            start: new Date(2022, 12, 16, 14),
+            end: new Date(2022, 12, 16, 15),
+            title: 'sixth block'
+        },
+        {
+            start: new Date(2022, 12, 16, 14),
+            end: new Date(2022, 12, 16, 15),
+            title: 'sixth block'
+        },
+        {
+            start: new Date(2022, 12, 16, 10),
+            end: new Date(2022, 12, 16, 12, 30),
+            title: 'sixth block'
+        },
+        {
+            start: new Date(2022, 12, 16, 10, 30),
+            end: new Date(2022, 12, 16, 13, 30),
+            title: 'sixth block'
+        },
+        {
+            start: new Date(2022, 12, 16, 13),
+            end: new Date(2022, 12, 16, 13, 30),
+            title: 'sixth block'
         }
     ];
 

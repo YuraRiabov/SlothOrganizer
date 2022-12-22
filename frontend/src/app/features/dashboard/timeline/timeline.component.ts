@@ -2,6 +2,8 @@ import { AfterViewInit, Component, ElementRef, EventEmitter, Input, OnInit, Outp
 import { addHours, differenceInHours } from 'date-fns';
 import { getSectionTitle, getSubsectionTitle, getTimelineBoundaries, getTimelineSections, getTimelineSubsections } from '@utils/dates/timeline.helper';
 
+import { ExceedingTasksComponent } from '../exceeding-tasks/exceeding-tasks.component';
+import { MatDialog } from '@angular/material/dialog';
 import { Task } from '#types/tasks/task';
 import { TimelineScale } from '#types/tasks/enums/timeline-scale';
 import { TimelineSection } from '#types/tasks/timeline-section';
@@ -13,7 +15,7 @@ import { isBetween } from '@utils/dates/dates.helper';
     styleUrls: ['./timeline.component.sass']
 })
 export class TimelineComponent implements OnInit, AfterViewInit {
-    private readonly minimumColumnNumber = 25;
+    private readonly minimumColumnNumber = 15;
     public readonly pageColumnNumber = 500;
     public readonly defaultPageNumber = 12;
 
@@ -36,11 +38,12 @@ export class TimelineComponent implements OnInit, AfterViewInit {
 
     public pageNumber: number = this.defaultPageNumber;
     public tasksByRows: Task[][] = [];
+    public exceedingTaskBlocks: Task[][] = [];
     public timelineBoundaries: TimelineSection = {} as TimelineSection;
     public timelineSections: TimelineSection[] = [];
     public timelineSubsections: TimelineSection[] = [];
 
-    constructor() { }
+    constructor(public dialog: MatDialog) { }
 
     ngAfterViewInit(): void {
         this.scrollTo(this.currentDate);
@@ -52,7 +55,7 @@ export class TimelineComponent implements OnInit, AfterViewInit {
 
     public getColumn(date: Date): number {
         let ratio = this.getDateRatio(date);
-        if(ratio < 0) {
+        if (ratio < 0) {
             return 1;
         }
         if (ratio > 1) {
@@ -84,10 +87,22 @@ export class TimelineComponent implements OnInit, AfterViewInit {
         setTimeout(() => this.scrollTo(returnTo, false), 0);
     }
 
-    private initializeTimeline(pageNumber? : number, scroll: boolean = true): void {
+    public getBlockStart(block: Task[]): Date {
+        return block.sort((first, second) => first.start.getTime() - second.start.getTime())[0].start;
+    }
+
+    public getBlockEnd(block: Task[]): Date {
+        return block.sort((first, second) => second.end.getTime() - first.end.getTime())[0].end;
+    }
+
+    public openExceedingTasks(block: Task[]) {
+        this.dialog.open(ExceedingTasksComponent, { data: { tasks: block } });
+    }
+
+    private initializeTimeline(pageNumber?: number, scroll: boolean = true): void {
         this.pageNumber = pageNumber ?? this.defaultPageNumber;
         this.timelineBoundaries = getTimelineBoundaries(this.currentDate, this.timelineScale, this.pageNumber);
-        this.tasksByRows = this.separateTasksByRows(this.getVisibleTasks());
+        this.separateTasksByRows(this.getVisibleTasks());
         this.timelineSubsections = getTimelineSubsections(this.timelineBoundaries, this.timelineScale);
         this.timelineSections = getTimelineSections(this.timelineBoundaries, this.timelineScale);
         if (this.timelineScroll && scroll) {
@@ -112,12 +127,13 @@ export class TimelineComponent implements OnInit, AfterViewInit {
         return this.timelineBoundaries.end.getTime() - this.timelineBoundaries.start.getTime();
     }
 
-    private getDateRatio(date: Date) : number {
+    private getDateRatio(date: Date): number {
         return (date.getTime() - this.timelineBoundaries.start.getTime()) / this.getTimelineLength();
     }
 
-    private separateTasksByRows(tasks: Task[]): Task[][] {
+    private separateTasksByRows(tasks: Task[]): void {
         let tasksByRows: Task[][] = Array.from(Array(5), () => []);
+        let exceeding: Task[][] = [];
         for (let task of tasks) {
             let inserted = false;
             for (let i = 0; i < tasksByRows.length && !inserted; i++) {
@@ -127,7 +143,37 @@ export class TimelineComponent implements OnInit, AfterViewInit {
                     inserted = true;
                 }
             }
+            if (!inserted) {
+                for (let i = 0; i < exceeding.length && !inserted; i++) {
+                    let block = exceeding[i];
+                    if (isBetween(task.end, this.getBlockStart(block), this.getBlockEnd(block)) ||
+                        isBetween(this.getBlockEnd(block), task.start, task.end)) {
+                        block.push(task);
+                        inserted = true;
+                    }
+                }
+                if (!inserted) {
+                    exceeding.push([task]);
+                }
+            }
         }
-        return tasksByRows;
+
+        this.tasksByRows = tasksByRows;
+
+        if (exceeding.length > 0) {
+            exceeding = exceeding.sort(
+                (firstBlock, secondBlock) => this.getBlockStart(firstBlock).getTime() - this.getBlockStart(secondBlock).getTime()
+            );
+            let lastBlockIndex = 0;
+            this.exceedingTaskBlocks = [exceeding[0]];
+            for (let i = 1; i < exceeding.length; i++) {
+                if (this.getBlockEnd(this.exceedingTaskBlocks[lastBlockIndex]) > this.getBlockStart(exceeding[i])) {
+                    this.exceedingTaskBlocks[lastBlockIndex] = this.exceedingTaskBlocks[lastBlockIndex].concat(exceeding[i]);
+                } else {
+                    this.exceedingTaskBlocks.push(exceeding[i]);
+                    lastBlockIndex++;
+                }
+            }
+        }
     }
 }

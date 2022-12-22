@@ -8,8 +8,8 @@ export const getTimelineBoundaries = (currentDate: Date, scale: TimelineScale, p
     switch (scale) {
     case TimelineScale.Day:
         return {
-            start: startOfDay(addDays(currentDate, -1 * pageNumber / 2)),
-            end: endOfDay(addDays(currentDate, pageNumber / 2))
+            start: startOfDay(addDays(currentDate, -1 * pageNumber / 4)),
+            end: endOfDay(addDays(currentDate, pageNumber / 4))
         };
     case TimelineScale.Week:
         return {

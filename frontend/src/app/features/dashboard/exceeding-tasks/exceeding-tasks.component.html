@@ -1,0 +1,6 @@
+<mat-dialog-content class="exceeding-tasks-wrapper">
+    <div class="task-block" *ngFor="let task of data.tasks">
+        <h2>{{ task.title }}</h2>
+        <p> {{ task.start | date: 'medium'}} - {{ task.start | date: 'medium'}}</p>
+    </div>
+</mat-dialog-content>
