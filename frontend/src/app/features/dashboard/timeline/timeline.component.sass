@@ -15,6 +15,7 @@
     display: grid
     grid-template-rows: 30px 30px repeat(6, 1fr)
     row-gap: 10px
+    position: relative
 
     .subsections-container, .sections-container
         grid-column: 1
@@ -48,4 +49,15 @@
         place-items: center
         text-align: center
         z-index: 2
-        
+    
+    .left-more-button, .right-more-button
+        position: absolute
+        top: 50%
+        bottom: 50%
+        z-index: 5
+
+    .left-more-button
+        left: 0
+
+    .right-more-button
+        right: 0

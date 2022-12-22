@@ -1,5 +1,8 @@
 <div class="timeline-scrolling-wrapper" #timelineScroll>
     <div class="timeline-container" [ngStyle]="{'width': 100 * pageNumber + '%'}">
+        <button class="left-more-button" mat-fab color="primary" (click)="loadMore(true)">
+            <mat-icon>chevron_left</mat-icon>
+        </button>
         <div class="sections-container"
             [ngStyle]="{'grid-template-columns' : 'repeat(' + pageColumnNumber * pageNumber + ', 1fr'}">
             <div class="timeline-section" *ngFor="let section of timelineSections; index as i"
@@ -23,4 +26,8 @@
                 {{task.title}}
             </div>
         </div>
+        <button class="right-more-button" mat-fab color="primary" (click)="loadMore(false)">
+            <mat-icon>chevron_right</mat-icon>
+        </button>
     </div>
+</div>

@@ -15,7 +15,7 @@ import { isBetween } from '@utils/dates/dates.helper';
 export class TimelineComponent implements OnInit, AfterViewInit {
     private readonly minimumColumnNumber = 25;
     public readonly pageColumnNumber = 500;
-    public readonly pageNumber = 8;
+    public readonly defaultPageNumber = 12;
 
     private timelineScale: TimelineScale = TimelineScale.Day;
     private currentDate: Date = new Date();
@@ -34,6 +34,7 @@ export class TimelineComponent implements OnInit, AfterViewInit {
 
     @ViewChild('timelineScroll') timelineScroll!: ElementRef;
 
+    public pageNumber: number = this.defaultPageNumber;
     public tasksByRows: Task[][] = [];
     public timelineBoundaries: TimelineSection = {} as TimelineSection;
     public timelineSections: TimelineSection[] = [];
@@ -72,17 +73,24 @@ export class TimelineComponent implements OnInit, AfterViewInit {
         return getSectionTitle(section, this.timelineScale);
     }
 
-    public increaseScale(section: TimelineSection) {
+    public increaseScale(section: TimelineSection): void {
         let date = addHours(section.start, differenceInHours(section.end, section.start) / 2);
         this.scaleIncreased.emit(date);
     }
 
-    private initializeTimeline(): void {
+    public loadMore(left: boolean): void {
+        let returnTo = left ? this.timelineBoundaries.start : this.timelineBoundaries.end;
+        this.initializeTimeline(this.pageNumber * 2, false);
+        setTimeout(() => this.scrollTo(returnTo, false), 0);
+    }
+
+    private initializeTimeline(pageNumber? : number, scroll: boolean = true): void {
+        this.pageNumber = pageNumber ?? this.defaultPageNumber;
         this.timelineBoundaries = getTimelineBoundaries(this.currentDate, this.timelineScale, this.pageNumber);
         this.tasksByRows = this.separateTasksByRows(this.getVisibleTasks());
         this.timelineSubsections = getTimelineSubsections(this.timelineBoundaries, this.timelineScale);
         this.timelineSections = getTimelineSections(this.timelineBoundaries, this.timelineScale);
-        if (this.timelineScroll) {
+        if (this.timelineScroll && scroll) {
             this.scrollTo(this.currentDate);
         }
     }
@@ -91,11 +99,13 @@ export class TimelineComponent implements OnInit, AfterViewInit {
         return this.getColumn(task.end) - this.getColumn(task.start) >= this.minimumColumnNumber;
     }
 
-    private scrollTo(date: Date): void {
+    private scrollTo(date: Date, center: boolean = true): void {
         const elementRect = this.timelineScroll.nativeElement.getBoundingClientRect();
-        const absoluteElementLeft = elementRect.left + window.scrollX;
-        const datePosition = absoluteElementLeft + elementRect.width * (this.pageNumber * this.getDateRatio(date) - 0.5);
-        this.timelineScroll.nativeElement.scrollTo(datePosition, datePosition);
+        let datePosition = elementRect.width * (this.pageNumber * this.getDateRatio(date) - 0.5);
+        if (!center) {
+            datePosition -= elementRect.width * 0.5;
+        }
+        this.timelineScroll.nativeElement.scrollTo(datePosition, 0);
     }
 
     private getTimelineLength(): number {
