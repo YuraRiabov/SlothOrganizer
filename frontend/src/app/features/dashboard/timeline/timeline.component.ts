@@ -117,7 +117,7 @@ export class TimelineComponent implements OnInit, AfterViewInit {
         let observer = new ResizeObserver(entries => {
             for (let entry of entries) {
                 if (this.pageNumber != this.defaultPageNumber) {
-                    this.scrollTo(this.returnDate, false);
+                    this.scrollTo(this.returnDate);
                 }
             }
         });
@@ -131,12 +131,9 @@ export class TimelineComponent implements OnInit, AfterViewInit {
         return this.getColumn(task.end) - this.getColumn(task.start) >= this.minimumColumnNumber;
     }
 
-    private scrollTo(date: Date, center: boolean = true): void {
+    private scrollTo(date: Date): void {
         const elementRect = this.timelineScroll.nativeElement.getBoundingClientRect();
         let datePosition = elementRect.width * (this.pageNumber * this.getDateRatio(date) - 0.5);
-        if (!center) {
-            datePosition -= elementRect.width * 0.5;
-        }
         this.timelineScroll.nativeElement.scrollTo(datePosition, 0);
     }
 
