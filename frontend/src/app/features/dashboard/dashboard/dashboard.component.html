@@ -12,10 +12,10 @@
     <app-timeline [tasks]="tasks" [date]="currentDate" [scale]="timelineScale" (scaleIncreased)="zoomIn($event)">
     </app-timeline>
     <div class="zoom-buttons">
-        <button mat-fab color="primary" (click)="zoomIn()">
+        <button mat-fab color="primary" [disabled]="timelineScale === 0" (click)="zoomIn()">
             <mat-icon>zoom_in</mat-icon>
         </button>
-        <button mat-fab color="primary" (click)="zoomOut()">
+        <button mat-fab color="primary" [disabled]="timelineScale === 3" (click)="zoomOut()">
             <mat-icon>zoom_out</mat-icon>
         </button>
     </div>

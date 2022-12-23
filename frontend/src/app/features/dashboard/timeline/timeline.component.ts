@@ -81,8 +81,10 @@ export class TimelineComponent implements OnInit, AfterViewInit {
     }
 
     public increaseScale(section: TimelineSection): void {
-        let date = addHours(section.start, differenceInHours(section.end, section.start) / 2);
-        this.scaleIncreased.emit(date);
+        if (this.timelineScale !== TimelineScale.Day) {
+            let date = addHours(section.start, differenceInHours(section.end, section.start) / 2);
+            this.scaleIncreased.emit(date);
+        }
     }
 
     public loadMore(left: boolean): void {
