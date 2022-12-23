@@ -1,5 +1,5 @@
 <div class="timeline-scrolling-wrapper" #timelineScroll>
-    <div class="timeline-container" [ngStyle]="{'width': 100 * pageNumber + '%'}">
+    <div class="timeline-container" #timelineContainer [ngStyle]="{'width': 100 * pageNumber + '%'}">
         <button class="left-more-button" mat-fab color="primary" (click)="loadMore(true)">
             <mat-icon>chevron_left</mat-icon>
         </button>

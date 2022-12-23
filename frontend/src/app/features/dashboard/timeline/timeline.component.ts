@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, DoCheck, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { addHours, differenceInHours } from 'date-fns';
 import { getSectionTitle, getSubsectionTitle, getTimelineBoundaries, getTimelineSections, getTimelineSubsections } from '@utils/dates/timeline.helper';
 
@@ -21,6 +21,8 @@ export class TimelineComponent implements OnInit, AfterViewInit {
 
     private timelineScale: TimelineScale = TimelineScale.Day;
     private currentDate: Date = new Date();
+    private returnDate: Date = this.currentDate;
+    private timelineResizeObserver!: ResizeObserver;
 
     @Input() set date(value: Date) {
         this.currentDate = value;
@@ -35,6 +37,7 @@ export class TimelineComponent implements OnInit, AfterViewInit {
     @Output() scaleIncreased = new EventEmitter<Date>();
 
     @ViewChild('timelineScroll') timelineScroll!: ElementRef;
+    @ViewChild('timelineContainer') timelineContainer!: ElementRef;
 
     public pageNumber: number = this.defaultPageNumber;
     public tasksByRows: Task[][] = [];
@@ -47,6 +50,7 @@ export class TimelineComponent implements OnInit, AfterViewInit {
 
     ngAfterViewInit(): void {
         this.scrollTo(this.currentDate);
+        this.timelineResizeObserver = this.initializeTimelineWidthObserver();
     }
 
     ngOnInit(): void {
@@ -82,9 +86,8 @@ export class TimelineComponent implements OnInit, AfterViewInit {
     }
 
     public loadMore(left: boolean): void {
-        let returnTo = left ? this.timelineBoundaries.start : this.timelineBoundaries.end;
+        this.returnDate = left ? this.timelineBoundaries.start : this.timelineBoundaries.end;
         this.initializeTimeline(this.pageNumber * 2, false);
-        setTimeout(() => this.scrollTo(returnTo, false), 0);
     }
 
     public getBlockStart(block: Task[]): Date {
@@ -108,6 +111,20 @@ export class TimelineComponent implements OnInit, AfterViewInit {
         if (this.timelineScroll && scroll) {
             this.scrollTo(this.currentDate);
         }
+    }
+
+    private initializeTimelineWidthObserver(): ResizeObserver {
+        let observer = new ResizeObserver(entries => {
+            for (let entry of entries) {
+                if (this.pageNumber != this.defaultPageNumber) {
+                    this.scrollTo(this.returnDate, false);
+                }
+            }
+        });
+
+        observer.observe(this.timelineContainer.nativeElement);
+
+        return observer;
     }
 
     private isVisible(task: Task): boolean {
