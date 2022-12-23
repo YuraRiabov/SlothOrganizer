@@ -78,7 +78,7 @@ export class DashboardComponent {
         }
     ];
 
-    public currentDate: Date = new Date(2022, 12, 16, 23);
+    public currentDate: Date = new Date(2022, 12, 16, 12);
     public timelineScale = TimelineScale.Day;
     constructor() { }
 

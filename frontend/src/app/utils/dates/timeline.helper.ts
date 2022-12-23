@@ -1,4 +1,4 @@
-import { addDays, addHours, addMonths, addWeeks, addYears, differenceInDays, differenceInHours, endOfDay, endOfMonth, endOfWeek, endOfYear, startOfDay, startOfMonth, startOfWeek, startOfYear } from 'date-fns';
+import { addDays, addHours, addMonths, addWeeks, addYears, daysInWeek, differenceInHours, endOfDay, endOfMonth, endOfWeek, endOfYear, startOfDay, startOfMonth, startOfWeek, startOfYear } from 'date-fns';
 
 import { DatePipe } from '@angular/common';
 import { TimelineScale } from '#types/tasks/timeline/enums/timeline-scale';
@@ -52,41 +52,22 @@ export const getTimelineSections = (boundaries: TimelineSection, scale: Timeline
 };
 
 export const getTimelineSubsections = (boundaries: TimelineSection, scale: TimelineScale): TimelineSection[] => {
-    let sectionHours: number = getSubsectionSize(scale);
+    const sectionHours: number = getSubsectionSize(scale);
     let sectionsCount: number = Math.round(differenceInHours(boundaries.end, boundaries.start) / sectionHours);
+    if (scale === TimelineScale.Month || scale == TimelineScale.Year) {
+        sectionsCount++;
+    }
     let sections: TimelineSection[] = [];
-    if (scale === TimelineScale.Year) {
-        sectionsCount++;
-        let firstSectionStart = startOfMonth(boundaries.start);
-        sections.push({ start: firstSectionStart, end: endOfMonth(firstSectionStart) });
-        for (let i = 1; i < sectionsCount; i++) {
-            let previousDate = sections[i - 1].start;
-            let section = {
-                start: startOfMonth(addHours(previousDate, sectionHours)),
-                end: endOfMonth(addHours(previousDate, sectionHours)),
-            };
-            sections.push(section);
-        }
-        return sections;
-    }
-    if (scale === TimelineScale.Month) {
-        sectionsCount++;
-        let firstSectionStart = startOfWeek(boundaries.start);
-        sections.push({ start: firstSectionStart, end: endOfWeek(firstSectionStart) });
-        for (let i = 1; i < sectionsCount; i++) {
-            let previousDate = sections[i - 1].start;
-            let section = {
-                start: startOfWeek(addHours(previousDate, sectionHours)),
-                end: endOfWeek(addHours(previousDate, sectionHours)),
-            };
-            sections.push(section);
-        }
-        return sections;
-    }
-    for (let i = 0; i < sectionsCount; i++) {
-        let section: TimelineSection = {
-            start: addHours(boundaries.start, sectionHours * i),
-            end: addHours(boundaries.start, sectionHours * (i + 1))
+    const startFunction = getStartFunction(scale);
+    const endFunction = getEndFunction(scale);
+
+    const firstSectionStart = startFunction(boundaries.start);
+    sections.push({ start: firstSectionStart, end: endFunction(firstSectionStart) });
+    for (let i = 1; i < sectionsCount; i++) {
+        let previousDate = sections[i - 1].start;
+        let section = {
+            start: startFunction(addHours(previousDate, sectionHours)),
+            end: endFunction(addHours(previousDate, sectionHours)),
         };
         sections.push(section);
     }
@@ -126,16 +107,45 @@ export const getSectionTitle = (section: TimelineSection, scale: TimelineScale):
 };
 
 const getSubsectionSize = (scale: TimelineScale) => {
-    let mockDate: Date = new Date();
     switch (scale) {
     case TimelineScale.Day:
         return 4;
     case TimelineScale.Week:
         return 24;
     case TimelineScale.Month:
-        return 24 * 7 + 1;
+        return 24 * daysInWeek + 1;
     case TimelineScale.Year:
         return 24 * 32;
+    default:
+        throw new Error('Invalid scale');
+    }
+};
+
+const getStartFunction = (scale: TimelineScale) => {
+    switch (scale) {
+    case TimelineScale.Day:
+        return (date: Date) => date;
+    case TimelineScale.Week:
+        return startOfDay;
+    case TimelineScale.Month:
+        return startOfWeek;
+    case TimelineScale.Year:
+        return startOfMonth;
+    default:
+        throw new Error('Invalid scale');
+    }
+};
+
+const getEndFunction = (scale: TimelineScale) => {
+    switch (scale) {
+    case TimelineScale.Day:
+        return (date: Date) => addHours(date, 4);
+    case TimelineScale.Week:
+        return endOfDay;
+    case TimelineScale.Month:
+        return endOfWeek;
+    case TimelineScale.Year:
+        return endOfMonth;
     default:
         throw new Error('Invalid scale');
     }

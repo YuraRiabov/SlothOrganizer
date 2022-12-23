@@ -1,6 +1,11 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
+import { CommonModule } from '@angular/common';
 import { DashboardComponent } from './dashboard.component';
+import { DashboardRoutingModule } from '../dashboard-routing.module';
+import { FormsModule } from '@angular/forms';
+import { MaterialModule } from '@shared/material/material.module';
+import { TimelineComponent } from '../timeline/timeline.component';
 
 describe('DashboardComponent', () => {
     let component: DashboardComponent;
@@ -8,7 +13,13 @@ describe('DashboardComponent', () => {
 
     beforeEach(async () => {
         await TestBed.configureTestingModule({
-            declarations: [DashboardComponent]
+            declarations: [DashboardComponent, TimelineComponent],
+            imports: [
+                CommonModule,
+                DashboardRoutingModule,
+                MaterialModule,
+                FormsModule
+            ]
         })
             .compileComponents();
 

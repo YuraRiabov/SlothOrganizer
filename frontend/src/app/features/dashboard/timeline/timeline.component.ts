@@ -2,7 +2,6 @@ import { AfterViewInit, Component, ElementRef, EventEmitter, Input, OnInit, Outp
 import { addHours, differenceInHours } from 'date-fns';
 import { getSectionTitle, getSubsectionTitle, getTimelineBoundaries, getTimelineSections, getTimelineSubsections } from '@utils/dates/timeline.helper';
 
-import { ExceedingTasksComponent } from '../exceeding-tasks/exceeding-tasks.component';
 import { MatDialog } from '@angular/material/dialog';
 import { Task } from '#types/tasks/task';
 import { TasksBlock } from '#types/tasks/timeline/tasks-block';
@@ -44,7 +43,7 @@ export class TimelineComponent implements OnInit, AfterViewInit {
     public timelineSections: TimelineSection[] = [];
     public timelineSubsections: TimelineSection[] = [];
 
-    constructor(public dialog: MatDialog) { }
+    constructor() { }
 
     ngAfterViewInit(): void {
         this.scrollTo(this.currentDate);
@@ -145,38 +144,47 @@ export class TimelineComponent implements OnInit, AfterViewInit {
                 }
             }
             if (!inserted) {
-                for (let i = 0; i < exceeding.length && !inserted; i++) {
-                    let block = exceeding[i];
-                    if (isBetween(task.end, this.getBlockStart(block), this.getBlockEnd(block)) ||
-                        isBetween(this.getBlockEnd(block), task.start, task.end)) {
-                        block.push(task);
-                        inserted = true;
-                    }
-                }
-                if (!inserted) {
-                    exceeding.push([task]);
-                }
+                this.addToExceeding(exceeding, task);
             }
         }
 
         this.tasksByRows = tasksByRows;
         this.exceedingTaskBlocks = [];
         if (exceeding.length > 0) {
-            let exceedingTaskBlocks: Task[][] = [];
-            exceeding = exceeding.sort(
-                (firstBlock, secondBlock) => this.getBlockStart(firstBlock).getTime() - this.getBlockStart(secondBlock).getTime()
-            );
-            let lastBlockIndex = 0;
-            exceedingTaskBlocks = [exceeding[0]];
-            for (let i = 1; i < exceeding.length; i++) {
-                if (this.getBlockEnd(exceedingTaskBlocks[lastBlockIndex]) > this.getBlockStart(exceeding[i])) {
-                    exceedingTaskBlocks[lastBlockIndex] = exceedingTaskBlocks[lastBlockIndex].concat(exceeding[i]);
-                } else {
-                    exceedingTaskBlocks.push(exceeding[i]);
-                    lastBlockIndex++;
-                }
+            this.exceedingTaskBlocks = this.getExceedingBlocks(exceeding);
+        }
+    }
+
+    private getExceedingBlocks(exceeding: Task[][]) {
+        let exceedingTaskBlocks: Task[][] = [];
+        exceeding = exceeding.sort(
+            (firstBlock, secondBlock) => this.getBlockStart(firstBlock).getTime() - this.getBlockStart(secondBlock).getTime()
+        );
+        let lastBlockIndex = 0;
+        exceedingTaskBlocks = [exceeding[0]];
+        for (let i = 1; i < exceeding.length; i++) {
+            if (this.getBlockEnd(exceedingTaskBlocks[lastBlockIndex]) > this.getBlockStart(exceeding[i])) {
+                exceedingTaskBlocks[lastBlockIndex] = exceedingTaskBlocks[lastBlockIndex].concat(exceeding[i]);
+            } else {
+                exceedingTaskBlocks.push(exceeding[i]);
+                lastBlockIndex++;
             }
-            this.exceedingTaskBlocks = exceedingTaskBlocks.map(tasks => ({ tasks, expanded: false }));
+        }
+        return exceedingTaskBlocks.map(tasks => ({ tasks, expanded: false }));
+    }
+
+    private addToExceeding(exceeding: Task[][], task: Task): void {
+        let inserted = false;
+        for (let i = 0; i < exceeding.length && !inserted; i++) {
+            let block = exceeding[i];
+            if (isBetween(task.end, this.getBlockStart(block), this.getBlockEnd(block)) ||
+                isBetween(this.getBlockEnd(block), task.start, task.end)) {
+                block.push(task);
+                inserted = true;
+            }
+        }
+        if (!inserted) {
+            exceeding.push([task]);
         }
     }
 }
