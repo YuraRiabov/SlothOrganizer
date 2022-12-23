@@ -1,5 +1,4 @@
-import { Component, Inject } from '@angular/core';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { Component, ElementRef, EventEmitter, HostListener, Input, Output } from '@angular/core';
 
 import { Task } from '#types/tasks/task';
 
@@ -9,10 +8,20 @@ import { Task } from '#types/tasks/task';
     styleUrls: ['./exceeding-tasks.component.sass']
 })
 export class ExceedingTasksComponent {
+    private clickCount : number = 0;
+    @Output() private clickedOff = new EventEmitter();
+    @Input() public tasks: Task[] = [];
 
-    constructor(
-        @Inject(MAT_DIALOG_DATA) public data: { tasks: Task[] },
-        public dialogRef: MatDialogRef<ExceedingTasksComponent>
-    ) { }
+    @HostListener('document:click', ['$event'])
+    clickout(event: MouseEvent) {
+        if(!this.elementRef.nativeElement.contains(event.target)) {
+            this.clickCount++;
+            if (this.clickCount > 1) {
+                this.clickedOff.emit();
+            }
+        }
+    }
+
+    constructor(private elementRef: ElementRef) { }
 
 }

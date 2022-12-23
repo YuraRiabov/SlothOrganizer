@@ -5,8 +5,9 @@ import { getSectionTitle, getSubsectionTitle, getTimelineBoundaries, getTimeline
 import { ExceedingTasksComponent } from '../exceeding-tasks/exceeding-tasks.component';
 import { MatDialog } from '@angular/material/dialog';
 import { Task } from '#types/tasks/task';
-import { TimelineScale } from '#types/tasks/enums/timeline-scale';
-import { TimelineSection } from '#types/tasks/timeline-section';
+import { TasksBlock } from '#types/tasks/timeline/tasks-block';
+import { TimelineScale } from '#types/tasks/timeline/enums/timeline-scale';
+import { TimelineSection } from '#types/tasks/timeline/timeline-section';
 import { isBetween } from '@utils/dates/dates.helper';
 
 @Component({
@@ -38,7 +39,7 @@ export class TimelineComponent implements OnInit, AfterViewInit {
 
     public pageNumber: number = this.defaultPageNumber;
     public tasksByRows: Task[][] = [];
-    public exceedingTaskBlocks: Task[][] = [];
+    public exceedingTaskBlocks: TasksBlock[] = [];
     public timelineBoundaries: TimelineSection = {} as TimelineSection;
     public timelineSections: TimelineSection[] = [];
     public timelineSubsections: TimelineSection[] = [];
@@ -95,8 +96,8 @@ export class TimelineComponent implements OnInit, AfterViewInit {
         return block.sort((first, second) => second.end.getTime() - first.end.getTime())[0].end;
     }
 
-    public openExceedingTasks(block: Task[]) {
-        this.dialog.open(ExceedingTasksComponent, { data: { tasks: block } });
+    public changeBlockExpansion(block: TasksBlock) {
+        block.expanded = !block.expanded;
     }
 
     private initializeTimeline(pageNumber?: number, scroll: boolean = true): void {
@@ -161,19 +162,21 @@ export class TimelineComponent implements OnInit, AfterViewInit {
         this.tasksByRows = tasksByRows;
         this.exceedingTaskBlocks = [];
         if (exceeding.length > 0) {
+            let exceedingTaskBlocks: Task[][] = [];
             exceeding = exceeding.sort(
                 (firstBlock, secondBlock) => this.getBlockStart(firstBlock).getTime() - this.getBlockStart(secondBlock).getTime()
             );
             let lastBlockIndex = 0;
-            this.exceedingTaskBlocks = [exceeding[0]];
+            exceedingTaskBlocks = [exceeding[0]];
             for (let i = 1; i < exceeding.length; i++) {
-                if (this.getBlockEnd(this.exceedingTaskBlocks[lastBlockIndex]) > this.getBlockStart(exceeding[i])) {
-                    this.exceedingTaskBlocks[lastBlockIndex] = this.exceedingTaskBlocks[lastBlockIndex].concat(exceeding[i]);
+                if (this.getBlockEnd(exceedingTaskBlocks[lastBlockIndex]) > this.getBlockStart(exceeding[i])) {
+                    exceedingTaskBlocks[lastBlockIndex] = exceedingTaskBlocks[lastBlockIndex].concat(exceeding[i]);
                 } else {
-                    this.exceedingTaskBlocks.push(exceeding[i]);
+                    exceedingTaskBlocks.push(exceeding[i]);
                     lastBlockIndex++;
                 }
             }
+            this.exceedingTaskBlocks = exceedingTaskBlocks.map(tasks => ({ tasks, expanded: false }));
         }
     }
 }

@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { MatDatepickerInputEvent } from '@angular/material/datepicker';
 import { Task } from '#types/tasks/task';
-import { TimelineScale } from '#types/tasks/enums/timeline-scale';
+import { TimelineScale } from '#types/tasks/timeline/enums/timeline-scale';
 import { addHours } from 'date-fns';
 
 @Component({

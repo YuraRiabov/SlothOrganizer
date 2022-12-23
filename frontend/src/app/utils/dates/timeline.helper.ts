@@ -1,15 +1,15 @@
 import { addDays, addHours, addMonths, addWeeks, addYears, differenceInDays, differenceInHours, endOfDay, endOfMonth, endOfWeek, endOfYear, startOfDay, startOfMonth, startOfWeek, startOfYear } from 'date-fns';
 
 import { DatePipe } from '@angular/common';
-import { TimelineScale } from '#types/tasks/enums/timeline-scale';
-import { TimelineSection } from '#types/tasks/timeline-section';
+import { TimelineScale } from '#types/tasks/timeline/enums/timeline-scale';
+import { TimelineSection } from '#types/tasks/timeline/timeline-section';
 
 export const getTimelineBoundaries = (currentDate: Date, scale: TimelineScale, pageNumber: number): TimelineSection => {
     switch (scale) {
     case TimelineScale.Day:
         return {
-            start: startOfDay(addDays(currentDate, -1 * pageNumber / 4)),
-            end: endOfDay(addDays(currentDate, pageNumber / 4))
+            start: startOfDay(addDays(currentDate, -1 * pageNumber / 3)),
+            end: endOfDay(addDays(currentDate, pageNumber / 3))
         };
     case TimelineScale.Week:
         return {
@@ -23,8 +23,8 @@ export const getTimelineBoundaries = (currentDate: Date, scale: TimelineScale, p
         };
     case TimelineScale.Year:
         return {
-            start: startOfMonth(addYears(currentDate, -1 * pageNumber / 8)),
-            end: endOfMonth(addYears(currentDate, pageNumber / 8))
+            start: startOfMonth(addYears(currentDate, -1 * pageNumber / 2)),
+            end: endOfMonth(addYears(currentDate, pageNumber / 2))
         };
     default:
         throw new Error('Invalid scale');
@@ -35,8 +35,8 @@ export const getTimelineSections = (boundaries: TimelineSection, scale: Timeline
     if (scale !== TimelineScale.Year) {
         return getTimelineSubsections(boundaries, scale + 1);
     }
-    let sectionHours = 24 * 365;
-    let sectionsCount = differenceInHours(boundaries.end, boundaries.start) / sectionHours;
+    let sectionHours = 24 * 367;
+    let sectionsCount = differenceInHours(boundaries.end, boundaries.start) / sectionHours + 1;
     let sections: TimelineSection[] = [];
     let firstSectionStart = startOfYear(boundaries.start);
     sections.push({ start: firstSectionStart, end: endOfYear(firstSectionStart) });

@@ -29,12 +29,15 @@
         <div class="timeline-row"
             [ngStyle]="{'grid-template-columns' : 'repeat(' + pageColumnNumber * pageNumber + ', 1fr', 'grid-row': 8 }">
             <div class="task-block" *ngFor="let block of exceedingTaskBlocks"
-                [ngStyle]="{'grid-column': getColumn(getBlockStart(block)) + '/' + getColumn(getBlockEnd(block))}">
-                <div *ngIf="block.length > 1" (click)="openExceedingTasks(block)">
-                    {{ block.length }} more
+                [ngStyle]="{'grid-column': getColumn(getBlockStart(block.tasks)) + '/' + getColumn(getBlockEnd(block.tasks))}">
+                <div class="expanded-block-label" *ngIf="block.tasks.length > 1"(click)="changeBlockExpansion(block)">
+                    {{ block.tasks.length }} more
                 </div>
-                <div *ngIf="block.length === 1">
-                    {{block[0].title}}
+                <div *ngIf="block.tasks.length === 1">
+                    {{block.tasks[0].title}}
+                </div>
+                <div class="expanded-block" *ngIf="block.expanded">
+                    <app-exceeding-tasks [tasks]="block.tasks" (clickedOff)="changeBlockExpansion(block)"></app-exceeding-tasks>
                 </div>
             </div>
         </div>
