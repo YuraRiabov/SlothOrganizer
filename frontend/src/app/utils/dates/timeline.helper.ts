@@ -1,4 +1,4 @@
-import { addDays, addHours, addMonths, addWeeks, addYears, daysInWeek, differenceInHours, endOfDay, endOfMonth, endOfWeek, endOfYear, startOfDay, startOfMonth, startOfWeek, startOfYear } from 'date-fns';
+import { addDays, addHours, addMonths, addWeeks, addYears, daysInWeek, differenceInHours, differenceInYears, endOfDay, endOfMonth, endOfWeek, endOfYear, startOfDay, startOfMonth, startOfWeek, startOfYear } from 'date-fns';
 
 import { DatePipe } from '@angular/common';
 import { TimelineScale } from '#types/tasks/timeline/enums/timeline-scale';
@@ -36,7 +36,7 @@ export const getTimelineSections = (boundaries: TimelineSection, scale: Timeline
         return getTimelineSubsections(boundaries, scale + 1);
     }
     let sectionHours = 24 * 367;
-    let sectionsCount = differenceInHours(boundaries.end, boundaries.start) / sectionHours + 1;
+    let sectionsCount = differenceInYears(boundaries.end, boundaries.start);
     let sections: TimelineSection[] = [];
     let firstSectionStart = startOfYear(boundaries.start);
     sections.push({ start: firstSectionStart, end: endOfYear(firstSectionStart) });
@@ -54,8 +54,11 @@ export const getTimelineSections = (boundaries: TimelineSection, scale: Timeline
 export const getTimelineSubsections = (boundaries: TimelineSection, scale: TimelineScale): TimelineSection[] => {
     const sectionHours: number = getSubsectionSize(scale);
     let sectionsCount: number = Math.round(differenceInHours(boundaries.end, boundaries.start) / sectionHours);
-    if (scale === TimelineScale.Month || scale == TimelineScale.Year) {
+    if (scale === TimelineScale.Month) {
         sectionsCount++;
+    }
+    if (scale == TimelineScale.Year) {
+        sectionsCount = differenceInYears(boundaries.end, boundaries.start) * 12;
     }
     let sections: TimelineSection[] = [];
     const startFunction = getStartFunction(scale);
@@ -100,7 +103,7 @@ export const getSectionTitle = (section: TimelineSection, scale: TimelineScale):
     case TimelineScale.Month:
         return datePipe.transform(section.start, 'MMMM, YYYY')!;
     case TimelineScale.Year:
-        return datePipe.transform(section.start, 'YYYY')!;
+        return section.start.getFullYear().toString();
     default:
         throw new Error('Invalid scale');
     }
