@@ -29,6 +29,8 @@ namespace SlothOrganizer.Web.Extensions
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IVerificationCodeRepository, VerificationCodeRepository>();
             services.AddScoped<IRefreshTokenRepository, RefreshTokenRepository>();
+            services.AddScoped<IDashboardRepository, DashboardRepository>();
+            services.AddScoped<ITaskRepository, TaskRepository>();
             return services;
         }
 
