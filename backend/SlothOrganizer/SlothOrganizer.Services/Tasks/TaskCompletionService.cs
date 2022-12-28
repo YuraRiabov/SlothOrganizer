@@ -2,6 +2,7 @@
 using SlothOrganizer.Contracts.DTO.Tasks.Task;
 using SlothOrganizer.Contracts.DTO.Tasks.Task.Enums;
 using SlothOrganizer.Domain.Entities;
+using SlothOrganizer.Domain.Exceptions;
 using SlothOrganizer.Domain.Repositories;
 using SlothOrganizer.Services.Abstractions.Tasks;
 using SlothOrganizer.Services.Abstractions.Utility;
@@ -69,7 +70,7 @@ namespace SlothOrganizer.Services.Tasks
                 TaskRepeatingPeriod.Week => currentStart.AddDays(7),
                 TaskRepeatingPeriod.Month => currentStart.AddMonths(1),
                 TaskRepeatingPeriod.Year => currentStart.AddYears(1),
-                _ => throw new NotImplementedException()
+                _ => throw new InvalidPeriodException()
             };
         }
     }
