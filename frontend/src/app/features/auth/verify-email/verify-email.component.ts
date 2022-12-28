@@ -1,3 +1,5 @@
+import * as loginPageActions from '@store/actions/login-page.actions';
+
 import { FormControl, Validators } from '@angular/forms';
 import { Observable, catchError, concatMap, filter, map, of } from 'rxjs';
 
@@ -7,7 +9,6 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { Token } from '#types/auth/token';
-import { addToken } from '@store/actions/login-page.actions';
 import { selectUserId } from '@store/selectors/auth-page.selectors';
 
 @Component({
@@ -48,7 +49,7 @@ export class VerifyEmailComponent extends BaseComponent {
             filter(user => user != null),
             map(token => token as Token)
         ).subscribe((token) => {
-            this.store.dispatch(addToken({ token }));
+            this.store.dispatch(loginPageActions.addToken({ token }));
         });
     }
 

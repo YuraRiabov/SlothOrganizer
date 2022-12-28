@@ -14,5 +14,5 @@ export const authPageReducer = createReducer(
     initialState,
     on(addUser, (state, { user }): AuthState => ({ ...state, user })),
     on(addToken, (state, { token }): AuthState => ({ ...state, token })),
-    on(login, (state, { authState }): AuthState => (authState))
+    on(login, (state, { authState }): AuthState => ({ ...state, token: authState.token, user: authState.user }))
 );

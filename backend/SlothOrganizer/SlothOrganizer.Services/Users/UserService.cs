@@ -43,13 +43,13 @@ namespace SlothOrganizer.Services.Users
 
         public async Task<UserDto> Get(long id)
         {
-            var user = await GetByIdInternal(id);
+            var user = await Find(id);
             return _mapper.Map<UserDto>(user);
         }
 
         public async Task<UserDto> Get(string email)
         {
-            var user = await GetByEmailInternal(email);
+            var user = await Find(email);
             return _mapper.Map<UserDto>(user);
         }
 
@@ -58,9 +58,9 @@ namespace SlothOrganizer.Services.Users
             return await _userRepository.VerifyEmail(userId, code);
         }
 
-        public async Task<UserDto> Authorize(LoginDto login)
+        public async Task<UserDto> Get(LoginDto login)
         {
-            var user = await GetByEmailInternal(login.Email);
+            var user = await Find(login.Email);
             if (_hashService.VerifyPassword(login.Password, Convert.FromBase64String(user.Salt), user.Password))
             {
                 return _mapper.Map<UserDto>(user);
@@ -68,7 +68,7 @@ namespace SlothOrganizer.Services.Users
             throw new InvalidCredentialsException("Invalid password");
         }
 
-        private async Task<User> GetByIdInternal(long userId)
+        private async Task<User> Find(long userId)
         {
             var user = await _userRepository.Get(userId);
             if (user is null)
@@ -78,7 +78,7 @@ namespace SlothOrganizer.Services.Users
             return user;
         }
 
-        private async Task<User> GetByEmailInternal(string email)
+        private async Task<User> Find(string email)
         {
             var user = await _userRepository.Get(email);
             if (user is null)

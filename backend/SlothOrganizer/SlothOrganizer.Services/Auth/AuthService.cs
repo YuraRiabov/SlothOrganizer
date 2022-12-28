@@ -47,7 +47,7 @@ namespace SlothOrganizer.Services.Auth
 
         public async Task<UserAuthDto> SignIn(LoginDto login)
         {
-            var user = await _userService.Authorize(login);
+            var user = await _userService.Get(login);
             if (!user.EmailVerified)
             {
                 return new UserAuthDto

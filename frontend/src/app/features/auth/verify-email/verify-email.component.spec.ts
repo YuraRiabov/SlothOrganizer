@@ -1,5 +1,7 @@
 /* eslint-disable no-undef */
 
+import * as loginPageActions from '@store/actions/login-page.actions';
+
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { of, throwError } from 'rxjs';
@@ -13,7 +15,6 @@ import { MaterialModule } from '@shared/material/material.module';
 import { Store } from '@ngrx/store';
 import { Token } from '#types/auth/token';
 import { VerifyEmailComponent } from './verify-email.component';
-import { addToken } from '@store/actions/login-page.actions';
 
 describe('VerifyEmailComponent', () => {
     let component: VerifyEmailComponent;
@@ -80,7 +81,7 @@ describe('VerifyEmailComponent', () => {
 
         expect(mockStore.select).toHaveBeenCalledTimes(1);
         expect(mockAuthService.verifyEmail).toHaveBeenCalledTimes(1);
-        expect(mockStore.dispatch).toHaveBeenCalledOnceWith(addToken({token}));
+        expect(mockStore.dispatch).toHaveBeenCalledOnceWith(loginPageActions.addToken({token}));
     });
 
     it('should set error when invalid code', () => {

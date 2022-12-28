@@ -116,7 +116,7 @@ namespace SlothOrganizer.Services.Tests.Unit.Users
         }
 
         [Fact]
-        public async Task Authorize_WhenValid_ShouldReturn()
+        public async Task GetByLogin_WhenValid_ShouldReturn()
         {
             var bytes = GetBytes();
             LoginDto login = GetLoginDto();
@@ -129,16 +129,16 @@ namespace SlothOrganizer.Services.Tests.Unit.Users
             A.CallTo(() => _userRepository.Get("test@test.com")).Returns(Task.FromResult<User?>(user));
             A.CallTo(() => _hashService.VerifyPassword(login.Password, A<byte[]>._, user.Password)).Returns(true);
 
-            var result = await _userService.Authorize(login);
+            var result = await _userService.Get(login);
 
             Assert.Equal(login.Email, result.Email);
             A.CallTo(() => _hashService.VerifyPassword(login.Password, A<byte[]>._, user.Password)).MustHaveHappenedOnceExactly();
         }
 
         [Fact]
-        public async Task Authorize_WhenInValid_ShouldThrow()
+        public async Task GetByLogin_WhenInValid_ShouldThrow()
         {
-            var bytes = new byte[] { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 };
+            var bytes = GetBytes();
             var login = GetLoginDto();
             var user = new User
             {
@@ -149,7 +149,7 @@ namespace SlothOrganizer.Services.Tests.Unit.Users
             A.CallTo(() => _userRepository.Get("test@test.com")).Returns(Task.FromResult<User?>(user));
             A.CallTo(() => _hashService.VerifyPassword(login.Password, A<byte[]>._, user.Password)).Returns(false);
 
-            var code = async () => await _userService.Authorize(login);
+            var code = async () => await _userService.Get(login);
 
             await Assert.ThrowsAsync<InvalidCredentialsException>(code);
             A.CallTo(() => _hashService.VerifyPassword(login.Password, A<byte[]>._, user.Password)).MustHaveHappenedOnceExactly();
