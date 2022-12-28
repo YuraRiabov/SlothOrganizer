@@ -2,7 +2,7 @@
 using SlothOrganizer.Contracts.DTO.Tasks.Dashboard;
 using SlothOrganizer.Domain.Entities;
 
-namespace SlothOrganizer.Services.Tasks
+namespace SlothOrganizer.Services.Tasks.Mapping
 {
     internal class DashboardMappingProfile : Profile
     {

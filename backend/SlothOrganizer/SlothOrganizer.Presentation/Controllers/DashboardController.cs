@@ -22,5 +22,11 @@ namespace SlothOrganizer.Presentation.Controllers
         {
             return await _dashboardService.Create(newDashboard);
         }
+
+        [HttpGet("{userId}")]
+        public async Task<List<DashboardDto>> Get(long userId)
+        {
+            return await _dashboardService.Get(userId);
+        }
     }
 }

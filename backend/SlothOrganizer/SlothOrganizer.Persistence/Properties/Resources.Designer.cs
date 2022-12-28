@@ -187,6 +187,17 @@ namespace SlothOrganizer.Persistence.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to INSERT INTO TaskCompletions (TaskId, IsSuccessful, Start, End, LastEdited)
+        ///VALUES (@TaskId, @IsSuccessful, @Start, @End, @LastEdited)
+        ///SELECT CAST(SCOPE_IDENTITY() AS bigint).
+        /// </summary>
+        internal static string InsertTaskCompletion {
+            get {
+                return ResourceManager.GetString("InsertTaskCompletion", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to INSERT INTO Users (FirstName, LastName, Email, Password, Salt, EmailVerified)
         ///VALUES (@FirstName, @LastName, @Email, @Password, @Salt, @EmailVerified)
         ///SELECT CAST(SCOPE_IDENTITY() as bigint).
