@@ -1,6 +1,6 @@
 // hydration.effects.ts
 
-import * as HydrationActions from '../actions/hydration.actions';
+import * as HydrationActions from '../../actions/hydration.actions';
 
 import { Action, Store } from '@ngrx/store';
 import { Actions, OnInitEffects, createEffect, ofType } from '@ngrx/effects';

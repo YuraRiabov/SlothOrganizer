@@ -1,8 +1,8 @@
 import { addDays, addHours, addMonths, addWeeks, addYears, daysInWeek, differenceInHours, differenceInYears, endOfDay, endOfMonth, endOfWeek, endOfYear, startOfDay, startOfMonth, startOfWeek, startOfYear } from 'date-fns';
 
 import { DatePipe } from '@angular/common';
-import { TimelineScale } from '#types/tasks/timeline/enums/timeline-scale';
-import { TimelineSection } from '#types/tasks/timeline/timeline-section';
+import { TimelineScale } from '#types/dashboard/timeline/enums/timeline-scale';
+import { TimelineSection } from '#types/dashboard/timeline/timeline-section';
 
 export const getTimelineBoundaries = (currentDate: Date, scale: TimelineScale, pageNumber: number): TimelineSection => {
     switch (scale) {

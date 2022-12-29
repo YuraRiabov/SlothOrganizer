@@ -7,7 +7,7 @@ namespace SlothOrganizer.Presentation.Controllers
 {
     [Authorize]
     [ApiController]
-    [Route("task")]
+    [Route("tasks")]
     public class TaskController : ControllerBase
     {
         private readonly ITaskService _taskService;

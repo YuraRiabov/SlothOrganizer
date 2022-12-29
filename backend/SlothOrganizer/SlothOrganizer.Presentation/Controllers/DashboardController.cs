@@ -7,7 +7,7 @@ namespace SlothOrganizer.Presentation.Controllers
 {
     [Authorize]
     [ApiController]
-    [Route("dashboard")]
+    [Route("dashboards")]
     public class DashboardController : ControllerBase
     {
         private readonly IDashboardService _dashboardService;

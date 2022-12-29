@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { MatDatepickerInputEvent } from '@angular/material/datepicker';
-import { Task } from '#types/tasks/task';
-import { TimelineScale } from '#types/tasks/timeline/enums/timeline-scale';
+import { TaskBlock } from '#types/dashboard/timeline/task-block';
+import { TimelineScale } from '#types/dashboard/timeline/enums/timeline-scale';
 import { addHours } from 'date-fns';
 
 @Component({
@@ -10,7 +10,7 @@ import { addHours } from 'date-fns';
     styleUrls: ['./dashboard.component.sass']
 })
 export class DashboardComponent {
-    public tasks: Task[] = [
+    public tasks: TaskBlock[] = [
         {
             start: new Date(2022, 11, 16, 8),
             end: new Date(2022, 13, 1, 0),

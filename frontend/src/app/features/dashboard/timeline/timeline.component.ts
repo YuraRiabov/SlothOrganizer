@@ -1,12 +1,11 @@
-import { AfterViewInit, Component, DoCheck, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { addHours, differenceInHours } from 'date-fns';
 import { getSectionTitle, getSubsectionTitle, getTimelineBoundaries, getTimelineSections, getTimelineSubsections } from '@utils/dates/timeline.helper';
 
-import { MatDialog } from '@angular/material/dialog';
-import { Task } from '#types/tasks/task';
-import { TasksBlock } from '#types/tasks/timeline/tasks-block';
-import { TimelineScale } from '#types/tasks/timeline/enums/timeline-scale';
-import { TimelineSection } from '#types/tasks/timeline/timeline-section';
+import { JoinedTasksBlock } from '#types/dashboard/timeline/joined-tasks-block';
+import { TaskBlock } from '#types/dashboard/timeline/task-block';
+import { TimelineScale } from '#types/dashboard/timeline/enums/timeline-scale';
+import { TimelineSection } from '#types/dashboard/timeline/timeline-section';
 import { isBetween } from '@utils/dates/dates.helper';
 
 @Component({
@@ -28,7 +27,7 @@ export class TimelineComponent implements OnInit, AfterViewInit {
         this.currentDate = value;
         this.initializeTimeline();
     }
-    @Input() public tasks: Task[] = [];
+    @Input() public tasks: TaskBlock[] = [];
     @Input() public set scale(value: TimelineScale) {
         this.timelineScale = value;
         this.initializeTimeline();
@@ -40,8 +39,8 @@ export class TimelineComponent implements OnInit, AfterViewInit {
     @ViewChild('timelineContainer') timelineContainer!: ElementRef;
 
     public pageNumber: number = this.defaultPageNumber;
-    public tasksByRows: Task[][] = [];
-    public exceedingTaskBlocks: TasksBlock[] = [];
+    public tasksByRows: TaskBlock[][] = [];
+    public exceedingTaskBlocks: JoinedTasksBlock[] = [];
     public timelineBoundaries: TimelineSection = {} as TimelineSection;
     public timelineSections: TimelineSection[] = [];
     public timelineSubsections: TimelineSection[] = [];
@@ -68,7 +67,7 @@ export class TimelineComponent implements OnInit, AfterViewInit {
         return Math.round(ratio * this.pageColumnNumber * this.pageNumber) + 1;
     }
 
-    public getVisibleTasks(): Task[] {
+    public getVisibleTasks(): TaskBlock[] {
         return this.tasks.filter(t => this.isVisible(t));
     }
 
@@ -92,15 +91,15 @@ export class TimelineComponent implements OnInit, AfterViewInit {
         this.initializeTimeline(this.pageNumber * 2, false);
     }
 
-    public getBlockStart(block: Task[]): Date {
+    public getBlockStart(block: TaskBlock[]): Date {
         return block.sort((first, second) => first.start.getTime() - second.start.getTime())[0].start;
     }
 
-    public getBlockEnd(block: Task[]): Date {
+    public getBlockEnd(block: TaskBlock[]): Date {
         return block.sort((first, second) => second.end.getTime() - first.end.getTime())[0].end;
     }
 
-    public changeBlockExpansion(block: TasksBlock) {
+    public changeBlockExpansion(block: JoinedTasksBlock) {
         block.expanded = !block.expanded;
     }
 
@@ -129,7 +128,7 @@ export class TimelineComponent implements OnInit, AfterViewInit {
         return observer;
     }
 
-    private isVisible(task: Task): boolean {
+    private isVisible(task: TaskBlock): boolean {
         return this.getColumn(task.end) - this.getColumn(task.start) >= this.minimumColumnNumber;
     }
 
@@ -147,9 +146,9 @@ export class TimelineComponent implements OnInit, AfterViewInit {
         return (date.getTime() - this.timelineBoundaries.start.getTime()) / this.getTimelineLength();
     }
 
-    private separateTasksByRows(tasks: Task[]): void {
-        let tasksByRows: Task[][] = Array.from(Array(5), () => []);
-        let exceeding: Task[][] = [];
+    private separateTasksByRows(tasks: TaskBlock[]): void {
+        let tasksByRows: TaskBlock[][] = Array.from(Array(5), () => []);
+        let exceeding: TaskBlock[][] = [];
         for (let task of tasks) {
             let inserted = false;
             for (let i = 0; i < tasksByRows.length && !inserted; i++) {
@@ -171,8 +170,8 @@ export class TimelineComponent implements OnInit, AfterViewInit {
         }
     }
 
-    private getExceedingBlocks(exceeding: Task[][]) {
-        let exceedingTaskBlocks: Task[][] = [];
+    private getExceedingBlocks(exceeding: TaskBlock[][]) {
+        let exceedingTaskBlocks: TaskBlock[][] = [];
         exceeding = exceeding.sort(
             (firstBlock, secondBlock) => this.getBlockStart(firstBlock).getTime() - this.getBlockStart(secondBlock).getTime()
         );
@@ -189,7 +188,7 @@ export class TimelineComponent implements OnInit, AfterViewInit {
         return exceedingTaskBlocks.map(tasks => ({ tasks, expanded: false }));
     }
 
-    private addToExceeding(exceeding: Task[][], task: Task): void {
+    private addToExceeding(exceeding: TaskBlock[][], task: TaskBlock): void {
         let inserted = false;
         for (let i = 0; i < exceeding.length && !inserted; i++) {
             let block = exceeding[i];

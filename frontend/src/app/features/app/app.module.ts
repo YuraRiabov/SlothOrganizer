@@ -6,7 +6,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { BrowserModule } from '@angular/platform-browser';
 import { EffectsModule } from '@ngrx/effects';
 import { ErrorInterceptor } from '@shared/interceptors/error.interceptor';
-import { HydrationEffects } from '@store/effects/hydration.effects';
+import { HydrationEffects } from '@store/effects/meta/hydration.effects';
 import { LoadingInterceptor } from '@shared/interceptors/loading.interceptor';
 import { MaterialModule } from '@shared/material/material.module';
 import { NgModule } from '@angular/core';

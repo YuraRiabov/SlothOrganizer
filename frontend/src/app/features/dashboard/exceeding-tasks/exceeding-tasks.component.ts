@@ -1,6 +1,6 @@
 import { Component, ElementRef, EventEmitter, HostListener, Input, Output } from '@angular/core';
 
-import { Task } from '#types/tasks/task';
+import { TaskBlock } from '#types/dashboard/timeline/task-block';
 
 @Component({
     selector: 'app-exceeding-tasks',
@@ -10,7 +10,7 @@ import { Task } from '#types/tasks/task';
 export class ExceedingTasksComponent {
     private clickCount : number = 0;
     @Output() private clickedOff = new EventEmitter();
-    @Input() public tasks: Task[] = [];
+    @Input() public tasks: TaskBlock[] = [];
 
     @HostListener('document:click', ['$event'])
     clickout(event: MouseEvent) {
