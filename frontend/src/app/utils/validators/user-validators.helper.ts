@@ -1,4 +1,4 @@
-import { AbstractControl, ValidatorFn, Validators } from '@angular/forms';
+import { AbstractControl, FormGroup, ValidatorFn, Validators } from '@angular/forms';
 
 export const getNameValidators = () => [
     Validators.required,
@@ -27,4 +27,8 @@ export const passwordMatchingValidator = () : ValidatorFn => {
         }
         return null;
     };
+};
+
+export const hasLengthErrors =  (group: FormGroup, controlName: string): boolean => {
+    return group.get(controlName)?.hasError('minlength') || !!group.get(controlName)?.hasError('maxlength');
 };

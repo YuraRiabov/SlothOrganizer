@@ -1,8 +1,9 @@
+import * as loginPageActions from '@store/actions/login-page.actions';
+
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
-import { addUser, login } from '@store/actions/login-page.actions';
 import { catchError, filter, map, of } from 'rxjs';
-import { getEmailValidators, getPasswordValidators } from '@utils/validators/user-validators.helper';
+import { getEmailValidators, getPasswordValidators, hasLengthErrors } from '@utils/validators/user-validators.helper';
 
 import { AuthService } from '@api/auth.service';
 import { AuthState } from '@store/states/auth-state';
@@ -28,6 +29,10 @@ export class SignInComponent extends BaseComponent implements OnInit {
         this.signInGroup = this.buildSignInForm();
     }
 
+    public hasLengthErrors(controlName: string): boolean {
+        return hasLengthErrors(this.signInGroup, controlName);
+    }
+
     public redirectTo(route: string): void {
         this.router.navigate([route]);
     }
@@ -47,16 +52,16 @@ export class SignInComponent extends BaseComponent implements OnInit {
             map(auth => auth as AuthState)
         ).subscribe((auth) => {
             if (auth.token == null) {
-                this.store.dispatch(addUser({ user: auth.user }));
+                this.store.dispatch(loginPageActions.addUser({ user: auth.user }));
                 this.redirectTo('auth/verify-email');
                 return;
             }
-            this.store.dispatch(login({ authState: auth }));
+            this.store.dispatch(loginPageActions.login({ authState: auth }));
             this.redirectTo('');
         });
     }
 
-    public updateLoginErrors() : void {
+    public validate() : void {
         this.signInGroup.get('email')?.setErrors({ invalidLogin: false });
         this.signInGroup.get('password')?.setErrors({ invalidLogin: false });
         this.signInGroup.get('email')?.updateValueAndValidity();
