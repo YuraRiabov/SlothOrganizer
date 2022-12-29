@@ -13,8 +13,7 @@
     <mat-form-field class="sign-in-field">
         <mat-label i18n>Password</mat-label>
         <input formControlName="password" matInput type="password" (keydown)="validate()"/>
-        <mat-error i18n *ngIf="!signInGroup.get('password')?.hasError('pattern') &&
-         (signInGroup.get('password')?.hasError('minlength') || signInGroup.get('password')?.hasError('maxlength'))">
+        <mat-error i18n *ngIf="!signInGroup.get('password')?.hasError('pattern') && hasLengthErrors('password')">
             Must be 8 to 16 characters
         </mat-error>
         <mat-error i18n *ngIf="signInGroup.get('password')?.hasError('pattern')">

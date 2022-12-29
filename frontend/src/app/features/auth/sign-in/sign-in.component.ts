@@ -3,7 +3,7 @@ import * as loginPageActions from '@store/actions/login-page.actions';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { catchError, filter, map, of } from 'rxjs';
-import { getEmailValidators, getPasswordValidators } from '@utils/validators/user-validators.helper';
+import { getEmailValidators, getPasswordValidators, hasLengthErrors } from '@utils/validators/user-validators.helper';
 
 import { AuthService } from '@api/auth.service';
 import { AuthState } from '@store/states/auth-state';
@@ -27,6 +27,10 @@ export class SignInComponent extends BaseComponent implements OnInit {
 
     ngOnInit(): void {
         this.signInGroup = this.buildSignInForm();
+    }
+
+    public hasLengthErrors(controlName: string): boolean {
+        return hasLengthErrors(this.signInGroup, controlName);
     }
 
     public redirectTo(route: string): void {
