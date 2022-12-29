@@ -1,4 +1,6 @@
 import { ActivatedRoute, Router } from '@angular/router';
+import * as loginPageActions from '@store/actions/login-page.actions';
+
 import { FormControl, Validators } from '@angular/forms';
 import { Observable, catchError, concatMap, filter, map, of } from 'rxjs';
 
@@ -7,6 +9,7 @@ import { AuthState } from '@store/states/auth-state';
 import { BaseComponent } from '@shared/components/base/base.component';
 import { Component } from '@angular/core';
 import { Store } from '@ngrx/store';
+import { Token } from '#types/auth/token';
 import { login } from '@store/actions/login-page.actions';
 import { selectUserEmail } from '@store/selectors/auth-page.selectors';
 

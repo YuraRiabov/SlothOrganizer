@@ -1,5 +1,7 @@
 /* eslint-disable no-undef */
 
+import * as loginPageActions from '@store/actions/login-page.actions';
+
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ParamMap, Router } from '@angular/router';
@@ -14,7 +16,6 @@ import { CommonModule } from '@angular/common';
 import { MaterialModule } from '@shared/material/material.module';
 import { Store } from '@ngrx/store';
 import { VerifyEmailComponent } from './verify-email.component';
-import { login } from '@store/actions/login-page.actions';
 
 describe('VerifyEmailComponent', () => {
     let component: VerifyEmailComponent;
