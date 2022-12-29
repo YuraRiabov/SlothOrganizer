@@ -5,6 +5,7 @@ import { ExceedingTasksComponent } from './exceeding-tasks/exceeding-tasks.compo
 import { FormsModule } from '@angular/forms';
 import { MaterialModule } from '@shared/material/material.module';
 import { NgModule } from '@angular/core';
+import { StoreModule } from '@ngrx/store';
 import { TimelineComponent } from './timeline/timeline.component';
 
 @NgModule({
@@ -17,7 +18,8 @@ import { TimelineComponent } from './timeline/timeline.component';
         CommonModule,
         DashboardRoutingModule,
         MaterialModule,
-        FormsModule
+        FormsModule,
+        StoreModule.forFeature('Dashboard', [])
     ]
 })
 export class DashboardModule { }
