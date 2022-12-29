@@ -70,7 +70,7 @@ namespace SlothOrganizer.Web.Tests.Integration.Base
         {
             var user = await SetupUser();
             var verificationCode = DtoProvider.GetVerificationCode(user.Email);
-            var verificationResponse = await Client.PutAsync("auth/verifyEmail", GetStringContent(verificationCode));
+            var verificationResponse = await Client.PutAsync("auth/verify-email", GetStringContent(verificationCode));
             return await GetResponse<UserAuthDto>(verificationResponse);
         }
 
@@ -79,7 +79,7 @@ namespace SlothOrganizer.Web.Tests.Integration.Base
             A.CallTo(() => RandomService.GetRandomNumber(6)).Returns(111111);
             A.CallTo(() => DateTimeService.Now()).Returns(DateTime.Now.AddHours(1));
             var newUser = DtoProvider.GetNewUser();
-            var signUpResponse = await Client.PostAsync("auth/signup", GetStringContent(newUser));
+            var signUpResponse = await Client.PostAsync("auth/sign-up", GetStringContent(newUser));
             return await GetResponse<UserDto>(signUpResponse);
         }
     }

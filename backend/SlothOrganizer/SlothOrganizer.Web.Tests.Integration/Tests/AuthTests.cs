@@ -19,7 +19,7 @@ namespace SlothOrganizer.Web.Tests.Integration.Tests
         {
             var newUser = DtoProvider.GetNewUser();
 
-            var response = await Client.PostAsync($"{ControllerRoute}/signup", GetStringContent(newUser));
+            var response = await Client.PostAsync($"{ControllerRoute}/sign-up", GetStringContent(newUser));
             var result = await GetResponse<UserDto>(response);
 
             Assert.Equal(HttpStatusCode.OK, response.StatusCode);
@@ -45,7 +45,7 @@ namespace SlothOrganizer.Web.Tests.Integration.Tests
         {
             var newUser = new {firstName, lastName, email, password};
 
-            var response = await Client.PostAsync($"{ControllerRoute}/signup", GetStringContent(newUser));
+            var response = await Client.PostAsync($"{ControllerRoute}/sign-up", GetStringContent(newUser));
 
             Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
         }
@@ -55,8 +55,8 @@ namespace SlothOrganizer.Web.Tests.Integration.Tests
         {
             var newUser = DtoProvider.GetNewUser();
 
-            await Client.PostAsync($"{ControllerRoute}/signup", GetStringContent(newUser));
-            var response = await Client.PostAsync($"{ControllerRoute}/signup", GetStringContent(newUser));
+            await Client.PostAsync($"{ControllerRoute}/sign-up", GetStringContent(newUser));
+            var response = await Client.PostAsync($"{ControllerRoute}/sign-up", GetStringContent(newUser));
 
             Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
             Assert.Single(await new UserRepository(Context).GetAll());
@@ -69,12 +69,12 @@ namespace SlothOrganizer.Web.Tests.Integration.Tests
             A.CallTo(() => DateTimeService.Now()).Returns(DateTime.Now.AddHours(1));
             var newUser = DtoProvider.GetNewUser();
 
-            var signUpResponse = await Client.PostAsync($"{ControllerRoute}/signup", GetStringContent(newUser));
+            var signUpResponse = await Client.PostAsync($"{ControllerRoute}/sign-up", GetStringContent(newUser));
             var user = await GetResponse<UserDto>(signUpResponse);
 
             var verificationCode = DtoProvider.GetVerificationCode(user.Email);
 
-            var verificationResponse = await Client.PutAsync($"{ControllerRoute}/verifyEmail", GetStringContent(verificationCode));
+            var verificationResponse = await Client.PutAsync($"{ControllerRoute}/verify-email", GetStringContent(verificationCode));
             var result = await GetResponse<UserAuthDto>(verificationResponse);
 
             Assert.Equal(HttpStatusCode.OK, verificationResponse.StatusCode);
@@ -90,12 +90,12 @@ namespace SlothOrganizer.Web.Tests.Integration.Tests
             A.CallTo(() => DateTimeService.Now()).Returns(DateTime.Now.AddMinutes(-2));
             var newUser = DtoProvider.GetNewUser();
 
-            var signUpResponse = await Client.PostAsync($"{ControllerRoute}/signup", GetStringContent(newUser));
+            var signUpResponse = await Client.PostAsync($"{ControllerRoute}/sign-up", GetStringContent(newUser));
             var user = await GetResponse<UserDto>(signUpResponse);
 
             var verificationCode = DtoProvider.GetVerificationCode(user.Email);
 
-            var verificationResponse = await Client.PutAsync($"{ControllerRoute}/verifyEmail", GetStringContent(verificationCode));
+            var verificationResponse = await Client.PutAsync($"{ControllerRoute}/verify-email", GetStringContent(verificationCode));
 
             Assert.Equal(HttpStatusCode.Forbidden, verificationResponse.StatusCode);
         }
@@ -105,7 +105,7 @@ namespace SlothOrganizer.Web.Tests.Integration.Tests
         {
             VerificationCodeDto verificationCode = DtoProvider.GetVerificationCode("test@test.com");
 
-            var verificationResponse = await Client.PutAsync($"{ControllerRoute}/verifyEmail", GetStringContent(verificationCode));
+            var verificationResponse = await Client.PutAsync($"{ControllerRoute}/verify-email", GetStringContent(verificationCode));
 
             Assert.Equal(HttpStatusCode.Forbidden, verificationResponse.StatusCode);
         }
@@ -115,7 +115,7 @@ namespace SlothOrganizer.Web.Tests.Integration.Tests
         {
             var user = await SetupUser();
 
-            var response = await Client.PostAsync($"{ControllerRoute}/resendCode/{user.Email}", null);
+            var response = await Client.PostAsync($"{ControllerRoute}/resend-code/{user.Email}", null);
 
             Assert.Equal(HttpStatusCode.OK, response.StatusCode);
             var codes = await new VerificationCodeRepository(Context).Get(user.Email);
@@ -125,7 +125,7 @@ namespace SlothOrganizer.Web.Tests.Integration.Tests
         [Fact]
         public async Task ResendVerificationCode_WhenInvalidId_NotFound()
         {
-            var response = await Client.PostAsync($"{ControllerRoute}/resendCode/1", null);
+            var response = await Client.PostAsync($"{ControllerRoute}/resend-code/1", null);
 
             Assert.Equal(HttpStatusCode.NotFound, response.StatusCode);
         }
@@ -137,7 +137,7 @@ namespace SlothOrganizer.Web.Tests.Integration.Tests
 
             var loginDto = DtoProvider.GetLogin();
 
-            var response = await Client.PostAsync($"{ControllerRoute}/signIn", GetStringContent(loginDto));
+            var response = await Client.PostAsync($"{ControllerRoute}/sign-in", GetStringContent(loginDto));
             var result = await GetResponse<UserAuthDto>(response);
 
             Assert.Equal(HttpStatusCode.OK, response.StatusCode);
@@ -154,7 +154,7 @@ namespace SlothOrganizer.Web.Tests.Integration.Tests
 
             var loginDto = DtoProvider.GetLogin();
 
-            var response = await Client.PostAsync($"{ControllerRoute}/signIn", GetStringContent(loginDto));
+            var response = await Client.PostAsync($"{ControllerRoute}/sign-in", GetStringContent(loginDto));
             var userAuth = await GetResponse<UserAuthDto>(response);
 
             Assert.Equal(HttpStatusCode.OK, response.StatusCode);
@@ -168,7 +168,7 @@ namespace SlothOrganizer.Web.Tests.Integration.Tests
         {
             var loginDto = new { email = "test@testing.com", password = "passw0rd" };
 
-            var response = await Client.PostAsync($"{ControllerRoute}/signIn", GetStringContent(loginDto));
+            var response = await Client.PostAsync($"{ControllerRoute}/sign-in", GetStringContent(loginDto));
 
             Assert.Equal(HttpStatusCode.NotFound, response.StatusCode);
         }
@@ -180,7 +180,7 @@ namespace SlothOrganizer.Web.Tests.Integration.Tests
 
             var loginDto = new { email = "test@test.com", password = "passw0rd1" };
 
-            var response = await Client.PostAsync($"{ControllerRoute}/signIn", GetStringContent(loginDto));
+            var response = await Client.PostAsync($"{ControllerRoute}/sign-in", GetStringContent(loginDto));
 
             Assert.Equal(HttpStatusCode.Forbidden, response.StatusCode);
         }
@@ -193,7 +193,7 @@ namespace SlothOrganizer.Web.Tests.Integration.Tests
         public async Task SignIn_WhenIvalidData_BadRequest(string email, string password)
         {
             var loginDto = new { email, password };
-            var response = await Client.PostAsync($"{ControllerRoute}/signIn", GetStringContent(loginDto));
+            var response = await Client.PostAsync($"{ControllerRoute}/sign-in", GetStringContent(loginDto));
 
             Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
         }
@@ -203,7 +203,7 @@ namespace SlothOrganizer.Web.Tests.Integration.Tests
         {
             var userAuth = await SetupVerifiedUser();
 
-            var response = await Client.PutAsync($"{ControllerRoute}/refreshToken", GetStringContent(userAuth.Token));
+            var response = await Client.PutAsync($"{ControllerRoute}/refresh-token", GetStringContent(userAuth.Token));
 
             Assert.Equal(HttpStatusCode.OK, response.StatusCode);
             var tokens = await new RefreshTokenRepository(Context).Get(DtoProvider.GetNewUser().Email);
@@ -217,15 +217,15 @@ namespace SlothOrganizer.Web.Tests.Integration.Tests
             A.CallTo(() => DateTimeService.Now()).Returns(DateTime.Now.AddHours(1));
             var newUser = DtoProvider.GetNewUser();
 
-            var signUpResponse = await Client.PostAsync($"{ControllerRoute}/signup", GetStringContent(newUser));
+            var signUpResponse = await Client.PostAsync($"{ControllerRoute}/sign-up", GetStringContent(newUser));
             var user = await GetResponse<UserDto>(signUpResponse);
 
             var verificationCode = DtoProvider.GetVerificationCode(user.Email);
 
-            var verificationResponse = await Client.PutAsync($"{ControllerRoute}/verifyEmail", GetStringContent(verificationCode));
+            var verificationResponse = await Client.PutAsync($"{ControllerRoute}/verify-email", GetStringContent(verificationCode));
             var token = new { accessToken = "access", refreshToken = "refresh" };
 
-            var response = await Client.PutAsync($"{ControllerRoute}/refreshToken", GetStringContent(token));
+            var response = await Client.PutAsync($"{ControllerRoute}/refresh-token", GetStringContent(token));
 
             Assert.Equal(HttpStatusCode.Forbidden, response.StatusCode);
         }
@@ -238,16 +238,16 @@ namespace SlothOrganizer.Web.Tests.Integration.Tests
             A.CallTo(() => CryptoService.Decrypt(dto.Code)).Returns(dto.Code);
             A.CallTo(() => CryptoService.Decrypt(dto.Email)).Returns(dto.Email);
 
-            var response = await Client.PutAsync($"{ControllerRoute}/resetPassword", GetStringContent(dto));
+            var response = await Client.PutAsync($"{ControllerRoute}/reset-password", GetStringContent(dto));
 
             Assert.Equal(HttpStatusCode.OK, response.StatusCode);
 
             var login = DtoProvider.GetLogin();
-            var oldAuthResult = await Client.PostAsync("auth/signIn", GetStringContent(login));
+            var oldAuthResult = await Client.PostAsync("auth/sign-in", GetStringContent(login));
             Assert.Equal(HttpStatusCode.Forbidden, oldAuthResult.StatusCode);
 
             login.Password = dto.Password;
-            var newAuthResult = await Client.PostAsync("auth/signIn", GetStringContent(login));
+            var newAuthResult = await Client.PostAsync("auth/sign-in", GetStringContent(login));
             Assert.Equal(HttpStatusCode.OK, newAuthResult.StatusCode);
         }
 
@@ -259,12 +259,12 @@ namespace SlothOrganizer.Web.Tests.Integration.Tests
             A.CallTo(() => CryptoService.Decrypt(dto.Code)).Returns(dto.Code);
             A.CallTo(() => CryptoService.Decrypt(dto.Email)).Returns("invalid email");
 
-            var response = await Client.PutAsync($"{ControllerRoute}/resetPassword", GetStringContent(dto));
+            var response = await Client.PutAsync($"{ControllerRoute}/reset-password", GetStringContent(dto));
 
             Assert.Equal(HttpStatusCode.NotFound, response.StatusCode);
 
             var login = DtoProvider.GetLogin();
-            var authResult = await Client.PostAsync("auth/signIn", GetStringContent(login));
+            var authResult = await Client.PostAsync("auth/sign-in", GetStringContent(login));
             Assert.Equal(HttpStatusCode.OK, authResult.StatusCode);
         }
 
@@ -275,7 +275,7 @@ namespace SlothOrganizer.Web.Tests.Integration.Tests
             var dto = DtoProvider.GetResetPasswordDto();
             A.CallTo(() => CryptoService.Decrypt(dto.Code)).Returns("not a number");
 
-            var response = await Client.PutAsync($"{ControllerRoute}/resetPassword", GetStringContent(dto));
+            var response = await Client.PutAsync($"{ControllerRoute}/reset-password", GetStringContent(dto));
 
             Assert.Equal(HttpStatusCode.Forbidden, response.StatusCode);
         }
@@ -291,7 +291,7 @@ namespace SlothOrganizer.Web.Tests.Integration.Tests
             var dto = DtoProvider.GetResetPasswordDto();
             dto.Password = password;
 
-            var response = await Client.PutAsync($"{ControllerRoute}/resetPassword", GetStringContent(dto));
+            var response = await Client.PutAsync($"{ControllerRoute}/reset-password", GetStringContent(dto));
 
             Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
         }
@@ -301,7 +301,7 @@ namespace SlothOrganizer.Web.Tests.Integration.Tests
         {
             var auth = await SetupVerifiedUser();
 
-            var response = await Client.PostAsync($"{ControllerRoute}/sendPasswordReset/{auth.User.Email}", null);
+            var response = await Client.PostAsync($"{ControllerRoute}/send-password-reset/{auth.User.Email}", null);
 
             Assert.Equal(HttpStatusCode.OK, response.StatusCode);
             A.CallTo(() => EmailSerivce.SendEmail(auth.User.Email, "Follow the link to reset your password", A<string>._)).MustHaveHappenedOnceExactly();
@@ -310,7 +310,7 @@ namespace SlothOrganizer.Web.Tests.Integration.Tests
         [Fact]
         public async Task SendPasswordReset_WhenUserAbsent_NotFound()
         {
-            var response = await Client.PostAsync($"{ControllerRoute}/sendPasswordReset/test@test.com", null);
+            var response = await Client.PostAsync($"{ControllerRoute}/send-password-reset/test@test.com", null);
 
             Assert.Equal(HttpStatusCode.NotFound, response.StatusCode);
         }

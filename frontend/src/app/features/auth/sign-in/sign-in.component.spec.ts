@@ -1,8 +1,9 @@
 /* eslint-disable no-undef */
 
+import * as loginPageActions from '@store/actions/login-page.actions';
+
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { addUser, login } from '@store/actions/login-page.actions';
 import { of, throwError } from 'rxjs';
 
 import { AuthRoutingModule } from '../auth-routing.module';
@@ -88,7 +89,7 @@ describe('SignInComponent', () => {
 
         expect(component.signInGroup.valid).toBeTrue();
         expect(authService.signIn).toHaveBeenCalledTimes(1);
-        expect(store.dispatch).toHaveBeenCalledOnceWith(login({authState: mockAuth}));
+        expect(store.dispatch).toHaveBeenCalledOnceWith(loginPageActions.login({authState: mockAuth}));
         expect(router.navigate).toHaveBeenCalledOnceWith(['']);
     });
 
@@ -101,7 +102,7 @@ describe('SignInComponent', () => {
 
         expect(component.signInGroup.valid).toBeTrue();
         expect(authService.signIn).toHaveBeenCalledTimes(1);
-        expect(store.dispatch).toHaveBeenCalledOnceWith(addUser({user: mockAuth.user}));
+        expect(store.dispatch).toHaveBeenCalledOnceWith(loginPageActions.addUser({user: mockAuth.user}));
         expect(router.navigate).toHaveBeenCalledOnceWith(['auth/verify-email']);
     });
 

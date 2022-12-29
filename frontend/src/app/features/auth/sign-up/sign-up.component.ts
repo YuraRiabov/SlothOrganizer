@@ -1,14 +1,15 @@
-import { ActivatedRoute, Router } from '@angular/router';
+import * as loginPageActions from '@store/actions/login-page.actions';
+
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { catchError, filter, map, of } from 'rxjs';
-import { getEmailValidators, getNameValidators, getPasswordValidators, passwordMatchingValidator } from '@utils/validators/user-validators.helper';
+import { getEmailValidators, getNameValidators, getPasswordValidators, hasLengthErrors, passwordMatchingValidator } from '@utils/validators/user-validators.helper';
 
 import { AuthService } from '@api/auth.service';
 import { BaseComponent } from '@shared/components/base/base.component';
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { User } from '#types/user/user';
-import { addUser } from '@store/actions/login-page.actions';
 
 @Component({
     selector: 'app-sign-up',
@@ -32,6 +33,10 @@ export class SignUpComponent extends BaseComponent {
         this.router.navigate([route]);
     }
 
+    public hasLengthErrors(controlName: string): boolean {
+        return hasLengthErrors(this.signUpGroup, controlName);
+    }
+
     public signUpClick() {
         this.authService.signUp({
             firstName: this.signUpGroup.get('firstName')?.value!,
@@ -47,7 +52,7 @@ export class SignUpComponent extends BaseComponent {
             filter(user => user != null),
             map(user => user as User)
         ).subscribe((user) => {
-            this.store.dispatch(addUser({ user }));
+            this.store.dispatch(loginPageActions.addUser({ user }));
             this.redirectTo('auth/verify-email');
         });
     }

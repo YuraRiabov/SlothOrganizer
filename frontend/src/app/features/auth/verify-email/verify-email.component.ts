@@ -1,4 +1,5 @@
-import { ActivatedRoute, Router } from '@angular/router';
+import * as loginPageActions from '@store/actions/login-page.actions';
+
 import { FormControl, Validators } from '@angular/forms';
 import { Observable, catchError, concatMap, filter, map, of } from 'rxjs';
 
@@ -6,8 +7,8 @@ import { AuthService } from '@api/auth.service';
 import { AuthState } from '@store/states/auth-state';
 import { BaseComponent } from '@shared/components/base/base.component';
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { login } from '@store/actions/login-page.actions';
 import { selectUserEmail } from '@store/selectors/auth-page.selectors';
 
 @Component({
@@ -50,7 +51,7 @@ export class VerifyEmailComponent extends BaseComponent {
             filter(auth => auth != null),
             map(auth => auth as AuthState)
         ).subscribe((auth) => {
-            this.store.dispatch(login({ authState: auth }));
+            this.store.dispatch(loginPageActions.login({ authState: auth }));
             this.router.navigate(['']);
         });
     }

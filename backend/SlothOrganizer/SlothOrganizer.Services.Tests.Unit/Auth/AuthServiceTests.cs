@@ -136,7 +136,7 @@ namespace SlothOrganizer.Services.Tests.Unit.Auth
             var user = GetUser(login.Email, true);
             var accessToken = "access";
             var refreshToken = "refresh";
-            A.CallTo(() => _userService.Authorize(login)).Returns(user);
+            A.CallTo(() => _userService.Get(login)).Returns(user);
             A.CallTo(() => _accessTokenService.Generate(user.Email)).Returns(accessToken);
             A.CallTo(() => _refreshTokenService.Generate(user.Email)).Returns(refreshToken);
 
@@ -153,7 +153,7 @@ namespace SlothOrganizer.Services.Tests.Unit.Auth
         {
             var auth = GetLoginDto();
             var user = GetUser(auth.Email, false);
-            A.CallTo(() => _userService.Authorize(auth)).Returns(user);
+            A.CallTo(() => _userService.Get(auth)).Returns(user);
 
             var result = await _authService.SignIn(auth);
 

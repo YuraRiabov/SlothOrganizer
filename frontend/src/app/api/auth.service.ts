@@ -18,32 +18,32 @@ export class AuthService {
     constructor(private httpService: HttpService) {}
 
     public signUp(user: NewUser) : Observable<User> {
-        return this.httpService.post<User>(`${this.baseUri}/signup`, user);
+        return this.httpService.post<User>(`${this.baseUri}/sign-up`, user);
     }
 
     public signIn(login: Login): Observable<AuthState> {
-        return this.httpService.post<AuthState>(`${this.baseUri}/signin`, login);
+        return this.httpService.post<AuthState>(`${this.baseUri}/sign-in`, login);
     }
     public verifyEmail(verificationCode: VerificationCode) : Observable<AuthState> {
         return this.httpService.put<AuthState>(
-            `${this.baseUri}/verifyEmail`,
+            `${this.baseUri}/verify-email`,
             verificationCode
         );
     }
 
     public resendCode(email: string) : Observable<null> {
-        return this.httpService.post(`${this.baseUri}/resendCode/${email}`);
+        return this.httpService.post(`${this.baseUri}/resend-code/${email}`);
     }
 
     public refreshToken(token: Token) : Observable<Token> {
-        return this.httpService.put<Token>(`${this.baseUri}/refreshToken`, token);
+        return this.httpService.put<Token>(`${this.baseUri}/refresh-token`, token);
     }
 
     public sendPasswordReset(email: string) : Observable<null> {
-        return this.httpService.post(`${this.baseUri}/sendPasswordReset/${email}`);
+        return this.httpService.post(`${this.baseUri}/send-password-reset/${email}`);
     }
 
     public resetPassword(resetPassword: ResetPassword) : Observable<AuthState> {
-        return this.httpService.put<AuthState>(`${this.baseUri}/resetPassword`, resetPassword);
+        return this.httpService.put<AuthState>(`${this.baseUri}/reset-password`, resetPassword);
     }
 }
