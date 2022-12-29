@@ -4,12 +4,14 @@ import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { BrowserModule } from '@angular/platform-browser';
+import { EffectsModule } from '@ngrx/effects';
 import { ErrorInterceptor } from '@shared/interceptors/error.interceptor';
+import { HydrationEffects } from '@store/effects/hydration.effects';
 import { NgModule } from '@angular/core';
 import { StoreModule } from '@ngrx/store';
 import { TokenInterceptor } from '@shared/interceptors/token.interceptor';
 import { authPageReducer } from '@store/reducers/auth-page.reducers';
-import { metaReducers } from '@store/reducers/metareducers';
+import { metaReducers } from '@store/reducers/meta/metareducers';
 
 @NgModule({
     declarations: [AppComponent],
@@ -17,6 +19,7 @@ import { metaReducers } from '@store/reducers/metareducers';
         BrowserModule,
         AppRoutingModule,
         StoreModule.forRoot({ authState: authPageReducer }, { metaReducers }),
+        EffectsModule.forRoot([HydrationEffects]),
         BrowserAnimationsModule,
         HttpClientModule
     ],

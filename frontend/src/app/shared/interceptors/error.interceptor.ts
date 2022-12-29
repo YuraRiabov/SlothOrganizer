@@ -1,5 +1,5 @@
 import { HttpEvent, HttpHandler, HttpInterceptor, HttpRequest } from '@angular/common/http';
-import { Observable, Subject, catchError, switchMap, tap } from 'rxjs';
+import { Observable, Subject, catchError, switchMap, tap, throwError } from 'rxjs';
 
 import { AuthService } from '@api/auth.service';
 import { Injectable } from '@angular/core';
@@ -7,6 +7,7 @@ import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { Token } from '#types/auth/token';
 import { addToken } from '@store/actions/login-page.actions';
+import { logoutAction } from '@store/actions/hydration.actions';
 import { selectToken } from '@store/selectors/auth-page.selectors';
 
 @Injectable()
@@ -23,19 +24,16 @@ export class ErrorInterceptor implements HttpInterceptor {
                 if (response.status === 401) {
                     return this.refreshToken().pipe(
                         switchMap((token) => {
-                            req = req.clone({
-                                setHeaders: {
-                                    Authorization: `Bearer ${token.accessToken}`
-                                }
-                            });
-
+                            if (token) {
+                                req = req.clone({
+                                    setHeaders: {
+                                        Authorization: `Bearer ${token.accessToken}`
+                                    }
+                                });
+                            }
                             return next.handle(req);
                         })
                     );
-                }
-
-                if (response.error === 'Invalid refresh token') {
-                    this.router.navigate(['auth/sign-in']);
                 }
 
                 return next.handle(req);
@@ -43,7 +41,7 @@ export class ErrorInterceptor implements HttpInterceptor {
         );
     }
 
-    private refreshToken(): Observable<Token> {
+    private refreshToken(): Observable<Token | null> {
         if (this.refreshTokenInProgress) {
             return new Observable(observer => {
                 this.tokenRefreshed$.subscribe(() => {
@@ -63,6 +61,11 @@ export class ErrorInterceptor implements HttpInterceptor {
                 this.store.dispatch(addToken({ token }));
                 this.refreshTokenInProgress = false;
                 this.tokenRefreshedSource.next();
+            }),
+            catchError((error) => {
+                this.refreshTokenInProgress = false;
+                this.store.dispatch(logoutAction());
+                return throwError(() => error);
             }));
     }
 

@@ -11,11 +11,13 @@ export class TokenInterceptor implements HttpInterceptor {
     intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
         return this.store.select(selectAccessToken).pipe(
             switchMap((token) => {
-                req = req.clone({
-                    setHeaders: {
-                        Authorization: `Bearer ${token}`
-                    }
-                });
+                if (token) {
+                    req = req.clone({
+                        setHeaders: {
+                            Authorization: `Bearer ${token}`
+                        }
+                    });
+                }
                 return next.handle(req);
             })
         );
