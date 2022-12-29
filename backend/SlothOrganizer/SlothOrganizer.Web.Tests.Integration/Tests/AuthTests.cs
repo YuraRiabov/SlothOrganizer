@@ -238,16 +238,16 @@ namespace SlothOrganizer.Web.Tests.Integration.Tests
             A.CallTo(() => CryptoService.Decrypt(dto.Code)).Returns(dto.Code);
             A.CallTo(() => CryptoService.Decrypt(dto.Email)).Returns(dto.Email);
 
-            var response = await Client.PutAsync($"{ControllerRoute}/resetPassword", GetStringContent(dto));
+            var response = await Client.PutAsync($"{ControllerRoute}/reset-password", GetStringContent(dto));
 
             Assert.Equal(HttpStatusCode.OK, response.StatusCode);
 
             var login = DtoProvider.GetLogin();
-            var oldAuthResult = await Client.PostAsync("auth/signIn", GetStringContent(login));
+            var oldAuthResult = await Client.PostAsync("auth/sign-in", GetStringContent(login));
             Assert.Equal(HttpStatusCode.Forbidden, oldAuthResult.StatusCode);
 
             login.Password = dto.Password;
-            var newAuthResult = await Client.PostAsync("auth/signIn", GetStringContent(login));
+            var newAuthResult = await Client.PostAsync("auth/sign-in", GetStringContent(login));
             Assert.Equal(HttpStatusCode.OK, newAuthResult.StatusCode);
         }
 
@@ -259,12 +259,12 @@ namespace SlothOrganizer.Web.Tests.Integration.Tests
             A.CallTo(() => CryptoService.Decrypt(dto.Code)).Returns(dto.Code);
             A.CallTo(() => CryptoService.Decrypt(dto.Email)).Returns("invalid email");
 
-            var response = await Client.PutAsync($"{ControllerRoute}/resetPassword", GetStringContent(dto));
+            var response = await Client.PutAsync($"{ControllerRoute}/reset-password", GetStringContent(dto));
 
             Assert.Equal(HttpStatusCode.NotFound, response.StatusCode);
 
             var login = DtoProvider.GetLogin();
-            var authResult = await Client.PostAsync("auth/signIn", GetStringContent(login));
+            var authResult = await Client.PostAsync("auth/sign-in", GetStringContent(login));
             Assert.Equal(HttpStatusCode.OK, authResult.StatusCode);
         }
 
@@ -275,7 +275,7 @@ namespace SlothOrganizer.Web.Tests.Integration.Tests
             var dto = DtoProvider.GetResetPasswordDto();
             A.CallTo(() => CryptoService.Decrypt(dto.Code)).Returns("not a number");
 
-            var response = await Client.PutAsync($"{ControllerRoute}/resetPassword", GetStringContent(dto));
+            var response = await Client.PutAsync($"{ControllerRoute}/reset-password", GetStringContent(dto));
 
             Assert.Equal(HttpStatusCode.Forbidden, response.StatusCode);
         }
@@ -291,7 +291,7 @@ namespace SlothOrganizer.Web.Tests.Integration.Tests
             var dto = DtoProvider.GetResetPasswordDto();
             dto.Password = password;
 
-            var response = await Client.PutAsync($"{ControllerRoute}/resetPassword", GetStringContent(dto));
+            var response = await Client.PutAsync($"{ControllerRoute}/reset-password", GetStringContent(dto));
 
             Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
         }
@@ -301,7 +301,7 @@ namespace SlothOrganizer.Web.Tests.Integration.Tests
         {
             var auth = await SetupVerifiedUser();
 
-            var response = await Client.PostAsync($"{ControllerRoute}/sendPasswordReset/{auth.User.Email}", null);
+            var response = await Client.PostAsync($"{ControllerRoute}/send-password-reset/{auth.User.Email}", null);
 
             Assert.Equal(HttpStatusCode.OK, response.StatusCode);
             A.CallTo(() => EmailSerivce.SendEmail(auth.User.Email, "Follow the link to reset your password", A<string>._)).MustHaveHappenedOnceExactly();
@@ -310,7 +310,7 @@ namespace SlothOrganizer.Web.Tests.Integration.Tests
         [Fact]
         public async Task SendPasswordReset_WhenUserAbsent_NotFound()
         {
-            var response = await Client.PostAsync($"{ControllerRoute}/sendPasswordReset/test@test.com", null);
+            var response = await Client.PostAsync($"{ControllerRoute}/send-password-reset/test@test.com", null);
 
             Assert.Equal(HttpStatusCode.NotFound, response.StatusCode);
         }

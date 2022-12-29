@@ -49,13 +49,13 @@ namespace SlothOrganizer.Presentation.Controllers
             return await _authService.RefreshToken(token);
         }
 
-        [HttpPut("resetPassword")]
+        [HttpPut("reset-password")]
         public async Task<UserAuthDto> ResetPassword(ResetPasswordDto resetPasswordDto)
         {
             return await _authService.ResetPassword(resetPasswordDto);
         }
 
-        [HttpPost("sendPasswordReset/{email}")]
+        [HttpPost("send-password-reset/{email}")]
         public async Task SendPasswordReset(string email)
         {
             await _authService.SendResetPassword(email);

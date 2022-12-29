@@ -40,10 +40,10 @@ export class AuthService {
     }
 
     public sendPasswordReset(email: string) : Observable<null> {
-        return this.httpService.post(`${this.baseUri}/sendPasswordReset/${email}`);
+        return this.httpService.post(`${this.baseUri}/send-password-reset/${email}`);
     }
 
     public resetPassword(resetPassword: ResetPassword) : Observable<AuthState> {
-        return this.httpService.put<AuthState>(`${this.baseUri}/resetPassword`, resetPassword);
+        return this.httpService.put<AuthState>(`${this.baseUri}/reset-password`, resetPassword);
     }
 }

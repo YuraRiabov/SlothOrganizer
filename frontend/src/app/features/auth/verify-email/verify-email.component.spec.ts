@@ -96,7 +96,7 @@ describe('VerifyEmailComponent', () => {
 
         expect(mockStore.select).toHaveBeenCalledTimes(1);
         expect(mockAuthService.verifyEmail).toHaveBeenCalledTimes(1);
-        expect(mockStore.dispatch).toHaveBeenCalledOnceWith(login({ authState: auth }));
+        expect(mockStore.dispatch).toHaveBeenCalledOnceWith(loginPageActions.login({ authState: auth }));
     });
 
     it('should redirect to root', () => {

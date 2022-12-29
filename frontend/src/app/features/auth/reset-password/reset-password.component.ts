@@ -1,14 +1,13 @@
+import * as loginPageActions from '@store/actions/login-page.actions';
+
 import { ActivatedRoute, Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { Observable, concatMap } from 'rxjs';
-import { getPasswordValidators, passwordMatchingValidator } from '@utils/validators/user-validators.helper';
+import { getPasswordValidators, hasLengthErrors, passwordMatchingValidator } from '@utils/validators/user-validators.helper';
 
 import { AuthService } from '@api/auth.service';
 import { BaseComponent } from '@shared/components/base/base.component';
 import { Store } from '@ngrx/store';
-import { login } from '@store/actions/login-page.actions';
-import { selectUserEmail } from '@store/selectors/auth-page.selectors';
 
 @Component({
     selector: 'app-reset-password',
@@ -38,6 +37,10 @@ export class ResetPasswordComponent extends BaseComponent implements OnInit {
             });
     }
 
+    public hasLengthErrors(controlName: string): boolean {
+        return hasLengthErrors(this.resetPassowordGroup, controlName);
+    }
+
     public submitClick(): void {
         this.authService.resetPassword({
             password: this.resetPassowordGroup.get('password')?.value,
@@ -46,7 +49,7 @@ export class ResetPasswordComponent extends BaseComponent implements OnInit {
         }).pipe(
             this.untilDestroyed
         ).subscribe((auth) => {
-            this.store.dispatch(login({ authState: auth }));
+            this.store.dispatch(loginPageActions.login({ authState: auth }));
             this.router.navigate(['']);
         });
     }
