@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using SlothOrganizer.Contracts.DTO.Auth;
 using SlothOrganizer.Contracts.DTO.User;
 using SlothOrganizer.Domain.Entities;
 using SlothOrganizer.Domain.Exceptions;
@@ -42,7 +43,13 @@ namespace SlothOrganizer.Services.Users
 
         public async Task<UserDto> Get(long id)
         {
-            var user = await GetByIdInternal(id);
+            var user = await Find(id);
+            return _mapper.Map<UserDto>(user);
+        }
+
+        public async Task<UserDto> Get(string email)
+        {
+            var user = await Find(email);
             return _mapper.Map<UserDto>(user);
         }
 
@@ -51,12 +58,32 @@ namespace SlothOrganizer.Services.Users
             return await _userRepository.VerifyEmail(userId, code);
         }
 
-        private async Task<User> GetByIdInternal(long userId)
+        public async Task<UserDto> Get(LoginDto login)
+        {
+            var user = await Find(login.Email);
+            if (_hashService.VerifyPassword(login.Password, Convert.FromBase64String(user.Salt), user.Password))
+            {
+                return _mapper.Map<UserDto>(user);
+            }
+            throw new InvalidCredentialsException("Invalid password");
+        }
+
+        private async Task<User> Find(long userId)
         {
             var user = await _userRepository.Get(userId);
             if (user is null)
             {
                 throw new EntityNotFoundException("Not found user with such id");
+            }
+            return user;
+        }
+
+        private async Task<User> Find(string email)
+        {
+            var user = await _userRepository.Get(email);
+            if (user is null)
+            {
+                throw new EntityNotFoundException("No user with such email");
             }
             return user;
         }

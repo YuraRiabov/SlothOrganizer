@@ -1,22 +1,32 @@
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
+
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { BrowserModule } from '@angular/platform-browser';
-import { HttpClientModule } from '@angular/common/http';
+import { EffectsModule } from '@ngrx/effects';
+import { ErrorInterceptor } from '@shared/interceptors/error.interceptor';
+import { HydrationEffects } from '@store/effects/hydration.effects';
 import { NgModule } from '@angular/core';
 import { StoreModule } from '@ngrx/store';
-import { authPageReducer } from '../../store/reducers/auth-page.reducers';
+import { TokenInterceptor } from '@shared/interceptors/token.interceptor';
+import { authPageReducer } from '@store/reducers/auth-page.reducers';
+import { metaReducers } from '@store/reducers/meta/metareducers';
 
 @NgModule({
     declarations: [AppComponent],
     imports: [
         BrowserModule,
         AppRoutingModule,
-        StoreModule.forRoot({ authState: authPageReducer }, {}),
+        StoreModule.forRoot({ authState: authPageReducer }, { metaReducers }),
+        EffectsModule.forRoot([HydrationEffects]),
         BrowserAnimationsModule,
         HttpClientModule
     ],
-    providers: [],
+    providers: [
+        { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true},
+        { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true}
+    ],
     bootstrap: [AppComponent]
 })
 export class AppModule {}

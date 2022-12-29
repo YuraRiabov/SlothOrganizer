@@ -1,4 +1,4 @@
-import { AbstractControl, ValidatorFn, Validators } from '@angular/forms';
+import { AbstractControl, FormGroup, ValidatorFn, Validators } from '@angular/forms';
 
 export const getNameValidators = () => [
     Validators.required,
@@ -10,7 +10,7 @@ export const getPasswordValidators = () => [
     Validators.required,
     Validators.minLength(8),
     Validators.maxLength(16),
-    Validators.pattern('([0-9].*[a-zA-Z])|([a-zA-Z].*[0-9])')
+    Validators.pattern('([0-9]+[a-zA-Z]+[0-9a-zA-Z]*)|([a-zA-Z]+[0-9]+[0-9a-zA-Z]*)')
 ];
 
 export const getEmailValidators = () => [
@@ -27,4 +27,8 @@ export const passwordMatchingValidator = () : ValidatorFn => {
         }
         return null;
     };
+};
+
+export const hasLengthErrors =  (group: FormGroup, controlName: string): boolean => {
+    return group.get(controlName)?.hasError('minlength') || !!group.get(controlName)?.hasError('maxlength');
 };

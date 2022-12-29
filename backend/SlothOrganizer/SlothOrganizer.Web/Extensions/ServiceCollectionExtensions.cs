@@ -26,17 +26,18 @@ namespace SlothOrganizer.Web.Extensions
         {
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IVerificationCodeRepository, VerificationCodeRepository>();
+            services.AddScoped<IRefreshTokenRepository, RefreshTokenRepository>();
             return services;
         }
 
         public static IServiceCollection AddCustomServices(this IServiceCollection services)
         {
             services.AddScoped<IUserService, UserService>();
+            services.AddScoped<IAccessTokenService, AccessTokenService>();
+            services.AddScoped<IRefreshTokenService, RefreshTokenService>();
             services.AddScoped<IHashService, HashService>();
             services.AddScoped<IRandomService, RandomService>();
-            services.AddScoped<ITokenService, TokenService>();
             services.AddScoped<IAuthService, AuthService>();
-            services.AddScoped<IEmailService, EmailService>();
             services.AddScoped<IVerificationCodeService, VerificationCodeService>();
             services.AddScoped<IDateTimeService, DateTimeService>();
             return services;
@@ -87,7 +88,8 @@ namespace SlothOrganizer.Web.Extensions
                     ValidateIssuerSigningKey = true,
                     ValidIssuer = configuration["Jwt:Issuer"],
                     ValidAudience = configuration["Jwt:Audience"],
-                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["JwtKey"]))
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["JwtKey"])),
+                    ClockSkew = TimeSpan.Zero
                 };
             });
             return services;

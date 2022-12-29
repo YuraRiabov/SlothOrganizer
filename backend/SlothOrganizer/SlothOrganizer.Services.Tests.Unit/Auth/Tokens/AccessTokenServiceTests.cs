@@ -12,13 +12,12 @@ using Xunit;
 
 namespace SlothOrganizer.Services.Tests.Unit.Auth.Tokens
 {
-    public class TokenServiceTests
+    public class AccessTokenServiceTests
     {
-        private readonly TokenService _tokenService;
-        private readonly IRandomService _randomService;
+        private readonly AccessTokenService _accessTokenService;
         private readonly IDateTimeService _dateTimeService;
 
-        public TokenServiceTests()
+        public AccessTokenServiceTests()
         {
             var options = Options.Create(new JwtOptions
             {
@@ -27,31 +26,26 @@ namespace SlothOrganizer.Services.Tests.Unit.Auth.Tokens
                 Audience = "tests"
             });
 
-            _randomService = A.Fake<IRandomService>();
             _dateTimeService = A.Fake<IDateTimeService>();
 
-            _tokenService = new TokenService(options, _randomService, _dateTimeService);
-
-            A.CallTo(() => _randomService.GetRandomBytes(16)).Returns(GetBytes());
-            A.CallTo(() => _dateTimeService.Now()).Returns(new DateTime(1800, 1, 1));
+            _accessTokenService = new AccessTokenService(options, _dateTimeService);
         }
 
         [Fact]
         public void GenerateToken_ShouldGenerateValidToken()
         {
-            var bytes = GetBytes();
             var email = "test@test.com";
+            A.CallTo(() => _dateTimeService.Now()).Returns(new DateTime(1800, 1, 1));
 
             var tokenValidationParameters = GetTokenParameters(false);
             var tokenHandler = new JwtSecurityTokenHandler();
             SecurityToken securityToken;
 
-            var token = _tokenService.GenerateToken(email);
-            var principal = tokenHandler.ValidateToken(token.AccessToken, tokenValidationParameters, out securityToken);
+            var token = _accessTokenService.Generate(email);
+            var principal = tokenHandler.ValidateToken(token, tokenValidationParameters, out securityToken);
             var jwtSecurityToken = securityToken as JwtSecurityToken;
 
             Assert.NotNull(jwtSecurityToken);
-            Assert.Equal(Convert.ToBase64String(bytes), token.RefreshToken);
             Assert.Equal(email, principal.FindFirst(ClaimTypes.Email)?.Value);
         }
 
@@ -59,12 +53,14 @@ namespace SlothOrganizer.Services.Tests.Unit.Auth.Tokens
         public void GenerateToken_WhenExpired_ShouldThrow()
         {
             var email = "test@test.com";
-            TokenValidationParameters tokenValidationParameters = GetTokenParameters(true);
+            A.CallTo(() => _dateTimeService.Now()).Returns(new DateTime(1800, 1, 1));
+
+            var tokenValidationParameters = GetTokenParameters(true);
             var tokenHandler = new JwtSecurityTokenHandler();
             SecurityToken securityToken;
 
-            var token = _tokenService.GenerateToken(email);
-            var code = () => tokenHandler.ValidateToken(token.AccessToken, tokenValidationParameters, out securityToken);
+            var token = _accessTokenService.Generate(email);
+            var code = () => tokenHandler.ValidateToken(token, tokenValidationParameters, out securityToken);
 
             Assert.Throws<SecurityTokenExpiredException>(code);
         }
@@ -74,7 +70,7 @@ namespace SlothOrganizer.Services.Tests.Unit.Auth.Tokens
         {
             var token = "invalidToken";
 
-            var code = () => _tokenService.GetEmailFromToken(token);
+            var code = () => _accessTokenService.GetEmailFromToken(token);
 
             var exception = Assert.Throws<InvalidCredentialsException>(code);
             Assert.Equal("Invalid token", exception.Message);
@@ -84,16 +80,12 @@ namespace SlothOrganizer.Services.Tests.Unit.Auth.Tokens
         public void GetEmailFromToken_WhenValid_ShouldGet()
         {
             var email = "test@test.com";
-            var token = _tokenService.GenerateToken(email).AccessToken;
+            A.CallTo(() => _dateTimeService.Now()).Returns(new DateTime(1800, 1, 1));
+            var token = _accessTokenService.Generate(email);
 
-            var result = _tokenService.GetEmailFromToken(token);
+            var result = _accessTokenService.GetEmailFromToken(token);
 
             Assert.Equal(email, result);
-        }
-
-        private byte[] GetBytes()
-        {
-            return new byte[] { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 };
         }
 
         private TokenValidationParameters GetTokenParameters(bool validateLifetime)

@@ -19,7 +19,7 @@ namespace SlothOrganizer.Presentation.Controllers
         }
 
         [AllowAnonymous]
-        [HttpPost("signup")]
+        [HttpPost("sign-up")]
         public async Task<UserDto> SignUp([FromBody] NewUserDto newUserDto)
         {
             var user = await _authService.SignUp(newUserDto);
@@ -27,17 +27,31 @@ namespace SlothOrganizer.Presentation.Controllers
         }
 
         [AllowAnonymous]
-        [HttpPut("verifyEmail")]
+        [HttpPut("verify-email")]
         public async Task<TokenDto> VerifyEmail([FromBody] VerificationCodeDto verificationCode)
         {
             return await _authService.VerifyEmail(verificationCode);
         }
 
         [AllowAnonymous]
-        [HttpPost("resendCode/{userId}")]
+        [HttpPost("sign-in")]
+        public async Task<UserAuthDto> SignIn([FromBody] LoginDto loginDto)
+        {
+            return await _authService.SignIn(loginDto);
+        }
+
+        [AllowAnonymous]
+        [HttpPost("resend-code/{userId}")]
         public async Task ResendVerificationCode(long userId)
         {
             await _authService.ResendVerificationCode(userId);
+        }
+
+        [AllowAnonymous]
+        [HttpPut("refresh-token")]
+        public async Task<TokenDto> RefreshToken([FromBody] TokenDto token)
+        {
+            return await _authService.RefreshToken(token);
         }
     }
 }

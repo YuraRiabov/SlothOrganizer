@@ -6,7 +6,7 @@
     "start": "ng serve",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
-    "test": "ng test",
+    "test": "ng test --browsers=ChromeHeadless --watch=false",
     "lint": "ng lint"
   },
   "private": true,
@@ -21,6 +21,7 @@
     "@angular/platform-browser": "^14.2.0",
     "@angular/platform-browser-dynamic": "^14.2.0",
     "@angular/router": "^14.2.0",
+    "@ngrx/effects": "^14.3.2",
     "@ngrx/store": "^14.3.2",
     "rxjs": "~7.5.0",
     "tslib": "^2.3.0",

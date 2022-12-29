@@ -1,14 +1,20 @@
 import { createAction, props } from '@ngrx/store';
 
-import { Token } from 'src/app/types/auth/token';
-import { User } from 'src/app/types/user/user';
+import { AuthState } from '@store/states/auth-state';
+import { Token } from '#types/auth/token';
+import { User } from '#types/user/user';
 
-export const register = createAction(
-    '[Sign up page] Register',
+export const addUser = createAction(
+    '[Sign up, Sign in page] Register',
     props<{ user: User }>()
 );
 
-export const verifyEmail = createAction(
+export const addToken = createAction(
     '[Verify email page] Verify email',
     props<{ token: Token }>()
+);
+
+export const login = createAction(
+    '[Sign in page] Login',
+    props<{authState: AuthState}>()
 );

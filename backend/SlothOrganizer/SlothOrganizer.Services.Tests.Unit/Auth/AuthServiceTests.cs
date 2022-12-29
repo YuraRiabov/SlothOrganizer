@@ -15,18 +15,24 @@ namespace SlothOrganizer.Services.Tests.Unit.Auth
     {
         private readonly AuthService _authService;
         private readonly IUserService _userService;
-        private readonly ITokenService _tokenService;
+        private readonly IAccessTokenService _accessTokenService;
+        private readonly IRefreshTokenService _refreshTokenService;
         private readonly IVerificationCodeService _verificationCodeService;
         private readonly IEmailService _emailService;
 
         public AuthServiceTests()
         {
             _userService = A.Fake<IUserService>();
-            _tokenService = A.Fake<ITokenService>();
+            _accessTokenService = A.Fake<IAccessTokenService>();
+            _refreshTokenService = A.Fake<IRefreshTokenService>();
             _verificationCodeService = A.Fake<IVerificationCodeService>();
             _emailService = A.Fake<IEmailService>();
 
-            _authService = new AuthService(_tokenService, _userService, _verificationCodeService, _emailService);
+            _authService = new AuthService(_accessTokenService,
+                _userService,
+                _verificationCodeService,
+                _emailService,
+                _refreshTokenService);
         }
 
         [Fact]
@@ -34,7 +40,7 @@ namespace SlothOrganizer.Services.Tests.Unit.Auth
         {
             var dto = GetVerificationCodeDto();
             A.CallTo(() => _userService.VerifyEmail(1, 111111)).Returns("test");
-            A.CallTo(() => _tokenService.GenerateToken("test")).Returns(new TokenDto { AccessToken = "test" });
+            A.CallTo(() => _accessTokenService.Generate("test")).Returns("test");
 
             var result = await _authService.VerifyEmail(dto);
 
@@ -94,12 +100,104 @@ namespace SlothOrganizer.Services.Tests.Unit.Auth
             A.CallTo(() => _emailService.SendEmail("test@test.com", "Verify your email", "Your verification code is 111111"))
                 .MustHaveHappenedOnceExactly();
         }
+        [Fact]
+        public async Task RefreshToken_WhenTokenValid_ShouldRefresh()
+        {
+            var token = GetTokenDto();
+            var email = "test";
+            var accessToken = "access";
+            var refreshToken = "refresh";
+            A.CallTo(() => _accessTokenService.GetEmailFromToken(token.AccessToken)).Returns(email);
+            A.CallTo(() => _refreshTokenService.Validate(email, token.RefreshToken)).Returns(true);
+            A.CallTo(() => _accessTokenService.Generate(email)).Returns(accessToken);
+            A.CallTo(() => _refreshTokenService.Generate(email)).Returns(refreshToken);
+
+            var result = await _authService.RefreshToken(token);
+
+            Assert.Equal(accessToken, result.AccessToken);
+            Assert.Equal(refreshToken, result.RefreshToken);
+        }
+
+        [Fact]
+        public async Task RefreshToken_WhenTokenInvalid_ShouldThrow()
+        {
+            var token = GetTokenDto();
+            var email = "test";
+            A.CallTo(() => _accessTokenService.GetEmailFromToken(token.AccessToken)).Returns(email);
+            A.CallTo(() => _refreshTokenService.Validate(email, token.RefreshToken)).Returns(false);
+
+            var code = async () => await _authService.RefreshToken(token);
+
+            var exception = await Assert.ThrowsAsync<InvalidCredentialsException>(code);
+            Assert.Equal("Invalid refresh token", exception.Message);
+        }
+
+        [Fact]
+        public async Task SignIn_WhenEmailVerified_ShouldReturnWithToken()
+        {
+            LoginDto login = GetLoginDto();
+            var token = GetTokenDto();
+            var user = GetUser(login.Email, true);
+            var accessToken = "access";
+            var refreshToken = "refresh";
+            A.CallTo(() => _userService.Get(login)).Returns(user);
+            A.CallTo(() => _accessTokenService.Generate(user.Email)).Returns(accessToken);
+            A.CallTo(() => _refreshTokenService.Generate(user.Email)).Returns(refreshToken);
+
+            var result = await _authService.SignIn(login);
+
+            Assert.NotNull(result.Token);
+            Assert.Equal(user, result.User);
+            Assert.Equal(accessToken, result.Token!.AccessToken);
+            Assert.Equal(refreshToken, result.Token.RefreshToken);
+        }
+
+        [Fact]
+        public async Task SignIn_WhenEmailNotVerified_ShouldReturnWithoutToken()
+        {
+            var auth = GetLoginDto();
+            var user = GetUser(auth.Email, false);
+            A.CallTo(() => _userService.Get(auth)).Returns(user);
+
+            var result = await _authService.SignIn(auth);
+
+            Assert.Null(result.Token);
+            Assert.Equal(user, result.User);
+        }
         private VerificationCodeDto GetVerificationCodeDto()
         {
             return new VerificationCodeDto
             {
                 UserId = 1,
                 VerificationCode = 111111
+            };
+        }
+
+        private static UserDto GetUser(string email, bool emailVerified)
+        {
+            return new UserDto
+            {
+                Email = email,
+                Id = 1,
+                EmailVerified = emailVerified
+            };
+        }
+
+        private static LoginDto GetLoginDto()
+        {
+            return new LoginDto
+            {
+                Email = "test",
+                Password = "password"
+            };
+        }
+
+        private static TokenDto GetTokenDto()
+        {
+            return new TokenDto
+            {
+                AccessToken = "expired",
+                RefreshToken = "notExpired"
             };
         }
     }

@@ -47,6 +47,7 @@
           }
         ],
         "no-unused-vars": 0,
+        "no-undef": "off",
         "indent": ["error", 4],
         "no-trailing-spaces": "error",
         "semi": ["error", "always"],

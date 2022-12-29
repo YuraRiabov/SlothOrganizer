@@ -11,26 +11,14 @@ using SlothOrganizer.Services.Auth.Tokens.Options;
 
 namespace SlothOrganizer.Services.Auth.Tokens
 {
-    public class TokenService : ITokenService
+    public class AccessTokenService : IAccessTokenService
     {
-        private readonly IRandomService _randomService;
         private readonly IDateTimeService _dateTimeService;
         private readonly JwtOptions _jwtOptions;
-
-        public TokenService(IOptions<JwtOptions> options, IRandomService randomService, IDateTimeService dateTimeService)
+        public AccessTokenService(IOptions<JwtOptions> options, IDateTimeService dateTimeService)
         {
             _jwtOptions = options.Value;
-            _randomService = randomService;
             _dateTimeService = dateTimeService;
-        }
-
-        public TokenDto GenerateToken(string email)
-        {
-            return new TokenDto
-            {
-                AccessToken = GenerateAccessToken(email),
-                RefreshToken = GenerateRefreshToken()
-            };
         }
 
         public string GetEmailFromToken(string token)
@@ -61,7 +49,7 @@ namespace SlothOrganizer.Services.Auth.Tokens
             }
         }
 
-        private string GenerateAccessToken(string email)
+        public string Generate(string email)
         {
             var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_jwtOptions.Secret));
             var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
@@ -77,11 +65,6 @@ namespace SlothOrganizer.Services.Auth.Tokens
 
 
             return new JwtSecurityTokenHandler().WriteToken(token);
-        }
-
-        private string GenerateRefreshToken()
-        {
-            return Convert.ToBase64String(_randomService.GetRandomBytes());
         }
     }
 }

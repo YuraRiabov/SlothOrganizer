@@ -4,14 +4,14 @@
         <mat-form-field class="name-field">
             <mat-label i18n>First name</mat-label>
             <input formControlName="firstName" matInput type="text"/>
-            <mat-error i18n *ngIf="signUpGroup.get('firstName')?.hasError('minlength') || signUpGroup.get('firstName')?.hasError('maxlength')">
+            <mat-error i18n *ngIf="hasLengthErrors('firstName')">
                 Must be between  2 and 30 characters
             </mat-error>
         </mat-form-field>
         <mat-form-field class="name-field">
             <mat-label i18n>Last name</mat-label>
             <input formControlName="lastName" matInput type="text"/>
-            <mat-error i18n *ngIf="signUpGroup.get('lastName')?.hasError('minlength') || signUpGroup.get('lastName')?.hasError('maxlength')">
+            <mat-error i18n *ngIf="hasLengthErrors('lastName')">
                 Must be between  2 and 30 characters
             </mat-error>
         </mat-form-field>
@@ -29,8 +29,7 @@
     <mat-form-field class="sign-up-field">
         <mat-label i18n>Password</mat-label>
         <input formControlName="password" matInput type="password"/>
-        <mat-error i18n *ngIf="!signUpGroup.get('password')?.hasError('pattern') &&
-         (signUpGroup.get('password')?.hasError('minlength') || signUpGroup.get('password')?.hasError('maxlength'))">
+        <mat-error i18n *ngIf="!signUpGroup.get('password')?.hasError('pattern') && hasLengthErrors('password')">
             Must be 8 to 16 characters
         </mat-error>
         <mat-error i18n *ngIf="signUpGroup.get('password')?.hasError('pattern')">
@@ -46,6 +45,6 @@
     </mat-form-field>
     <button [disabled]="!signUpGroup.valid" class="sign-up-button" (click)="signUpClick()" mat-flat-button color="primary">Sign up</button>
     <p i18n class="sign-in-reference">
-        Already have an account? <span class="sign-in-link" routerLink="sign-in">Sign in</span>
+        Already have an account? <span class="sign-in-link" (click)="redirectTo('auth/sign-in')">Sign in</span>
     </p>
 </form>

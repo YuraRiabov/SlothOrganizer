@@ -16,5 +16,10 @@ namespace SlothOrganizer.Services.Utility
                 iterationCount: 100000,
                 numBytesRequested: 256 / 8));
         }
+
+        public bool VerifyPassword(string password, byte[] salt, string hash)
+        {
+            return hash.Equals(HashPassword(password, salt));
+        }
     }
 }

@@ -17,7 +17,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SlothOrganizer.Presentation
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SlothOrganizer.Web", "SlothOrganizer.Web\SlothOrganizer.Web.csproj", "{93356AB4-3B29-43FE-8448-04560430D472}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SlothOrganizer.Services.Tests.Unit", "SlothOrganizer.Services.Tests.Unit\SlothOrganizer.Services.Tests.Unit.csproj", "{0FF3B21E-69B5-453D-A125-CBC70287E2FC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SlothOrganizer.Services.Tests.Unit", "SlothOrganizer.Services.Tests.Unit\SlothOrganizer.Services.Tests.Unit.csproj", "{0FF3B21E-69B5-453D-A125-CBC70287E2FC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SlothOrganizer.Web.Tests.Integration", "SlothOrganizer.Web.Tests.Integration\SlothOrganizer.Web.Tests.Integration.csproj", "{5D05ED4F-BDF4-4CE3-8DC9-E1F2A320A412}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -57,6 +59,10 @@ Global
 		{0FF3B21E-69B5-453D-A125-CBC70287E2FC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0FF3B21E-69B5-453D-A125-CBC70287E2FC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0FF3B21E-69B5-453D-A125-CBC70287E2FC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5D05ED4F-BDF4-4CE3-8DC9-E1F2A320A412}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5D05ED4F-BDF4-4CE3-8DC9-E1F2A320A412}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5D05ED4F-BDF4-4CE3-8DC9-E1F2A320A412}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5D05ED4F-BDF4-4CE3-8DC9-E1F2A320A412}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

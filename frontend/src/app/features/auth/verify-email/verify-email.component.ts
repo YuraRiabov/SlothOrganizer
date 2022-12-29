@@ -1,13 +1,15 @@
+import * as loginPageActions from '@store/actions/login-page.actions';
+
 import { FormControl, Validators } from '@angular/forms';
 import { Observable, catchError, concatMap, filter, map, of } from 'rxjs';
 
 import { AuthService } from '@api/auth.service';
 import { BaseComponent } from '@shared/components/base/base.component';
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { Token } from '#types/auth/token';
 import { selectUserId } from '@store/selectors/auth-page.selectors';
-import { verifyEmail } from '@store/actions/login-page.actions';
 
 @Component({
     selector: 'app-verify-email',
@@ -22,9 +24,13 @@ export class VerifyEmailComponent extends BaseComponent {
         Validators.pattern('[0-9]*')
     ]);
 
-    constructor(private authService: AuthService, private store: Store) {
+    constructor(private authService: AuthService, private store: Store, private router: Router) {
         super();
         this.userId$ = store.select(selectUserId);
+    }
+
+    public redirectTo(route: string) : void {
+        this.router.navigate([route]);
     }
 
     public submit() {
@@ -43,7 +49,7 @@ export class VerifyEmailComponent extends BaseComponent {
             filter(user => user != null),
             map(token => token as Token)
         ).subscribe((token) => {
-            this.store.dispatch(verifyEmail({ token }));
+            this.store.dispatch(loginPageActions.addToken({ token }));
         });
     }
 

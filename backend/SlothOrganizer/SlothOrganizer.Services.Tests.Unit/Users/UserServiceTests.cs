@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using FakeItEasy;
+using SlothOrganizer.Contracts.DTO.Auth;
 using SlothOrganizer.Contracts.DTO.User;
 using SlothOrganizer.Domain.Entities;
 using SlothOrganizer.Domain.Exceptions;
@@ -114,6 +115,68 @@ namespace SlothOrganizer.Services.Tests.Unit.Users
             Assert.Null(result);
         }
 
+        [Fact]
+        public async Task GetByLogin_WhenValid_ShouldReturn()
+        {
+            var bytes = GetBytes();
+            LoginDto login = GetLoginDto();
+            var user = new User
+            {
+                Email = "test@test.com",
+                Salt = Convert.ToBase64String(bytes),
+                Password = "hashedTest"
+            };
+            A.CallTo(() => _userRepository.Get("test@test.com")).Returns(Task.FromResult<User?>(user));
+            A.CallTo(() => _hashService.VerifyPassword(login.Password, A<byte[]>._, user.Password)).Returns(true);
+
+            var result = await _userService.Get(login);
+
+            Assert.Equal(login.Email, result.Email);
+            A.CallTo(() => _hashService.VerifyPassword(login.Password, A<byte[]>._, user.Password)).MustHaveHappenedOnceExactly();
+        }
+
+        [Fact]
+        public async Task GetByLogin_WhenInValid_ShouldThrow()
+        {
+            var bytes = GetBytes();
+            var login = GetLoginDto();
+            var user = new User
+            {
+                Email = "test@test.com",
+                Salt = Convert.ToBase64String(bytes),
+                Password = "hashedTest"
+            };
+            A.CallTo(() => _userRepository.Get("test@test.com")).Returns(Task.FromResult<User?>(user));
+            A.CallTo(() => _hashService.VerifyPassword(login.Password, A<byte[]>._, user.Password)).Returns(false);
+
+            var code = async () => await _userService.Get(login);
+
+            await Assert.ThrowsAsync<InvalidCredentialsException>(code);
+            A.CallTo(() => _hashService.VerifyPassword(login.Password, A<byte[]>._, user.Password)).MustHaveHappenedOnceExactly();
+        }
+
+        [Fact]
+        public async Task GetByEmail_WhenExists_ShouldReturn()
+        {
+            var user = GetUser();
+            A.CallTo(() => _userRepository.Get(user.Email)).Returns(Task.FromResult<User?>(user));
+
+            var result = await _userService.Get("test@test.com");
+
+            Assert.Equal(user.Id, result.Id);
+            Assert.Equal(user.Email, result.Email);
+        }
+
+        [Fact]
+        public async Task GetByEmail_WhenAbsent_ShouldThrow()
+        {
+            A.CallTo(() => _userRepository.Get("test")).Returns(Task.FromResult<User?>(null));
+
+            var code = async () => await _userService.Get("test");
+
+            await Assert.ThrowsAsync<EntityNotFoundException>(code);
+        }
+
         private byte[] GetBytes()
         {
             return new byte[] { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 };
@@ -136,6 +199,15 @@ namespace SlothOrganizer.Services.Tests.Unit.Users
                 FirstName = "test",
                 LastName = "user",
                 Email = "test@test.com",
+            };
+        }
+
+        private static LoginDto GetLoginDto()
+        {
+            return new LoginDto
+            {
+                Email = "test@test.com",
+                Password = "test"
             };
         }
     }

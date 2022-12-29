@@ -22,12 +22,12 @@ namespace SlothOrganizer.Persistence.Repositories
             await connection.ExecuteAsync(command, new { id });
         }
 
-        public Task<IEnumerable<User>> GetAll()
+        public async Task<IEnumerable<User>> GetAll()
         {
             var query = Resources.SelectAllUsers;
 
             using var connection = _dapperContext.CreateConnection();
-            return connection.QueryAsync<User>(query);
+            return await connection.QueryAsync<User>(query);
         }
 
         public async Task<User?> Get(string email)
