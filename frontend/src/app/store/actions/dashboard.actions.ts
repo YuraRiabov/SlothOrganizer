@@ -24,7 +24,7 @@ export const dashboardCreated = createAction(
     props<{ dashboard: Dashboard }>()
 );
 
-export const selectDashboard = createAction(
+export const chooseDashboard = createAction(
     '[Dashboard page] Select dashboard',
     props<{ dashboardId: number }>()
 );
