@@ -1,0 +1,11 @@
+<div class="create-dashboard-wrapper">
+    <mat-form-field class="title-field">
+        <input [formControl]="dashboardTitleControl" matInput type="text">
+    </mat-form-field>
+    <button mat-icon-button [disabled]="!dashboardTitleControl.valid" (click)="submit()">
+        <mat-icon>check</mat-icon>
+    </button>
+    <button mat-icon-button (click)="cancel()">
+        <mat-icon>close</mat-icon>
+    </button>
+</div>

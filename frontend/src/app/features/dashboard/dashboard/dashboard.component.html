@@ -1,8 +1,18 @@
 <div class="dashboard-wrapper">
     <div class="header">
-
+        <mat-select class="dashboard-select" [(value)]="currentDashboard" (selectionChange)="selectDashboard($event)">
+            <mat-option *ngFor="let dashboard of dashboards" [value]="dashboard">
+                {{dashboard.title}}
+            </mat-option>
+        </mat-select>
     </div>
     <div class="toolbar">
+        <app-create-dashboard class="new-dashboard" *ngIf="creatingDashboard" (closed)="creatingDashboard = false">
+        </app-create-dashboard>
+        <img class="logo" src="assets/logo.png"/>
+        <button mat-icon-button (click)="creatingDashboard = !creatingDashboard" class="new-dashboard-button">
+            <mat-icon>add_circle_outline</mat-icon>
+        </button>
         <div class="go-to-date-button">
             <input hidden [value]="currentDate" (dateChange)="goToDate($event)" [matDatepicker]="picker">
             <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
