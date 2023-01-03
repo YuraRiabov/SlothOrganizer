@@ -5,10 +5,12 @@ import { CreateDashboardComponent } from './create-dashboard/create-dashboard.co
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { DashboardEffects } from '@store/effects/dashboard/dashboard.effects';
 import { DashboardRoutingModule } from './dashboard-routing.module';
+import { DashboardSidebarComponent } from './dashboard-sidebar/dashboard-sidebar.component';
 import { EffectsModule } from '@ngrx/effects';
 import { ExceedingTasksComponent } from './exceeding-tasks/exceeding-tasks.component';
 import { MaterialModule } from '@shared/material/material.module';
 import { NgModule } from '@angular/core';
+import { TaskFormComponent } from './task-form/task-form.component';
 import { TasksEffects } from '@store/effects/dashboard/tasks.effects';
 import { TimelineComponent } from './timeline/timeline.component';
 
@@ -17,7 +19,9 @@ import { TimelineComponent } from './timeline/timeline.component';
         DashboardComponent,
         TimelineComponent,
         ExceedingTasksComponent,
-        CreateDashboardComponent
+        CreateDashboardComponent,
+        DashboardSidebarComponent,
+        TaskFormComponent
     ],
     imports: [
         CommonModule,

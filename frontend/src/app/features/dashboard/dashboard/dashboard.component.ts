@@ -6,6 +6,7 @@ import { BaseComponent } from '@shared/components/base/base.component';
 import { Dashboard } from '#types/dashboard/dashboard/dashboard';
 import { MatDatepickerInputEvent } from '@angular/material/datepicker';
 import { MatSelectChange } from '@angular/material/select';
+import { SidebarType } from '#types/dashboard/timeline/enums/sidebar-type';
 import { Store } from '@ngrx/store';
 import { TaskBlock } from '#types/dashboard/timeline/task-block';
 import { TimelineScale } from '#types/dashboard/timeline/enums/timeline-scale';
@@ -94,6 +95,8 @@ export class DashboardComponent extends BaseComponent implements OnInit {
     public currentDashboard: Dashboard = getDefaultDashboard();
 
     public creatingDashboard: boolean = false;
+    public sidebarOpen: boolean = false;
+    public sidebarType: SidebarType = SidebarType.Create;
 
     constructor(private store: Store) {
         super();
@@ -113,7 +116,11 @@ export class DashboardComponent extends BaseComponent implements OnInit {
             });
     }
 
-    public selectDashboard(selection: MatSelectChange) {
+    public openCreateSidebar(): void {
+        this.openSidebar(SidebarType.Create);
+    }
+
+    public selectDashboard(selection: MatSelectChange): void {
         this.currentDashboard = selection.value as Dashboard;
         this.store.dispatch(dashboardActions.chooseDashboard({ dashboardId: this.currentDashboard.id }));
     }
@@ -131,7 +138,12 @@ export class DashboardComponent extends BaseComponent implements OnInit {
         }
     }
 
-    public goToDate(event: MatDatepickerInputEvent<Date>) {
+    public goToDate(event: MatDatepickerInputEvent<Date>): void {
         this.currentDate = addHours(event.value!, 12);
+    }
+
+    private openSidebar(type: SidebarType): void {
+        this.sidebarType = type;
+        this.sidebarOpen = true;
     }
 }

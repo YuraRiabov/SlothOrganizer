@@ -1,0 +1,53 @@
+<form [formGroup]="taskForm" class="task-form-wrapper">
+    <h1 i18n>Create task</h1>
+    <mat-form-field class="task-field">
+        <mat-label>Title</mat-label>
+        <input formControlName="title" matInput type="text">
+    </mat-form-field>
+    <mat-form-field class="task-field">
+        <mat-label>Description</mat-label>
+        <textarea formControlName="description" matInput type="text"></textarea>
+    </mat-form-field>
+    <div class="date-row">
+        <mat-form-field class="date-field" appearance="fill">
+            <mat-label>Start</mat-label>
+            <input formControlName="startDate" matInput [matDatepicker]="startPicker" (dateChange)="validate()">
+            <mat-datepicker-toggle matSuffix [for]="startPicker"></mat-datepicker-toggle>
+            <mat-datepicker #startPicker></mat-datepicker>
+        </mat-form-field>
+        <mat-checkbox formControlName="startTimeCheckbox" (change)="update()">Time</mat-checkbox>
+        <mat-form-field class="time-field" *ngIf="selectStartTime">
+            <input formControlName="startTime" matInput type="time" (change)="validate()">
+        </mat-form-field>
+    </div>
+    <div class="date-row">
+        <mat-form-field class="date-field" appearance="fill">
+            <mat-label>End</mat-label>
+            <input formControlName="endDate" matInput [matDatepicker]="endPicker" (dateChange)="validate()">
+            <mat-datepicker-toggle matSuffix [for]="endPicker"></mat-datepicker-toggle>
+            <mat-datepicker #endPicker></mat-datepicker>
+        </mat-form-field>
+        <mat-checkbox formControlName="endTimeCheckbox" (change)="update()">Time</mat-checkbox>
+        <mat-form-field class="time-field" *ngIf="selectEndTime">
+            <input formControlName="endTime" matInput type="time" (change)="validate()">
+        </mat-form-field>
+    </div>
+    <div class="date-row">
+        <mat-form-field appearance="fill" class="period-field">
+            <mat-label>Repeating period</mat-label>
+            <mat-select formControlName="repeatingPeriod" (selectionChange)="validate()">
+                <mat-option *ngFor="let option of repeatingOptions" [value]="option">{{getLabel(option)}}</mat-option>
+            </mat-select>
+        </mat-form-field>
+        <mat-form-field class="date-field" *ngIf="isRepeating" appearance="fill">
+            <mat-label>End repeating</mat-label>
+            <input formControlName="endRepeating" matInput [matDatepicker]="endRepeatingPicker">
+            <mat-datepicker-toggle matSuffix [for]="endRepeatingPicker"></mat-datepicker-toggle>
+            <mat-datepicker #endRepeatingPicker></mat-datepicker>
+        </mat-form-field>
+    </div>
+    <div class="button-row">
+        <button mat-flat-button (click)="cancelClick()">Cancel</button>
+        <button mat-flat-button color="primary" [disabled]="!taskForm.valid" (click)="saveClick()">Save</button>
+    </div>
+</form>

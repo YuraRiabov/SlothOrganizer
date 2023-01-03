@@ -1,6 +1,6 @@
 import * as dashboardActions from '@store/actions/dashboard.actions';
 
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 
 import { BaseComponent } from '@shared/components/base/base.component';

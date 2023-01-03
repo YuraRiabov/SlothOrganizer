@@ -23,7 +23,7 @@ namespace SlothOrganizer.Services.Tasks
 
         public async Task<TaskDto> Create(NewTaskDto newTask)
         {
-            if (newTask.End - newTask.Start < _dateTimeService.GetLength(newTask.RepeatingPeriod))
+            if (newTask.End - newTask.Start > _dateTimeService.GetLength(newTask.RepeatingPeriod))
             {
                 throw new InvalidPeriodException();
             }

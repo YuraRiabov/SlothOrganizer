@@ -46,7 +46,7 @@ namespace SlothOrganizer.Services.Tasks
             var taskCompletions = new List<TaskCompletion>();
             var currentStart = task.Start;
             var length = task.End - task.Start;
-            while (currentStart < task.EndRepeating)
+            while (currentStart + length < task.EndRepeating)
             {
                 var current = new TaskCompletion
                 {

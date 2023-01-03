@@ -8,7 +8,7 @@ import { Task } from '#types/dashboard/tasks/task';
     providedIn: 'root'
 })
 export class TasksService {
-    private readonly baseUri: string = '/dashboards';
+    private readonly baseUri: string = '/tasks';
 
     constructor(private http: HttpService) { }
 

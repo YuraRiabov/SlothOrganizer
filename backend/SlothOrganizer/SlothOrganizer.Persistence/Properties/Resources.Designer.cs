@@ -151,9 +151,10 @@ namespace SlothOrganizer.Persistence.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to INSERT INTO Dashboards (UserId, Title)
-        ///VALUES (@UserId, @Title)
-        ///SELECT CAST(SCOPE_IDENTITY() AS bigint).
+        ///   Looks up a localized string similar to IF EXISTS (SELECT * FROM Users WHERE Id = @UserId)
+        ///	INSERT INTO Dashboards (UserId, Title)
+        ///	VALUES (@UserId, @Title)
+        ///	SELECT CAST(SCOPE_IDENTITY() AS bigint).
         /// </summary>
         internal static string InsertDashboard {
             get {
@@ -187,7 +188,7 @@ namespace SlothOrganizer.Persistence.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to INSERT INTO TaskCompletions (TaskId, IsSuccessful, Start, End, LastEdited)
+        ///   Looks up a localized string similar to INSERT INTO TaskCompletions (TaskId, IsSuccessful, Start, [End], LastEdited)
         ///VALUES (@TaskId, @IsSuccessful, @Start, @End, @LastEdited)
         ///SELECT CAST(SCOPE_IDENTITY() AS bigint).
         /// </summary>
