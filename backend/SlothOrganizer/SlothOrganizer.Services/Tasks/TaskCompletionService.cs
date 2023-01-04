@@ -46,7 +46,7 @@ namespace SlothOrganizer.Services.Tasks
             var taskCompletions = new List<TaskCompletion>();
             var currentStart = task.Start;
             var length = task.End - task.Start;
-            while (currentStart + length < task.EndRepeating)
+            while (currentStart + length <= task.EndRepeating)
             {
                 var current = new TaskCompletion
                 {
@@ -62,7 +62,7 @@ namespace SlothOrganizer.Services.Tasks
             return taskCompletions;
         }
 
-        private DateTime GetNextStart(DateTime currentStart, TaskRepeatingPeriod period)
+        private static DateTime GetNextStart(DateTime currentStart, TaskRepeatingPeriod period)
         {
             return period switch
             {

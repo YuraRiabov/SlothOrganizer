@@ -4,7 +4,7 @@ using SlothOrganizer.Domain.Entities;
 
 namespace SlothOrganizer.Services.Tasks.Mapping
 {
-    internal class DashboardMappingProfile : Profile
+    public class DashboardMappingProfile : Profile
     {
         public DashboardMappingProfile()
         {
