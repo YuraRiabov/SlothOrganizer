@@ -8,14 +8,14 @@ using SlothOrganizer.Services.Abstractions.Utility;
 
 namespace SlothOrganizer.Services.Auth.UserVerification
 {
-    public class UserVerificationService : IUserVerificationService
+    public class EmailNotificationService : INotificationService
     {
         private readonly IVerificationCodeService _verificationCodeService;
         private readonly IEmailService _emailService;
         private readonly ICryptoService _cryptoService;
         private readonly IConfiguration _configuration;
 
-        public UserVerificationService(IVerificationCodeService verificationCodeService, IEmailService emailService, ICryptoService cryptoService, IConfiguration configuration)
+        public EmailNotificationService(IVerificationCodeService verificationCodeService, IEmailService emailService, ICryptoService cryptoService, IConfiguration configuration)
         {
             _verificationCodeService = verificationCodeService;
             _emailService = emailService;
@@ -29,7 +29,7 @@ namespace SlothOrganizer.Services.Auth.UserVerification
             await _emailService.SendEmail(userEmail, "Verify your email", $"Your verification code is {code}");
         }
 
-        public async Task SendPasswordReset(string userEmail)
+        public async Task SendPasswordResetLink(string userEmail)
         {
             var code = await _verificationCodeService.Generate(userEmail);
             var link = _configuration["ResetPasswordLink"];

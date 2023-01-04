@@ -1,4 +1,4 @@
-import { addEmail, addToken, addUser, login } from '../actions/login-page.actions';
+import { addEmail, addToken, addUser, login, verifyEmail } from '../actions/auth.actions';
 import { createReducer, on } from '@ngrx/store';
 
 import { AuthState } from '../states/auth-state';
@@ -10,10 +10,11 @@ export const initialState: AuthState = {
     token: {} as Token
 };
 
-export const authPageReducer = createReducer(
+export const authReducer = createReducer(
     initialState,
     on(addUser, (state, { user }): AuthState => ({ ...state, user })),
     on(addToken, (state, { token }): AuthState => ({ ...state, token })),
     on(login, (state, { authState }): AuthState => ({ ...state, token: authState.token, user: authState.user })),
+    on(verifyEmail, (state, { authState }): AuthState => ({ ...state, token: authState.token, user: authState.user })),
     on(addEmail, (state, { email }): AuthState => ({ ...state, user: { ...state.user, email}}))
 );

@@ -3,7 +3,7 @@ import { Observable, map } from 'rxjs';
 
 import { Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { selectAccessToken } from '@store/selectors/auth-page.selectors';
+import { selectAccessToken } from '@store/selectors/auth.selectors';
 
 @Injectable({
     providedIn: 'root'

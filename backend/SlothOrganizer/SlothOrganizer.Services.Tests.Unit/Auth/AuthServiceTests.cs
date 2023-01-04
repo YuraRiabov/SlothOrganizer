@@ -4,7 +4,6 @@ using SlothOrganizer.Contracts.DTO.User;
 using SlothOrganizer.Domain.Exceptions;
 using SlothOrganizer.Services.Abstractions.Auth.Tokens;
 using SlothOrganizer.Services.Abstractions.Auth.UserVerification;
-using SlothOrganizer.Services.Abstractions.Email;
 using SlothOrganizer.Services.Abstractions.Users;
 using SlothOrganizer.Services.Auth;
 using Xunit;
@@ -17,42 +16,42 @@ namespace SlothOrganizer.Services.Tests.Unit.Auth
         private readonly IUserService _userService;
         private readonly IAccessTokenService _accessTokenService;
         private readonly IRefreshTokenService _refreshTokenService;
-        private readonly IUserVerificationService _userVerificationService;
+        private readonly INotificationService _notificationService;
 
         public AuthServiceTests()
         {
             _userService = A.Fake<IUserService>();
             _accessTokenService = A.Fake<IAccessTokenService>();
             _refreshTokenService = A.Fake<IRefreshTokenService>();
-            _userVerificationService = A.Fake<IUserVerificationService>();
+            _notificationService = A.Fake<INotificationService>();
 
             _authService = new AuthService(_accessTokenService,
                 _userService,
-                _userVerificationService,
+                _notificationService,
                 _refreshTokenService);
         }
 
         [Fact]
         public async Task VerifyEmail_WhenValid_ShouldVerify()
         {
-            var dto = GetVerificationCodeDto();
-            var user = GetUser(dto.Email, true);
-            A.CallTo(() => _userService.VerifyEmail(dto.Email, 111111)).Returns(user);
-            A.CallTo(() => _accessTokenService.Generate(dto.Email)).Returns("test");
+            var verificationCodeDto = GetVerificationCodeDto();
+            var user = GetUser(verificationCodeDto.Email, true);
+            A.CallTo(() => _userService.VerifyEmail(verificationCodeDto.Email, 111111)).Returns(user);
+            A.CallTo(() => _accessTokenService.Generate(verificationCodeDto.Email)).Returns("test");
 
-            var result = await _authService.VerifyEmail(dto);
+            var result = await _authService.VerifyEmail(verificationCodeDto);
 
             Assert.Equal("test", result.Token.AccessToken);
-            A.CallTo(() => _userService.VerifyEmail(dto.Email, 111111)).MustHaveHappenedOnceExactly();
+            A.CallTo(() => _userService.VerifyEmail(verificationCodeDto.Email, 111111)).MustHaveHappenedOnceExactly();
         }
 
         [Fact]
         public async Task VerifyEmail_WhenInvalid_ShouldThrow()
         {
-            var dto = GetVerificationCodeDto();
-            A.CallTo(() => _userService.VerifyEmail(dto.Email, 111111)).Returns(Task.FromResult<UserDto?>(null));
+            var verificationCodeDto = GetVerificationCodeDto();
+            A.CallTo(() => _userService.VerifyEmail(verificationCodeDto.Email, 111111)).Returns(Task.FromResult<UserDto?>(null));
 
-            var code = async () => await _authService.VerifyEmail(dto);
+            var code = async () => await _authService.VerifyEmail(verificationCodeDto);
 
             var exception = await Assert.ThrowsAsync<InvalidCredentialsException>(code);
             Assert.Equal("Invalid verification code", exception.Message);
@@ -73,7 +72,7 @@ namespace SlothOrganizer.Services.Tests.Unit.Auth
             await _authService.SignUp(newUser);
 
             A.CallTo(() => _userService.Create(newUser)).MustHaveHappenedOnceExactly();
-            A.CallTo(() => _userVerificationService.SendVerificationCode(newUser.Email))
+            A.CallTo(() => _notificationService.SendVerificationCode(newUser.Email))
                 .MustHaveHappenedOnceExactly();
         }
 
@@ -93,7 +92,7 @@ namespace SlothOrganizer.Services.Tests.Unit.Auth
             await _authService.ResendVerificationCode(user.Email);
 
             A.CallTo(() => _userService.Get(user.Email)).MustHaveHappenedOnceExactly();
-            A.CallTo(() => _userVerificationService.SendVerificationCode(user.Email))
+            A.CallTo(() => _notificationService.SendVerificationCode(user.Email))
                 .MustHaveHappenedOnceExactly();
         }
         [Fact]

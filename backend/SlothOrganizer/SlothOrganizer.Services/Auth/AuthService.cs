@@ -13,23 +13,23 @@ namespace SlothOrganizer.Services.Auth
         private readonly IUserService _userService;
         private readonly IAccessTokenService _accessTokenService;
         private readonly IRefreshTokenService _refreshTokenService;
-        private readonly IUserVerificationService _userVerificationService;
+        private readonly INotificationService _notificationServcie;
 
         public AuthService(IAccessTokenService tokenService,
             IUserService userService,
-            IUserVerificationService userVerificationService,
+            INotificationService notificationService,
             IRefreshTokenService refreshTokenService)
         {
             _accessTokenService = tokenService;
             _userService = userService;
-            _userVerificationService = userVerificationService;
+            _notificationServcie = notificationService;
             _refreshTokenService = refreshTokenService;
         }
 
         public async Task ResendVerificationCode(string email)
         {
             var user = await _userService.Get(email);
-            await _userVerificationService.SendVerificationCode(user.Email);
+            await _notificationServcie.SendVerificationCode(user.Email);
         }
 
         public async Task<TokenDto> RefreshToken(TokenDto expiredToken)
@@ -63,7 +63,7 @@ namespace SlothOrganizer.Services.Auth
         public async Task<UserDto> SignUp(NewUserDto newUser)
         {
             var user = await _userService.Create(newUser);
-            await _userVerificationService.SendVerificationCode(user.Email);
+            await _notificationServcie.SendVerificationCode(user.Email);
             return user;
         }
 
@@ -94,7 +94,7 @@ namespace SlothOrganizer.Services.Auth
         public async Task SendResetPassword(string email)
         {
             var user = await _userService.Get(email);
-            await _userVerificationService.SendPasswordReset(user.Email);
+            await _notificationServcie.SendPasswordResetLink(user.Email);
         }
 
         private async Task<TokenDto> GenerateToken(string email)

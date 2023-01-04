@@ -1,6 +1,6 @@
 SELECT * FROM VerificationCodes 
-WHERE EXISTS(
+WHERE EXISTS (
 	SELECT * FROM Users
-	WHERE Users.Id=VerificationCodes.UserId
-	AND Users.Email=@UserEmail
+	WHERE Users.Id = VerificationCodes.UserId
+	AND Users.Email = @UserEmail
 )
