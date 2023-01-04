@@ -1,7 +1,7 @@
 import { RouterModule, Routes } from '@angular/router';
 
 import { AuthPageComponent } from './auth-page/auth-page.component';
-import { EnterEmailComponent } from './enter-email/enter-email.component';
+import { EmailRecoveryComponent } from './email-recovery/enter-email.component';
 import { NgModule } from '@angular/core';
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
 import { SignInComponent } from './sign-in/sign-in.component';
@@ -27,7 +27,7 @@ const routes: Routes = [
             },
             {
                 path: 'enter-email',
-                component: EnterEmailComponent
+                component: EmailRecoveryComponent
             },
             {
                 path: 'reset-password',

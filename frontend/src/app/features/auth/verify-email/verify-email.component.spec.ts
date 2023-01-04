@@ -1,6 +1,6 @@
 /* eslint-disable no-undef */
 
-import * as loginPageActions from '@store/actions/login-page.actions';
+import * as authActions from '@store/actions/auth.actions';
 
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -96,7 +96,7 @@ describe('VerifyEmailComponent', () => {
 
         expect(mockStore.select).toHaveBeenCalledTimes(1);
         expect(mockAuthService.verifyEmail).toHaveBeenCalledTimes(1);
-        expect(mockStore.dispatch).toHaveBeenCalledOnceWith(loginPageActions.login({ authState: auth }));
+        expect(mockStore.dispatch).toHaveBeenCalledOnceWith(authActions.verifyEmail({ authState: auth }));
     });
 
     it('should redirect to root', () => {

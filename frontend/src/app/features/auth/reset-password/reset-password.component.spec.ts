@@ -12,7 +12,7 @@ import { CommonModule } from '@angular/common';
 import { MaterialModule } from '@shared/material/material.module';
 import { ResetPasswordComponent } from './reset-password.component';
 import { Store } from '@ngrx/store';
-import { login } from '@store/actions/login-page.actions';
+import { login } from '@store/actions/auth.actions';
 
 describe('ResetPasswordComponent', () => {
     let component: ResetPasswordComponent;

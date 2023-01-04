@@ -15,7 +15,12 @@ export const addToken = createAction(
 );
 
 export const login = createAction(
-    '[Sign in page, verify email page] Login',
+    '[Sign in page] Login',
+    props<{authState: AuthState}>()
+);
+
+export const verifyEmail = createAction(
+    '[Verify email page] verify email',
     props<{authState: AuthState}>()
 );
 

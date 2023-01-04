@@ -1,7 +1,6 @@
 ﻿using FakeItEasy;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Configuration;
-using SlothOrganizer.Contracts.DTO.Auth;
 using SlothOrganizer.Services.Abstractions.Auth.UserVerification;
 using SlothOrganizer.Services.Abstractions.Email;
 using SlothOrganizer.Services.Abstractions.Utility;
@@ -10,22 +9,22 @@ using Xunit;
 
 namespace SlothOrganizer.Services.Tests.Unit.Auth.UserVerification
 {
-    public class UserVerificationSeriviceTests
+    public class EmailNotificationServiceTests
     {
         private readonly IVerificationCodeService _verificationCodeService;
         private readonly IEmailService _emailService;
         private readonly ICryptoService _cryptoService;
         private readonly IConfiguration _configuration;
-        private readonly UserVerificationService _userVerificationService;
+        private readonly EmailNotificationService _userVerificationService;
 
-        public UserVerificationSeriviceTests()
+        public EmailNotificationServiceTests()
         {
             var configuration = new Dictionary<string, string?> { { "ResetPasswordLink", "https://test.com" } };
             _configuration = new ConfigurationBuilder().AddInMemoryCollection(configuration).Build();
             _emailService = A.Fake<IEmailService>();
             _cryptoService = A.Fake<ICryptoService>();
             _verificationCodeService = A.Fake<IVerificationCodeService>();
-            _userVerificationService = new UserVerificationService(_verificationCodeService, _emailService, _cryptoService, _configuration);
+            _userVerificationService = new EmailNotificationService(_verificationCodeService, _emailService, _cryptoService, _configuration);
         }
 
         [Fact]
@@ -55,7 +54,7 @@ namespace SlothOrganizer.Services.Tests.Unit.Auth.UserVerification
             A.CallTo(() => _cryptoService.Encrypt(email)).Returns(email);
             A.CallTo(() => _cryptoService.Encrypt(code.ToString())).Returns(code.ToString());
 
-            await _userVerificationService.SendPasswordReset(email);
+            await _userVerificationService.SendPasswordResetLink(email);
 
             A.CallTo(() => _emailService.SendEmail(email,
                 "Follow the link to reset your password",

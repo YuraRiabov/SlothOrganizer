@@ -8,11 +8,11 @@ import { Store } from '@ngrx/store';
 import { getEmailValidators } from '@utils/validators/user-validators.helper';
 
 @Component({
-    selector: 'app-enter-email',
-    templateUrl: './enter-email.component.html',
-    styleUrls: ['./enter-email.component.sass']
+    selector: 'so-enter-email',
+    templateUrl: './email-recovery.component.html',
+    styleUrls: ['./email-recovery.component.sass']
 })
-export class EnterEmailComponent extends BaseComponent implements OnInit {
+export class EmailRecoveryComponent extends BaseComponent implements OnInit {
     public submittedEmail: string = '';
 
     public emailSent: boolean = false;
@@ -27,8 +27,8 @@ export class EnterEmailComponent extends BaseComponent implements OnInit {
         this.emailControl = new FormControl('', getEmailValidators());
     }
 
-    public submitClick(): void {
-        this.authService.sendPasswordReset(this.emailControl.value).pipe(
+    public sendPasswordResetLink(): void {
+        this.authService.sendPasswordResetLink(this.emailControl.value).pipe(
             this.untilDestroyed,
             catchError(() => {
                 this.emailControl.setErrors({ email: true });

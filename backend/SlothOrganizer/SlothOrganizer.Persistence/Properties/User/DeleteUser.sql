@@ -1,1 +1,1 @@
-DELETE FROM Users WHERE Id=@Id
+DELETE FROM Users WHERE Id = @Id
