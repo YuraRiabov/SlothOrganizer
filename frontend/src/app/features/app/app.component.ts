@@ -3,7 +3,7 @@ import { LoadingService } from '@shared/services/loading.service';
 import { Observable } from 'rxjs';
 
 @Component({
-    selector: 'app-root',
+    selector: 'so-root',
     templateUrl: './app.component.html',
     styleUrls: ['./app.component.sass']
 })

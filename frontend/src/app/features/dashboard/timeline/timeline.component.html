@@ -37,7 +37,7 @@
                     {{block.tasks[0].title}}
                 </div>
                 <div class="expanded-block" *ngIf="block.expanded">
-                    <app-exceeding-tasks [tasks]="block.tasks" (clickedOff)="changeBlockExpansion(block)"></app-exceeding-tasks>
+                    <so-exceeding-tasks [tasks]="block.tasks" (clickedOff)="changeBlockExpansion(block)"></so-exceeding-tasks>
                 </div>
             </div>
         </div>

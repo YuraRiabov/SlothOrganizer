@@ -1,4 +1,4 @@
-import * as loginPageActions from '@store/actions/login-page.actions';
+import * as authActions from '@store/actions/auth.actions';
 
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { catchError, filter, map, of } from 'rxjs';
@@ -13,7 +13,7 @@ import { User } from '#types/user/user';
 import { hasLengthErrors } from '@utils/validators/common-validators';
 
 @Component({
-    selector: 'app-sign-up',
+    selector: 'so-sign-up',
     templateUrl: './sign-up.component.html',
     styleUrls: ['./sign-up.component.sass']
 })
@@ -53,7 +53,7 @@ export class SignUpComponent extends BaseComponent {
             filter(user => user != null),
             map(user => user as User)
         ).subscribe((user) => {
-            this.store.dispatch(loginPageActions.addUser({ user }));
+            this.store.dispatch(authActions.addUser({ user }));
             this.redirectTo('auth/verify-email');
         });
     }

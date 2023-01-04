@@ -2,7 +2,7 @@ import { Component, OnDestroy } from '@angular/core';
 import { Observable, Subject, takeUntil } from 'rxjs';
 
 @Component({
-    selector: 'app-base',
+    selector: 'so-base',
     template: ''
 })
 export class BaseComponent implements OnDestroy {

@@ -1,13 +1,11 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 
-@Injectable({
-    providedIn: 'root'
-})
-export class HttpService {
+export abstract class HttpService {
     private apiUrl: string = environment.apiUrl;
+
+    protected readonly abstract controllerUri: string;
 
     constructor(private http: HttpClient) {}
 
@@ -49,9 +47,6 @@ export class HttpService {
     }
 
     private buildUrl(url: string) : string {
-        if (url.includes('http')) {
-            return url;
-        }
-        return this.apiUrl + url;
+        return this.apiUrl + this.controllerUri + url;
     }
 }

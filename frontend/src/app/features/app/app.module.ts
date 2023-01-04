@@ -12,7 +12,7 @@ import { MaterialModule } from '@shared/material/material.module';
 import { NgModule } from '@angular/core';
 import { StoreModule } from '@ngrx/store';
 import { TokenInterceptor } from '@shared/interceptors/token.interceptor';
-import { authPageReducer } from '@store/reducers/auth-page.reducers';
+import { authReducer } from '@store/reducers/auth-page.reducers';
 import { dashboardReducer } from '@store/reducers/dashboard.reducers';
 import { metaReducers } from '@store/reducers/meta/metareducers';
 
@@ -21,7 +21,7 @@ import { metaReducers } from '@store/reducers/meta/metareducers';
     imports: [
         BrowserModule,
         AppRoutingModule,
-        StoreModule.forRoot({ authState: authPageReducer, dashboard: dashboardReducer }, { metaReducers }),
+        StoreModule.forRoot({ authState: authReducer, dashboard: dashboardReducer }, { metaReducers }),
         EffectsModule.forRoot([HydrationEffects]),
         BrowserAnimationsModule,
         HttpClientModule,

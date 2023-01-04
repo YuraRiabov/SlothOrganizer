@@ -1,4 +1,4 @@
-import * as loginPageActions from '@store/actions/login-page.actions';
+import * as authActions from '@store/actions/auth.actions';
 
 import { ActivatedRoute, Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
@@ -11,7 +11,7 @@ import { Store } from '@ngrx/store';
 import { hasLengthErrors } from '@utils/validators/common-validators';
 
 @Component({
-    selector: 'app-reset-password',
+    selector: 'so-reset-password',
     templateUrl: './reset-password.component.html',
     styleUrls: ['./reset-password.component.sass']
 })
@@ -42,7 +42,7 @@ export class ResetPasswordComponent extends BaseComponent implements OnInit {
         return hasLengthErrors(this.resetPassowordGroup, controlName);
     }
 
-    public submitClick(): void {
+    public resetPassword(): void {
         this.authService.resetPassword({
             password: this.resetPassowordGroup.get('password')?.value,
             email: this.email,
@@ -50,7 +50,7 @@ export class ResetPasswordComponent extends BaseComponent implements OnInit {
         }).pipe(
             this.untilDestroyed
         ).subscribe((auth) => {
-            this.store.dispatch(loginPageActions.login({ authState: auth }));
+            this.store.dispatch(authActions.login({ authState: auth }));
             this.router.navigate(['']);
         });
     }

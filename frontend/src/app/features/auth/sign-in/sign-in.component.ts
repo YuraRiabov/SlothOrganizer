@@ -1,4 +1,4 @@
-import * as loginPageActions from '@store/actions/login-page.actions';
+import * as authActions from '@store/actions/auth.actions';
 
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
@@ -13,7 +13,7 @@ import { Store } from '@ngrx/store';
 import { hasLengthErrors } from '@utils/validators/common-validators';
 
 @Component({
-    selector: 'app-sign-in',
+    selector: 'so-sign-in',
     templateUrl: './sign-in.component.html',
     styleUrls: ['./sign-in.component.sass']
 })
@@ -53,11 +53,11 @@ export class SignInComponent extends BaseComponent implements OnInit {
             map(auth => auth as AuthState)
         ).subscribe((auth) => {
             if (auth.token == null) {
-                this.store.dispatch(loginPageActions.addUser({ user: auth.user }));
+                this.store.dispatch(authActions.addUser({ user: auth.user }));
                 this.redirectTo('auth/verify-email');
                 return;
             }
-            this.store.dispatch(loginPageActions.login({ authState: auth }));
+            this.store.dispatch(authActions.login({ authState: auth }));
             this.redirectTo('');
         });
     }

@@ -6,9 +6,9 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { Token } from '#types/auth/token';
-import { addToken } from '@store/actions/login-page.actions';
+import { addToken } from '@store/actions/auth.actions';
 import { logoutAction } from '@store/actions/hydration.actions';
-import { selectToken } from '@store/selectors/auth-page.selectors';
+import { selectToken } from '@store/selectors/auth.selectors';
 
 @Injectable()
 export class ErrorInterceptor implements HttpInterceptor {

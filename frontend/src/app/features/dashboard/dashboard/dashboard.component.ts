@@ -15,7 +15,7 @@ import { getDefaultDashboard } from '@utils/creation-functions/dashboard-creatio
 import { selectDashboards } from '@store/selectors/dashboard.selectors';
 
 @Component({
-    selector: 'app-dashboard',
+    selector: 'so-dashboard',
     templateUrl: './dashboard.component.html',
     styleUrls: ['./dashboard.component.sass']
 })

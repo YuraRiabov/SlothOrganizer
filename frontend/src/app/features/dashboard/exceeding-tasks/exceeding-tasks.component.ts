@@ -3,7 +3,7 @@ import { Component, ElementRef, EventEmitter, HostListener, Input, Output } from
 import { TaskBlock } from '#types/dashboard/timeline/task-block';
 
 @Component({
-    selector: 'app-exceeding-tasks',
+    selector: 'so-exceeding-tasks',
     templateUrl: './exceeding-tasks.component.html',
     styleUrls: ['./exceeding-tasks.component.sass']
 })
