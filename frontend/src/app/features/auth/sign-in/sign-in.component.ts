@@ -3,13 +3,14 @@ import * as loginPageActions from '@store/actions/login-page.actions';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { catchError, filter, map, of } from 'rxjs';
-import { getEmailValidators, getPasswordValidators, hasLengthErrors } from '@utils/validators/user-validators.helper';
+import { getEmailValidators, getPasswordValidators } from '@utils/validators/user-validators.helper';
 
 import { AuthService } from '@api/auth.service';
 import { AuthState } from '@store/states/auth-state';
 import { BaseComponent } from '@shared/components/base/base.component';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
+import { hasLengthErrors } from '@utils/validators/common-validators';
 
 @Component({
     selector: 'app-sign-in',

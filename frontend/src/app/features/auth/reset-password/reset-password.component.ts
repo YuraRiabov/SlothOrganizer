@@ -3,11 +3,12 @@ import * as loginPageActions from '@store/actions/login-page.actions';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { getPasswordValidators, hasLengthErrors, passwordMatchingValidator } from '@utils/validators/user-validators.helper';
+import { getPasswordValidators, passwordMatchingValidator } from '@utils/validators/user-validators.helper';
 
 import { AuthService } from '@api/auth.service';
 import { BaseComponent } from '@shared/components/base/base.component';
 import { Store } from '@ngrx/store';
+import { hasLengthErrors } from '@utils/validators/common-validators';
 
 @Component({
     selector: 'app-reset-password',

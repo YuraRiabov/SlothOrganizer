@@ -3,10 +3,16 @@
     <mat-form-field class="task-field">
         <mat-label>Title</mat-label>
         <input formControlName="title" matInput type="text">
+        <mat-error *ngIf="hasLengthErrors('title')">
+            Title must be 2 to 30 characters long
+        </mat-error>
     </mat-form-field>
     <mat-form-field class="task-field">
         <mat-label>Description</mat-label>
         <textarea formControlName="description" matInput type="text"></textarea>
+        <mat-error *ngIf="hasLengthErrors('description')">
+            Too long description
+        </mat-error>
     </mat-form-field>
     <div class="date-row">
         <mat-form-field class="date-field" appearance="fill">
@@ -14,8 +20,11 @@
             <input formControlName="startDate" matInput [matDatepicker]="startPicker" (dateChange)="validate()">
             <mat-datepicker-toggle matSuffix [for]="startPicker"></mat-datepicker-toggle>
             <mat-datepicker #startPicker></mat-datepicker>
+            <mat-error *ngIf="taskForm.get('startDate')?.hasError('startBeforeEnd')">
+                Start must be prior to end
+            </mat-error>
         </mat-form-field>
-        <mat-checkbox formControlName="startTimeCheckbox" (change)="update()">Time</mat-checkbox>
+        <mat-checkbox formControlName="startTimeCheckbox" color="primary" (change)="update()">Time</mat-checkbox>
         <mat-form-field class="time-field" *ngIf="selectStartTime">
             <input formControlName="startTime" matInput type="time" (change)="validate()">
         </mat-form-field>
@@ -26,8 +35,11 @@
             <input formControlName="endDate" matInput [matDatepicker]="endPicker" (dateChange)="validate()">
             <mat-datepicker-toggle matSuffix [for]="endPicker"></mat-datepicker-toggle>
             <mat-datepicker #endPicker></mat-datepicker>
+            <mat-error *ngIf="taskForm.get('endDate')?.hasError('startBeforeEnd')">
+                Start must be prior to end
+            </mat-error>
         </mat-form-field>
-        <mat-checkbox formControlName="endTimeCheckbox" (change)="update()">Time</mat-checkbox>
+        <mat-checkbox formControlName="endTimeCheckbox" color="primary" (change)="update()">Time</mat-checkbox>
         <mat-form-field class="time-field" *ngIf="selectEndTime">
             <input formControlName="endTime" matInput type="time" (change)="validate()">
         </mat-form-field>
@@ -38,16 +50,22 @@
             <mat-select formControlName="repeatingPeriod" (selectionChange)="validate()">
                 <mat-option *ngFor="let option of repeatingOptions" [value]="option">{{getLabel(option)}}</mat-option>
             </mat-select>
+            <mat-error *ngIf="taskForm.get('repeatingPeriod')?.hasError('shortRepeatingPeriod')">
+                Repeating period must be longer than task
+            </mat-error>
         </mat-form-field>
         <mat-form-field class="date-field" *ngIf="isRepeating" appearance="fill">
             <mat-label>End repeating</mat-label>
             <input formControlName="endRepeating" matInput [matDatepicker]="endRepeatingPicker">
             <mat-datepicker-toggle matSuffix [for]="endRepeatingPicker"></mat-datepicker-toggle>
             <mat-datepicker #endRepeatingPicker></mat-datepicker>
+            <mat-error *ngIf="taskForm.get('endRepeating')?.hasError('endBeforeEndRepeating')">
+                Repeating end must be after task end
+            </mat-error>
         </mat-form-field>
     </div>
     <div class="button-row">
-        <button mat-flat-button (click)="cancelClick()">Cancel</button>
+        <button mat-flat-button class="cancel-button" (click)="cancelClick()">Cancel</button>
         <button mat-flat-button color="primary" [disabled]="!taskForm.valid" (click)="saveClick()">Save</button>
     </div>
 </form>

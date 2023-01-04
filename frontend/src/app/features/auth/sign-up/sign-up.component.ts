@@ -2,7 +2,7 @@ import * as loginPageActions from '@store/actions/login-page.actions';
 
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { catchError, filter, map, of } from 'rxjs';
-import { getEmailValidators, getNameValidators, getPasswordValidators, hasLengthErrors, passwordMatchingValidator } from '@utils/validators/user-validators.helper';
+import { getEmailValidators, getNameValidators, getPasswordValidators, passwordMatchingValidator } from '@utils/validators/user-validators.helper';
 
 import { AuthService } from '@api/auth.service';
 import { BaseComponent } from '@shared/components/base/base.component';
@@ -10,6 +10,7 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { User } from '#types/user/user';
+import { hasLengthErrors } from '@utils/validators/common-validators';
 
 @Component({
     selector: 'app-sign-up',

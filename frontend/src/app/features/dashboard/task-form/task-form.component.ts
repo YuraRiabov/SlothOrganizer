@@ -9,6 +9,7 @@ import { Store } from '@ngrx/store';
 import { TaskRepeatingPeriod } from '#types/dashboard/tasks/enums/task-repeating-period';
 import { createTask } from '@store/actions/dashboard.actions';
 import { getRepeatingPeriods } from '@utils/creation-functions/repeating-period.helper';
+import { hasLengthErrors } from '@utils/validators/common-validators';
 import { selectChosenDashboardId } from '@store/selectors/dashboard.selectors';
 
 @Component({
@@ -49,6 +50,10 @@ export class TaskFormComponent extends BaseComponent implements OnInit {
         this.isRepeating = (this.taskForm.get('repeatingPeriod')?.value as TaskRepeatingPeriod) !== TaskRepeatingPeriod.None;
         this.selectStartTime = this.taskForm.get('startTimeCheckbox')?.value;
         this.selectEndTime = this.taskForm.get('endTimeCheckbox')?.value;
+    }
+
+    public hasLengthErrors(controlName: string): boolean {
+        return hasLengthErrors(this.taskForm, controlName);
     }
 
     public cancelClick(): void {
