@@ -10,7 +10,7 @@ import { TimelineSection } from '#types/tasks/timeline/timeline-section';
 import { isBetween } from '@utils/dates/dates.helper';
 
 @Component({
-    selector: 'app-timeline',
+    selector: 'so-timeline',
     templateUrl: './timeline.component.html',
     styleUrls: ['./timeline.component.sass']
 })

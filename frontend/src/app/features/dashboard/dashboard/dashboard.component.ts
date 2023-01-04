@@ -5,7 +5,7 @@ import { TimelineScale } from '#types/tasks/timeline/enums/timeline-scale';
 import { addHours } from 'date-fns';
 
 @Component({
-    selector: 'app-dashboard',
+    selector: 'so-dashboard',
     templateUrl: './dashboard.component.html',
     styleUrls: ['./dashboard.component.sass']
 })
