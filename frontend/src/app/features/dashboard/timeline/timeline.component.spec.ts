@@ -6,14 +6,14 @@ import { DashboardRoutingModule } from '../dashboard-routing.module';
 import { ExceedingTasksComponent } from '../exceeding-tasks/exceeding-tasks.component';
 import { FormsModule } from '@angular/forms';
 import { MaterialModule } from '@shared/material/material.module';
-import { Task } from '#types/tasks/task';
+import { TaskBlock } from '#types/dashboard/timeline/task-block';
 import { TimelineComponent } from './timeline.component';
-import { TimelineScale } from '#types/tasks/timeline/enums/timeline-scale';
+import { TimelineScale } from '#types/dashboard/timeline/enums/timeline-scale';
 
 describe('TimelineComponent', () => {
     let component: TimelineComponent;
     let fixture: ComponentFixture<TimelineComponent>;
-    const mockTasks: Task[] = [
+    const mockTasks: TaskBlock[] = [
         {
             start: new Date(2022, 11, 16, 8),
             end: new Date(2022, 13, 1, 0),

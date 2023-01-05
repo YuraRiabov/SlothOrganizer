@@ -1,3 +1,5 @@
+import * as dashboardActions from '@store/actions/dashboard.actions';
+
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { endRepeatingValidator, getDescriptionValidators, getTitleValidators, repeatingPeriodValidator, startBeforeEndValidator } from '@utils/validators/task-validators';
@@ -7,7 +9,6 @@ import { BaseComponent } from '@shared/components/base/base.component';
 import { NewTask } from '#types/dashboard/tasks/new-task';
 import { Store } from '@ngrx/store';
 import { TaskRepeatingPeriod } from '#types/dashboard/tasks/enums/task-repeating-period';
-import { createTask } from '@store/actions/dashboard.actions';
 import { getRepeatingPeriods } from '@utils/creation-functions/repeating-period.helper';
 import { hasLengthErrors } from '@utils/validators/common-validators';
 import { selectChosenDashboardId } from '@store/selectors/dashboard.selectors';
@@ -73,7 +74,7 @@ export class TaskFormComponent extends BaseComponent implements OnInit {
                 repeatingPeriod: this.taskForm.get('repeatingPeriod')?.value,
                 endRepeating: this.taskForm.get('endRepeating')?.value
             };
-            this.store.dispatch(createTask({ newTask }));
+            this.store.dispatch(dashboardActions.createTask({ newTask }));
             this.cancel.emit();
         });
     }

@@ -21,7 +21,7 @@ export class CreateDashboardComponent extends BaseComponent {
         super();
     }
 
-    public submit(): void {
+    public createDashboard(): void {
         this.store.select(selectUserId)
             .pipe(this.untilDestroyed)
             .subscribe((id) => {

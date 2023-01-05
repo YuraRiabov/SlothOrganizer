@@ -2,10 +2,10 @@
     <mat-form-field class="title-field">
         <input [formControl]="dashboardTitleControl" matInput type="text">
     </mat-form-field>
-    <button mat-icon-button [disabled]="!dashboardTitleControl.valid" (click)="submit()">
+    <button mat-icon-button class="submit-button" [disabled]="!dashboardTitleControl.valid" (click)="createDashboard()">
         <mat-icon>check</mat-icon>
     </button>
-    <button mat-icon-button (click)="cancel()">
+    <button mat-icon-button class="cancel-button" (click)="cancel()">
         <mat-icon>close</mat-icon>
     </button>
 </div>
