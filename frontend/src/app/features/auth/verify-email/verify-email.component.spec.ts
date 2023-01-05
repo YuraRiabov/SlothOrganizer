@@ -1,19 +1,20 @@
 /* eslint-disable no-undef */
 
-import * as loginPageActions from '@store/actions/login-page.actions';
+import * as authActions from '@store/actions/auth.actions';
 
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { ParamMap, Router } from '@angular/router';
 import { of, throwError } from 'rxjs';
 
 import { AuthRoutingModule } from '../auth-routing.module';
 import { AuthService } from '@api/auth.service';
+import { AuthState } from '@store/states/auth-state';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { By } from '@angular/platform-browser';
 import { CommonModule } from '@angular/common';
 import { MaterialModule } from '@shared/material/material.module';
 import { Store } from '@ngrx/store';
-import { Token } from '#types/auth/token';
 import { VerifyEmailComponent } from './verify-email.component';
 
 describe('VerifyEmailComponent', () => {
@@ -21,11 +22,27 @@ describe('VerifyEmailComponent', () => {
     let fixture: ComponentFixture<VerifyEmailComponent>;
     let mockAuthService: jasmine.SpyObj<AuthService>;
     let mockStore: jasmine.SpyObj<Store>;
+    let router: jasmine.SpyObj<Router>;
+    let paramMap: jasmine.SpyObj<ParamMap>;
     let button: HTMLElement;
+
+    const getAuthState = () => ({
+        token: {
+            accessToken: 'test',
+            refreshToken: 'test'
+        },
+        user: {
+            email: 'test@test.com',
+            firstName: 'test',
+            lastName: 'test',
+            id: 1
+        }
+    });
 
     beforeEach(async () => {
         mockAuthService = jasmine.createSpyObj(['verifyEmail', 'resendCode']);
         mockStore = jasmine.createSpyObj(['select', 'dispatch']);
+        router = jasmine.createSpyObj(['navigate']);
         mockStore.select.and.returnValue(of(1));
         await TestBed.configureTestingModule({
             imports: [
@@ -40,6 +57,7 @@ describe('VerifyEmailComponent', () => {
             providers: [
                 { provide: AuthService, useValue: mockAuthService },
                 { provide: Store, useValue: mockStore },
+                { provide: Router, useValue: router }
             ]
         }).compileComponents();
 
@@ -71,17 +89,26 @@ describe('VerifyEmailComponent', () => {
         component.codeControl.setValue(111111);
         fixture.detectChanges();
 
-        const token : Token = {
-            accessToken: 'test',
-            refreshToken: 'test'
-        };
-        mockAuthService.verifyEmail.and.returnValue(of(token));
+        const auth: AuthState = getAuthState();
+        mockAuthService.verifyEmail.and.returnValue(of(auth));
 
         button.click();
 
         expect(mockStore.select).toHaveBeenCalledTimes(1);
         expect(mockAuthService.verifyEmail).toHaveBeenCalledTimes(1);
-        expect(mockStore.dispatch).toHaveBeenCalledOnceWith(loginPageActions.addToken({token}));
+        expect(mockStore.dispatch).toHaveBeenCalledOnceWith(authActions.verifyEmail({ authState: auth }));
+    });
+
+    it('should redirect to root', () => {
+        component.codeControl.setValue(111111);
+        fixture.detectChanges();
+
+        const auth: AuthState = getAuthState();
+        mockAuthService.verifyEmail.and.returnValue(of(auth));
+
+        button.click();
+
+        expect(router.navigate).toHaveBeenCalledOnceWith(['']);
     });
 
     it('should set error when invalid code', () => {

@@ -16,7 +16,7 @@ namespace SlothOrganizer.Persistence.Repositories
 
         public async Task<IEnumerable<RefreshToken>> Get(string userEmail)
         {
-            var query = Resources.GetRefreshTokenByUserId;
+            var query = Resources.GetRefreshTokenByUserEmail;
             using var connection = _context.CreateConnection();
             return await connection.QueryAsync<RefreshToken>(query, new { userEmail });
         }

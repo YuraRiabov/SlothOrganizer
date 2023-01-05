@@ -6,7 +6,7 @@ using SlothOrganizer.Services.Abstractions.Auth;
 
 namespace SlothOrganizer.Presentation.Controllers
 {
-    [Authorize]
+    [AllowAnonymous]
     [ApiController]
     [Route("auth")]
     public class AuthController : ControllerBase
@@ -18,7 +18,6 @@ namespace SlothOrganizer.Presentation.Controllers
             _authService = authService;
         }
 
-        [AllowAnonymous]
         [HttpPost("sign-up")]
         public async Task<UserDto> SignUp([FromBody] NewUserDto newUserDto)
         {
@@ -26,32 +25,40 @@ namespace SlothOrganizer.Presentation.Controllers
             return user;
         }
 
-        [AllowAnonymous]
         [HttpPut("verify-email")]
-        public async Task<TokenDto> VerifyEmail([FromBody] VerificationCodeDto verificationCode)
+        public async Task<UserAuthDto> VerifyEmail([FromBody] VerificationCodeDto verificationCode)
         {
             return await _authService.VerifyEmail(verificationCode);
         }
 
-        [AllowAnonymous]
         [HttpPost("sign-in")]
         public async Task<UserAuthDto> SignIn([FromBody] LoginDto loginDto)
         {
             return await _authService.SignIn(loginDto);
         }
 
-        [AllowAnonymous]
-        [HttpPost("resend-code/{userId}")]
-        public async Task ResendVerificationCode(long userId)
+        [HttpPost("resend-code/{email}")]
+        public async Task ResendVerificationCode(string email)
         {
-            await _authService.ResendVerificationCode(userId);
+            await _authService.ResendVerificationCode(email);
         }
 
-        [AllowAnonymous]
         [HttpPut("refresh-token")]
         public async Task<TokenDto> RefreshToken([FromBody] TokenDto token)
         {
             return await _authService.RefreshToken(token);
+        }
+
+        [HttpPut("reset-password")]
+        public async Task<UserAuthDto> ResetPassword(ResetPasswordDto resetPasswordDto)
+        {
+            return await _authService.ResetPassword(resetPasswordDto);
+        }
+
+        [HttpPost("send-password-reset/{email}")]
+        public async Task SendPasswordReset(string email)
+        {
+            await _authService.SendResetPassword(email);
         }
     }
 }

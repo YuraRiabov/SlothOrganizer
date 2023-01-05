@@ -3,7 +3,7 @@ using SlothOrganizer.Contracts.DTO.User;
 using SlothOrganizer.Domain.Exceptions;
 using SlothOrganizer.Services.Abstractions.Auth;
 using SlothOrganizer.Services.Abstractions.Auth.Tokens;
-using SlothOrganizer.Services.Abstractions.Email;
+using SlothOrganizer.Services.Abstractions.Auth.UserVerification;
 using SlothOrganizer.Services.Abstractions.Users;
 
 namespace SlothOrganizer.Services.Auth
@@ -13,26 +13,23 @@ namespace SlothOrganizer.Services.Auth
         private readonly IUserService _userService;
         private readonly IAccessTokenService _accessTokenService;
         private readonly IRefreshTokenService _refreshTokenService;
-        private readonly IVerificationCodeService _verificationCodeService;
-        private readonly IEmailService _emailService;
+        private readonly INotificationService _notificationServcie;
 
         public AuthService(IAccessTokenService tokenService,
             IUserService userService,
-            IVerificationCodeService verificationCodeService,
-            IEmailService emailService,
+            INotificationService notificationService,
             IRefreshTokenService refreshTokenService)
         {
             _accessTokenService = tokenService;
             _userService = userService;
-            _verificationCodeService = verificationCodeService;
-            _emailService = emailService;
+            _notificationServcie = notificationService;
             _refreshTokenService = refreshTokenService;
         }
 
-        public async Task ResendVerificationCode(long userId)
+        public async Task ResendVerificationCode(string email)
         {
-            var user = await _userService.Get(userId);
-            await SendVerificationCode(user);
+            var user = await _userService.Get(email);
+            await _notificationServcie.SendVerificationCode(user.Email);
         }
 
         public async Task<TokenDto> RefreshToken(TokenDto expiredToken)
@@ -66,24 +63,38 @@ namespace SlothOrganizer.Services.Auth
         public async Task<UserDto> SignUp(NewUserDto newUser)
         {
             var user = await _userService.Create(newUser);
-            await SendVerificationCode(user);
+            await _notificationServcie.SendVerificationCode(user.Email);
             return user;
         }
 
-        public async Task<TokenDto> VerifyEmail(VerificationCodeDto verificationCode)
+        public async Task<UserAuthDto> VerifyEmail(VerificationCodeDto verificationCode)
         {
-            var email = await _userService.VerifyEmail(verificationCode.UserId, verificationCode.VerificationCode);
-            if (email is not null)
+            var user = await _userService.VerifyEmail(verificationCode.Email, verificationCode.VerificationCode);
+            if (user is not null)
             {
-                return await GenerateToken(email);
+                return new UserAuthDto
+                {
+                    User = user,
+                    Token = await GenerateToken(user.Email)
+                };
             }
             throw new InvalidCredentialsException("Invalid verification code");
         }
 
-        private async Task SendVerificationCode(UserDto user)
+        public async Task<UserAuthDto> ResetPassword(ResetPasswordDto resetPasswordDto)
         {
-            var code = await _verificationCodeService.Generate(user.Id);
-            await _emailService.SendEmail(user.Email, "Verify your email", $"Your verification code is {code}");
+            var user = await _userService.ResetPassword(resetPasswordDto);
+            return new UserAuthDto
+            {
+                User = user,
+                Token = await GenerateToken(user.Email)
+            };
+        }
+
+        public async Task SendResetPassword(string email)
+        {
+            var user = await _userService.Get(email);
+            await _notificationServcie.SendPasswordResetLink(user.Email);
         }
 
         private async Task<TokenDto> GenerateToken(string email)

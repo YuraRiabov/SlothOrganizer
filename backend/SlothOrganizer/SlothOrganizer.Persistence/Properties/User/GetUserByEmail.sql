@@ -1,1 +1,1 @@
-SELECT TOP(1) * FROM Users WHERE Email=@Email
+SELECT TOP(1) * FROM Users WHERE Email = @Email

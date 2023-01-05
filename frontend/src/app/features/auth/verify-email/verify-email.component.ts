@@ -1,44 +1,46 @@
-import * as loginPageActions from '@store/actions/login-page.actions';
+import * as authActions from '@store/actions/auth.actions';
 
 import { FormControl, Validators } from '@angular/forms';
 import { Observable, catchError, concatMap, filter, map, of } from 'rxjs';
 
 import { AuthService } from '@api/auth.service';
+import { AuthState } from '@store/states/auth-state';
 import { BaseComponent } from '@shared/components/base/base.component';
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { Token } from '#types/auth/token';
-import { selectUserId } from '@store/selectors/auth-page.selectors';
+import { selectUserEmail } from '@store/selectors/auth.selectors';
 
 @Component({
-    selector: 'app-verify-email',
+    selector: 'so-verify-email',
     templateUrl: './verify-email.component.html',
     styleUrls: ['./verify-email.component.sass']
 })
 export class VerifyEmailComponent extends BaseComponent {
-    private userId$: Observable<number>;
+    private email$: Observable<string>;
 
     public codeControl: FormControl = new FormControl('', [
         Validators.required,
         Validators.pattern('[0-9]*')
     ]);
 
-    constructor(private authService: AuthService, private store: Store, private router: Router) {
+    constructor(private authService: AuthService,
+        private store: Store,
+        private router: Router) {
         super();
-        this.userId$ = store.select(selectUserId);
+        this.email$ = store.select(selectUserEmail);
     }
 
-    public redirectTo(route: string) : void {
+    public redirectTo(route: string): void {
         this.router.navigate([route]);
     }
 
     public submit() {
-        this.userId$.pipe(
+        this.email$.pipe(
             this.untilDestroyed,
-            concatMap((id) =>
+            concatMap((email) =>
                 this.authService.verifyEmail({
-                    userId: id,
+                    email,
                     verificationCode: this.codeControl.value
                 })
             ),
@@ -46,18 +48,19 @@ export class VerifyEmailComponent extends BaseComponent {
                 this.codeControl.setErrors({ invalidCode: true });
                 return of(null);
             }),
-            filter(user => user != null),
-            map(token => token as Token)
-        ).subscribe((token) => {
-            this.store.dispatch(loginPageActions.addToken({ token }));
+            filter(auth => auth != null),
+            map(auth => auth as AuthState)
+        ).subscribe((auth) => {
+            this.store.dispatch(authActions.verifyEmail({ authState: auth }));
+            this.router.navigate(['']);
         });
     }
 
-    public resendCode() {
-        this.userId$
+    public resendCode(): void {
+        this.email$
             .pipe(
                 this.untilDestroyed,
-                concatMap((id) => this.authService.resendCode(id))
+                concatMap((email) => this.authService.resendCode(email))
             ).subscribe();
     }
 }

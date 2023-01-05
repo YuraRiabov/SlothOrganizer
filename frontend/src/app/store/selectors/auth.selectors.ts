@@ -22,6 +22,11 @@ export const selectUserId = createSelector(
     (user: User) => user.id
 );
 
+export const selectUserEmail = createSelector(
+    selectUser,
+    (user: User) => user.email
+);
+
 export const selectAccessToken = createSelector(
     selectToken,
     (token: Token) => token.accessToken

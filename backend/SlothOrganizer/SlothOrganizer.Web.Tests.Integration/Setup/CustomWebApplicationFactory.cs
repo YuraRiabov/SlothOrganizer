@@ -11,11 +11,13 @@ namespace SlothOrganizer.Web.Tests.Integration.Setup
         private readonly IEmailService _emailService;
         private readonly IRandomService _randomService;
         private readonly IDateTimeService _dateService;
-        public CustomWebApplicationFactory(IEmailService emailService, IRandomService randomService, IDateTimeService dateService)
+        private readonly ICryptoService _cryptoService;
+        public CustomWebApplicationFactory(IEmailService emailService, IRandomService randomService, IDateTimeService dateService, ICryptoService cryptoService)
         {
             _emailService = emailService;
             _randomService = randomService;
             _dateService = dateService;
+            _cryptoService = cryptoService;
         }
         protected override void ConfigureWebHost(IWebHostBuilder builder)
         {
@@ -25,6 +27,7 @@ namespace SlothOrganizer.Web.Tests.Integration.Setup
                 ReplaceService(services, _emailService);
                 ReplaceService(services, _randomService);
                 ReplaceService(services, _dateService);
+                ReplaceService(services, _cryptoService);
             });
         }
 
