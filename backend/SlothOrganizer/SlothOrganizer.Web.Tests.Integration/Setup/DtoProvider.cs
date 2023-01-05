@@ -1,4 +1,7 @@
 ﻿using SlothOrganizer.Contracts.DTO.Auth;
+using SlothOrganizer.Contracts.DTO.Tasks.Dashboard;
+using SlothOrganizer.Contracts.DTO.Tasks.Task;
+using SlothOrganizer.Contracts.DTO.Tasks.Task.Enums;
 using SlothOrganizer.Contracts.DTO.User;
 
 namespace SlothOrganizer.Web.Tests.Integration.Setup
@@ -41,6 +44,29 @@ namespace SlothOrganizer.Web.Tests.Integration.Setup
                 Email = "test@test.com",
                 Password = "newpassw0rd",
                 Code = "111111"
+            };
+        }
+
+        public static NewDashboardDto GetNewDashboard()
+        {
+            return new NewDashboardDto
+            {
+                UserId = 1,
+                Title = "Test",
+            };
+        }
+
+        public static NewTaskDto GetNewTask()
+        {
+            return new NewTaskDto
+            {
+                DashboardId = 1,
+                Title = "Test",
+                Description = "Test",
+                Start = new DateTime(2023, 1, 1),
+                End = new DateTime(2023, 1, 5),
+                RepeatingPeriod = TaskRepeatingPeriod.Week,
+                EndRepeating = new DateTime(2023, 2, 5)
             };
         }
     }

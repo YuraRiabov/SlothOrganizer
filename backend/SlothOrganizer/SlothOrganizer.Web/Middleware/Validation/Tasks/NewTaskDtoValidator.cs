@@ -11,7 +11,7 @@ namespace SlothOrganizer.Web.Middleware.Validation.Tasks
             RuleFor(t => t.Title)
                 .NotEmpty()
                 .MinimumLength(2)
-                .MinimumLength(30);
+                .MaximumLength(30);
 
             RuleFor(t => t.Description).MaximumLength(200);
 

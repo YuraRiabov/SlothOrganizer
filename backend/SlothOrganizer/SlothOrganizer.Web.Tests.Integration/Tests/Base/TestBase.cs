@@ -4,6 +4,7 @@ using FakeItEasy;
 using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
 using SlothOrganizer.Contracts.DTO.Auth;
+using SlothOrganizer.Contracts.DTO.Tasks.Task.Enums;
 using SlothOrganizer.Contracts.DTO.User;
 using SlothOrganizer.Persistence;
 using SlothOrganizer.Services.Abstractions.Email;
@@ -18,6 +19,7 @@ namespace SlothOrganizer.Web.Tests.Integration.Base
         protected IEmailService EmailSerivce { get; }
         protected IRandomService RandomService { get; }
         protected IRandomService RealRandomService { get; }
+        protected IDateTimeService RealDateTimeService { get; } 
         protected IDateTimeService DateTimeService { get; }
         protected ICryptoService CryptoService { get; }
         protected HttpClient Client { get; }
@@ -27,7 +29,10 @@ namespace SlothOrganizer.Web.Tests.Integration.Base
             EmailSerivce = A.Fake<IEmailService>();
             A.CallTo(() => EmailSerivce.SendEmail(A<string>._, A<string>._, A<string>._)).Returns(Task.FromResult(1));
             DateTimeService = A.Fake<IDateTimeService>();
+            RealDateTimeService = new DateTimeService();
             A.CallTo(() => DateTimeService.Now()).Returns(new DateTime(2022, 12, 8, 12, 0, 0));
+            A.CallTo(() => DateTimeService.GetLength(A<TaskRepeatingPeriod>._))
+                .ReturnsLazily((TaskRepeatingPeriod period) => RealDateTimeService.GetLength(period));
             RandomService = A.Fake<IRandomService>();
             RealRandomService = new RandomService();
             A.CallTo(() => RandomService.GetRandomBytes(16)).Returns(RealRandomService.GetRandomBytes(16));
