@@ -3,7 +3,7 @@ import { Component, ElementRef, EventEmitter, HostListener, Input, Output } from
 import { SidebarType } from '#types/dashboard/timeline/enums/sidebar-type';
 
 @Component({
-    selector: 'app-dashboard-sidebar',
+    selector: 'so-dashboard-sidebar',
     templateUrl: './dashboard-sidebar.component.html',
     styleUrls: ['./dashboard-sidebar.component.sass']
 })

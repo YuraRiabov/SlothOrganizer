@@ -6,7 +6,7 @@ import { map, mergeMap } from 'rxjs';
 import { DashboardService } from '@api/dashboard.service';
 import { Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { selectUserId } from '@store/selectors/auth-page.selectors';
+import { selectUserId } from '@store/selectors/auth.selectors';
 
 @Injectable()
 export class DashboardEffects {
@@ -15,7 +15,7 @@ export class DashboardEffects {
             return this.actions$.pipe(
                 ofType(dashboardActions.loadDashboards),
                 concatLatestFrom(() => this.store.select(selectUserId)),
-                mergeMap(([action, id]) => this.dashboardService.get(id)),
+                mergeMap(([action, id]) => this.dashboardService.find(id)),
                 map((dashboards) => dashboardActions.loadDashboardsSuccess({ dashboards }))
             );
         }

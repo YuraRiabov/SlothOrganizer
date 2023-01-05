@@ -1,2 +1,2 @@
 SELECT * FROM Dashboards 
-WHERE UserId=@UserId
+WHERE UserId = @UserId

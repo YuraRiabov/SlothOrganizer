@@ -13,7 +13,7 @@ import { hasLengthErrors } from '@utils/validators/common-validators';
 import { selectChosenDashboardId } from '@store/selectors/dashboard.selectors';
 
 @Component({
-    selector: 'app-task-form',
+    selector: 'so-task-form',
     templateUrl: './task-form.component.html',
     styleUrls: ['./task-form.component.sass']
 })

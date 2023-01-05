@@ -1,2 +1,2 @@
 SELECT * FROM Tasks 
-WHERE DashboardId=@DashboardId
+WHERE DashboardId = @DashboardId

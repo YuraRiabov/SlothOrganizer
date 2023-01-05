@@ -5,10 +5,10 @@ import { FormControl, Validators } from '@angular/forms';
 
 import { BaseComponent } from '@shared/components/base/base.component';
 import { Store } from '@ngrx/store';
-import { selectUserId } from '@store/selectors/auth-page.selectors';
+import { selectUserId } from '@store/selectors/auth.selectors';
 
 @Component({
-    selector: 'app-create-dashboard',
+    selector: 'so-create-dashboard',
     templateUrl: './create-dashboard.component.html',
     styleUrls: ['./create-dashboard.component.sass']
 })
