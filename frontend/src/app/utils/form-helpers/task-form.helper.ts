@@ -9,7 +9,7 @@ export const getStart = (group: AbstractControl) => {
     const startTimeControl = group.get('startTime');
     const startTimeCheckbox = group.get('startTimeCheckbox');
 
-    let startDate = startDateControl?.value as Date;
+    let startDate = new Date(startDateControl?.value);
     if (startTimeCheckbox?.value) {
         startDate = setTime(startDate, startTimeControl?.value);
     } else {
@@ -23,7 +23,7 @@ export const getEnd = (group: AbstractControl) => {
     const endTimeControl = group.get('endTime');
     const endTimeCheckbox = group.get('endTimeCheckbox');
 
-    let endDate = endDateControl?.value as Date;
+    let endDate = new Date(endDateControl?.value);
     if (endTimeCheckbox?.value) {
         endDate = setTime(endDate, endTimeControl?.value);
     } else {

@@ -25,7 +25,7 @@
             </mat-error>
         </mat-form-field>
         <mat-checkbox formControlName="startTimeCheckbox" color="primary" (change)="update()">Time</mat-checkbox>
-        <mat-form-field class="time-field" *ngIf="selectStartTime">
+        <mat-form-field class="time-field row-end" *ngIf="selectStartTime">
             <input formControlName="startTime" matInput type="time" (change)="validate()">
         </mat-form-field>
     </div>
@@ -40,7 +40,7 @@
             </mat-error>
         </mat-form-field>
         <mat-checkbox formControlName="endTimeCheckbox" color="primary" (change)="update()">Time</mat-checkbox>
-        <mat-form-field class="time-field" *ngIf="selectEndTime">
+        <mat-form-field class="time-field row-end" *ngIf="selectEndTime">
             <input formControlName="endTime" matInput type="time" (change)="validate()">
         </mat-form-field>
     </div>
@@ -54,7 +54,7 @@
                 Repeating period must be longer than task
             </mat-error>
         </mat-form-field>
-        <mat-form-field class="date-field" *ngIf="isRepeating" appearance="fill">
+        <mat-form-field class="date-field row-end" *ngIf="isRepeating" appearance="fill">
             <mat-label>End repeating</mat-label>
             <input formControlName="endRepeating" matInput [matDatepicker]="endRepeatingPicker">
             <mat-datepicker-toggle matSuffix [for]="endRepeatingPicker"></mat-datepicker-toggle>

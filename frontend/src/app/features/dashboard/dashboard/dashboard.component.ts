@@ -1,6 +1,7 @@
 import * as dashboardActions from '@store/actions/dashboard.actions';
 
 import { Component, OnInit } from '@angular/core';
+import { selectChosenDashboardId, selectDashboards } from '@store/selectors/dashboard.selectors';
 
 import { BaseComponent } from '@shared/components/base/base.component';
 import { Dashboard } from '#types/dashboard/dashboard/dashboard';
@@ -12,7 +13,6 @@ import { TaskBlock } from '#types/dashboard/timeline/task-block';
 import { TimelineScale } from '#types/dashboard/timeline/enums/timeline-scale';
 import { addHours } from 'date-fns';
 import { getDefaultDashboard } from '@utils/creation-functions/dashboard-creation.helper';
-import { selectDashboards } from '@store/selectors/dashboard.selectors';
 
 @Component({
     selector: 'so-dashboard',
@@ -107,13 +107,7 @@ export class DashboardComponent extends BaseComponent implements OnInit {
 
         this.store.select(selectDashboards)
             .pipe(this.untilDestroyed)
-            .subscribe(dashboards => {
-                this.dashboards = dashboards;
-                if (dashboards.length > 0) {
-                    this.currentDashboard = dashboards[0];
-                    this.store.dispatch(dashboardActions.chooseDashboard({ dashboardId: this.currentDashboard.id }));
-                }
-            });
+            .subscribe(dashboards => this.updateDashboards(dashboards));
     }
 
     public openCreateSidebar(): void {
@@ -145,5 +139,18 @@ export class DashboardComponent extends BaseComponent implements OnInit {
     private openSidebar(type: SidebarType): void {
         this.sidebarType = type;
         this.sidebarOpen = true;
+    }
+
+    private updateDashboards(dashboards: Dashboard[]): void {
+        let newDashboards = dashboards.filter(d => !this.dashboards.includes(d));
+        this.dashboards = dashboards;
+        if (dashboards.length > 0) {
+            let selectedDashboardIndex = 0;
+            if (newDashboards.length === 1) {
+                selectedDashboardIndex = this.dashboards.indexOf(newDashboards[0]);
+            }
+            this.currentDashboard = dashboards[selectedDashboardIndex];
+            this.store.dispatch(dashboardActions.chooseDashboard({ dashboardId: this.currentDashboard.id }));
+        }
     }
 }
