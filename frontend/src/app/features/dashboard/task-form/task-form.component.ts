@@ -19,7 +19,7 @@ import { selectChosenDashboardId } from '@store/selectors/dashboard.selectors';
     styleUrls: ['./task-form.component.sass']
 })
 export class TaskFormComponent extends BaseComponent implements OnInit {
-    @Output() private cancel = new EventEmitter<void>();
+    @Output() public cancel = new EventEmitter<void>();
     public taskForm: FormGroup = {} as FormGroup;
 
     public isRepeating: boolean = false;
@@ -57,11 +57,7 @@ export class TaskFormComponent extends BaseComponent implements OnInit {
         return hasLengthErrors(this.taskForm, controlName);
     }
 
-    public cancelClick(): void {
-        this.cancel.emit();
-    }
-
-    public saveClick(): void {
+    public createTask(): void {
         this.store.select(selectChosenDashboardId).pipe(
             this.untilDestroyed
         ).subscribe(id => {
