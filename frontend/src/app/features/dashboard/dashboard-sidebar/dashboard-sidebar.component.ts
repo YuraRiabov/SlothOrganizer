@@ -14,7 +14,6 @@ export class DashboardSidebarComponent implements AfterViewChecked {
 
     @HostListener('document:mousedown', ['$event'])
     clickout(event: MouseEvent) {
-        console.log(new Date().getTime());
         const left = this.elementRef.nativeElement.getBoundingClientRect().left;
         if(event.clientX < left && this.viewInitialized) {
             this.clickedOff.emit();
@@ -24,7 +23,6 @@ export class DashboardSidebarComponent implements AfterViewChecked {
     constructor(private elementRef: ElementRef) { }
 
     ngAfterViewChecked(): void {
-        console.log(new Date().getTime());
         this.viewInitialized = true;
     }
 }

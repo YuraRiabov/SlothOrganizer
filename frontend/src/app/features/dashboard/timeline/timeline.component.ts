@@ -157,7 +157,6 @@ export class TimelineComponent extends BaseComponent implements OnInit, AfterVie
     }
 
     public chooseTask(taskBlock: TaskBlock): void {
-        console.log(new Date().getTime());
         this.store.dispatch(dashboardActions.chooseTask({ taskBlock }));
         this.blockClicked.emit();
     }
