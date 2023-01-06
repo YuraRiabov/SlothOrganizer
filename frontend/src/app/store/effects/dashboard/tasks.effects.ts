@@ -1,10 +1,12 @@
 import * as dashboardActions from '@store/actions/dashboard.actions';
 
-import { Actions, createEffect, ofType } from '@ngrx/effects';
+import { Actions, concatLatestFrom, createEffect, ofType } from '@ngrx/effects';
 import { map, mergeMap } from 'rxjs';
 
 import { Injectable } from '@angular/core';
+import { Store } from '@ngrx/store';
 import { TasksService } from '@api/tasks.service';
+import { selectChosenDashboardId } from '@store/selectors/dashboard.selectors';
 
 @Injectable()
 export class TasksEffects {
@@ -18,5 +20,16 @@ export class TasksEffects {
         }
     );
 
-    constructor(private tasksService: TasksService, private actions$: Actions) {}
+    public loadTasks$ = createEffect(
+        () => {
+            return this.actions$.pipe(
+                ofType(dashboardActions.loadTasks),
+                concatLatestFrom(() => this.store.select(selectChosenDashboardId)),
+                mergeMap(([action, id]) => this.tasksService.load(id)),
+                map((tasks) => dashboardActions.tasksLoaded({ tasks }))
+            );
+        }
+    );
+
+    constructor(private tasksService: TasksService, private actions$: Actions, private store: Store) { }
 }

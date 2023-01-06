@@ -9,24 +9,24 @@ export abstract class HttpService {
 
     constructor(private http: HttpClient) {}
 
-    public get<T>(url: string, httpParams?: any): Observable<T> {
+    protected get<T>(url: string, httpParams?: any): Observable<T> {
         return this.http.get<T>(this.buildUrl(url), { params: httpParams });
     }
 
-    public getString(url: string, httpParams?: any): Observable<string> {
+    protected getString(url: string, httpParams?: any): Observable<string> {
         return this.http.get(this.buildUrl(url), {
             params: httpParams,
             responseType: 'text'
         });
     }
 
-    public delete<T>(url: string, httpParams?: any): Observable<T> {
+    protected delete<T>(url: string, httpParams?: any): Observable<T> {
         return this.http.delete<T>(this.buildUrl(url), {
             params: httpParams
         });
     }
 
-    public post<T>(
+    protected post<T>(
         url: string,
         payload?: object,
         httpParams?: any
@@ -36,7 +36,7 @@ export abstract class HttpService {
         });
     }
 
-    public put<T>(
+    protected put<T>(
         url: string,
         payload?: object,
         httpParams?: any

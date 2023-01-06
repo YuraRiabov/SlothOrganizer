@@ -31,5 +31,14 @@ export class DashboardEffects {
         }
     );
 
+    public changeDashboard$ = createEffect(
+        () => {
+            return this.actions$.pipe(
+                ofType(dashboardActions.chooseDashboard),
+                map(() => dashboardActions.loadTasks())
+            );
+        }
+    );
+
     constructor(private dashboardService: DashboardService, private actions$: Actions, private store: Store) {}
 }

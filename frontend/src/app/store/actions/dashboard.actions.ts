@@ -38,3 +38,12 @@ export const taskCreated = createAction(
     '[API] Task created',
     props<{ task: Task}>()
 );
+
+export const loadTasks = createAction(
+    '[Dashboard page] Load tasks'
+);
+
+export const tasksLoaded = createAction(
+    '[API] Tasks loaded',
+    props<{ tasks: Task[] }>()
+);
