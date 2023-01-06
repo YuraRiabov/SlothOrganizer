@@ -4,6 +4,7 @@ import { Dashboard } from '#types/dashboard/dashboard/dashboard';
 import { NewDashboard } from '#types/dashboard/dashboard/new-dashboard';
 import { NewTask } from '#types/dashboard/tasks/new-task';
 import { Task } from '#types/dashboard/tasks/task';
+import { TaskBlock } from '#types/dashboard/timeline/task-block';
 
 export const loadDashboards = createAction(
     '[Dashboard page] Load dashboards'
@@ -11,7 +12,7 @@ export const loadDashboards = createAction(
 
 export const loadDashboardsSuccess = createAction(
     '[API] Load dashboards success',
-    props<{ dashboards: Dashboard[]}>()
+    props<{ dashboards: Dashboard[] }>()
 );
 
 export const createDashbaord = createAction(
@@ -36,7 +37,7 @@ export const createTask = createAction(
 
 export const taskCreated = createAction(
     '[API] Task created',
-    props<{ task: Task}>()
+    props<{ task: Task }>()
 );
 
 export const loadTasks = createAction(
@@ -46,4 +47,9 @@ export const loadTasks = createAction(
 export const tasksLoaded = createAction(
     '[API] Tasks loaded',
     props<{ tasks: Task[] }>()
+);
+
+export const chooseTask = createAction(
+    '[Timeline] Choose task',
+    props<{ taskBlock: TaskBlock }>()
 );

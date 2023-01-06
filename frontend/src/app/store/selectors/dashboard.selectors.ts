@@ -18,3 +18,8 @@ export const selectTasks = createSelector(
     selectDashboardState,
     (state) => state.tasks
 );
+
+export const selectChosenTaskBlock = createSelector(
+    selectDashboardState,
+    (state) => state.chosenTaskBlock
+);

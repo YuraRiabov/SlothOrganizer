@@ -46,6 +46,10 @@ export class DashboardComponent extends BaseComponent implements OnInit {
         this.openSidebar(SidebarType.Create);
     }
 
+    public openDisplaySidebar(): void {
+        this.openSidebar(SidebarType.Display);
+    }
+
     public selectDashboard(selection: MatSelectChange): void {
         this.currentDashboard = selection.value as Dashboard;
         this.store.dispatch(dashboardActions.chooseDashboard({ dashboardId: this.currentDashboard.id }));

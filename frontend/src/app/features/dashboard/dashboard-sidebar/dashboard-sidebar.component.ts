@@ -1,4 +1,4 @@
-import { Component, ElementRef, EventEmitter, HostListener, Input, Output } from '@angular/core';
+import { AfterViewChecked, Component, ElementRef, EventEmitter, HostListener, Input, Output } from '@angular/core';
 
 import { SidebarType } from '#types/dashboard/timeline/enums/sidebar-type';
 
@@ -7,18 +7,24 @@ import { SidebarType } from '#types/dashboard/timeline/enums/sidebar-type';
     templateUrl: './dashboard-sidebar.component.html',
     styleUrls: ['./dashboard-sidebar.component.sass']
 })
-export class DashboardSidebarComponent {
-
+export class DashboardSidebarComponent implements AfterViewChecked {
+    private viewInitialized: boolean = false;
     @Input() public type: SidebarType = SidebarType.Create;
     @Output() public clickedOff = new EventEmitter();
 
-    @HostListener('document:click', ['$event'])
+    @HostListener('document:mousedown', ['$event'])
     clickout(event: MouseEvent) {
+        console.log(new Date().getTime());
         const left = this.elementRef.nativeElement.getBoundingClientRect().left;
-        if(event.clientX < left) {
+        if(event.clientX < left && this.viewInitialized) {
             this.clickedOff.emit();
         }
     }
 
     constructor(private elementRef: ElementRef) { }
+
+    ngAfterViewChecked(): void {
+        console.log(new Date().getTime());
+        this.viewInitialized = true;
+    }
 }

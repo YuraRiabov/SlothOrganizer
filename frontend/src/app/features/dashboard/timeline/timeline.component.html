@@ -21,7 +21,7 @@
         </div>
         <div class="timeline-row" *ngFor="let taskRow of tasksByRows; index as i"
             [ngStyle]="{'grid-template-columns' : 'repeat(' + pageColumnNumber * pageNumber + ', 1fr', 'grid-row': i+3}">
-            <div class="task-block" [ngClass]="task.color" *ngFor="let task of tasksByRows[i]"
+            <div class="task-block" (click)="chooseTask(task)" [ngClass]="task.color" *ngFor="let task of tasksByRows[i]"
                 [ngStyle]="{'grid-column': getColumn(task.taskCompletion.start) + '/' + getColumn(task.taskCompletion.end)}">
                 {{task.task.title}}
             </div>
@@ -37,7 +37,7 @@
                     {{block.tasks[0].task.title}}
                 </div>
                 <div class="expanded-block" *ngIf="block.expanded">
-                    <so-exceeding-tasks [tasks]="block.tasks" (clickedOff)="changeBlockExpansion(block)"></so-exceeding-tasks>
+                    <so-exceeding-tasks [tasks]="block.tasks" (blockClicked)="chooseTask($event)" (clickedOff)="changeBlockExpansion(block)"></so-exceeding-tasks>
                 </div>
             </div>
         </div>

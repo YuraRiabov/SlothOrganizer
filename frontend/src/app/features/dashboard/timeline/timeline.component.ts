@@ -1,3 +1,5 @@
+import * as dashboardActions from '@store/actions/dashboard.actions';
+
 import { AfterViewInit, Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { addHours, differenceInHours, secondsInDay } from 'date-fns';
 import { getSectionTitle, getSubsectionTitle, getTimelineBoundaries, getTimelineSections, getTimelineSubsections } from '@utils/dates/timeline.helper';
@@ -60,6 +62,7 @@ export class TimelineComponent extends BaseComponent implements OnInit, AfterVie
     }
 
     @Output() scaleIncreased = new EventEmitter<Date>();
+    @Output() blockClicked = new EventEmitter();
 
     @ViewChild('timelineScroll') timelineScroll!: ElementRef;
     @ViewChild('timelineContainer') timelineContainer!: ElementRef;
@@ -151,6 +154,12 @@ export class TimelineComponent extends BaseComponent implements OnInit, AfterVie
             return 'gray';
         }
         return 'blue';
+    }
+
+    public chooseTask(taskBlock: TaskBlock): void {
+        console.log(new Date().getTime());
+        this.store.dispatch(dashboardActions.chooseTask({ taskBlock }));
+        this.blockClicked.emit();
     }
 
     private initializeTimeline(pageNumber?: number, scroll: boolean = true): void {

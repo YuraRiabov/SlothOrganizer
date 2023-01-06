@@ -10,6 +10,7 @@ import { TaskBlock } from '#types/dashboard/timeline/task-block';
 export class ExceedingTasksComponent {
     private clickCount : number = 0;
     @Output() private clickedOff = new EventEmitter();
+    @Output() public blockClicked = new EventEmitter<TaskBlock>();
     @Input() public tasks: TaskBlock[] = [];
 
     @HostListener('document:click', ['$event'])

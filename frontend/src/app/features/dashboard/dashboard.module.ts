@@ -13,6 +13,7 @@ import { NgModule } from '@angular/core';
 import { TaskFormComponent } from './task-form/task-form.component';
 import { TasksEffects } from '@store/effects/dashboard/tasks.effects';
 import { TimelineComponent } from './timeline/timeline.component';
+import { TaskInfoComponent } from './task-info/task-info.component';
 
 @NgModule({
     declarations: [
@@ -21,7 +22,8 @@ import { TimelineComponent } from './timeline/timeline.component';
         ExceedingTasksComponent,
         CreateDashboardComponent,
         DashboardSidebarComponent,
-        TaskFormComponent
+        TaskFormComponent,
+        TaskInfoComponent
     ],
     imports: [
         CommonModule,
