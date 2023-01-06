@@ -1,4 +1,5 @@
 ﻿using Dapper;
+using SlothOrganizer.Domain.Entities;
 using SlothOrganizer.Domain.Repositories;
 using SlothOrganizer.Persistence.Properties;
 using Task = SlothOrganizer.Domain.Entities.Task;
@@ -34,10 +35,22 @@ namespace SlothOrganizer.Persistence.Repositories
         public async Task<List<Task>> Get(long dashboardId)
         {
             var query = Resources.GetAllTasks;
+            var tasks = new Dictionary<long, Task>();
 
             using var connection = _context.CreateConnection();
-            var tasks = await connection.QueryAsync<Task>(query, new { dashboardId });
-            return tasks.ToList();
+            await connection.QueryAsync<Task, TaskCompletion, Task>(query, (task, completion) =>
+                {
+                    if (!tasks.TryGetValue(task.Id, out var uniqueTask))
+                    {
+                        tasks.Add(task.Id, task);
+                        uniqueTask = task;
+                    }
+                    uniqueTask.TaskCompletions.Add(completion);
+                    return uniqueTask;
+                },
+                param: new { dashboardId }
+            );
+            return tasks.Values.ToList();
         }
     }
 }
