@@ -19,7 +19,7 @@
             <mat-datepicker #picker></mat-datepicker>
         </div>
     </div>
-    <so-timeline [tasks]="tasks" [date]="currentDate" [scale]="timelineScale" (scaleIncreased)="zoomIn($event)">
+    <so-timeline [date]="currentDate" [scale]="timelineScale" (scaleIncreased)="zoomIn($event)">
     </so-timeline>
     <div class="zoom-buttons">
         <button mat-fab color="primary" [disabled]="timelineScale === 0" (click)="zoomIn()">

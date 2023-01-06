@@ -1,6 +1,6 @@
 <div class="exceeding-tasks-wrapper">
-    <div class="task-block" *ngFor="let task of tasks">
-        <h2>{{ task.title }}</h2>
-        <p> {{ task.start | date: 'medium'}} - {{ task.end | date: 'medium'}}</p>
+    <div class="task-block" [ngClass]="task.color" *ngFor="let task of tasks">
+        <h2>{{ task.task.title }}</h2>
+        <p> {{ task.taskCompletion.start | date: 'medium'}} - {{ task.taskCompletion.end | date: 'medium'}}</p>
     </div>
 </div>

@@ -1,19 +1,24 @@
 import { AfterViewInit, Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
-import { addHours, differenceInHours } from 'date-fns';
+import { addHours, differenceInHours, secondsInDay } from 'date-fns';
 import { getSectionTitle, getSubsectionTitle, getTimelineBoundaries, getTimelineSections, getTimelineSubsections } from '@utils/dates/timeline.helper';
+import { isBetween, toLocal } from '@utils/dates/dates.helper';
 
+import { BaseComponent } from '@shared/components/base/base.component';
 import { JoinedTasksBlock } from '#types/dashboard/timeline/joined-tasks-block';
+import { Store } from '@ngrx/store';
+import { Task } from '#types/dashboard/tasks/task';
 import { TaskBlock } from '#types/dashboard/timeline/task-block';
+import { TaskCompletion } from '#types/dashboard/tasks/task-completion';
 import { TimelineScale } from '#types/dashboard/timeline/enums/timeline-scale';
 import { TimelineSection } from '#types/dashboard/timeline/timeline-section';
-import { isBetween } from '@utils/dates/dates.helper';
+import { selectTasks } from '@store/selectors/dashboard.selectors';
 
 @Component({
     selector: 'so-timeline',
     templateUrl: './timeline.component.html',
     styleUrls: ['./timeline.component.sass']
 })
-export class TimelineComponent implements OnInit, AfterViewInit {
+export class TimelineComponent extends BaseComponent implements OnInit, AfterViewInit {
     private readonly minimumColumnNumber = 15;
     public readonly pageColumnNumber = 500;
     public readonly defaultPageNumber = 12;
@@ -27,9 +32,30 @@ export class TimelineComponent implements OnInit, AfterViewInit {
         this.currentDate = value;
         this.initializeTimeline();
     }
-    @Input() public tasks: TaskBlock[] = [];
     @Input() public set scale(value: TimelineScale) {
         this.timelineScale = value;
+        this.initializeTimeline();
+    }
+
+    public set tasks(tasks: Task[]) {
+        let taskBlocks: TaskBlock[] = [];
+        for (let task of tasks) {
+            for (let taskCompletion of task.taskCompletions) {
+                let localTaskCompletion: TaskCompletion = {
+                    ...taskCompletion,
+                    start: toLocal(new Date(taskCompletion.start)),
+                    end: toLocal(new Date(taskCompletion.end))
+                };
+                taskBlocks.push({
+                    task,
+                    taskCompletion: localTaskCompletion,
+                    color: this.getBlockColor(localTaskCompletion)
+                });
+            }
+        }
+        this.taskBlocks = taskBlocks.sort(
+            (first, second) => first.taskCompletion.start.getTime() - second.taskCompletion.start.getTime()
+        );
         this.initializeTimeline();
     }
 
@@ -39,13 +65,17 @@ export class TimelineComponent implements OnInit, AfterViewInit {
     @ViewChild('timelineContainer') timelineContainer!: ElementRef;
 
     public pageNumber: number = this.defaultPageNumber;
+
+    public taskBlocks: TaskBlock[] = [];
     public tasksByRows: TaskBlock[][] = [];
     public exceedingTaskBlocks: JoinedTasksBlock[] = [];
     public timelineBoundaries: TimelineSection = {} as TimelineSection;
     public timelineSections: TimelineSection[] = [];
     public timelineSubsections: TimelineSection[] = [];
 
-    constructor() { }
+    constructor(private store: Store) {
+        super();
+    }
 
     ngAfterViewInit(): void {
         this.scrollTo(this.currentDate);
@@ -53,6 +83,9 @@ export class TimelineComponent implements OnInit, AfterViewInit {
     }
 
     ngOnInit(): void {
+        this.store.select(selectTasks)
+            .pipe(this.untilDestroyed)
+            .subscribe(tasks => this.tasks = tasks);
         this.initializeTimeline();
     }
 
@@ -68,7 +101,7 @@ export class TimelineComponent implements OnInit, AfterViewInit {
     }
 
     public getVisibleTasks(): TaskBlock[] {
-        return this.tasks.filter(t => this.isVisible(t));
+        return this.taskBlocks.filter(t => this.isVisible(t));
     }
 
     public getSubsectionTitle(subsection: TimelineSection): string {
@@ -92,15 +125,32 @@ export class TimelineComponent implements OnInit, AfterViewInit {
     }
 
     public getBlockStart(block: TaskBlock[]): Date {
-        return block.sort((first, second) => first.start.getTime() - second.start.getTime())[0].start;
+        return block.sort(
+            (first, second) => first.taskCompletion.start.getTime() - second.taskCompletion.start.getTime()
+        )[0].taskCompletion.start;
     }
 
     public getBlockEnd(block: TaskBlock[]): Date {
-        return block.sort((first, second) => second.end.getTime() - first.end.getTime())[0].end;
+        return block.sort(
+            (first, second) => second.taskCompletion.end.getTime() - first.taskCompletion.end.getTime()
+        )[0].taskCompletion.end;
     }
 
     public changeBlockExpansion(block: JoinedTasksBlock) {
         block.expanded = !block.expanded;
+    }
+
+    public getBlockColor(taskCompletion: TaskCompletion) {
+        if (taskCompletion.isSuccessful) {
+            return 'green';
+        }
+        if (taskCompletion.end < new Date()) {
+            return 'red';
+        }
+        if (taskCompletion.start > new Date()) {
+            return 'gray';
+        }
+        return 'blue';
     }
 
     private initializeTimeline(pageNumber?: number, scroll: boolean = true): void {
@@ -129,7 +179,7 @@ export class TimelineComponent implements OnInit, AfterViewInit {
     }
 
     private isVisible(task: TaskBlock): boolean {
-        return this.getColumn(task.end) - this.getColumn(task.start) >= this.minimumColumnNumber;
+        return this.getColumn(task.taskCompletion.end) - this.getColumn(task.taskCompletion.start) >= this.minimumColumnNumber;
     }
 
     private scrollTo(date: Date): void {
@@ -152,8 +202,8 @@ export class TimelineComponent implements OnInit, AfterViewInit {
         for (let task of tasks) {
             let inserted = false;
             for (let i = 0; i < tasksByRows.length && !inserted; i++) {
-                if (!tasksByRows[i].find(t => isBetween(t.end, task.start, task.end) ||
-                    isBetween(task.end, t.start, t.end))) {
+                if (!tasksByRows[i].find(t => (t.taskCompletion.end, task.taskCompletion.start, task.taskCompletion.end) ||
+                    isBetween(task.taskCompletion.end, t.taskCompletion.start, t.taskCompletion.end))) {
                     tasksByRows[i].push(task);
                     inserted = true;
                 }
@@ -192,8 +242,8 @@ export class TimelineComponent implements OnInit, AfterViewInit {
         let inserted = false;
         for (let i = 0; i < exceeding.length && !inserted; i++) {
             let block = exceeding[i];
-            if (isBetween(task.end, this.getBlockStart(block), this.getBlockEnd(block)) ||
-                isBetween(this.getBlockEnd(block), task.start, task.end)) {
+            if (isBetween(task.taskCompletion.end, this.getBlockStart(block), this.getBlockEnd(block)) ||
+                isBetween(this.getBlockEnd(block), task.taskCompletion.start, task.taskCompletion.end)) {
                 block.push(task);
                 inserted = true;
             }
