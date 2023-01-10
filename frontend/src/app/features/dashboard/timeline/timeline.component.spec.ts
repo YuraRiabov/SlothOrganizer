@@ -118,9 +118,9 @@ describe('TimelineComponent', () => {
         expect(component).toBeTruthy();
     });
 
-    it('should contain 8 blocks when scale day', () => {
+    it('should contain 7 blocks when scale day', () => {
         let blocks = fixture.debugElement.queryAll(By.css('.task-block'));
-        expect(blocks.length === 6).toBeTrue();
+        expect(blocks.length === 7).toBeTrue();
     });
 
     it('should contain 5 blocks when scale week', () => {
