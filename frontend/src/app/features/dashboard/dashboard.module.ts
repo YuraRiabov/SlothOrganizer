@@ -11,9 +11,9 @@ import { ExceedingTasksComponent } from './exceeding-tasks/exceeding-tasks.compo
 import { MaterialModule } from '@shared/material/material.module';
 import { NgModule } from '@angular/core';
 import { TaskFormComponent } from './task-form/task-form.component';
+import { TaskInfoComponent } from './task-info/task-info.component';
 import { TasksEffects } from '@store/effects/dashboard/tasks.effects';
 import { TimelineComponent } from './timeline/timeline.component';
-import { TaskInfoComponent } from './task-info/task-info.component';
 
 @NgModule({
     declarations: [

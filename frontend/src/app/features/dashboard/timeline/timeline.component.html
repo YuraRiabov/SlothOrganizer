@@ -23,18 +23,22 @@
             [ngStyle]="{'grid-template-columns' : 'repeat(' + pageColumnNumber * pageNumber + ', 1fr', 'grid-row': i+3}">
             <div class="task-block" (click)="chooseTask(task)" [ngClass]="task.color" *ngFor="let task of tasksByRows[i]"
                 [ngStyle]="{'grid-column': getColumn(task.taskCompletion.start) + '/' + getColumn(task.taskCompletion.end)}">
-                {{task.task.title}}
+                <p class="task-title">
+                    {{task.task.title}}
+                </p>
             </div>
         </div>
         <div class="timeline-row"
             [ngStyle]="{'grid-template-columns' : 'repeat(' + pageColumnNumber * pageNumber + ', 1fr', 'grid-row': 8 }">
-            <div class="task-block" *ngFor="let block of exceedingTaskBlocks"
+            <div [ngClass]="block.tasks[0].color" class="task-block" *ngFor="let block of exceedingTaskBlocks"
                 [ngStyle]="{'grid-column': getColumn(getBlockStart(block.tasks)) + '/' + getColumn(getBlockEnd(block.tasks))}">
                 <div class="expanded-block-label" *ngIf="block.tasks.length > 1"(click)="changeBlockExpansion(block)">
                     {{ block.tasks.length }} more
                 </div>
-                <div *ngIf="block.tasks.length === 1">
-                    {{block.tasks[0].task.title}}
+                <div *ngIf="block.tasks.length === 1" (click)="chooseTask(block.tasks[0])">
+                    <p class="task-title">
+                        {{block.tasks[0].task.title}}
+                    </p>
                 </div>
                 <div class="expanded-block" *ngIf="block.expanded">
                     <so-exceeding-tasks [tasks]="block.tasks" (blockClicked)="chooseTask($event)" (clickedOff)="changeBlockExpansion(block)"></so-exceeding-tasks>

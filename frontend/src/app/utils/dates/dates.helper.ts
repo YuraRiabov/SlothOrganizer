@@ -12,3 +12,7 @@ export const setTime = (date: Date, time: string) => {
 export const toLocal = (date: Date) => {
     return addMinutes(date, -1 * new Date().getTimezoneOffset());
 };
+
+export const hasTimezone = (date: string) => {
+    return date.includes('+') || date.includes('Z');
+};

@@ -7,11 +7,11 @@ import { differenceInDays } from 'date-fns';
 export const getTitleValidators = () => [
     Validators.required,
     Validators.minLength(2),
-    Validators.maxLength(30)
+    Validators.maxLength(60)
 ];
 
 export const getDescriptionValidators = () => [
-    Validators.maxLength(200)
+    Validators.maxLength(400)
 ];
 
 export const startBeforeEndValidator = () : ValidatorFn => {

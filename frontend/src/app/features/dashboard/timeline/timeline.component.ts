@@ -1,9 +1,9 @@
 import * as dashboardActions from '@store/actions/dashboard.actions';
 
 import { AfterViewInit, Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
-import { addHours, differenceInHours, secondsInDay } from 'date-fns';
+import { addHours, differenceInHours } from 'date-fns';
 import { getSectionTitle, getSubsectionTitle, getTimelineBoundaries, getTimelineSections, getTimelineSubsections } from '@utils/dates/timeline.helper';
-import { isBetween, toLocal } from '@utils/dates/dates.helper';
+import { hasTimezone, isBetween, toLocal } from '@utils/dates/dates.helper';
 
 import { BaseComponent } from '@shared/components/base/base.component';
 import { JoinedTasksBlock } from '#types/dashboard/timeline/joined-tasks-block';
@@ -43,11 +43,17 @@ export class TimelineComponent extends BaseComponent implements OnInit, AfterVie
         let taskBlocks: TaskBlock[] = [];
         for (let task of tasks) {
             for (let taskCompletion of task.taskCompletions) {
-                let localTaskCompletion: TaskCompletion = {
-                    ...taskCompletion,
-                    start: toLocal(new Date(taskCompletion.start)),
-                    end: toLocal(new Date(taskCompletion.end))
-                };
+                let localTaskCompletion: TaskCompletion = hasTimezone(taskCompletion.start.toString())
+                    ? {
+                        ...taskCompletion,
+                        start:new Date(taskCompletion.start),
+                        end: new Date(taskCompletion.end)
+                    }
+                    : {
+                        ...taskCompletion,
+                        start: toLocal(new Date(taskCompletion.start)),
+                        end: toLocal(new Date(taskCompletion.end))
+                    };
                 taskBlocks.push({
                     task,
                     taskCompletion: localTaskCompletion,
@@ -210,7 +216,7 @@ export class TimelineComponent extends BaseComponent implements OnInit, AfterVie
         for (let task of tasks) {
             let inserted = false;
             for (let i = 0; i < tasksByRows.length && !inserted; i++) {
-                if (!tasksByRows[i].find(t => (t.taskCompletion.end, task.taskCompletion.start, task.taskCompletion.end) ||
+                if (!tasksByRows[i].find(t => isBetween(t.taskCompletion.end, task.taskCompletion.start, task.taskCompletion.end) ||
                     isBetween(task.taskCompletion.end, t.taskCompletion.start, t.taskCompletion.end))) {
                     tasksByRows[i].push(task);
                     inserted = true;
