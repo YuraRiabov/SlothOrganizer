@@ -66,6 +66,31 @@ namespace SlothOrganizer.Services.Tests.Unit.Tasks
             Assert.Equal("Invalid repeating period", exception.Message);
         }
 
+        [Fact]
+        public async Task Get_WhenHasData_ShouldReturn()
+        {
+            var tasks = GetTasks();
+            var dashboardId = 1;
+            A.CallTo(() => _taskRepository.Get(dashboardId)).Returns(tasks);
+
+            var result = await _taskRepository.Get(dashboardId);
+
+            Assert.NotEmpty(result);
+            Assert.Equal(2, result.Count());
+            Assert.Equal(2, result.Count(t => t.Title == "Test"));
+        }
+
+        [Fact]
+        public async Task Get_WhenNoData_ShouldReturnEmpty()
+        {
+            var dashboardId = 1;
+            A.CallTo(() => _taskRepository.Get(dashboardId)).Returns(new List<Entities.Task>());
+
+            var result = await _taskRepository.Get(dashboardId);
+
+            Assert.Empty(result);
+        }
+
         private static NewTaskDto GetNewTask(TaskRepeatingPeriod period)
         {
             return new NewTaskDto
@@ -91,6 +116,27 @@ namespace SlothOrganizer.Services.Tests.Unit.Tasks
                     Start = new DateTime(2023, 1, 1),
                     End = new DateTime(2023, 1, 9),
                     IsSuccessful = false
+                }
+            };
+        }
+
+        private static List<Entities.Task> GetTasks()
+        {
+            return new List<Entities.Task>
+            {
+                new Entities.Task
+                {
+                    Id = 1,
+                    DashboardId = 1,
+                    Title = "Test",
+                    Description = "Test"
+                },
+                new Entities.Task
+                {
+                    Id = 2,
+                    DashboardId = 1,
+                    Title = "Test",
+                    Description = "Test"
                 }
             };
         }
