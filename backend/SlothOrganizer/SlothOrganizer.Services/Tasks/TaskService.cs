@@ -39,5 +39,33 @@ namespace SlothOrganizer.Services.Tasks
             var tasks = await _taskRepository.Get(dashboardId);
             return _mapper.Map<List<TaskDto>>(tasks);
         }
+
+        public async Task<TaskDto> Update(UpdateTaskDto updateTaskDto)
+        {
+            await _taskCompletionService.Update(updateTaskDto.TaskCompletion);
+            var task = _mapper.Map<Domain.Entities.Task>(updateTaskDto.Task);
+            var updatedTask = _mapper.Map<TaskDto>(await _taskRepository.Update(task));
+            if (updatedTask is null)
+            {
+                throw new EntityNotFoundException("Task with such id not found");
+            }
+            var latestCompletion = updatedTask.TaskCompletions.MaxBy(tc => tc.End);
+            if (updateTaskDto.EndRepeating is DateTime endRepeating)
+            {
+                if (latestCompletion.End > endRepeating)
+                {
+                    await _taskCompletionService.DeleteExceeding(updatedTask.Id, endRepeating);
+                    updatedTask.TaskCompletions = updatedTask.TaskCompletions
+                        .Where(tc => tc.End < updateTaskDto.EndRepeating)
+                        .ToList();
+                }
+                if (latestCompletion.End < endRepeating)
+                {
+                    var addedCompletions = await _taskCompletionService.AddLacking(updatedTask.TaskCompletions, endRepeating);
+                    updatedTask.TaskCompletions.AddRange(addedCompletions);
+                }
+            }
+            return updatedTask;
+        }
     }
 }

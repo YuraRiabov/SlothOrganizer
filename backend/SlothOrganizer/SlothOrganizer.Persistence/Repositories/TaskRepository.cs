@@ -52,5 +52,20 @@ namespace SlothOrganizer.Persistence.Repositories
             );
             return tasks.Values.ToList();
         }
+
+        public async Task<Task> Update(Task task)
+        {
+            var query = Resources.UpdateTask;
+
+            var parameters = new
+            {
+                Id = task.Id,
+                Title = task.Title,
+                Description = task.Description,
+            };
+            
+            var connection = _context.CreateConnection();
+            return await connection.QuerySingleOrDefaultAsync<Task>(query, parameters);
+        }
     }
 }

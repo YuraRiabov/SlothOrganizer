@@ -1,4 +1,5 @@
-﻿using AutoMapper;
+﻿using System.Threading.Tasks;
+using AutoMapper;
 using SlothOrganizer.Contracts.DTO.Tasks.Task;
 using SlothOrganizer.Contracts.DTO.Tasks.Task.Enums;
 using SlothOrganizer.Domain.Entities;
@@ -6,6 +7,7 @@ using SlothOrganizer.Domain.Exceptions;
 using SlothOrganizer.Domain.Repositories;
 using SlothOrganizer.Services.Abstractions.Tasks;
 using SlothOrganizer.Services.Abstractions.Utility;
+using Task = System.Threading.Tasks.Task;
 
 namespace SlothOrganizer.Services.Tasks
 {
@@ -31,7 +33,41 @@ namespace SlothOrganizer.Services.Tasks
         {
             var taskCompletion = _mapper.Map<TaskCompletion>(taskCompletionDto);
             var updatedTaskCompletion = await _taskCompletionRepository.Update(taskCompletion);
+            if (updatedTaskCompletion is null)
+            {
+                throw new EntityNotFoundException("No task completion with such id found");
+            }
             return _mapper.Map<TaskCompletionDto>(updatedTaskCompletion);
+        }
+
+        public async Task DeleteExceeding(long taskId, DateTime endRepeating)
+        {
+            await _taskCompletionRepository.Delete(taskId, endRepeating);
+        }
+
+        public async Task<List<TaskCompletionDto>> AddLacking(List<TaskCompletionDto> completions, DateTime endRepeating)
+        {
+            var lastTwoCompletions = completions.OrderBy(tc => tc.End).TakeLast(2).ToList();
+            var lastCompletion = lastTwoCompletions.Last();
+            var repeatingPeriodLength = lastTwoCompletions[1].Start - lastTwoCompletions[1].Start;
+            var length = lastCompletion.End - lastCompletion.Start;
+            var newCompletions = new List<TaskCompletion>();
+
+            var currentStart = lastCompletion.Start;
+            while (currentStart + length <= endRepeating)
+            {
+                var current = new TaskCompletion
+                {
+                    Start = currentStart,
+                    End = currentStart + length,
+                    LastEdited = _dateTimeService.Now(),
+                    IsSuccessful = false,
+                    TaskId = lastCompletion.TaskId,
+                };
+                newCompletions.Add(current);
+                currentStart += repeatingPeriodLength;
+            }
+            return _mapper.Map<List<TaskCompletionDto>>(await _taskCompletionRepository.Insert(newCompletions));
         }
 
         private List<TaskCompletion> Generate(NewTaskDto task, long taskId)

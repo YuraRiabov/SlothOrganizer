@@ -61,6 +61,16 @@ namespace SlothOrganizer.Persistence.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to DELETE FROM TaskCompletions
+        ///WHERE TaskId = @TaskId AND [End] &gt; @RepeatingEnd.
+        /// </summary>
+        internal static string DeleteTaskCompletions {
+            get {
+                return ResourceManager.GetString("DeleteTaskCompletions", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to DELETE FROM Users WHERE Id = @Id.
         /// </summary>
         internal static string DeleteUser {
@@ -112,6 +122,30 @@ namespace SlothOrganizer.Persistence.Properties {
         internal static string GetRefreshTokenByUserEmail {
             get {
                 return ResourceManager.GetString("GetRefreshTokenByUserEmail", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to SELECT *
+        ///FROM TaskCompletions
+        ///WHERE TaskId = @TaskId
+        ///.
+        /// </summary>
+        internal static string GetTaskCompletionsByTask {
+            get {
+                return ResourceManager.GetString("GetTaskCompletionsByTask", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to SELECT *
+        ///FROM TaskCompletions
+        ///WHERE TaskId = @TaskId
+        ///.
+        /// </summary>
+        internal static string GetTaskCompletionsByTask1 {
+            get {
+                return ResourceManager.GetString("GetTaskCompletionsByTask1", resourceCulture);
             }
         }
         
@@ -229,6 +263,23 @@ namespace SlothOrganizer.Persistence.Properties {
         internal static string SelectAllUsers {
             get {
                 return ResourceManager.GetString("SelectAllUsers", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to UPDATE TASKS
+        ///SET
+        ///	Title = @Title,
+        ///	[Description] = @Description
+        ///WHERE Id = @Id
+        ///
+        ///SELECT * 
+        ///FROM Tasks
+        ///WHERE Id = @Id.
+        /// </summary>
+        internal static string UpdateTask {
+            get {
+                return ResourceManager.GetString("UpdateTask", resourceCulture);
             }
         }
         

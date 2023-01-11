@@ -27,5 +27,11 @@ namespace SlothOrganizer.Presentation.Controllers
         {
             return await _taskService.Get(dashboardId);
         }
+
+        [HttpPut]
+        public async Task<TaskDto> Update([FromBody] UpdateTaskDto updateTaskDto)
+        {
+            return await _taskService.Update(updateTaskDto);
+        }
     }
 }

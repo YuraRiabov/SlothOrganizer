@@ -3,6 +3,7 @@ using Dapper;
 using SlothOrganizer.Domain.Entities;
 using SlothOrganizer.Domain.Repositories;
 using SlothOrganizer.Persistence.Properties;
+using Task = System.Threading.Tasks.Task;
 
 namespace SlothOrganizer.Persistence.Repositories
 {
@@ -50,6 +51,20 @@ namespace SlothOrganizer.Persistence.Repositories
             };
             using var connection = _context.CreateConnection();
             return await connection.QuerySingleOrDefaultAsync<TaskCompletion>(query, parameters);
+        }
+
+        public async Task Delete(long taskId, DateTime repeatingEnd)
+        {
+            var command = Resources.DeleteTaskCompletions;
+
+            var parameters = new
+            {
+                TaskId = taskId,
+                RepeatingEnd = repeatingEnd
+            };
+
+            using var connection = _context.CreateConnection();
+            await connection.ExecuteAsync(command, parameters);
         }
     }
 }
