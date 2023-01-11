@@ -36,5 +36,20 @@ namespace SlothOrganizer.Persistence.Repositories
             
             return taskCompletions;
         }
+
+        public async Task<TaskCompletion> Update(TaskCompletion taskCompletion)
+        {
+            var query = Resources.UpdateTaskCompletion;
+            var parameters = new
+            {
+                Id = taskCompletion.Id,
+                IsSuccessful = taskCompletion.IsSuccessful,
+                Start = taskCompletion.Start,
+                End = taskCompletion.End,
+                LastEdited = taskCompletion.LastEdited
+            };
+            using var connection = _context.CreateConnection();
+            return await connection.QuerySingleOrDefaultAsync<TaskCompletion>(query, parameters);
+        }
     }
 }

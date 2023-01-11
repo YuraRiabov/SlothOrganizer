@@ -233,6 +233,23 @@ namespace SlothOrganizer.Persistence.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to UPDATE TaskCompletions
+        ///SET  
+        ///	IsSuccessful = @IsSuccessful,
+        ///	[Start] = @Start,
+        ///	[End] = @End,
+        ///	LastEdited = @LastEdited
+        ///WHERE Id=@Id
+        ///SELECT TOP 1 * FROM TaskCompletions
+        ///WHERE Id=@Id.
+        /// </summary>
+        internal static string UpdateTaskCompletion {
+            get {
+                return ResourceManager.GetString("UpdateTaskCompletion", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to UPDATE Users SET 
         ///	FirstName = @FirstName, 
         ///	LastName = @LastName, 

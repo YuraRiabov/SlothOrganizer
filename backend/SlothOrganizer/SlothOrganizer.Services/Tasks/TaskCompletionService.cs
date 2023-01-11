@@ -27,6 +27,13 @@ namespace SlothOrganizer.Services.Tasks
             return _mapper.Map<List<TaskCompletionDto>>(await _taskCompletionRepository.Insert(taskCompletions));
         }
 
+        public async Task<TaskCompletionDto> Update(TaskCompletionDto taskCompletionDto)
+        {
+            var taskCompletion = _mapper.Map<TaskCompletion>(taskCompletionDto);
+            var updatedTaskCompletion = await _taskCompletionRepository.Update(taskCompletion);
+            return _mapper.Map<TaskCompletionDto>(updatedTaskCompletion);
+        }
+
         private List<TaskCompletion> Generate(NewTaskDto task, long taskId)
         {
             if (task.RepeatingPeriod == TaskRepeatingPeriod.None)

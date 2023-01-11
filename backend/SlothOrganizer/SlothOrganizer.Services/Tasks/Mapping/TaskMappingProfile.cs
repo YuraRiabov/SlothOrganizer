@@ -9,6 +9,7 @@ namespace SlothOrganizer.Services.Tasks.Mapping
         public TaskMappingProfile()
         {
             CreateMap<TaskCompletion, TaskCompletionDto>();
+            CreateMap<TaskCompletionDto, TaskCompletion>();
             CreateMap<Domain.Entities.Task, TaskDto>();
             CreateMap<NewTaskDto, Domain.Entities.Task>();
         }
