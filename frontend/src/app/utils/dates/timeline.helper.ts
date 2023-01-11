@@ -1,4 +1,5 @@
-import { addDays, addHours, addMonths, addWeeks, addYears, daysInWeek, differenceInHours, differenceInYears, endOfDay, endOfMonth, endOfWeek, endOfYear, startOfDay, startOfMonth, startOfWeek, startOfYear } from 'date-fns';
+import { addDays, addHours, addMonths, addWeeks, addYears, daysInWeek, daysInYear, differenceInHours, differenceInYears, endOfDay, endOfMonth, endOfWeek, endOfYear, monthsInYear, startOfDay, startOfMonth, startOfWeek, startOfYear } from 'date-fns';
+import { hoursInDay, maxDaysInMonth } from './dates.helper';
 
 import { DatePipe } from '@angular/common';
 import { TimelineScale } from '#types/tasks/timeline/enums/timeline-scale';
@@ -35,7 +36,7 @@ export const getTimelineSections = (boundaries: TimelineSection, scale: Timeline
     if (scale !== TimelineScale.Year) {
         return getTimelineSubsections(boundaries, scale + 1);
     }
-    let sectionHours = 24 * 367;
+    let sectionHours = hoursInDay * (daysInYear + 2);
     let sectionsCount = differenceInYears(boundaries.end, boundaries.start);
     let sections: TimelineSection[] = [];
     let firstSectionStart = startOfYear(boundaries.start);
@@ -58,7 +59,7 @@ export const getTimelineSubsections = (boundaries: TimelineSection, scale: Timel
         sectionsCount++;
     }
     if (scale == TimelineScale.Year) {
-        sectionsCount = differenceInYears(boundaries.end, boundaries.start) * 12;
+        sectionsCount = differenceInYears(boundaries.end, boundaries.start) * monthsInYear;
     }
     let sections: TimelineSection[] = [];
     const startFunction = getStartFunction(scale);
@@ -112,13 +113,13 @@ export const getSectionTitle = (section: TimelineSection, scale: TimelineScale):
 const getSubsectionSize = (scale: TimelineScale) => {
     switch (scale) {
     case TimelineScale.Day:
-        return 4;
+        return hoursInDay / sectionsInDay;
     case TimelineScale.Week:
-        return 24;
+        return hoursInDay;
     case TimelineScale.Month:
-        return 24 * daysInWeek + 1;
+        return hoursInDay * daysInWeek + 1;
     case TimelineScale.Year:
-        return 24 * 32;
+        return hoursInDay * (maxDaysInMonth + 1);
     default:
         throw new Error('Invalid scale');
     }
@@ -153,3 +154,5 @@ const getEndFunction = (scale: TimelineScale) => {
         throw new Error('Invalid scale');
     }
 };
+
+const sectionsInDay = 6;

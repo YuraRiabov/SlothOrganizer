@@ -1,8 +1,7 @@
-import { AfterViewInit, Component, DoCheck, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, EventEmitter, Input, OnDestroy, OnInit, Output, ViewChild } from '@angular/core';
 import { addHours, differenceInHours } from 'date-fns';
 import { getSectionTitle, getSubsectionTitle, getTimelineBoundaries, getTimelineSections, getTimelineSubsections } from '@utils/dates/timeline.helper';
 
-import { MatDialog } from '@angular/material/dialog';
 import { Task } from '#types/tasks/task';
 import { TasksBlock } from '#types/tasks/timeline/tasks-block';
 import { TimelineScale } from '#types/tasks/timeline/enums/timeline-scale';
@@ -14,8 +13,9 @@ import { isBetween } from '@utils/dates/dates.helper';
     templateUrl: './timeline.component.html',
     styleUrls: ['./timeline.component.sass']
 })
-export class TimelineComponent implements OnInit, AfterViewInit {
+export class TimelineComponent implements OnInit, AfterViewInit, OnDestroy {
     private readonly minimumColumnNumber = 15;
+    private readonly taskRowsNumber = 5;
     public readonly pageColumnNumber = 500;
     public readonly defaultPageNumber = 12;
 
@@ -48,6 +48,10 @@ export class TimelineComponent implements OnInit, AfterViewInit {
 
     constructor() { }
 
+    ngOnDestroy(): void {
+        this.timelineResizeObserver.disconnect();
+    }
+
     ngAfterViewInit(): void {
         this.scrollTo(this.currentDate);
         this.timelineResizeObserver = this.initializeTimelineWidthObserver();
@@ -58,14 +62,13 @@ export class TimelineComponent implements OnInit, AfterViewInit {
     }
 
     public getColumn(date: Date): number {
-        let ratio = this.getDateRatio(date);
-        if (ratio < 0) {
+        if (date < this.timelineBoundaries.start) {
             return 1;
         }
-        if (ratio > 1) {
+        if (date > this.timelineBoundaries.end) {
             return this.pageColumnNumber * this.pageNumber + 1;
         }
-        return Math.round(ratio * this.pageColumnNumber * this.pageNumber) + 1;
+        return Math.round(this.getDateRatio(date) * this.pageColumnNumber * this.pageNumber) + 1;
     }
 
     public getVisibleTasks(): Task[] {
@@ -148,7 +151,7 @@ export class TimelineComponent implements OnInit, AfterViewInit {
     }
 
     private separateTasksByRows(tasks: Task[]): void {
-        let tasksByRows: Task[][] = Array.from(Array(5), () => []);
+        let tasksByRows: Task[][] = Array.from(Array(this.taskRowsNumber), () => []);
         let exceeding: Task[][] = [];
         for (let task of tasks) {
             let inserted = false;
