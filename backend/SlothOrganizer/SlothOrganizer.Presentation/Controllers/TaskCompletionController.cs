@@ -17,7 +17,7 @@ namespace SlothOrganizer.Presentation.Controllers
             _taskCompletionService = taskCompletionService;
         }
 
-        [HttpPut("{id}")]
+        [HttpPut]
         public async Task<TaskCompletionDto> Update([FromBody] TaskCompletionDto taskCompletionDto)
         {
             return await _taskCompletionService.Update(taskCompletionDto);
