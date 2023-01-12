@@ -54,14 +54,14 @@ namespace SlothOrganizer.Services.Tasks
             {
                 if (latestCompletion.End > endRepeating)
                 {
-                    await _taskCompletionService.DeleteExceeding(updatedTask.Id, endRepeating);
+                    await _taskCompletionService.Delete(updatedTask.Id, endRepeating);
                     updatedTask.TaskCompletions = updatedTask.TaskCompletions
                         .Where(tc => tc.End < updateTaskDto.EndRepeating)
                         .ToList();
                 }
                 if (latestCompletion.End < endRepeating)
                 {
-                    var addedCompletions = await _taskCompletionService.AddLacking(updatedTask.TaskCompletions, endRepeating);
+                    var addedCompletions = await _taskCompletionService.Add(updatedTask.TaskCompletions, endRepeating);
                     updatedTask.TaskCompletions.AddRange(addedCompletions);
                 }
             }

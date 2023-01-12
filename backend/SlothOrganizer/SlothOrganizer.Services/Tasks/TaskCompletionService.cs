@@ -25,7 +25,7 @@ namespace SlothOrganizer.Services.Tasks
 
         public async Task<List<TaskCompletionDto>> Create(NewTaskDto newTask, long taskId)
         {
-            var taskCompletions = Generate(newTask, taskId);
+            var taskCompletions = GenerateNew(newTask, taskId);
             return _mapper.Map<List<TaskCompletionDto>>(await _taskCompletionRepository.Insert(taskCompletions));
         }
 
@@ -40,37 +40,30 @@ namespace SlothOrganizer.Services.Tasks
             return _mapper.Map<TaskCompletionDto>(updatedTaskCompletion);
         }
 
-        public async Task DeleteExceeding(long taskId, DateTime endRepeating)
+        public async Task Delete(long taskId, DateTime endRepeating)
         {
             await _taskCompletionRepository.Delete(taskId, endRepeating);
         }
 
-        public async Task<List<TaskCompletionDto>> AddLacking(List<TaskCompletionDto> completions, DateTime endRepeating)
+        public async Task Delete(long id)
         {
-            var lastTwoCompletions = completions.OrderBy(tc => tc.End).TakeLast(2).ToList();
-            var lastCompletion = lastTwoCompletions.Last();
-            var repeatingPeriodLength = lastTwoCompletions[1].Start - lastTwoCompletions[1].Start;
-            var length = lastCompletion.End - lastCompletion.Start;
-            var newCompletions = new List<TaskCompletion>();
+            await _taskCompletionRepository.Delete(id);
+        }
 
-            var currentStart = lastCompletion.Start;
-            while (currentStart + length <= endRepeating)
-            {
-                var current = new TaskCompletion
-                {
-                    Start = currentStart,
-                    End = currentStart + length,
-                    LastEdited = _dateTimeService.Now(),
-                    IsSuccessful = false,
-                    TaskId = lastCompletion.TaskId,
-                };
-                newCompletions.Add(current);
-                currentStart += repeatingPeriodLength;
-            }
+        public async Task<List<TaskCompletionDto>> Add(List<TaskCompletionDto> completions, DateTime endRepeating)
+        {
+            var lastTwoCompletions = completions.OrderBy(tc => tc.End).TakeLast(2);
+            var lastCompletion = lastTwoCompletions.Last();
+            var repeatingPeriodLength = lastCompletion.Start - lastTwoCompletions.First().Start;
+            var length = lastCompletion.End - lastCompletion.Start;
+            var firstStart = lastCompletion.Start + repeatingPeriodLength;
+            var repeatingPeriod = _dateTimeService.GetRepeatingPeriod(repeatingPeriodLength);
+
+            var newCompletions = Generate(firstStart, length, repeatingPeriod, endRepeating, lastCompletion.TaskId);
             return _mapper.Map<List<TaskCompletionDto>>(await _taskCompletionRepository.Insert(newCompletions));
         }
 
-        private List<TaskCompletion> Generate(NewTaskDto task, long taskId)
+        private List<TaskCompletion> GenerateNew(NewTaskDto task, long taskId)
         {
             if (task.RepeatingPeriod == TaskRepeatingPeriod.None)
             {
@@ -86,10 +79,17 @@ namespace SlothOrganizer.Services.Tasks
                     }
                 };
             }
-            var taskCompletions = new List<TaskCompletion>();
-            var currentStart = task.Start;
+            var firstStart = task.Start;
             var length = task.End - task.Start;
-            while (currentStart + length <= task.EndRepeating)
+            var taskCompletions = Generate(firstStart, length, task.RepeatingPeriod, task.EndRepeating, taskId);
+            return taskCompletions;
+        }
+
+        private List<TaskCompletion> Generate(DateTime firstStart, TimeSpan length, TaskRepeatingPeriod period, DateTime? endRepeating, long taskId)
+        {
+            var completions = new List<TaskCompletion>();
+            var currentStart = firstStart;
+            while (currentStart + length <= endRepeating)
             {
                 var current = new TaskCompletion
                 {
@@ -99,10 +99,11 @@ namespace SlothOrganizer.Services.Tasks
                     IsSuccessful = false,
                     TaskId = taskId,
                 };
-                taskCompletions.Add(current);
-                currentStart = GetNextStart(currentStart, task.RepeatingPeriod);
+                completions.Add(current);
+                currentStart = GetNextStart(currentStart, period);
             }
-            return taskCompletions;
+
+            return completions;
         }
 
         private static DateTime GetNextStart(DateTime currentStart, TaskRepeatingPeriod period)

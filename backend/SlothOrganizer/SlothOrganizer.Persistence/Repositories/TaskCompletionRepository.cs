@@ -66,5 +66,13 @@ namespace SlothOrganizer.Persistence.Repositories
             using var connection = _context.CreateConnection();
             await connection.ExecuteAsync(command, parameters);
         }
+
+        public async Task Delete(long id)
+        {
+            var command = Resources.DeleteTaskCompletion;
+
+            using var connection = _context.CreateConnection();
+            await connection.ExecuteAsync(command, new { id });
+        }
     }
 }

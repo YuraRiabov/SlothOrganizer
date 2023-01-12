@@ -6,5 +6,6 @@ namespace SlothOrganizer.Services.Abstractions.Utility
     {
         DateTime Now();
         TimeSpan GetLength(TaskRepeatingPeriod period);
+        TaskRepeatingPeriod GetRepeatingPeriod(TimeSpan repeatsDifference);
     }
 }

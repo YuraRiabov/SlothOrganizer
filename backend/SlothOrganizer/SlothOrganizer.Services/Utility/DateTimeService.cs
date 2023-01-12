@@ -18,6 +18,23 @@ namespace SlothOrganizer.Services.Utility
             };
         }
 
+        public TaskRepeatingPeriod GetRepeatingPeriod(TimeSpan repeatsDifference)
+        {
+            if (repeatsDifference < TimeSpan.FromDays(3))
+            {
+                return TaskRepeatingPeriod.Day;
+            }
+            if (repeatsDifference < TimeSpan.FromDays(14))
+            {
+                return TaskRepeatingPeriod.Week;
+            }
+            if (repeatsDifference < TimeSpan.FromDays(40))
+            {
+                return TaskRepeatingPeriod.Month;
+            }
+            return TaskRepeatingPeriod.Year;
+        }
+
         public DateTime Now() => DateTime.Now;
     }
 }

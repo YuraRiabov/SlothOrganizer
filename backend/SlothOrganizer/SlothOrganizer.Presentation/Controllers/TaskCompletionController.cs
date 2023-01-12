@@ -22,5 +22,11 @@ namespace SlothOrganizer.Presentation.Controllers
         {
             return await _taskCompletionService.Update(taskCompletionDto);
         }
+
+        [HttpDelete("{id:long}")]
+        public async Task Delete(long id)
+        {
+            return await _taskCompletionService.Delete(id);
+        }
     }
 }

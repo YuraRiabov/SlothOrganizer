@@ -62,6 +62,16 @@ namespace SlothOrganizer.Persistence.Properties {
         
         /// <summary>
         ///   Looks up a localized string similar to DELETE FROM TaskCompletions
+        ///WHERE Id=@Id.
+        /// </summary>
+        internal static string DeleteTaskCompletion {
+            get {
+                return ResourceManager.GetString("DeleteTaskCompletion", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to DELETE FROM TaskCompletions
         ///WHERE TaskId = @TaskId AND [End] &gt; @RepeatingEnd.
         /// </summary>
         internal static string DeleteTaskCompletions {
@@ -273,8 +283,10 @@ namespace SlothOrganizer.Persistence.Properties {
         ///	[Description] = @Description
         ///WHERE Id = @Id
         ///
-        ///SELECT * 
-        ///FROM Tasks
+        ///SELECT TOP 1 * 
+        ///FROM Tasks as t
+        ///INNER JOIN TaskCompletions AS tc
+        ///ON t.Id = tc.TaskId
         ///WHERE Id = @Id.
         /// </summary>
         internal static string UpdateTask {
