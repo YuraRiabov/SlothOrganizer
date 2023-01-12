@@ -26,7 +26,7 @@ namespace SlothOrganizer.Presentation.Controllers
         [HttpDelete("{id:long}")]
         public async Task Delete(long id)
         {
-            return await _taskCompletionService.Delete(id);
+            await _taskCompletionService.Delete(id);
         }
     }
 }
