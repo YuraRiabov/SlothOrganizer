@@ -3,6 +3,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
+import {MatMenuModule} from '@angular/material/menu';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { NgModule } from '@angular/core';
@@ -15,7 +16,8 @@ import { NgModule } from '@angular/core';
         MatButtonModule,
         MatProgressSpinnerModule,
         MatIconModule, MatDatepickerModule,
-        MatNativeDateModule
+        MatNativeDateModule,
+        MatMenuModule
     ],
     exports: [
         MatInputModule,
@@ -23,7 +25,8 @@ import { NgModule } from '@angular/core';
         MatProgressSpinnerModule,
         MatIconModule,
         MatDatepickerModule,
-        MatNativeDateModule
+        MatNativeDateModule,
+        MatMenuModule
     ]
 })
 export class MaterialModule { }

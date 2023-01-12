@@ -1,5 +1,5 @@
-export const isBetween = (date: Date, start: Date, end: Date) => {
-    return start <= date && date <= end;
+export const intercept = (first: { start: Date, end: Date }, second: { start: Date, end: Date }) => {
+    return first.end >= second.start && second.end >= first.start;
 };
 
 export const hoursInDay = 24;

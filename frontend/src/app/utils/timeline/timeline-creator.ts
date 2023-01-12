@@ -1,5 +1,5 @@
 import { addDays, addHours, addMonths, addWeeks, addYears, daysInWeek, daysInYear, differenceInHours, differenceInYears, endOfDay, endOfMonth, endOfWeek, endOfYear, monthsInYear, startOfDay, startOfMonth, startOfWeek, startOfYear } from 'date-fns';
-import { hoursInDay, isBetween, maxDaysInMonth } from '@utils/dates/dates.helper';
+import { hoursInDay, intercept, maxDaysInMonth } from '@utils/dates/dates.helper';
 
 import { DatePipe } from '@angular/common';
 import { Injectable } from '@angular/core';
@@ -32,14 +32,20 @@ export class TimelineCreator {
             sections: this.getTimelineSections(this.boundaries, scale),
             subsections: this.getTimelineSubsections(this.boundaries, scale)
         };
-        timeline = this.addTasks(this.getVisibleTasks(tasks), timeline);
+        let tasksToAdd = this.getVisibleTasks(tasks).map(task => this.addColumns(task));
+        timeline = this.addTasks(tasksToAdd, timeline);
         return timeline;
     }
 
     public getDateRatio(date: Date): number {
         return (date.getTime() - this.boundaries.start.getTime()) / this.getTimelineLength();
     }
-    public getVisibleTasks(tasks: Task[]): Task[] {
+
+    private addColumns(task: Task): Task {
+        return { ...task, startColumn: this.getColumn(task.start), endColumn: this.getColumn(task.end) };
+    }
+
+    private getVisibleTasks(tasks: Task[]): Task[] {
         return tasks.filter(t => this.isVisible(t));
     }
 
@@ -75,8 +81,7 @@ export class TimelineCreator {
         for (let task of tasks) {
             let inserted = false;
             for (let i = 0; i < tasksByRows.length && !inserted; i++) {
-                if (!tasksByRows[i].find(t => isBetween(t.end, task.start, task.end) ||
-                    isBetween(task.end, t.start, t.end))) {
+                if (!tasksByRows[i].find(t => intercept(t, task))) {
                     tasksByRows[i].push(task);
                     inserted = true;
                 }
@@ -119,8 +124,7 @@ export class TimelineCreator {
         let inserted = false;
         for (let i = 0; i < exceeding.length && !inserted; i++) {
             let block = exceeding[i];
-            if (isBetween(task.end, this.getBlockStart(block), this.getBlockEnd(block)) ||
-                isBetween(this.getBlockEnd(block), task.start, task.end)) {
+            if (intercept(task, { start: this.getBlockStart(block), end: this.getBlockEnd(block)})) {
                 block.push(task);
                 inserted = true;
             }
@@ -174,7 +178,12 @@ export class TimelineCreator {
             };
             sections.push(section);
         }
-        return sections.map(section => ({ ...section, title: this.getSectionTitle(section, scale) }));
+        return sections.map(section => ({
+            ...section,
+            title: this.getSectionTitle(section, scale),
+            startColumn: this.getColumn(section.start),
+            endColumn: this.getColumn(section.end)
+        }));
     }
 
     private getTimelineSubsections(boundaries: TimelineSection, scale: TimelineScale): TimelineSection[] {
@@ -200,7 +209,12 @@ export class TimelineCreator {
             };
             sections.push(section);
         }
-        return sections.map(section => ({ ...section, title: this.getSubsectionTitle(section, scale) }));
+        return sections.map(section => ({
+            ...section,
+            title: this.getSubsectionTitle(section, scale),
+            startColumn: this.getColumn(section.start),
+            endColumn: this.getColumn(section.end)
+        }));
     }
 
     private getSubsectionTitle(subsection: TimelineSection, scale: TimelineScale): string {
