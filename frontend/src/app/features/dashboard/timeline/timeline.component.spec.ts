@@ -3,7 +3,6 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { CommonModule } from '@angular/common';
 import { DashboardRoutingModule } from '../dashboard-routing.module';
-import { ExceedingTasksComponent } from '../exceeding-tasks/exceeding-tasks.component';
 import { FormsModule } from '@angular/forms';
 import { MaterialModule } from '@shared/material/material.module';
 import { Task } from '#types/tasks/task';
@@ -83,7 +82,7 @@ describe('TimelineComponent', () => {
 
     beforeEach(async () => {
         await TestBed.configureTestingModule({
-            declarations: [TimelineComponent, ExceedingTasksComponent],
+            declarations: [TimelineComponent],
             imports: [
                 CommonModule,
                 DashboardRoutingModule,
