@@ -15,6 +15,8 @@ import { TaskFormComponent } from './task-form/task-form.component';
 import { TaskInfoComponent } from './task-info/task-info.component';
 import { TasksEffects } from '@store/effects/dashboard/tasks.effects';
 import { TimelineComponent } from './timeline/timeline.component';
+import { CreateTaskComponent } from './create-task/create-task.component';
+import { UpdateTaskComponent } from './update-task/update-task.component';
 
 @NgModule({
     declarations: [
@@ -24,7 +26,9 @@ import { TimelineComponent } from './timeline/timeline.component';
         CreateDashboardComponent,
         DashboardSidebarComponent,
         TaskFormComponent,
-        TaskInfoComponent
+        TaskInfoComponent,
+        CreateTaskComponent,
+        UpdateTaskComponent
     ],
     imports: [
         CommonModule,
