@@ -23,3 +23,27 @@ export const selectChosenTaskBlock = createSelector(
     selectDashboardState,
     (state) => state.chosenTaskBlock
 );
+
+export const selectChosenTaskCompletion = createSelector(
+    selectChosenTaskBlock,
+    (taskBlock) => taskBlock.taskCompletion
+);
+
+export const selectChosenTaskCompletionId = createSelector(
+    selectChosenTaskCompletion,
+    (taskCompletion) => taskCompletion.id
+);
+
+export const selectChosenTask = createSelector(
+    selectChosenTaskBlock,
+    (taskBlock) => taskBlock.task
+);
+
+export const selectChosenTaskRepeatingEnd = createSelector(
+    selectChosenTask,
+    (task) => task.taskCompletions.length <= 1
+        ? null
+        : task.taskCompletions.sort(
+            (first, second) => first.end.getTime() - second.end.getTime()
+        )[task.taskCompletions.length - 1].end
+);
