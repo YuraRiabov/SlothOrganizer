@@ -42,13 +42,14 @@ namespace SlothOrganizer.Services.Tasks
 
         public async Task<TaskDto> Update(UpdateTaskDto updateTaskDto)
         {
-            await _taskCompletionService.Update(updateTaskDto.TaskCompletion);
             var task = _mapper.Map<Domain.Entities.Task>(updateTaskDto.Task);
             var updatedTask = _mapper.Map<TaskDto>(await _taskRepository.Update(task));
             if (updatedTask is null)
             {
                 throw new EntityNotFoundException("Task with such id not found");
             }
+            var updatedCompletion = await _taskCompletionService.Update(updateTaskDto.TaskCompletion);
+            updatedTask.TaskCompletions = updatedTask.TaskCompletions.Select(tc => tc.Id == updatedCompletion.Id ? updatedCompletion : tc).ToList();
             var latestCompletion = updatedTask.TaskCompletions.MaxBy(tc => tc.End);
             if (updateTaskDto.EndRepeating is DateTime endRepeating)
             {

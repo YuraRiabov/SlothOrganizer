@@ -42,8 +42,6 @@ export const selectChosenTask = createSelector(
 export const selectChosenTaskRepeatingEnd = createSelector(
     selectChosenTask,
     (task) => task.taskCompletions.length <= 1
-        ? null
-        : task.taskCompletions.sort(
-            (first, second) => first.end.getTime() - second.end.getTime()
-        )[task.taskCompletions.length - 1].end
+        ? undefined
+        : task.taskCompletions.map(t => t.end).sort()[task.taskCompletions.length - 1]
 );

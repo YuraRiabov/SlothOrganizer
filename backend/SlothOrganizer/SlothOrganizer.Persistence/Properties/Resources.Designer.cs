@@ -287,7 +287,7 @@ namespace SlothOrganizer.Persistence.Properties {
         ///FROM Tasks as t
         ///INNER JOIN TaskCompletions AS tc
         ///ON t.Id = tc.TaskId
-        ///WHERE Id = @Id.
+        ///WHERE t.Id = @Id.
         /// </summary>
         internal static string UpdateTask {
             get {

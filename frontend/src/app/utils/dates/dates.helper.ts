@@ -1,4 +1,4 @@
-import { addMinutes, setHours, setMinutes } from 'date-fns';
+import { addMinutes, setHours, setMinutes, setSeconds } from 'date-fns';
 
 export const isBetween = (date: Date, start: Date, end: Date) => {
     return start <= date && date <= end;
@@ -6,7 +6,7 @@ export const isBetween = (date: Date, start: Date, end: Date) => {
 
 export const setTime = (date: Date, time: string) => {
     let splitTime = time.split(':').map(x => Number.parseInt(x));
-    return setHours(setMinutes(date, splitTime[1]), splitTime[0]);
+    return new Date(date.getFullYear(), date.getMonth(), date.getDate(), splitTime[0], splitTime[1]);
 };
 
 export const toLocal = (date: Date) => {

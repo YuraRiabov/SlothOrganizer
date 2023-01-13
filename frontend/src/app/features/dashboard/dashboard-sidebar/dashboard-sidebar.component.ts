@@ -25,4 +25,8 @@ export class DashboardSidebarComponent implements AfterViewChecked {
     ngAfterViewChecked(): void {
         this.viewInitialized = true;
     }
+
+    public switchToEditing(): void {
+        this.type = SidebarType.Edit;
+    }
 }

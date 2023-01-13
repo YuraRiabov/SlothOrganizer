@@ -1,13 +1,12 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { endOfDay, startOfDay } from 'date-fns';
+import { addDays, endOfDay, startOfDay } from 'date-fns';
 import { endRepeatingValidator, getDescriptionValidators, getTitleValidators, repeatingPeriodValidator, startBeforeEndValidator } from '@utils/validators/task-validators';
 import { getEnd, getPeriodLabel, getStart } from '@utils/form-helpers/task-form.helper';
 
 import { BaseComponent } from '@shared/components/base/base.component';
 import { DatePipe } from '@angular/common';
 import { NewTask } from '#types/dashboard/tasks/new-task';
-import { Store } from '@ngrx/store';
 import { TaskRepeatingPeriod } from '#types/dashboard/tasks/enums/task-repeating-period';
 import { getRepeatingPeriods } from '@utils/creation-functions/repeating-period.helper';
 import { hasLengthErrors } from '@utils/validators/common-validators';
@@ -17,25 +16,32 @@ import { hasLengthErrors } from '@utils/validators/common-validators';
     templateUrl: './task-form.component.html',
     styleUrls: ['./task-form.component.sass']
 })
-export class TaskFormComponent extends BaseComponent implements OnInit {
-    @Input() public initialValue!: NewTask;
+export class TaskFormComponent extends BaseComponent {
+    private dashboardId!: number;
+    @Input() public set initialValue(value: NewTask) {
+        this.isRepeating = !!value.endRepeating;
+        this.dashboardId = value.dashboardId;
+        this.taskForm = this.buildTaskFrom(value);
+        this.update();
+    }
     @Output() public submitted = new EventEmitter<NewTask>();
-    @Input() public editing: boolean = false;
+    @Input() public set edit(value: boolean) {
+        this.editing = value;
+        this.update();
+    }
     @Output() public cancel = new EventEmitter<void>();
     public taskForm: FormGroup = {} as FormGroup;
+    public title: string = '';
 
+    public editing: boolean = false;
     public isRepeating: boolean = false;
     public selectStartTime: boolean = false;
     public selectEndTime: boolean = false;
 
     public repeatingOptions: TaskRepeatingPeriod[] = getRepeatingPeriods();
 
-    constructor(private store: Store) {
+    constructor() {
         super();
-    }
-
-    ngOnInit(): void {
-        this.taskForm = this.buildTaskFrom();
     }
 
     public getLabel(period: TaskRepeatingPeriod): string {
@@ -50,7 +56,10 @@ export class TaskFormComponent extends BaseComponent implements OnInit {
     }
 
     public update(): void {
-        this.isRepeating = (this.taskForm.get('repeatingPeriod')?.value as TaskRepeatingPeriod) !== TaskRepeatingPeriod.None;
+        this.title = this.editing ? 'Edit task' : 'Create task';
+        this.isRepeating = this.editing
+            ? !!this.taskForm.get('endRepeating')?.value
+            : (this.taskForm.get('repeatingPeriod')?.value as TaskRepeatingPeriod) !== TaskRepeatingPeriod.None;
         this.selectStartTime = this.taskForm.get('startTimeCheckbox')?.value;
         this.selectEndTime = this.taskForm.get('endTimeCheckbox')?.value;
     }
@@ -61,20 +70,20 @@ export class TaskFormComponent extends BaseComponent implements OnInit {
 
     public createTask(): void {
         const newTask: NewTask = {
-            dashboardId: this.initialValue.dashboardId,
+            dashboardId: this.dashboardId,
             title: this.taskForm.get('title')?.value,
             description: this.taskForm.get('description')?.value,
             start: getStart(this.taskForm),
             end: getEnd(this.taskForm),
             repeatingPeriod: this.taskForm.get('repeatingPeriod')?.value,
-            endRepeating: this.taskForm.get('endRepeating')?.value
+            endRepeating: addDays(this.taskForm.get('endRepeating')?.value, 1)
         };
         this.submitted.emit(newTask);
     }
 
-    private buildTaskFrom(): FormGroup {
-        const titleContol = new FormControl(this.initialValue.title, getTitleValidators());
-        const descriptionControl = new FormControl(this.initialValue.description, getDescriptionValidators());
+    private buildTaskFrom(initialValue: NewTask): FormGroup {
+        const titleContol = new FormControl(initialValue.title, getTitleValidators());
+        const descriptionControl = new FormControl(initialValue.description, getDescriptionValidators());
 
         let validators = [ startBeforeEndValidator(), endRepeatingValidator()];
         if (!this.editing) {
@@ -85,14 +94,14 @@ export class TaskFormComponent extends BaseComponent implements OnInit {
         return new FormGroup({
             title: titleContol,
             description: descriptionControl,
-            startDate: new FormControl(startOfDay(this.initialValue.start), Validators.required),
-            endDate: new FormControl((endOfDay(this.initialValue.end)), Validators.required),
-            startTimeCheckbox: new FormControl(this.initialValue.start.getTime() !== startOfDay(this.initialValue.start).getTime()),
-            startTime: new FormControl(datePipe.transform(this.initialValue.start, 'HH:mm')),
-            endTimeCheckbox: new FormControl(this.initialValue.end.getTime() !== endOfDay(this.initialValue.end).getTime()),
-            endTime: new FormControl(datePipe.transform(this.initialValue.end, 'HH:mm')),
-            repeatingPeriod: new FormControl(this.initialValue.repeatingPeriod),
-            endRepeating: new FormControl(this.initialValue.endRepeating)
+            startDate: new FormControl(startOfDay(initialValue.start), Validators.required),
+            endDate: new FormControl((endOfDay(initialValue.end)), Validators.required),
+            startTimeCheckbox: new FormControl(initialValue.start.getTime() !== startOfDay(initialValue.start).getTime()),
+            startTime: new FormControl(datePipe.transform(initialValue.start, 'HH:mm')),
+            endTimeCheckbox: new FormControl(initialValue.end.getTime() !== endOfDay(initialValue.end).getTime()),
+            endTime: new FormControl(datePipe.transform(initialValue.end, 'HH:mm')),
+            repeatingPeriod: new FormControl(initialValue.repeatingPeriod),
+            endRepeating: new FormControl(initialValue.endRepeating)
         }, {
             validators
         });

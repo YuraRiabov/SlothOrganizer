@@ -1,4 +1,5 @@
 <div class="sidebar-wrapper">
     <so-create-task (goBack)="clickedOff.emit()" *ngIf="type === 'Create'"></so-create-task>
-    <so-task-info (goBack)="clickedOff.emit()" *ngIf="type === 'Display'"></so-task-info>
+    <so-task-info (switchToEdit)="switchToEditing()" (goBack)="clickedOff.emit()" *ngIf="type === 'Display'"></so-task-info>
+    <so-update-task (goBack)="clickedOff.emit()" *ngIf="type === 'Edit'"></so-update-task>
 </div>

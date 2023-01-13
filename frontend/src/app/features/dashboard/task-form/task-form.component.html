@@ -1,5 +1,5 @@
 <form [formGroup]="taskForm" class="task-form-wrapper">
-    <h1 i18n>Create task</h1>
+    <h1 i18n>{{title}}</h1>
     <mat-form-field class="task-field">
         <mat-label>Title</mat-label>
         <input formControlName="title" matInput type="text">
@@ -45,7 +45,7 @@
         </mat-form-field>
     </div>
     <div class="date-row">
-        <mat-form-field appearance="fill" class="period-field">
+        <mat-form-field *ngIf="!editing" appearance="fill" class="period-field">
             <mat-label>Repeating period</mat-label>
             <mat-select formControlName="repeatingPeriod" (selectionChange)="validate()">
                 <mat-option *ngFor="let option of repeatingOptions" [value]="option">{{getLabel(option)}}</mat-option>
@@ -54,7 +54,7 @@
                 Repeating period must be longer than task
             </mat-error>
         </mat-form-field>
-        <mat-form-field class="date-field row-end" *ngIf="isRepeating" appearance="fill">
+        <mat-form-field [ngClass]="{ 'row-end': !editing }" class="date-field" *ngIf="isRepeating" appearance="fill">
             <mat-label>End repeating</mat-label>
             <input formControlName="endRepeating" matInput [matDatepicker]="endRepeatingPicker">
             <mat-datepicker-toggle matSuffix [for]="endRepeatingPicker"></mat-datepicker-toggle>

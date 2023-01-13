@@ -16,6 +16,7 @@ export class TaskInfoComponent extends BaseComponent implements OnInit {
     public taskBlock!: TaskBlock;
 
     @Output() public goBack = new EventEmitter();
+    @Output() public switchToEdit = new EventEmitter();
 
     constructor(private store: Store) {
         super();
@@ -40,13 +41,17 @@ export class TaskInfoComponent extends BaseComponent implements OnInit {
         return 'In progress';
     }
 
-    public markAsCompleted() : void {
+    public markAsCompleted(): void {
         this.store.dispatch(dashboardActions.markTaskCompleted());
         this.goBack.emit();
     }
 
-    public delete() : void {
+    public delete(): void {
         this.store.dispatch(dashboardActions.deleteTask());
         this.goBack.emit();
+    }
+
+    public edit(): void {
+        this.switchToEdit.emit();
     }
 }

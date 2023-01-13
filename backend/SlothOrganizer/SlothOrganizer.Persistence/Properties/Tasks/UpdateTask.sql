@@ -8,4 +8,4 @@ SELECT TOP 1 *
 FROM Tasks as t
 INNER JOIN TaskCompletions AS tc
 ON t.Id = tc.TaskId
-WHERE Id = @Id
+WHERE t.Id = @Id

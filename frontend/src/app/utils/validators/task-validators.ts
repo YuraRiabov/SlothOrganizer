@@ -1,8 +1,8 @@
 import { AbstractControl, ValidatorFn, Validators } from '@angular/forms';
+import { addDays, differenceInDays, endOfDay } from 'date-fns';
 import { getEnd, getPeriodDays, getStart } from '@utils/form-helpers/task-form.helper';
 
 import { TaskRepeatingPeriod } from '#types/dashboard/tasks/enums/task-repeating-period';
-import { differenceInDays } from 'date-fns';
 
 export const getTitleValidators = () => [
     Validators.required,
@@ -47,7 +47,7 @@ export const endRepeatingValidator = () : ValidatorFn => {
         const endRepeatingControl = group.get('endRepeating');
         const end = getEnd(group);
         const repeatingPeriod = repeatingPeriodControl?.value as TaskRepeatingPeriod;
-        const endRepeating = endRepeatingControl?.value as Date;
+        const endRepeating = addDays(endRepeatingControl?.value, 1);
         if (repeatingPeriod !== TaskRepeatingPeriod.None && end > endRepeating) {
             endRepeatingControl?.setErrors({ endBeforeEndRepeating: true });
         }

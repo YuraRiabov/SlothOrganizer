@@ -56,8 +56,8 @@ namespace SlothOrganizer.Services.Tasks
             var lastCompletion = lastTwoCompletions.Last();
             var repeatingPeriodLength = lastCompletion.Start - lastTwoCompletions.First().Start;
             var length = lastCompletion.End - lastCompletion.Start;
-            var firstStart = lastCompletion.Start + repeatingPeriodLength;
             var repeatingPeriod = _dateTimeService.GetRepeatingPeriod(repeatingPeriodLength);
+            var firstStart = GetNextStart(lastCompletion.Start, repeatingPeriod);
 
             var newCompletions = Generate(firstStart, length, repeatingPeriod, endRepeating, lastCompletion.TaskId);
             return _mapper.Map<List<TaskCompletionDto>>(await _taskCompletionRepository.Insert(newCompletions));

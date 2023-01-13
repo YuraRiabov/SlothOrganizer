@@ -1,4 +1,5 @@
-﻿using Dapper;
+﻿using System.Threading.Tasks;
+using Dapper;
 using SlothOrganizer.Domain.Entities;
 using SlothOrganizer.Domain.Repositories;
 using SlothOrganizer.Persistence.Properties;
@@ -53,7 +54,7 @@ namespace SlothOrganizer.Persistence.Repositories
             return tasks.Values.ToList();
         }
 
-        public async Task<Task> Update(Task task)
+        public async Task<Task?> Update(Task task)
         {
             var query = Resources.UpdateTask;
 
@@ -63,9 +64,20 @@ namespace SlothOrganizer.Persistence.Repositories
                 Title = task.Title,
                 Description = task.Description,
             };
-            
+
+            Task? updatedTask = null;
             var connection = _context.CreateConnection();
-            return await connection.QuerySingleOrDefaultAsync<Task>(query, parameters);
+            await connection.QueryAsync<Task, TaskCompletion, Task>(query, (task, completion) =>
+            {
+                if (updatedTask is null)
+                {
+                    updatedTask = task;
+                }
+                updatedTask.TaskCompletions.Add(completion);
+                return updatedTask;
+            }, 
+            param: parameters);
+            return task;
         }
     }
 }
