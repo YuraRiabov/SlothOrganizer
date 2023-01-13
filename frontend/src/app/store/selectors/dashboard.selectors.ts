@@ -38,10 +38,3 @@ export const selectChosenTask = createSelector(
     selectChosenTaskBlock,
     (taskBlock) => taskBlock.task
 );
-
-export const selectChosenTaskRepeatingEnd = createSelector(
-    selectChosenTask,
-    (task) => task.taskCompletions.length <= 1
-        ? undefined
-        : task.taskCompletions.map(t => t.end).sort()[task.taskCompletions.length - 1]
-);
