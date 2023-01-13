@@ -75,7 +75,7 @@ describe('TaskFormComponent', () => {
         expect(component.taskForm.valid).toBeTrue();
     });
 
-    it('should call createTask when valid data and saved', () => {
+    it('should emit data when valid data and saved', () => {
         buildValidForm();
         fixture.detectChanges();
 
