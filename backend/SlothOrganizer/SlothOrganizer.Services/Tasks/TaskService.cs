@@ -51,7 +51,7 @@ namespace SlothOrganizer.Services.Tasks
             var updatedCompletion = await _taskCompletionService.Update(updateTaskDto.TaskCompletion);
             updatedTask.TaskCompletions = updatedTask.TaskCompletions.Select(tc => tc.Id == updatedCompletion.Id ? updatedCompletion : tc).ToList();
             var latestCompletion = updatedTask.TaskCompletions.MaxBy(tc => tc.End);
-            if (updateTaskDto.EndRepeating is DateTime endRepeating)
+            if (updateTaskDto.EndRepeating is DateTime endRepeating && updatedTask.TaskCompletions.Count > 1)
             {
                 if (latestCompletion.End > endRepeating)
                 {
