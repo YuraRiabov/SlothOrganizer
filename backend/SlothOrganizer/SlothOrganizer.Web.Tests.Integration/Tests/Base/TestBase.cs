@@ -33,6 +33,8 @@ namespace SlothOrganizer.Web.Tests.Integration.Base
             A.CallTo(() => DateTimeService.Now()).Returns(new DateTime(2022, 12, 8, 12, 0, 0));
             A.CallTo(() => DateTimeService.GetLength(A<TaskRepeatingPeriod>._))
                 .ReturnsLazily((TaskRepeatingPeriod period) => RealDateTimeService.GetLength(period));
+            A.CallTo(() => DateTimeService.GetRepeatingPeriod(A<TimeSpan>._))
+                .ReturnsLazily((TimeSpan span) => RealDateTimeService.GetRepeatingPeriod(span));
             RandomService = A.Fake<IRandomService>();
             RealRandomService = new RandomService();
             A.CallTo(() => RandomService.GetRandomBytes(16)).Returns(RealRandomService.GetRandomBytes(16));
@@ -86,6 +88,17 @@ namespace SlothOrganizer.Web.Tests.Integration.Base
             var newUser = DtoProvider.GetNewUser();
             var signUpResponse = await Client.PostAsync("auth/sign-up", GetStringContent(newUser));
             return await GetResponse<UserDto>(signUpResponse);
+        }
+
+        protected async Task SetUpTask(bool repeating = true)
+        {
+            A.CallTo(() => DateTimeService.Now()).Returns(new DateTime(2023, 1, 1));
+            var dashboard = DtoProvider.GetNewDashboard();
+            await Client.PostAsync("dashboards", GetStringContent(dashboard));
+
+            var period = repeating ? TaskRepeatingPeriod.Week : TaskRepeatingPeriod.None;
+            var newTask = DtoProvider.GetNewTask(period);
+            await Client.PostAsync("tasks", GetStringContent(newTask));
         }
     }
 }

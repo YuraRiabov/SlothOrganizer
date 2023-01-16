@@ -1,0 +1,35 @@
+﻿{
+  StatusCode: OK,
+  result: {
+    Id: 1,
+    DashboardId: 1,
+    Title: Title,
+    Description: Description,
+    TaskCompletions: [
+      {
+        Id: 1,
+        TaskId: 1,
+        IsSuccessful: true,
+        Start: 2023-01-01,
+        End: 2023-01-06,
+        LastEdited: 2023-01-01
+      },
+      {
+        Id: 2,
+        TaskId: 1,
+        IsSuccessful: false,
+        Start: 2023-01-08,
+        End: 2023-01-12,
+        LastEdited: 2023-01-01
+      },
+      {
+        Id: 3,
+        TaskId: 1,
+        IsSuccessful: false,
+        Start: 2023-01-15,
+        End: 2023-01-19,
+        LastEdited: 2023-01-01
+      }
+    ]
+  }
+}

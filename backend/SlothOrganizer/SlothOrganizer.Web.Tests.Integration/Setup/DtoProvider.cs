@@ -56,7 +56,7 @@ namespace SlothOrganizer.Web.Tests.Integration.Setup
             };
         }
 
-        public static NewTaskDto GetNewTask()
+        public static NewTaskDto GetNewTask(TaskRepeatingPeriod period = TaskRepeatingPeriod.None)
         {
             return new NewTaskDto
             {
@@ -65,7 +65,40 @@ namespace SlothOrganizer.Web.Tests.Integration.Setup
                 Description = "Test",
                 Start = new DateTime(2023, 1, 1),
                 End = new DateTime(2023, 1, 5),
-                RepeatingPeriod = TaskRepeatingPeriod.Week,
+                RepeatingPeriod = period,
+                EndRepeating = new DateTime(2023, 2, 5)
+            };
+        }
+
+        public static TaskDto GetTask()
+        {
+            return new TaskDto
+            {
+                Id = 1,
+                DashboardId = 1,
+                Title = "Title",
+                Description = "Description",
+            };
+        }
+
+        public static TaskCompletionDto GetTaskCompletion()
+        {
+            return new TaskCompletionDto
+            {
+                Id = 1,
+                TaskId = 1,
+                Start = new DateTime(2023, 1, 1),
+                End = new DateTime(2023, 1, 6),
+                IsSuccessful = true,
+            };
+        }
+
+        public static UpdateTaskDto GetUpdateTask()
+        {
+            return new UpdateTaskDto
+            {
+                Task = GetTask(),
+                TaskCompletion = GetTaskCompletion(),
                 EndRepeating = new DateTime(2023, 2, 5)
             };
         }

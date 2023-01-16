@@ -4,7 +4,7 @@ SET
 	[Description] = @Description
 WHERE Id = @Id
 
-SELECT TOP 1 * 
+SELECT * 
 FROM Tasks as t
 INNER JOIN TaskCompletions AS tc
 ON t.Id = tc.TaskId

@@ -77,7 +77,7 @@ namespace SlothOrganizer.Persistence.Repositories
                 return updatedTask;
             }, 
             param: parameters);
-            return task;
+            return updatedTask;
         }
     }
 }
