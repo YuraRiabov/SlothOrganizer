@@ -54,7 +54,7 @@ export class TimelineComponent implements OnInit, AfterViewInit, OnDestroy {
 
     public increaseScale(section: TimelineSection): void {
         if (this.timelineScale !== TimelineScale.Day) {
-            let date = addHours(section.start, differenceInHours(section.end, section.start) / 2);
+            const date = addHours(section.start, differenceInHours(section.end, section.start) / 2);
             this.scaleIncreased.emit(date);
         }
     }
@@ -69,7 +69,7 @@ export class TimelineComponent implements OnInit, AfterViewInit, OnDestroy {
     }
 
     private initializeTimeline(pageNumber?: number, scroll: boolean = true): void {
-        let newPageNumber = pageNumber ?? this.defaultPageNumber;
+        const newPageNumber = pageNumber ?? this.defaultPageNumber;
         this.timeline = this.timelineCreator.create(this.currentDate, this.timelineScale, newPageNumber, this.tasks);
         if (this.timelineScroll && scroll) {
             this.scrollTo(this.currentDate);
@@ -77,8 +77,8 @@ export class TimelineComponent implements OnInit, AfterViewInit, OnDestroy {
     }
 
     private initializeTimelineWidthObserver(): ResizeObserver {
-        let observer = new ResizeObserver(entries => {
-            for (let entry of entries) {
+        const observer = new ResizeObserver(entries => {
+            for (const entry of entries) {
                 if (this.timeline.pageNumber != this.defaultPageNumber) {
                     this.scrollTo(this.returnDate);
                 }
@@ -92,7 +92,7 @@ export class TimelineComponent implements OnInit, AfterViewInit, OnDestroy {
 
     private scrollTo(date: Date): void {
         const elementRect = this.timelineScroll.nativeElement.getBoundingClientRect();
-        let datePosition =
+        const datePosition =
             elementRect.width *
             (this.timeline.pageNumber * this.timelineCreator.getDateRatio(date) - 0.5);
         this.timelineScroll.nativeElement.scrollTo(datePosition, 0);

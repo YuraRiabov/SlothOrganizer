@@ -105,28 +105,28 @@ describe('TimelineComponent', () => {
     });
 
     it('should contain 8 blocks when scale day', () => {
-        let blocks = fixture.debugElement.queryAll(By.css('.task-block'));
+        const blocks = fixture.debugElement.queryAll(By.css('.task-block'));
         expect(blocks.length === 8).toBeTrue();
     });
 
     it('should contain 5 blocks when scale week', () => {
         component.scale = TimelineScale.Week;
         fixture.detectChanges();
-        let blocks = fixture.debugElement.queryAll(By.css('.task-block'));
+        const blocks = fixture.debugElement.queryAll(By.css('.task-block'));
         expect(blocks.length === 5).toBeTrue();
     });
 
     it('should contain 2 blocks when scale month', () => {
         component.scale = TimelineScale.Month;
         fixture.detectChanges();
-        let blocks = fixture.debugElement.queryAll(By.css('.task-block'));
+        const blocks = fixture.debugElement.queryAll(By.css('.task-block'));
         expect(blocks.length === 2).toBeTrue();
     });
 
     it('should contain 1 block when scale year', () => {
         component.scale = TimelineScale.Year;
         fixture.detectChanges();
-        let blocks = fixture.debugElement.queryAll(By.css('.task-block'));
+        const blocks = fixture.debugElement.queryAll(By.css('.task-block'));
         expect(blocks.length === 1).toBeTrue();
     });
 });

@@ -2,6 +2,6 @@ export const intercept = (first: { start: Date, end: Date }, second: { start: Da
     return first.end >= second.start && second.end >= first.start;
 };
 
-export const hoursInDay = 24;
+export const HOURS_IN_DAY = 24;
 
-export const maxDaysInMonth = 31;
+export const MAX_DAYS_IN_MONTH = 31;
