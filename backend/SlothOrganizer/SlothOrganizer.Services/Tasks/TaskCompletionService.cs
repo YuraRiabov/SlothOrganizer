@@ -31,7 +31,8 @@ namespace SlothOrganizer.Services.Tasks
 
         public async Task<TaskCompletionDto> Update(TaskCompletionDto taskCompletionDto)
         {
-            var taskCompletion = _mapper.Map<TaskCompletion>(taskCompletionDto);
+            var taskCompletion = _mapper.Map<TaskCompletion>(taskCompletionDto, options => 
+                options.AfterMap((_, tc) => tc.LastEdited = _dateTimeService.Now()));
             var updatedTaskCompletion = await _taskCompletionRepository.Update(taskCompletion);
             if (updatedTaskCompletion is null)
             {
