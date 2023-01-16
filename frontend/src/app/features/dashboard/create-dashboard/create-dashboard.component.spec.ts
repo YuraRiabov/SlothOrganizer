@@ -71,7 +71,7 @@ describe('CreateDashboardComponent', () => {
     });
 
     it('should call close on cancel click', () => {
-        let cancelButton = fixture.debugElement.query(By.css('.cancel-button')).nativeElement;
+        const cancelButton = fixture.debugElement.query(By.css('.cancel-button')).nativeElement;
 
         cancelButton.click();
 

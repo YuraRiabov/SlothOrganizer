@@ -3,7 +3,6 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { CommonModule } from '@angular/common';
 import { DashboardRoutingModule } from '../dashboard-routing.module';
-import { ExceedingTasksComponent } from '../exceeding-tasks/exceeding-tasks.component';
 import { FormsModule } from '@angular/forms';
 import { MaterialModule } from '@shared/material/material.module';
 import { Store } from '@ngrx/store';
@@ -93,7 +92,7 @@ describe('TimelineComponent', () => {
         store = jasmine.createSpyObj('Store', ['select', 'dispatch']);
         store.select.and.returnValue(of([mockTask]));
         await TestBed.configureTestingModule({
-            declarations: [TimelineComponent, ExceedingTasksComponent],
+            declarations: [TimelineComponent],
             imports: [
                 CommonModule,
                 DashboardRoutingModule,
@@ -119,28 +118,28 @@ describe('TimelineComponent', () => {
     });
 
     it('should contain 7 blocks when scale day', () => {
-        let blocks = fixture.debugElement.queryAll(By.css('.task-block'));
+        const blocks = fixture.debugElement.queryAll(By.css('.task-block'));
         expect(blocks.length === 7).toBeTrue();
     });
 
     it('should contain 5 blocks when scale week', () => {
         component.scale = TimelineScale.Week;
         fixture.detectChanges();
-        let blocks = fixture.debugElement.queryAll(By.css('.task-block'));
+        const blocks = fixture.debugElement.queryAll(By.css('.task-block'));
         expect(blocks.length === 5).toBeTrue();
     });
 
     it('should contain 2 blocks when scale month', () => {
         component.scale = TimelineScale.Month;
         fixture.detectChanges();
-        let blocks = fixture.debugElement.queryAll(By.css('.task-block'));
+        const blocks = fixture.debugElement.queryAll(By.css('.task-block'));
         expect(blocks.length === 2).toBeTrue();
     });
 
     it('should contain 1 block when scale year', () => {
         component.scale = TimelineScale.Year;
         fixture.detectChanges();
-        let blocks = fixture.debugElement.queryAll(By.css('.task-block'));
+        const blocks = fixture.debugElement.queryAll(By.css('.task-block'));
         expect(blocks.length === 1).toBeTrue();
     });
 
@@ -148,7 +147,7 @@ describe('TimelineComponent', () => {
         component.scale = TimelineScale.Year;
         fixture.detectChanges();
 
-        let block = fixture.debugElement.query(By.css('.task-block')).nativeElement;
+        const block = fixture.debugElement.query(By.css('.task-block')).nativeElement;
         block.click();
         fixture.detectChanges();
 

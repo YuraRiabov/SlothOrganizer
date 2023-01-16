@@ -18,7 +18,7 @@ describe('DashboardComponent', () => {
     let component: DashboardComponent;
     let fixture: ComponentFixture<DashboardComponent>;
     let store: jasmine.SpyObj<Store>;
-    let dashboards: Dashboard[] = [
+    const dashboards: Dashboard[] = [
         {
             id: 1,
             userId: 1,
@@ -60,7 +60,7 @@ describe('DashboardComponent', () => {
     });
 
     it ('should open sidebar on new click', () => {
-        let newButton = getByClass('create-task-button');
+        const newButton = getByClass('create-task-button');
 
         let sidebar = getByClass('sidebar');
         let blur = getByClass('blur');
@@ -79,7 +79,7 @@ describe('DashboardComponent', () => {
     });
 
     it ('should open new dashboard on button click', () => {
-        let newButton = getByClass('new-dashboard-button');
+        const newButton = getByClass('new-dashboard-button');
 
         let newDashboard = getByClass('new-dashboard');
 

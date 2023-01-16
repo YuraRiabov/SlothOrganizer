@@ -7,7 +7,6 @@ import { DashboardEffects } from '@store/effects/dashboard/dashboard.effects';
 import { DashboardRoutingModule } from './dashboard-routing.module';
 import { DashboardSidebarComponent } from './dashboard-sidebar/dashboard-sidebar.component';
 import { EffectsModule } from '@ngrx/effects';
-import { ExceedingTasksComponent } from './exceeding-tasks/exceeding-tasks.component';
 import { MaterialModule } from '@shared/material/material.module';
 import { NgModule } from '@angular/core';
 import { TaskFormComponent } from './task-form/task-form.component';
@@ -19,7 +18,6 @@ import { TimelineComponent } from './timeline/timeline.component';
     declarations: [
         DashboardComponent,
         TimelineComponent,
-        ExceedingTasksComponent,
         CreateDashboardComponent,
         DashboardSidebarComponent,
         TaskFormComponent,
