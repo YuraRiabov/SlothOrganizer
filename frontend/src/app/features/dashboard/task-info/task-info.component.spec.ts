@@ -62,7 +62,7 @@ describe('TaskInfoComponent', () => {
     });
 
     it('should dispatch delete when delete clicked', () => {
-        let button = fixture.debugElement.query(By.css('.delete-button')).nativeElement;
+        const button = fixture.debugElement.query(By.css('.delete-button')).nativeElement;
 
         button.click();
 
@@ -70,7 +70,7 @@ describe('TaskInfoComponent', () => {
     });
 
     it('should dispatch mark as completed when mark as completed clicked', () => {
-        let button = fixture.debugElement.query(By.css('.mark-completed-button')).nativeElement;
+        const button = fixture.debugElement.query(By.css('.mark-completed-button')).nativeElement;
 
         button.click();
 
@@ -78,7 +78,7 @@ describe('TaskInfoComponent', () => {
     });
 
     it('should change to edit when edit clicked', () => {
-        let button = fixture.debugElement.query(By.css('.edit-button')).nativeElement;
+        const button = fixture.debugElement.query(By.css('.edit-button')).nativeElement;
 
         button.click();
 

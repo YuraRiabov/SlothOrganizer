@@ -17,7 +17,7 @@ describe('TaskFormComponent', () => {
     let fixture: ComponentFixture<TaskFormComponent>;
     let store: jasmine.SpyObj<Store>;
     let saveButton: HTMLElement;
-    let initialValue = {
+    const initialValue = {
         dashboardId: 1,
         title: '',
         description: '',

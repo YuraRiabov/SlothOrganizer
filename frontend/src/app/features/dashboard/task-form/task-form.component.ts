@@ -85,11 +85,11 @@ export class TaskFormComponent extends BaseComponent {
         const titleContol = new FormControl(initialValue.title, getTitleValidators());
         const descriptionControl = new FormControl(initialValue.description, getDescriptionValidators());
 
-        let validators = [ startBeforeEndValidator(), endRepeatingValidator()];
+        const validators = [ startBeforeEndValidator(), endRepeatingValidator()];
         if (!this.editing) {
             validators.push(repeatingPeriodValidator());
         }
-        let datePipe = new DatePipe('en-US');
+        const datePipe = new DatePipe('en-US');
 
         return new FormGroup({
             title: titleContol,

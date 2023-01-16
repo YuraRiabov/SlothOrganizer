@@ -78,7 +78,7 @@ export class DashboardComponent extends BaseComponent implements OnInit {
     }
 
     private updateDashboards(dashboards: Dashboard[]): void {
-        let newDashboards = dashboards.filter(d => !this.dashboards.includes(d));
+        const newDashboards = dashboards.filter(d => !this.dashboards.includes(d));
         this.dashboards = dashboards;
         if (dashboards.length > 0) {
             let selectedDashboardIndex = 0;
