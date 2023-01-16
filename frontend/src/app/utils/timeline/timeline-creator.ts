@@ -3,11 +3,11 @@ import { addDays, addHours, addMonths, addWeeks, addYears, daysInWeek, daysInYea
 
 import { DatePipe } from '@angular/common';
 import { Injectable } from '@angular/core';
-import { Task } from '#types/tasks/task';
-import { TasksBlock } from '#types/tasks/timeline/tasks-block';
-import { Timeline } from '#types/tasks/timeline/timeline';
-import { TimelineScale } from '#types/tasks/timeline/enums/timeline-scale';
-import { TimelineSection } from '#types/tasks/timeline/timeline-section';
+import { JoinedTasksBlock } from '#types/dashboard/timeline/joined-tasks-block';
+import { TaskBlock } from '#types/dashboard/timeline/task-block';
+import { Timeline } from '#types/dashboard/timeline/timeline';
+import { TimelineScale } from '#types/dashboard/timeline/enums/timeline-scale';
+import { TimelineSection } from '#types/dashboard/timeline/timeline-section';
 
 @Injectable({
     providedIn: 'root',
@@ -20,7 +20,7 @@ export class TimelineCreator {
     private boundaries!: TimelineSection;
     private columnNumber!: number;
 
-    public create(currentDate: Date, scale: TimelineScale, pageNumber: number, tasks: Task[]): Timeline {
+    public create(currentDate: Date, scale: TimelineScale, pageNumber: number, tasks: TaskBlock[]): Timeline {
         this.boundaries = this.getTimelineBoundaries(currentDate, scale, pageNumber);
         this.columnNumber = pageNumber * this.pageColumnNumber;
         let timeline: Timeline = {
@@ -41,15 +41,15 @@ export class TimelineCreator {
         return (date.getTime() - this.boundaries.start.getTime()) / this.getTimelineLength();
     }
 
-    private addColumns(task: Task): Task {
+    private addColumns(task: TaskBlock): TaskBlock {
         return { ...task, startColumn: this.getColumn(task.start), endColumn: this.getColumn(task.end) };
     }
 
-    private getVisibleTasks(tasks: Task[]): Task[] {
+    private getVisibleTasks(tasks: TaskBlock[]): TaskBlock[] {
         return tasks.filter(t => this.isVisible(t));
     }
 
-    private isVisible(task: Task): boolean {
+    private isVisible(task: TaskBlock): boolean {
         return this.getColumn(task.end) - this.getColumn(task.start) >= this.minimumColumnNumber;
     }
 
@@ -63,11 +63,11 @@ export class TimelineCreator {
         return Math.round(this.getDateRatio(date) * this.columnNumber) + 1;
     }
 
-    private getBlockStart(block: Task[]): Date {
+    private getBlockStart(block: TaskBlock[]): Date {
         return block.sort((first, second) => first.start.getTime() - second.start.getTime())[0].start;
     }
 
-    private getBlockEnd(block: Task[]): Date {
+    private getBlockEnd(block: TaskBlock[]): Date {
         return block.sort((first, second) => second.end.getTime() - first.end.getTime())[0].end;
     }
 
@@ -75,9 +75,9 @@ export class TimelineCreator {
         return this.boundaries.end.getTime() - this.boundaries.start.getTime();
     }
 
-    private addTasks(tasks: Task[], timeline: Timeline): Timeline {
-        const tasksByRows: Task[][] = Array.from(Array(this.taskRowsNumber), () => []);
-        const exceeding: Task[][] = [];
+    private addTasks(tasks: TaskBlock[], timeline: Timeline): Timeline {
+        const tasksByRows: TaskBlock[][] = Array.from(Array(this.taskRowsNumber), () => []);
+        const exceeding: TaskBlock[][] = [];
         for (const task of tasks) {
             let inserted = false;
             for (let i = 0; i < tasksByRows.length && !inserted; i++) {
@@ -90,15 +90,15 @@ export class TimelineCreator {
                 this.addToExceeding(exceeding, task);
             }
         }
-        let exceedingTaskBlocks: TasksBlock[] = [];
+        let exceedingTaskBlocks: JoinedTasksBlock[] = [];
         if (exceeding.length > 0) {
             exceedingTaskBlocks = this.getExceedingBlocks(exceeding);
         }
         return { ...timeline, tasksByRows, exceedingTaskBlocks };
     }
 
-    private getExceedingBlocks(exceeding: Task[][]): TasksBlock[] {
-        let exceedingTaskBlocks: Task[][] = [];
+    private getExceedingBlocks(exceeding: TaskBlock[][]): JoinedTasksBlock[] {
+        let exceedingTaskBlocks: TaskBlock[][] = [];
         const sortedExceeding = exceeding.sort(
             (firstBlock, secondBlock) => this.getBlockStart(firstBlock).getTime() - this.getBlockStart(secondBlock).getTime()
         );
@@ -120,7 +120,7 @@ export class TimelineCreator {
         }));
     }
 
-    private addToExceeding(exceeding: Task[][], task: Task): void {
+    private addToExceeding(exceeding: TaskBlock[][], task: TaskBlock): void {
         let inserted = false;
         for (let i = 0; i < exceeding.length && !inserted; i++) {
             const block = exceeding[i];

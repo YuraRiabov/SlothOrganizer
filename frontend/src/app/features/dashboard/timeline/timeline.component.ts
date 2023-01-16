@@ -1,12 +1,11 @@
 import { AfterViewInit, Component, ElementRef, EventEmitter, Input, OnDestroy, OnInit, Output, ViewChild } from '@angular/core';
 import { addHours, differenceInHours } from 'date-fns';
 
-import { Task } from '#types/tasks/task';
-import { TasksBlock } from '#types/tasks/timeline/tasks-block';
-import { Timeline } from '#types/tasks/timeline/timeline';
+import { TaskBlock } from '#types/dashboard/timeline/task-block';
+import { Timeline } from '#types/dashboard/timeline/timeline';
 import { TimelineCreator } from '@utils/timeline/timeline-creator';
-import { TimelineScale } from '#types/tasks/timeline/enums/timeline-scale';
-import { TimelineSection } from '#types/tasks/timeline/timeline-section';
+import { TimelineScale } from '#types/dashboard/timeline/enums/timeline-scale';
+import { TimelineSection } from '#types/dashboard/timeline/timeline-section';
 
 @Component({
     selector: 'so-timeline',
@@ -62,10 +61,6 @@ export class TimelineComponent implements OnInit, AfterViewInit, OnDestroy {
     public loadMore(left: boolean): void {
         this.returnDate = left ? this.timeline.boundaries.start : this.timeline.boundaries.end;
         this.initializeTimeline(this.timeline.pageNumber * 2, false);
-    }
-
-    public changeBlockExpansion(block: TasksBlock) {
-        block.expanded = !block.expanded;
     }
 
     private initializeTimeline(pageNumber?: number, scroll: boolean = true): void {

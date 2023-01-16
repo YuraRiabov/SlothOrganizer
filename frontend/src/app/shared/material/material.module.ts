@@ -21,7 +21,7 @@ import { NgModule } from '@angular/core';
         MatDatepickerModule,
         MatNativeDateModule,
         MatSelectModule,
-        MatCheckboxModule
+        MatCheckboxModule,
         MatNativeDateModule,
         MatMenuModule
     ],
