@@ -1,0 +1,52 @@
+<div class="timeline-scrolling-wrapper" #timelineScroll>
+    <div class="timeline-container" #timelineContainer [ngStyle]="{'width': 100 * timeline.pageNumber + '%'}">
+        <button class="left-more-button" mat-fab color="primary" (click)="loadMore(true)">
+            <mat-icon>chevron_left</mat-icon>
+        </button>
+        <div class="sections-container"
+            [ngStyle]="{'grid-template-columns' : 'repeat(' + timeline.columnNumber + ', 1fr'}">
+            <div class="timeline-section" *ngFor="let section of timeline.sections; index as i"
+                [ngStyle]="{'grid-column': section.startColumn + '/' + section.endColumn}">
+                {{section.title}}
+            </div>
+        </div>
+        <div class="subsections-container"
+            [ngStyle]="{'grid-template-columns' : 'repeat(' + timeline.columnNumber + ', 1fr'}">
+            <div class="timeline-section" *ngFor="let subsection of timeline.subsections; index as i"
+                [ngStyle]="{'grid-column': subsection.startColumn + '/' + subsection.endColumn}">
+                <p (click)="increaseScale(timeline.subsections[i])">
+                    {{subsection.title}}
+                </p>
+            </div>
+        </div>
+        <div class="timeline-row" *ngFor="let taskRow of timeline.tasksByRows; index as i"
+            [ngStyle]="{'grid-template-columns' : 'repeat(' + timeline.columnNumber + ', 1fr', 'grid-row': i+3}">
+            <div class="task-block" *ngFor="let task of timeline.tasksByRows[i]"
+                [ngStyle]="{'grid-column': task.startColumn + '/' + task.endColumn}">
+                {{task.title}}
+            </div>
+        </div>
+        <div class="timeline-row"
+            [ngStyle]="{'grid-template-columns' : 'repeat(' + timeline.columnNumber + ', 1fr', 'grid-row': 8 }">
+            <div class="task-block" *ngFor="let block of timeline.exceedingTaskBlocks; let i=index"
+                [ngStyle]="{'grid-column': block.startColumn + '/' + block.endColumn}">
+                <div class="expand-tasks-container" *ngIf="block.tasks.length > 1">
+                    <div class="expand-tasks-trigger" [mat-menu-trigger-for]="i">
+                        {{ block.tasks.length }} more
+                    </div>
+                    <mat-menu #i="matMenu" yPosition="above">
+                        <div mat-menu-item *ngFor="let task of block.tasks">
+                            <h2>{{ task.title }}</h2>
+                        </div>
+                    </mat-menu>
+                </div>
+                <div *ngIf="block.tasks.length === 1">
+                    {{block.tasks[0].title}}
+                </div>
+            </div>
+        </div>
+        <button class="right-more-button" mat-fab color="primary" (click)="loadMore(false)">
+            <mat-icon>chevron_right</mat-icon>
+        </button>
+    </div>
+</div>

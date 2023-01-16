@@ -1,0 +1,22 @@
+<div class="dashboard-wrapper">
+    <div class="header">
+
+    </div>
+    <div class="toolbar">
+        <div class="go-to-date-button">
+            <input hidden [value]="currentDate" (dateChange)="goToDate($event)" [matDatepicker]="picker">
+            <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+        </div>
+    </div>
+    <so-timeline [tasks]="tasks" [date]="currentDate" [scale]="timelineScale" (scaleIncreased)="zoomIn($event)">
+    </so-timeline>
+    <div class="zoom-buttons">
+        <button mat-fab color="primary" [disabled]="timelineScale === 0" (click)="zoomIn()">
+            <mat-icon>zoom_in</mat-icon>
+        </button>
+        <button mat-fab color="primary" [disabled]="timelineScale === 3" (click)="zoomOut()">
+            <mat-icon>zoom_out</mat-icon>
+        </button>
+    </div>
+</div>
