@@ -6,5 +6,5 @@
         <mat-error *ngIf="codeControl.hasError('invalidCode')" i18n>Invalid code</mat-error>
     </mat-form-field>
     <button i18n class="submit-button" [disabled]="!codeControl.valid" mat-flat-button color="primary" (click)="submit()">Submit</button>
-    <p i18n class="resend-link" (click)="resendCode()">Send again</p>
+    <p i18n class="resend-link" (click)="sendCode()">Send again</p>
 </div>

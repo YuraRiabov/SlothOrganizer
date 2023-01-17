@@ -4,12 +4,12 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { catchError, filter, map, of } from 'rxjs';
 import { getEmailValidators, getNameValidators, getPasswordValidators, passwordMatchingValidator } from '@utils/validators/user-validators.helper';
 
-import { AuthService } from '@api/auth.service';
 import { BaseComponent } from '@shared/components/base/base.component';
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { User } from '#types/user/user';
+import { UserCredentialsService } from '@api/user-credentials.service';
 import { hasLengthErrors } from '@utils/validators/common-validators';
 
 @Component({
@@ -22,7 +22,7 @@ export class SignUpComponent extends BaseComponent {
     public signUpGroup: FormGroup;
 
     constructor(
-        private authService: AuthService,
+        private userCredentialsService: UserCredentialsService,
         private store: Store,
         private router: Router
     ) {
@@ -39,7 +39,7 @@ export class SignUpComponent extends BaseComponent {
     }
 
     public signUpClick() {
-        this.authService.signUp({
+        this.userCredentialsService.signUp({
             firstName: this.signUpGroup.get('firstName')?.value!,
             lastName: this.signUpGroup.get('lastName')?.value!,
             email: this.signUpGroup.get('email')?.value!,

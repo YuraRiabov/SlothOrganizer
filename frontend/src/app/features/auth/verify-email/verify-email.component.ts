@@ -1,14 +1,15 @@
 import * as authActions from '@store/actions/auth.actions';
 
+import { Component, OnInit } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { Observable, catchError, concatMap, filter, map, of } from 'rxjs';
 
 import { AuthService } from '@api/auth.service';
 import { AuthState } from '@store/states/auth-state';
 import { BaseComponent } from '@shared/components/base/base.component';
-import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
+import { UserCredentialsService } from '@api/user-credentials.service';
 import { selectUserEmail } from '@store/selectors/auth.selectors';
 
 @Component({
@@ -16,7 +17,7 @@ import { selectUserEmail } from '@store/selectors/auth.selectors';
     templateUrl: './verify-email.component.html',
     styleUrls: ['./verify-email.component.sass']
 })
-export class VerifyEmailComponent extends BaseComponent {
+export class VerifyEmailComponent extends BaseComponent implements OnInit {
     private email$: Observable<string>;
 
     public codeControl: FormControl = new FormControl('', [
@@ -24,11 +25,16 @@ export class VerifyEmailComponent extends BaseComponent {
         Validators.pattern('[0-9]*')
     ]);
 
-    constructor(private authService: AuthService,
+    constructor(private userCredentialsService: UserCredentialsService,
+        private authService: AuthService,
         private store: Store,
         private router: Router) {
         super();
         this.email$ = store.select(selectUserEmail);
+    }
+
+    ngOnInit(): void {
+        this.sendCode();
     }
 
     public redirectTo(route: string): void {
@@ -39,7 +45,7 @@ export class VerifyEmailComponent extends BaseComponent {
         this.email$.pipe(
             this.untilDestroyed,
             concatMap((email) =>
-                this.authService.verifyEmail({
+                this.userCredentialsService.verifyEmail({
                     email,
                     verificationCode: this.codeControl.value
                 })
@@ -56,7 +62,7 @@ export class VerifyEmailComponent extends BaseComponent {
         });
     }
 
-    public resendCode(): void {
+    public sendCode(): void {
         this.email$
             .pipe(
                 this.untilDestroyed,

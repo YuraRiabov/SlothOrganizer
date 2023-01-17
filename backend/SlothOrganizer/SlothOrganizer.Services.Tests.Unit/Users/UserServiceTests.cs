@@ -5,7 +5,10 @@ using SlothOrganizer.Contracts.DTO.User;
 using SlothOrganizer.Domain.Entities;
 using SlothOrganizer.Domain.Exceptions;
 using SlothOrganizer.Domain.Repositories;
+using SlothOrganizer.Services.Abstractions.Auth.Tokens;
+using SlothOrganizer.Services.Abstractions.Auth.UserVerification;
 using SlothOrganizer.Services.Abstractions.Utility;
+using SlothOrganizer.Services.Auth.Tokens;
 using SlothOrganizer.Services.Users;
 using Xunit;
 using Task = System.Threading.Tasks.Task;
@@ -14,11 +17,12 @@ namespace SlothOrganizer.Services.Tests.Unit.Users
 {
     public class UserServiceTests
     {
-        private readonly UserService _userService;
+        private readonly UserCredentialsService _userCredentialsService;
         private readonly IHashService _hashService;
         private readonly IRandomService _randomService;
         private readonly IUserRepository _userRepository;
         private readonly ICryptoService _cryptoService;
+        private readonly ITokenService _tokenService;
         private readonly IMapper _mapper;
 
         public UserServiceTests()
@@ -27,11 +31,44 @@ namespace SlothOrganizer.Services.Tests.Unit.Users
             _randomService = A.Fake<IRandomService>();
             _userRepository = A.Fake<IUserRepository>();
             _cryptoService = A.Fake<ICryptoService>();
+            _tokenService = A.Fake<ITokenService>();
 
             var config = new MapperConfiguration(cfg => cfg.AddProfile<UserMappingProfile>());
             _mapper = config.CreateMapper();
 
-            _userService = new UserService(_randomService, _mapper, _userRepository, _hashService, _cryptoService);
+            _userCredentialsService = new UserCredentialsService(_randomService,
+                _mapper,
+                _userRepository,
+                _hashService,
+                _cryptoService,
+                _tokenService);
+        }
+
+
+        [Fact]
+        public async Task VerifyEmail_WhenValid_ShouldVerify()
+        {
+            var verificationCodeDto = GetVerificationCodeDto();
+            var user = GetUser(verificationCodeDto.Email, true);
+
+            A.CallTo(() => _userRepository.VerifyEmail(user.Email, verificationCodeDto.VerificationCode)).Returns(user);
+            A.CallTo(() => _tokenService.Generate(verificationCodeDto.Email)).Returns(new TokenDto { AccessToken = "test" });
+
+            var result = await _userCredentialsService.VerifyEmail(verificationCodeDto);
+
+            Assert.Equal("test", result.Token.AccessToken);
+        }
+
+        [Fact]
+        public async Task VerifyEmail_WhenInvalid_ShouldThrow()
+        {
+            var verificationCodeDto = GetVerificationCodeDto();
+            A.CallTo(() => _userRepository.VerifyEmail(A<string>._, 111111)).Returns(Task.FromResult<User?>(null));
+
+            var code = async () => await _userCredentialsService.VerifyEmail(verificationCodeDto);
+
+            var exception = await Assert.ThrowsAsync<InvalidCredentialsException>(code);
+            Assert.Equal("Invalid verification code", exception.Message);
         }
 
         [Fact]
@@ -45,7 +82,7 @@ namespace SlothOrganizer.Services.Tests.Unit.Users
             A.CallTo(() => _hashService.HashPassword(A<string>._, salt)).Returns("hash");
             NewUserDto newUser = GetNewUser();
 
-            var result = await _userService.Create(newUser);
+            var result = await _userCredentialsService.Create(newUser);
 
             Assert.Equal(1, result.Id);
             A.CallTo(() => _randomService.GetRandomBytes(16)).MustHaveHappenedOnceExactly();
@@ -65,119 +102,10 @@ namespace SlothOrganizer.Services.Tests.Unit.Users
 
             var newUser = GetNewUser();
 
-            var code = async () => await _userService.Create(newUser);
+            var code = async () => await _userCredentialsService.Create(newUser);
 
             var exception = await Assert.ThrowsAsync<DuplicateAccountException>(code);
             Assert.Equal("Account with this email already exists", exception.Message);
-        }
-
-        [Fact]
-        public async Task GetUser_WhenExists_ShouldReturn()
-        {
-            var user = GetUser();
-            A.CallTo(() => _userRepository.Get(1)).Returns(Task.FromResult<User?>(user));
-
-            var result = await _userService.Get(1);
-
-            Assert.Equal(user.Id, result.Id);
-            Assert.Equal(user.Email, result.Email);
-        }
-
-        [Fact]
-        public async Task GetUser_WhenAbsent_ShouldThrow()
-        {
-            A.CallTo(() => _userRepository.Get(1)).Returns(Task.FromResult<User?>(null));
-
-            var code = async () => await _userService.Get(1);
-
-            var exception = await Assert.ThrowsAsync<EntityNotFoundException>(code);
-            Assert.Equal("Not found user with such id", exception.Message);
-        }
-
-        [Fact]
-        public async Task VerifyEmail_WhenExists_ShouldUpdate()
-        {
-            var code = 111111;
-            var user = GetUser();
-            A.CallTo(() => _userRepository.VerifyEmail(user.Email, code)).Returns(user);
-
-            var result = await _userService.VerifyEmail(user.Email, code);
-
-            Assert.NotNull(result);
-            Assert.Equal(user.Email, result.Email);
-            A.CallTo(() => _userRepository.VerifyEmail(user.Email, code)).MustHaveHappenedOnceExactly();
-        }
-
-        [Fact]
-        public async Task VerifyEmail_WhenAbsent_ShouldReturnNull()
-        {
-            A.CallTo(() => _userRepository.VerifyEmail(A<string>._, 111111)).Returns(Task.FromResult<User?>(null));
-
-            var result = await _userService.VerifyEmail("email", 111111);
-
-            Assert.Null(result);
-        }
-
-        [Fact]
-        public async Task GetByLogin_WhenValid_ShouldReturn()
-        {
-            var bytes = GetBytes();
-            LoginDto login = GetLoginDto();
-            var user = new User
-            {
-                Email = "test@test.com",
-                Salt = Convert.ToBase64String(bytes),
-                Password = "hashedTest"
-            };
-            A.CallTo(() => _userRepository.Get("test@test.com")).Returns(Task.FromResult<User?>(user));
-            A.CallTo(() => _hashService.VerifyPassword(login.Password, A<byte[]>._, user.Password)).Returns(true);
-
-            var result = await _userService.Get(login);
-
-            Assert.Equal(login.Email, result.Email);
-            A.CallTo(() => _hashService.VerifyPassword(login.Password, A<byte[]>._, user.Password)).MustHaveHappenedOnceExactly();
-        }
-
-        [Fact]
-        public async Task GetByLogin_WhenInValid_ShouldThrow()
-        {
-            var bytes = GetBytes();
-            var login = GetLoginDto();
-            var user = new User
-            {
-                Email = "test@test.com",
-                Salt = Convert.ToBase64String(bytes),
-                Password = "hashedTest"
-            };
-            A.CallTo(() => _userRepository.Get("test@test.com")).Returns(Task.FromResult<User?>(user));
-            A.CallTo(() => _hashService.VerifyPassword(login.Password, A<byte[]>._, user.Password)).Returns(false);
-
-            var code = async () => await _userService.Get(login);
-
-            await Assert.ThrowsAsync<InvalidCredentialsException>(code);
-            A.CallTo(() => _hashService.VerifyPassword(login.Password, A<byte[]>._, user.Password)).MustHaveHappenedOnceExactly();
-        }
-
-        [Fact]
-        public async Task GetByEmail_WhenExists_ShouldReturn()
-        {
-            var user = GetUser();
-            A.CallTo(() => _userRepository.Get(user.Email)).Returns(Task.FromResult<User?>(user));
-
-            var result = await _userService.Get("test@test.com");
-
-            Assert.Equal(user.Id, result.Id);
-            Assert.Equal(user.Email, result.Email);
-        }
-
-        [Fact]
-        public async Task GetByEmail_WhenAbsent_ShouldThrow()
-        {
-            A.CallTo(() => _userRepository.Get("test")).Returns(Task.FromResult<User?>(null));
-
-            var code = async () => await _userService.Get("test");
-
-            await Assert.ThrowsAsync<EntityNotFoundException>(code);
         }
 
         [Fact]
@@ -191,7 +119,7 @@ namespace SlothOrganizer.Services.Tests.Unit.Users
             A.CallTo(() => _userRepository.Get(dto.Email, int.Parse(dto.Code))).Returns(user);
             A.CallTo(() => _hashService.HashPassword(dto.Password, A<byte[]>._)).Returns("hashed");
 
-            await _userService.ResetPassword(dto);
+            await _userCredentialsService.ResetPassword(dto);
 
             A.CallTo(() => _userRepository.Update(user)).MustHaveHappenedOnceExactly();
             Assert.Equal("hashed", user.Password);
@@ -206,7 +134,7 @@ namespace SlothOrganizer.Services.Tests.Unit.Users
             A.CallTo(() => _cryptoService.Decrypt(dto.Email)).Returns(dto.Email);
             A.CallTo(() => _userRepository.Get(dto.Email, int.Parse(dto.Code))).Returns(Task.FromResult<User?>(null));
 
-            var code = async () => await _userService.ResetPassword(dto);
+            var code = async () => await _userCredentialsService.ResetPassword(dto);
 
             var exception = await Assert.ThrowsAsync<EntityNotFoundException>(code);
             Assert.Equal("No user found with such email and code", exception.Message);
@@ -219,10 +147,57 @@ namespace SlothOrganizer.Services.Tests.Unit.Users
 
             A.CallTo(() => _cryptoService.Decrypt(dto.Code)).Returns("not a number");
 
-            var code = async () => await _userService.ResetPassword(dto);
+            var code = async () => await _userCredentialsService.ResetPassword(dto);
 
             var exception = await Assert.ThrowsAsync<InvalidCredentialsException>(code);
             Assert.Equal("Invalid verification code", exception.Message);
+        }
+
+        [Fact]
+        public async Task SignIn_WhenEmailVerified_ShouldReturnWithToken()
+        {
+            var bytes = GetBytes();
+            var login = GetLoginDto();
+            var token = GetTokenDto();
+            var user = new User
+            {
+                Email = "test@test.com",
+                Salt = Convert.ToBase64String(bytes),
+                Password = "hashedTest",
+                EmailVerified = true
+            };
+            A.CallTo(() => _userRepository.Get("test@test.com")).Returns(Task.FromResult<User?>(user));
+            A.CallTo(() => _hashService.VerifyPassword(login.Password, A<byte[]>._, user.Password)).Returns(true);
+            A.CallTo(() => _tokenService.Generate(user.Email)).Returns(token);
+
+            var result = await _userCredentialsService.SignIn(login);
+
+            Assert.NotNull(result.Token);
+            Assert.Equal(login.Email, result.User.Email);
+            Assert.Equal(token.AccessToken, result.Token!.AccessToken);
+            Assert.Equal(token.RefreshToken, result.Token.RefreshToken);
+        }
+
+        [Fact]
+        public async Task SignIn_WhenEmailNotVerified_ShouldReturnWithoutToken()
+        {
+            var bytes = GetBytes();
+            var login = GetLoginDto();
+            var token = GetTokenDto();
+            var user = new User
+            {
+                Email = "test@test.com",
+                Salt = Convert.ToBase64String(bytes),
+                Password = "hashedTest"
+            };
+            A.CallTo(() => _userRepository.Get("test@test.com")).Returns(Task.FromResult<User?>(user));
+            A.CallTo(() => _hashService.VerifyPassword(login.Password, A<byte[]>._, user.Password)).Returns(true);
+            A.CallTo(() => _tokenService.Generate(user.Email)).Returns(token);
+
+            var result = await _userCredentialsService.SignIn(login);
+
+            Assert.Null(result.Token);
+            Assert.Equal(login.Email, result.User.Email);
         }
 
         private ResetPasswordDto GetResetPasswordDto()
@@ -267,6 +242,33 @@ namespace SlothOrganizer.Services.Tests.Unit.Users
             {
                 Email = "test@test.com",
                 Password = "test"
+            };
+        }
+        private VerificationCodeDto GetVerificationCodeDto()
+        {
+            return new VerificationCodeDto
+            {
+                Email = "test@test.com",
+                VerificationCode = 111111
+            };
+        }
+
+        private static User GetUser(string email, bool emailVerified)
+        {
+            return new User
+            {
+                Email = email,
+                Id = 1,
+                EmailVerified = emailVerified
+            };
+        }
+
+        private static TokenDto GetTokenDto()
+        {
+            return new TokenDto
+            {
+                AccessToken = "expired",
+                RefreshToken = "notExpired"
             };
         }
     }

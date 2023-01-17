@@ -8,6 +8,7 @@ import { getPasswordValidators, passwordMatchingValidator } from '@utils/validat
 import { AuthService } from '@api/auth.service';
 import { BaseComponent } from '@shared/components/base/base.component';
 import { Store } from '@ngrx/store';
+import { UserCredentialsService } from '@api/user-credentials.service';
 import { hasLengthErrors } from '@utils/validators/common-validators';
 
 @Component({
@@ -21,7 +22,7 @@ export class ResetPasswordComponent extends BaseComponent implements OnInit {
 
     public resetPassowordGroup: FormGroup = {} as FormGroup;
 
-    constructor(private authService: AuthService,
+    constructor(private userCredentialsService: UserCredentialsService,
         private activatedRoute: ActivatedRoute,
         private router: Router,
         private store: Store) {
@@ -43,7 +44,7 @@ export class ResetPasswordComponent extends BaseComponent implements OnInit {
     }
 
     public resetPassword(): void {
-        this.authService.resetPassword({
+        this.userCredentialsService.resetPassword({
             password: this.resetPassowordGroup.get('password')?.value,
             email: this.email,
             code: this.code
