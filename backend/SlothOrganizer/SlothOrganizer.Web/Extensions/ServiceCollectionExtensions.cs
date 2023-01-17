@@ -40,6 +40,7 @@ namespace SlothOrganizer.Web.Extensions
         public static IServiceCollection AddCustomServices(this IServiceCollection services)
         {
             services.AddScoped<IUserCredentialsService, UserCredentialsService>();
+            services.AddScoped<IUserInfoService, UserInfoService>();
             services.AddScoped<IAccessTokenService, AccessTokenService>();
             services.AddScoped<IRefreshTokenService, RefreshTokenService>();
             services.AddScoped<ITokenService, TokenService>();

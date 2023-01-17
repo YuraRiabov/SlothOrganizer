@@ -9,5 +9,6 @@
         public string Password { get; set; }
         public string Salt { get; set; }
         public bool EmailVerified { get; set; }
+        public string? AvatarUrl { get; set; }
     }
 }

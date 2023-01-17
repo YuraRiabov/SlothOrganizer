@@ -319,12 +319,46 @@ namespace SlothOrganizer.Persistence.Properties {
         ///	Email = @Email,
         ///	Password = @Password,
         ///	Salt = @Salt,
-        ///	EmailVerified = @EmailVerified
+        ///	EmailVerified = @EmailVerified,
+        ///	AvatarUrl = @AvatarUrl
         ///WHERE Id = @Id.
         /// </summary>
         internal static string UpdateUser {
             get {
                 return ResourceManager.GetString("UpdateUser", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to UPDATE Users SET 
+        ///	AvatarUrl = @AvatarUrl
+        ///WHERE Id = @Id.
+        /// </summary>
+        internal static string UpdateUserAvatar {
+            get {
+                return ResourceManager.GetString("UpdateUserAvatar", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to UPDATE Users SET 
+        ///	FirstName = @FirstName
+        ///WHERE Id = @Id.
+        /// </summary>
+        internal static string UpdateUserFirstName {
+            get {
+                return ResourceManager.GetString("UpdateUserFirstName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to UPDATE Users SET 
+        ///	LastName = @LastName
+        ///WHERE Id = @Id.
+        /// </summary>
+        internal static string UpdateUserLastName {
+            get {
+                return ResourceManager.GetString("UpdateUserLastName", resourceCulture);
             }
         }
         
