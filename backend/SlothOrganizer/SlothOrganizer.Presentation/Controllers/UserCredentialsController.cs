@@ -42,5 +42,11 @@ namespace SlothOrganizer.Presentation.Controllers
         {
             return await _userCredentialsService.ResetPassword(resetPasswordDto);
         }
+
+        [HttpPut("password")]
+        public async Task UpdatePassword([FromBody] PasswordUpdateDto passwordUpdate)
+        {
+            await _userCredentialsService.UpdatePassword(passwordUpdate);
+        }
     }
 }

@@ -7,6 +7,7 @@ using SlothOrganizer.Domain.Repositories;
 using SlothOrganizer.Services.Abstractions.Auth.Tokens;
 using SlothOrganizer.Services.Abstractions.Users;
 using SlothOrganizer.Services.Abstractions.Utility;
+using Task = System.Threading.Tasks.Task;
 
 namespace SlothOrganizer.Services.Users
 {
@@ -85,6 +86,19 @@ namespace SlothOrganizer.Services.Users
                 User = _mapper.Map<UserDto>(user),
                 Token = await _tokenService.Generate(user.Email)
             };
+        }
+
+        public async Task UpdatePassword(PasswordUpdateDto passwordUpdate)
+        {
+            var user = await Find(passwordUpdate.Email);
+            if (!_hashService.VerifyPassword(passwordUpdate.OldPassword, Convert.FromBase64String(user.Salt), user.Password))
+            {
+                throw new InvalidCredentialsException("Invalid password");
+            }
+            var hash = _hashService.HashPassword(passwordUpdate.Password, Convert.FromBase64String(user.Salt));
+            user.Password = hash;
+            user.EmailVerified = true;
+            await _userRepository.Update(user);
         }
 
         public async Task<UserDto> Create(NewUserDto newUser)

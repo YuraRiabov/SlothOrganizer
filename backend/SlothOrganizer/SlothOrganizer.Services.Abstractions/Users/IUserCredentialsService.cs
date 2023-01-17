@@ -9,5 +9,6 @@ namespace SlothOrganizer.Services.Abstractions.Users
         Task<UserAuthDto> SignIn(LoginDto login);
         Task<UserAuthDto> VerifyEmail(VerificationCodeDto verificationCode);
         Task<UserAuthDto> ResetPassword(ResetPasswordDto resetPasswordDto);
+        Task UpdatePassword(PasswordUpdateDto passwordUpdate);
     }
 }
