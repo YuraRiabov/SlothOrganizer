@@ -84,7 +84,7 @@ namespace SlothOrganizer.Services.Tests.Unit.Tasks
         public async Task Get_WhenNoData_ShouldReturnEmpty()
         {
             var dashboardId = 1;
-            A.CallTo(() => _taskRepository.Get(dashboardId)).Returns(new List<Entities.Task>());
+            A.CallTo(() => _taskRepository.Get(dashboardId)).Returns(new List<UserTask>());
 
             var result = await _taskRepository.Get(dashboardId);
 
@@ -120,18 +120,18 @@ namespace SlothOrganizer.Services.Tests.Unit.Tasks
             };
         }
 
-        private static List<Entities.Task> GetTasks()
+        private static List<UserTask> GetTasks()
         {
-            return new List<Entities.Task>
+            return new List<UserTask>
             {
-                new Entities.Task
+                new UserTask
                 {
                     Id = 1,
                     DashboardId = 1,
                     Title = "Test",
                     Description = "Test"
                 },
-                new Entities.Task
+                new UserTask
                 {
                     Id = 2,
                     DashboardId = 1,
