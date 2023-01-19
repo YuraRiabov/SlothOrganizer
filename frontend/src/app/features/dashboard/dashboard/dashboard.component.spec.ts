@@ -1,3 +1,5 @@
+import * as dashboardActions from '@store/actions/dashboard.actions';
+
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { By } from '@angular/platform-browser';
@@ -7,6 +9,7 @@ import { DashboardComponent } from './dashboard.component';
 import { DashboardRoutingModule } from '../dashboard-routing.module';
 import { FormsModule } from '@angular/forms';
 import { MaterialModule } from '@shared/material/material.module';
+import { SidebarType } from '#types/dashboard/timeline/enums/sidebar-type';
 import { Store } from '@ngrx/store';
 import { TimelineComponent } from '../timeline/timeline.component';
 import { of } from 'rxjs';
@@ -59,19 +62,9 @@ describe('DashboardComponent', () => {
     it ('should open sidebar on new click', () => {
         const newButton = getByClass('create-task-button');
 
-        let sidebar = getByClass('sidebar');
-        let blur = getByClass('blur');
-
-        expect(sidebar).toBeFalsy();
-        expect(blur).toBeFalsy();
-
         newButton.click();
         fixture.detectChanges();
 
-        sidebar = getByClass('sidebar');
-        blur = getByClass('blur');
-
-        expect(sidebar).toBeTruthy();
-        expect(blur).toBeTruthy();
+        expect(store.dispatch).toHaveBeenCalledWith(dashboardActions.openSidebar({ sidebarType: SidebarType.Create }));
     });
 });

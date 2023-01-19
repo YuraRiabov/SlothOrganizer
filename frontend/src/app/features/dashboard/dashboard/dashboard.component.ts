@@ -1,19 +1,17 @@
 import * as dashboardActions from '@store/actions/dashboard.actions';
 
 import { Component, OnInit } from '@angular/core';
-import { Observable, map, merge, of, shareReplay, switchMap } from 'rxjs';
-import { selectChosenDashboard, selectChosenDashboardId, selectDashboards } from '@store/selectors/dashboard.selectors';
+import { Observable, of } from 'rxjs';
+import { selectChosenDashboard, selectDashboards, selectSidebarType } from '@store/selectors/dashboard.selectors';
 
 import { BaseComponent } from '@shared/components/base/base.component';
 import { Dashboard } from '#types/dashboard/dashboard/dashboard';
 import { MatDatepickerInputEvent } from '@angular/material/datepicker';
-import { MatSelectChange } from '@angular/material/select';
 import { SidebarType } from '#types/dashboard/timeline/enums/sidebar-type';
 import { Store } from '@ngrx/store';
 import { TaskBlock } from '#types/dashboard/timeline/task-block';
 import { TimelineScale } from '#types/dashboard/timeline/enums/timeline-scale';
 import { addHours } from 'date-fns';
-import { getDefaultDashboard } from '@utils/creation-functions/dashboard-creation.helper';
 
 @Component({
     selector: 'so-dashboard',
@@ -95,9 +93,7 @@ export class DashboardComponent extends BaseComponent implements OnInit {
     public dashboards$?: Observable<Dashboard[]>;
     public currentDashboard$?: Observable<Dashboard>;
 
-    public creatingDashboard: boolean = false;
-    public sidebarOpen: boolean = false;
-    public sidebarType: SidebarType = SidebarType.Create;
+    public sidebarType$: Observable<SidebarType> = of(SidebarType.None);
 
     constructor(private store: Store) {
         super();
@@ -108,10 +104,15 @@ export class DashboardComponent extends BaseComponent implements OnInit {
 
         this.dashboards$ = this.store.select(selectDashboards);
         this.currentDashboard$ = this.store.select(selectChosenDashboard);
+        this.sidebarType$ = this.store.select(selectSidebarType);
     }
 
     public openCreateSidebar(): void {
-        this.openSidebar(SidebarType.Create);
+        this.store.dispatch(dashboardActions.openSidebar({ sidebarType: SidebarType.Create }));
+    }
+
+    public closeSidebar(): void {
+        this.store.dispatch(dashboardActions.closeSidebar());
     }
 
     public selectDashboard(dashboard: Dashboard): void {
@@ -137,10 +138,5 @@ export class DashboardComponent extends BaseComponent implements OnInit {
 
     public goToDate(event: MatDatepickerInputEvent<Date>): void {
         this.currentDate = addHours(event.value!, 12);
-    }
-
-    private openSidebar(type: SidebarType): void {
-        this.sidebarType = type;
-        this.sidebarOpen = true;
     }
 }

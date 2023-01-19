@@ -24,3 +24,8 @@ export const selectTasks = createSelector(
     selectDashboardState,
     (state) => state.tasks
 );
+
+export const selectSidebarType = createSelector(
+    selectDashboardState,
+    (state) => state.sidebarType
+);

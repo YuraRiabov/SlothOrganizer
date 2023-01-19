@@ -25,10 +25,9 @@
     <button class="create-task-button" color="primary" mat-fab (click)="openCreateSidebar()">
         <mat-icon>add</mat-icon>
     </button>
-    
-    <div class="sidebar" *ngIf="sidebarOpen">
-        <so-dashboard-sidebar [type]="sidebarType" (clickedOff)="sidebarOpen = false"></so-dashboard-sidebar>
+    <div [ngSwitch]="sidebarType$ | async">
+        <so-sidebar class="sidebar" *ngSwitchCase="'Create'" (closed)="closeSidebar()">
+            <so-task-form></so-task-form>
+        </so-sidebar>
     </div>
-
-    <div class="blur" *ngIf="sidebarOpen"></div>
 </div>

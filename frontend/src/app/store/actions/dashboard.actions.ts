@@ -3,6 +3,7 @@ import { createAction, props } from '@ngrx/store';
 import { Dashboard } from '#types/dashboard/dashboard/dashboard';
 import { NewDashboard } from '#types/dashboard/dashboard/new-dashboard';
 import { NewTask } from '#types/dashboard/tasks/new-task';
+import { SidebarType } from '#types/dashboard/timeline/enums/sidebar-type';
 import { Task } from '#types/dashboard/tasks/task';
 
 export const loadDashboards = createAction(
@@ -37,4 +38,13 @@ export const createTask = createAction(
 export const taskCreated = createAction(
     '[API] Task created',
     props<{ task: Task}>()
+);
+
+export const openSidebar = createAction(
+    '[Dashboard page] Open sidebar',
+    props< { sidebarType: SidebarType }>()
+);
+
+export const closeSidebar = createAction(
+    '[Dashboard page] Close sidebar'
 );

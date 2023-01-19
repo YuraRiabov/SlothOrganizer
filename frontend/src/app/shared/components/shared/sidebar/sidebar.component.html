@@ -1,0 +1,5 @@
+<mat-sidenav-container class="sidebar-wrapper">
+    <mat-sidenav class="sidebar" opened (closedStart)="closed.emit()" mode="over" position="end">
+        <ng-content></ng-content>
+    </mat-sidenav>
+</mat-sidenav-container>
