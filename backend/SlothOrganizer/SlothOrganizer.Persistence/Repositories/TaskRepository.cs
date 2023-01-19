@@ -1,7 +1,7 @@
 ﻿using Dapper;
+using SlothOrganizer.Domain.Entities;
 using SlothOrganizer.Domain.Repositories;
 using SlothOrganizer.Persistence.Properties;
-using Task = SlothOrganizer.Domain.Entities.Task;
 
 namespace SlothOrganizer.Persistence.Repositories
 {
@@ -14,7 +14,7 @@ namespace SlothOrganizer.Persistence.Repositories
             _context = context;
         }
 
-        public async Task<Task> Insert(Task task)
+        public async Task<UserTask> Insert(UserTask task)
         {
             var query = Resources.InsertTask;
 
@@ -31,12 +31,12 @@ namespace SlothOrganizer.Persistence.Repositories
             return task;
         }
 
-        public async Task<List<Task>> Get(long dashboardId)
+        public async Task<List<UserTask>> Get(long dashboardId)
         {
             var query = Resources.GetAllTasks;
 
             using var connection = _context.CreateConnection();
-            var tasks = await connection.QueryAsync<Task>(query, new { dashboardId });
+            var tasks = await connection.QueryAsync<UserTask>(query, new { dashboardId });
             return tasks.ToList();
         }
     }

@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using SlothOrganizer.Contracts.DTO.Tasks.Task;
+using SlothOrganizer.Domain.Entities;
 using SlothOrganizer.Domain.Exceptions;
 using SlothOrganizer.Domain.Repositories;
 using SlothOrganizer.Services.Abstractions.Tasks;
@@ -27,7 +28,7 @@ namespace SlothOrganizer.Services.Tasks
             {
                 throw new InvalidPeriodException();
             }
-            var task = await _taskRepository.Insert(_mapper.Map<Domain.Entities.Task>(newTask));
+            var task = await _taskRepository.Insert(_mapper.Map<UserTask>(newTask));
             var taskCompletions = await _taskCompletionService.Create(newTask, task.Id);
             var taskDto = _mapper.Map<TaskDto>(task);
             taskDto.TaskCompletions = taskCompletions;

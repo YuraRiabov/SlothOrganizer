@@ -5,6 +5,6 @@
         public long Id { get; set; }
         public long UserId { get; set; }
         public string Title { get; set; }
-        public List<Task> Tasks { get; set; } = new List<Task>();
+        public List<UserTask> Tasks { get; set; } = new List<UserTask>();
     }
 }
