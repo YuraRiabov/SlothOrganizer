@@ -19,6 +19,7 @@ import { addHours } from 'date-fns';
     styleUrls: ['./dashboard.component.sass']
 })
 export class DashboardComponent extends BaseComponent implements OnInit {
+    public readonly createSidebar = SidebarType.Create;
     public tasks: TaskBlock[] = [
         {
             start: new Date(2022, 11, 16, 8),

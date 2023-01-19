@@ -26,7 +26,7 @@
         <mat-icon>add</mat-icon>
     </button>
     <div [ngSwitch]="sidebarType$ | async">
-        <so-sidebar class="sidebar" *ngSwitchCase="'Create'" (closed)="closeSidebar()">
+        <so-sidebar class="sidebar" *ngSwitchCase="createSidebar" (closed)="closeSidebar()">
             <so-task-form></so-task-form>
         </so-sidebar>
     </div>
