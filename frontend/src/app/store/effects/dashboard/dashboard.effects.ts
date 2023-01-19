@@ -25,7 +25,11 @@ export class DashboardEffects {
         () => {
             return this.actions$.pipe(
                 ofType(dashboardActions.createDashbaord),
-                mergeMap(action => this.dashboardService.create(action.dashboard)),
+                concatLatestFrom(() => this.store.select(selectUserId)),
+                mergeMap(([action, id]) => this.dashboardService.create({
+                    title: action.title,
+                    userId: id
+                })),
                 map(dashboard => dashboardActions.dashboardCreated({ dashboard }))
             );
         }

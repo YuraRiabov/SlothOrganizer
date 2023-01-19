@@ -16,7 +16,7 @@ export const loadDashboardsSuccess = createAction(
 
 export const createDashbaord = createAction(
     '[Dashboard page] Create dashboard',
-    props<{ dashboard: NewDashboard }>()
+    props<{ title: string }>()
 );
 
 export const dashboardCreated = createAction(

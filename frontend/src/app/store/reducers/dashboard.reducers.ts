@@ -11,8 +11,16 @@ const initialState: DashboardState = {
 
 export const dashboardReducer = createReducer(
     initialState,
-    on(loadDashboardsSuccess, (state, { dashboards }): DashboardState => ({ ...state, dashboards })),
-    on(dashboardCreated, (state, { dashboard }): DashboardState => ({ ...state, dashboards: state.dashboards.concat(dashboard) })),
-    on(chooseDashboard, (state, { dashboardId }): DashboardState => ({...state, chosenDashboardId: dashboardId})),
-    on(taskCreated, (state, { task }): DashboardState => ({...state, tasks: state.tasks.concat(task)}))
+    on(loadDashboardsSuccess, (state, { dashboards }): DashboardState => ({
+        ...state,
+        dashboards,
+        chosenDashboardId: state.chosenDashboardId === -1 ? dashboards[0].id : state.chosenDashboardId
+    })),
+    on(dashboardCreated, (state, { dashboard }): DashboardState => ({
+        ...state,
+        dashboards: state.dashboards.concat(dashboard),
+        chosenDashboardId: dashboard.id
+    })),
+    on(chooseDashboard, (state, { dashboardId }): DashboardState => ({ ...state, chosenDashboardId: dashboardId })),
+    on(taskCreated, (state, { task }): DashboardState => ({ ...state, tasks: state.tasks.concat(task) }))
 );

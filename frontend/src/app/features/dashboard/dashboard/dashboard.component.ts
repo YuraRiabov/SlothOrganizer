@@ -1,7 +1,8 @@
 import * as dashboardActions from '@store/actions/dashboard.actions';
 
 import { Component, OnInit } from '@angular/core';
-import { selectChosenDashboardId, selectDashboards } from '@store/selectors/dashboard.selectors';
+import { Observable, map, merge, of, shareReplay, switchMap } from 'rxjs';
+import { selectChosenDashboard, selectChosenDashboardId, selectDashboards } from '@store/selectors/dashboard.selectors';
 
 import { BaseComponent } from '@shared/components/base/base.component';
 import { Dashboard } from '#types/dashboard/dashboard/dashboard';
@@ -91,8 +92,8 @@ export class DashboardComponent extends BaseComponent implements OnInit {
     public currentDate: Date = new Date(2022, 12, 16, 12);
     public timelineScale = TimelineScale.Day;
 
-    public dashboards: Dashboard[] = [];
-    public currentDashboard: Dashboard = getDefaultDashboard();
+    public dashboards$?: Observable<Dashboard[]>;
+    public currentDashboard$?: Observable<Dashboard>;
 
     public creatingDashboard: boolean = false;
     public sidebarOpen: boolean = false;
@@ -105,18 +106,20 @@ export class DashboardComponent extends BaseComponent implements OnInit {
     ngOnInit(): void {
         this.store.dispatch(dashboardActions.loadDashboards());
 
-        this.store.select(selectDashboards)
-            .pipe(this.untilDestroyed)
-            .subscribe(dashboards => this.updateDashboards(dashboards));
+        this.dashboards$ = this.store.select(selectDashboards);
+        this.currentDashboard$ = this.store.select(selectChosenDashboard);
     }
 
     public openCreateSidebar(): void {
         this.openSidebar(SidebarType.Create);
     }
 
-    public selectDashboard(selection: MatSelectChange): void {
-        this.currentDashboard = selection.value as Dashboard;
-        this.store.dispatch(dashboardActions.chooseDashboard({ dashboardId: this.currentDashboard.id }));
+    public selectDashboard(dashboard: Dashboard): void {
+        this.store.dispatch(dashboardActions.chooseDashboard({ dashboardId: dashboard.id }));
+    }
+
+    public createDashboard(title: string): void {
+        this.store.dispatch(dashboardActions.createDashbaord({ title }));
     }
 
     public zoomIn(date?: Date): void {
@@ -139,18 +142,5 @@ export class DashboardComponent extends BaseComponent implements OnInit {
     private openSidebar(type: SidebarType): void {
         this.sidebarType = type;
         this.sidebarOpen = true;
-    }
-
-    private updateDashboards(dashboards: Dashboard[]): void {
-        const newDashboards = dashboards.filter(d => !this.dashboards.includes(d));
-        this.dashboards = dashboards;
-        if (dashboards.length > 0) {
-            let selectedDashboardIndex = 0;
-            if (newDashboards.length === 1) {
-                selectedDashboardIndex = this.dashboards.indexOf(newDashboards[0]);
-            }
-            this.currentDashboard = dashboards[selectedDashboardIndex];
-            this.store.dispatch(dashboardActions.chooseDashboard({ dashboardId: this.currentDashboard.id }));
-        }
     }
 }

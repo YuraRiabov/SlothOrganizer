@@ -1,10 +1,10 @@
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { CommonModule } from '@angular/common';
-import { CreateDashboardComponent } from './create-dashboard/create-dashboard.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { DashboardEffects } from '@store/effects/dashboard/dashboard.effects';
 import { DashboardRoutingModule } from './dashboard-routing.module';
+import { DashboardSelectionComponent } from './dashboard-selection/dashboard-selection.component';
 import { DashboardSidebarComponent } from './dashboard-sidebar/dashboard-sidebar.component';
 import { EffectsModule } from '@ngrx/effects';
 import { MaterialModule } from '@shared/material/material.module';
@@ -17,9 +17,9 @@ import { TimelineComponent } from './timeline/timeline.component';
     declarations: [
         DashboardComponent,
         TimelineComponent,
-        CreateDashboardComponent,
         DashboardSidebarComponent,
-        TaskFormComponent
+        TaskFormComponent,
+        DashboardSelectionComponent
     ],
     imports: [
         CommonModule,

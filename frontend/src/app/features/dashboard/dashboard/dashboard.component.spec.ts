@@ -2,15 +2,12 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { By } from '@angular/platform-browser';
 import { CommonModule } from '@angular/common';
-import { CreateDashboardComponent } from '../create-dashboard/create-dashboard.component';
 import { Dashboard } from '#types/dashboard/dashboard/dashboard';
 import { DashboardComponent } from './dashboard.component';
 import { DashboardRoutingModule } from '../dashboard-routing.module';
-import { DashboardSidebarComponent } from '../dashboard-sidebar/dashboard-sidebar.component';
 import { FormsModule } from '@angular/forms';
 import { MaterialModule } from '@shared/material/material.module';
 import { Store } from '@ngrx/store';
-import { TaskFormComponent } from '../task-form/task-form.component';
 import { TimelineComponent } from '../timeline/timeline.component';
 import { of } from 'rxjs';
 
@@ -76,20 +73,5 @@ describe('DashboardComponent', () => {
 
         expect(sidebar).toBeTruthy();
         expect(blur).toBeTruthy();
-    });
-
-    it ('should open new dashboard on button click', () => {
-        const newButton = getByClass('new-dashboard-button');
-
-        let newDashboard = getByClass('new-dashboard');
-
-        expect(newDashboard).toBeFalsy();
-
-        newButton.click();
-        fixture.detectChanges();
-
-        newDashboard = getByClass('new-dashboard');
-
-        expect(newDashboard).toBeTruthy();
     });
 });
