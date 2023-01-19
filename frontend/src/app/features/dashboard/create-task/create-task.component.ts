@@ -16,7 +16,6 @@ import { selectChosenDashboardId } from '@store/selectors/dashboard.selectors';
 })
 export class CreateTaskComponent extends BaseComponent implements OnInit {
     public defaultTask: NewTask;
-    @Output() public goBack = new EventEmitter<void>();
 
     constructor(private store: Store) {
         super();
@@ -38,7 +37,10 @@ export class CreateTaskComponent extends BaseComponent implements OnInit {
 
     public createTask(newTask: NewTask) {
         this.store.dispatch(dashboardActions.createTask({ newTask }));
-        this.goBack.emit();
+    }
+
+    public close(): void {
+        this.store.dispatch(dashboardActions.closeSidebar());
     }
 }
 

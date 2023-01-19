@@ -4,7 +4,6 @@ using SlothOrganizer.Domain.Repositories;
 using SlothOrganizer.Services.Abstractions.Utility;
 using SlothOrganizer.Services.Auth.UserVerification;
 using Xunit;
-using Task = System.Threading.Tasks.Task;
 
 namespace SlothOrganizer.Services.Tests.Unit.Auth.UserVerification
 {

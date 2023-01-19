@@ -1,1 +1,1 @@
-<so-task-form (cancel)="goBack.emit()" [initialValue]="defaultTask" [edit]="false" (submitted)="createTask($event)"></so-task-form>
+<so-task-form (cancel)="close()" [initialValue]="defaultTask" [edit]="false" (submitted)="createTask($event)"></so-task-form>

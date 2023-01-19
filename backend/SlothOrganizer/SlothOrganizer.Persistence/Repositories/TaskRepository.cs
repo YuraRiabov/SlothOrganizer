@@ -1,9 +1,7 @@
-﻿using System.Threading.Tasks;
-using Dapper;
+﻿using Dapper;
 using SlothOrganizer.Domain.Entities;
 using SlothOrganizer.Domain.Repositories;
 using SlothOrganizer.Persistence.Properties;
-using Task = SlothOrganizer.Domain.Entities.Task;
 
 namespace SlothOrganizer.Persistence.Repositories
 {
@@ -16,7 +14,7 @@ namespace SlothOrganizer.Persistence.Repositories
             _context = context;
         }
 
-        public async Task<Task> Insert(Task task)
+        public async Task<UserTask> Insert(UserTask task)
         {
             var query = Resources.InsertTask;
 
@@ -33,13 +31,13 @@ namespace SlothOrganizer.Persistence.Repositories
             return task;
         }
 
-        public async Task<List<Task>> Get(long dashboardId)
+        public async Task<List<UserTask>> Get(long dashboardId)
         {
             var query = Resources.GetAllTasks;
-            var tasks = new Dictionary<long, Task>();
+            var tasks = new Dictionary<long, UserTask>();
 
             using var connection = _context.CreateConnection();
-            await connection.QueryAsync<Task, TaskCompletion, Task>(query, (task, completion) =>
+            await connection.QueryAsync<UserTask, TaskCompletion, UserTask>(query, (task, completion) =>
                 {
                     if (!tasks.TryGetValue(task.Id, out var uniqueTask))
                     {
@@ -54,7 +52,7 @@ namespace SlothOrganizer.Persistence.Repositories
             return tasks.Values.ToList();
         }
 
-        public async Task<Task?> Update(Task task)
+        public async Task<UserTask?> Update(UserTask task)
         {
             var query = Resources.UpdateTask;
 
@@ -65,9 +63,9 @@ namespace SlothOrganizer.Persistence.Repositories
                 Description = task.Description,
             };
 
-            Task? updatedTask = null;
+            UserTask? updatedTask = null;
             var connection = _context.CreateConnection();
-            await connection.QueryAsync<Task, TaskCompletion, Task>(query, (task, completion) =>
+            await connection.QueryAsync<UserTask, TaskCompletion, UserTask>(query, (task, completion) =>
             {
                 if (updatedTask is null)
                 {

@@ -15,7 +15,6 @@ import { selectChosenTaskBlock } from '@store/selectors/dashboard.selectors';
 })
 export class UpdateTaskComponent extends BaseComponent implements OnInit {
     public taskToUpdate!: NewTask;
-    @Output() public goBack = new EventEmitter<void>();
 
     constructor(private store: Store) {
         super();
@@ -42,8 +41,9 @@ export class UpdateTaskComponent extends BaseComponent implements OnInit {
 
     public updateTask(task: NewTask): void {
         this.store.dispatch(dashboardActions.editTask({ task }));
-        selectChosenTaskBlock.release();
-        this.goBack.emit();
     }
 
+    public close(): void {
+        this.store.dispatch(dashboardActions.closeSidebar());
+    }
 }

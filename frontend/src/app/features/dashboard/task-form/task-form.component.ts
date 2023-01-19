@@ -90,7 +90,6 @@ export class TaskFormComponent extends BaseComponent {
             validators.push(repeatingPeriodValidator());
         }
         const datePipe = new DatePipe('en-US');
-
         return new FormGroup({
             title: titleContol,
             description: descriptionControl,

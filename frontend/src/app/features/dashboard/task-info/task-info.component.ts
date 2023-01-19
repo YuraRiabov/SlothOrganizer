@@ -1,8 +1,9 @@
 import * as dashboardActions from '@store/actions/dashboard.actions';
 
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 
 import { BaseComponent } from '@shared/components/base/base.component';
+import { SidebarType } from '#types/dashboard/timeline/enums/sidebar-type';
 import { Store } from '@ngrx/store';
 import { TaskBlock } from '#types/dashboard/timeline/task-block';
 import { selectChosenTaskBlock } from '@store/selectors/dashboard.selectors';
@@ -14,10 +15,6 @@ import { selectChosenTaskBlock } from '@store/selectors/dashboard.selectors';
 })
 export class TaskInfoComponent extends BaseComponent implements OnInit {
     public taskBlock!: TaskBlock;
-
-    @Output() public goBack = new EventEmitter();
-    @Output() public switchToEdit = new EventEmitter();
-
     constructor(private store: Store) {
         super();
     }
@@ -28,7 +25,11 @@ export class TaskInfoComponent extends BaseComponent implements OnInit {
             .subscribe(taskBlock => this.taskBlock = taskBlock);
     }
 
-    public getBlockStatus() {
+    public close(): void {
+        this.store.dispatch(dashboardActions.closeSidebar());
+    }
+
+    public getBlockStatus(): string {
         if (this.taskBlock.taskCompletion.isSuccessful) {
             return 'Completed';
         }
@@ -43,15 +44,13 @@ export class TaskInfoComponent extends BaseComponent implements OnInit {
 
     public markAsCompleted(): void {
         this.store.dispatch(dashboardActions.markTaskCompleted());
-        this.goBack.emit();
     }
 
     public delete(): void {
         this.store.dispatch(dashboardActions.deleteTask());
-        this.goBack.emit();
     }
 
     public edit(): void {
-        this.switchToEdit.emit();
+        this.store.dispatch(dashboardActions.openSidebar({ sidebarType: SidebarType.Edit }));
     }
 }

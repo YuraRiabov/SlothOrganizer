@@ -26,10 +26,9 @@ export class TaskCompletionEffects {
             return this.actions$.pipe(
                 ofType(dashboardActions.deleteTask),
                 concatLatestFrom(() => this.store.select(selectChosenTaskCompletionId)),
-                mergeMap(([, id]) => this.taskCompletionService.remove(id))
+                mergeMap(([, id]) => this.taskCompletionService.remove(id)),
+                map(() => dashboardActions.closeSidebar())
             );
-        }, {
-            dispatch: false
         }
     );
 

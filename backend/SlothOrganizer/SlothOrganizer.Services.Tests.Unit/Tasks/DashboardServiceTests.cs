@@ -6,7 +6,6 @@ using SlothOrganizer.Domain.Repositories;
 using SlothOrganizer.Services.Tasks;
 using SlothOrganizer.Services.Tasks.Mapping;
 using Xunit;
-using Task = System.Threading.Tasks.Task;
 
 namespace SlothOrganizer.Services.Tests.Unit.Tasks
 {

@@ -1,5 +1,4 @@
 ﻿using SlothOrganizer.Domain.Entities;
-using Task = System.Threading.Tasks.Task;
 
 namespace SlothOrganizer.Domain.Repositories
 {

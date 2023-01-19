@@ -1,25 +1,24 @@
 <div class="dashboard-wrapper">
     <div class="header">
-        <mat-select class="dashboard-select" [(value)]="currentDashboard" (selectionChange)="selectDashboard($event)">
-            <mat-option *ngFor="let dashboard of dashboards" [value]="dashboard">
-                {{dashboard.title}}
-            </mat-option>
-        </mat-select>
+        <so-dashboard-selection [dashboards]="(dashboards$ | async) || []" [selectedDashboard]="currentDashboard$ | async"
+            (newDashboardTitle)="createDashboard($event)" (selectDashboard)="selectDashboard($event)">
+        </so-dashboard-selection>
     </div>
     <div class="toolbar">
-        <so-create-dashboard class="new-dashboard" *ngIf="creatingDashboard" (closed)="creatingDashboard = false">
-        </so-create-dashboard>
         <img class="logo" src="assets/logo.png"/>
-        <button mat-icon-button (click)="creatingDashboard = !creatingDashboard" class="new-dashboard-button">
-            <mat-icon>add_circle_outline</mat-icon>
-        </button>
         <div class="go-to-date-button">
             <input hidden [value]="currentDate" (dateChange)="goToDate($event)" [matDatepicker]="picker">
             <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
             <mat-datepicker #picker></mat-datepicker>
         </div>
     </div>
-    <so-timeline [date]="currentDate" [scale]="timelineScale" (blockClicked)="openDisplaySidebar()" (scaleIncreased)="zoomIn($event)">
+    <so-timeline 
+            [date]="currentDate" 
+            [scale]="timelineScale"
+            [tasks]="(tasks$ | async) || []"
+            (blockClicked)="displayTask($event)" 
+            (scaleIncreased)="zoomIn($event)"
+    >
     </so-timeline>
     <div class="zoom-buttons">
         <button mat-fab color="primary" [disabled]="timelineScale === 0" (click)="zoomIn()">
@@ -32,10 +31,15 @@
     <button class="create-task-button" color="primary" mat-fab (click)="openCreateSidebar()">
         <mat-icon>add</mat-icon>
     </button>
-    
-    <div class="sidebar" *ngIf="sidebarOpen">
-        <so-dashboard-sidebar [type]="sidebarType" (clickedOff)="sidebarOpen = false"></so-dashboard-sidebar>
+    <div [ngSwitch]="sidebarType$ | async">
+        <so-sidebar class="sidebar" *ngSwitchCase="createSidebar" (closed)="closeSidebar()">
+            <so-create-task></so-create-task>
+        </so-sidebar>
+        <so-sidebar class="sidebar" *ngSwitchCase="displaySidebar" (closed)="closeSidebar()">
+            <so-task-info></so-task-info>
+        </so-sidebar>
+        <so-sidebar class="sidebar" *ngSwitchCase="editSidebar" (closed)="closeSidebar()">
+            <so-update-task></so-update-task>
+        </so-sidebar>
     </div>
-
-    <div class="blur" *ngIf="sidebarOpen"></div>
 </div>

@@ -5,6 +5,7 @@ import { map, mergeMap } from 'rxjs';
 import { selectChosenDashboardId, selectChosenTaskBlock } from '@store/selectors/dashboard.selectors';
 
 import { Injectable } from '@angular/core';
+import { SidebarType } from '#types/dashboard/timeline/enums/sidebar-type';
 import { Store } from '@ngrx/store';
 import { TasksService } from '@api/tasks.service';
 
@@ -27,6 +28,24 @@ export class TasksEffects {
                 concatLatestFrom(() => this.store.select(selectChosenDashboardId)),
                 mergeMap(([action, id]) => this.tasksService.load(id)),
                 map((tasks) => dashboardActions.tasksLoaded({ tasks }))
+            );
+        }
+    );
+
+    public openDisplaySidebar$ = createEffect(
+        () => {
+            return this.actions$.pipe(
+                ofType(dashboardActions.chooseTask, dashboardActions.taskEdited),
+                map(() => dashboardActions.openSidebar({ sidebarType: SidebarType.Display }))
+            );
+        }
+    );
+
+    public closeDisplaySidebar$ = createEffect(
+        () => {
+            return this.actions$.pipe(
+                ofType(dashboardActions.taskCreated),
+                map(() => dashboardActions.closeSidebar())
             );
         }
     );
