@@ -70,7 +70,7 @@ describe('TaskFormComponent', () => {
 
         saveButton.click();
 
-        expect(store.dispatch).toHaveBeenCalledTimes(1);
+        expect(store.dispatch).toHaveBeenCalledTimes(2);
     });
 
     it('should have error when start after end', () => {

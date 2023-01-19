@@ -1,18 +1,18 @@
 import * as dashboardActions from '@store/actions/dashboard.actions';
 
 import { Component, OnInit } from '@angular/core';
-import { selectChosenDashboardId, selectDashboards } from '@store/selectors/dashboard.selectors';
+import { Observable, of } from 'rxjs';
+import { selectChosenDashboard, selectDashboards, selectSidebarType, selectTasks } from '@store/selectors/dashboard.selectors';
 
 import { BaseComponent } from '@shared/components/base/base.component';
 import { Dashboard } from '#types/dashboard/dashboard/dashboard';
 import { MatDatepickerInputEvent } from '@angular/material/datepicker';
-import { MatSelectChange } from '@angular/material/select';
 import { SidebarType } from '#types/dashboard/timeline/enums/sidebar-type';
 import { Store } from '@ngrx/store';
+import { Task } from '#types/dashboard/tasks/task';
 import { TaskBlock } from '#types/dashboard/timeline/task-block';
 import { TimelineScale } from '#types/dashboard/timeline/enums/timeline-scale';
 import { addHours } from 'date-fns';
-import { getDefaultDashboard } from '@utils/creation-functions/dashboard-creation.helper';
 
 @Component({
     selector: 'so-dashboard',
@@ -20,15 +20,17 @@ import { getDefaultDashboard } from '@utils/creation-functions/dashboard-creatio
     styleUrls: ['./dashboard.component.sass']
 })
 export class DashboardComponent extends BaseComponent implements OnInit {
+    public readonly createSidebar = SidebarType.Create;
+    public readonly displaySidebar = SidebarType.Display;
     public currentDate: Date = new Date();
     public timelineScale = TimelineScale.Day;
 
-    public dashboards: Dashboard[] = [];
-    public currentDashboard: Dashboard = getDefaultDashboard();
+    public dashboards$?: Observable<Dashboard[]>;
+    public currentDashboard$?: Observable<Dashboard>;
 
-    public creatingDashboard: boolean = false;
-    public sidebarOpen: boolean = false;
-    public sidebarType: SidebarType = SidebarType.Create;
+    public tasks$?: Observable<Task[]>;
+
+    public sidebarType$: Observable<SidebarType> = of(SidebarType.None);
 
     constructor(private store: Store) {
         super();
@@ -37,22 +39,30 @@ export class DashboardComponent extends BaseComponent implements OnInit {
     ngOnInit(): void {
         this.store.dispatch(dashboardActions.loadDashboards());
 
-        this.store.select(selectDashboards)
-            .pipe(this.untilDestroyed)
-            .subscribe(dashboards => this.updateDashboards(dashboards));
+        this.dashboards$ = this.store.select(selectDashboards);
+        this.currentDashboard$ = this.store.select(selectChosenDashboard);
+        this.sidebarType$ = this.store.select(selectSidebarType);
+        this.tasks$ = this.store.select(selectTasks);
     }
 
     public openCreateSidebar(): void {
-        this.openSidebar(SidebarType.Create);
+        this.store.dispatch(dashboardActions.openSidebar({ sidebarType: SidebarType.Create }));
     }
 
-    public openDisplaySidebar(): void {
-        this.openSidebar(SidebarType.Display);
+    public displayTask(taskBlock: TaskBlock): void {
+        this.store.dispatch(dashboardActions.chooseTask({ taskBlock }));
     }
 
-    public selectDashboard(selection: MatSelectChange): void {
-        this.currentDashboard = selection.value as Dashboard;
-        this.store.dispatch(dashboardActions.chooseDashboard({ dashboardId: this.currentDashboard.id }));
+    public closeSidebar(): void {
+        this.store.dispatch(dashboardActions.closeSidebar());
+    }
+
+    public selectDashboard(dashboard: Dashboard): void {
+        this.store.dispatch(dashboardActions.chooseDashboard({ dashboardId: dashboard.id }));
+    }
+
+    public createDashboard(title: string): void {
+        this.store.dispatch(dashboardActions.createDashbaord({ title }));
     }
 
     public zoomIn(date?: Date): void {
@@ -70,23 +80,5 @@ export class DashboardComponent extends BaseComponent implements OnInit {
 
     public goToDate(event: MatDatepickerInputEvent<Date>): void {
         this.currentDate = addHours(event.value!, 12);
-    }
-
-    private openSidebar(type: SidebarType): void {
-        this.sidebarType = type;
-        this.sidebarOpen = true;
-    }
-
-    private updateDashboards(dashboards: Dashboard[]): void {
-        const newDashboards = dashboards.filter(d => !this.dashboards.includes(d));
-        this.dashboards = dashboards;
-        if (dashboards.length > 0) {
-            let selectedDashboardIndex = 0;
-            if (newDashboards.length === 1) {
-                selectedDashboardIndex = this.dashboards.indexOf(newDashboards[0]);
-            }
-            this.currentDashboard = dashboards[selectedDashboardIndex];
-            this.store.dispatch(dashboardActions.chooseDashboard({ dashboardId: this.currentDashboard.id }));
-        }
     }
 }

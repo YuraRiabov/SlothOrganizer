@@ -1,9 +1,10 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import * as dashboardActions from '@store/actions/dashboard.actions';
+
+import { Component, OnInit } from '@angular/core';
 
 import { BaseComponent } from '@shared/components/base/base.component';
 import { Store } from '@ngrx/store';
 import { TaskBlock } from '#types/dashboard/timeline/task-block';
-import { TaskCompletion } from '#types/dashboard/tasks/task-completion';
 import { selectChosenTaskBlock } from '@store/selectors/dashboard.selectors';
 
 @Component({
@@ -13,8 +14,6 @@ import { selectChosenTaskBlock } from '@store/selectors/dashboard.selectors';
 })
 export class TaskInfoComponent extends BaseComponent implements OnInit {
     public taskBlock!: TaskBlock;
-
-    @Output() public goBack = new EventEmitter();
 
     constructor(private store: Store) {
         super();
@@ -26,7 +25,11 @@ export class TaskInfoComponent extends BaseComponent implements OnInit {
             .subscribe(taskBlock => this.taskBlock = taskBlock);
     }
 
-    public getBlockStatus() {
+    public close(): void {
+        this.store.dispatch(dashboardActions.closeSidebar());
+    }
+
+    public getBlockStatus(): string {
         if (this.taskBlock.taskCompletion.isSuccessful) {
             return 'Completed';
         }

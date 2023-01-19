@@ -4,14 +4,12 @@ import { AfterViewInit, Component, ElementRef, EventEmitter, Input, OnDestroy, O
 import { addHours, differenceInHours } from 'date-fns';
 
 import { BaseComponent } from '@shared/components/base/base.component';
-import { Store } from '@ngrx/store';
 import { Task } from '#types/dashboard/tasks/task';
 import { TaskBlock } from '#types/dashboard/timeline/task-block';
 import { Timeline } from '#types/dashboard/timeline/timeline';
 import { TimelineCreator } from '@utils/timeline/timeline-creator';
 import { TimelineScale } from '#types/dashboard/timeline/enums/timeline-scale';
 import { TimelineSection } from '#types/dashboard/timeline/timeline-section';
-import { selectTasks } from '@store/selectors/dashboard.selectors';
 
 @Component({
     selector: 'so-timeline',
@@ -35,20 +33,20 @@ export class TimelineComponent extends BaseComponent implements OnInit, AfterVie
         this.initializeTimeline();
     }
 
-    public set tasks(tasks: Task[]) {
+    @Input() public set tasks(tasks: Task[]) {
         this._tasks = tasks;
         this.initializeTimeline();
     }
 
     @Output() scaleIncreased = new EventEmitter<Date>();
-    @Output() blockClicked = new EventEmitter();
+    @Output() blockClicked = new EventEmitter<TaskBlock>();
 
     @ViewChild('timelineScroll') timelineScroll!: ElementRef;
     @ViewChild('timelineContainer') timelineContainer!: ElementRef;
 
     public timeline!: Timeline;
 
-    constructor(private store: Store, private timelineCreator: TimelineCreator) {
+    constructor(private timelineCreator: TimelineCreator) {
         super();
     }
 
@@ -63,9 +61,6 @@ export class TimelineComponent extends BaseComponent implements OnInit, AfterVie
     }
 
     ngOnInit(): void {
-        this.store.select(selectTasks)
-            .pipe(this.untilDestroyed)
-            .subscribe(tasks => this.tasks = tasks);
         this.initializeTimeline();
     }
 
@@ -82,8 +77,7 @@ export class TimelineComponent extends BaseComponent implements OnInit, AfterVie
     }
 
     public chooseTask(taskBlock: TaskBlock): void {
-        this.store.dispatch(dashboardActions.chooseTask({ taskBlock }));
-        this.blockClicked.emit();
+        this.blockClicked.emit(taskBlock);
     }
 
     private initializeTimeline(pageNumber?: number, scroll: boolean = true): void {

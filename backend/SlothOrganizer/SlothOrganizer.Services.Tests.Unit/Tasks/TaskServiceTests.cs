@@ -2,6 +2,7 @@
 using FakeItEasy;
 using SlothOrganizer.Contracts.DTO.Tasks.Task;
 using SlothOrganizer.Contracts.DTO.Tasks.Task.Enums;
+using SlothOrganizer.Domain.Entities;
 using SlothOrganizer.Domain.Exceptions;
 using SlothOrganizer.Domain.Repositories;
 using SlothOrganizer.Services.Abstractions.Tasks;
@@ -10,7 +11,6 @@ using SlothOrganizer.Services.Tasks;
 using SlothOrganizer.Services.Tasks.Mapping;
 using SlothOrganizer.Services.Utility;
 using Xunit;
-using Entities = SlothOrganizer.Domain.Entities;
 
 namespace SlothOrganizer.Services.Tests.Unit.Tasks
 {
@@ -20,7 +20,7 @@ namespace SlothOrganizer.Services.Tests.Unit.Tasks
         private readonly IMapper _mapper;
         private readonly ITaskRepository _taskRepository;
         private readonly ITaskCompletionService _taskCompletionService;
-        private readonly IDateTimeService _dateTimeService;
+        private readonly ITaskCompletionPeriodConverter _taskCompletionPeriodConverter;
 
         public TaskServiceTests()
         {
@@ -28,9 +28,9 @@ namespace SlothOrganizer.Services.Tests.Unit.Tasks
             _mapper = config.CreateMapper();
             _taskRepository = A.Fake<ITaskRepository>();
             _taskCompletionService= A.Fake<ITaskCompletionService>();
-            _dateTimeService = new DateTimeService();
+            _taskCompletionPeriodConverter = new TaskCompletionPeriodConverter();
 
-            _taskService = new TaskService(_taskCompletionService, _mapper, _taskRepository, _dateTimeService);
+            _taskService = new TaskService(_taskCompletionService, _mapper, _taskRepository, _taskCompletionPeriodConverter);
         }
 
         [Theory]
@@ -40,10 +40,10 @@ namespace SlothOrganizer.Services.Tests.Unit.Tasks
         public async Task Create_WhenValidPeriod_ShouldCreate(TaskRepeatingPeriod period)
         {
             var newTask = GetNewTask(period);
-            var task = _mapper.Map<Entities.Task>(newTask);
+            var task = _mapper.Map<UserTask>(newTask);
             task.Id = 1;
             var taskCompletions = GetTaskCompletions();
-            A.CallTo(() => _taskRepository.Insert(A<Entities.Task>._)).Returns(task);
+            A.CallTo(() => _taskRepository.Insert(A<UserTask>._)).Returns(task);
             A.CallTo(() => _taskCompletionService.Create(newTask, 1)).Returns(taskCompletions);
 
             var result = await _taskService.Create(newTask);

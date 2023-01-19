@@ -3,6 +3,7 @@ import { createAction, props } from '@ngrx/store';
 import { Dashboard } from '#types/dashboard/dashboard/dashboard';
 import { NewDashboard } from '#types/dashboard/dashboard/new-dashboard';
 import { NewTask } from '#types/dashboard/tasks/new-task';
+import { SidebarType } from '#types/dashboard/timeline/enums/sidebar-type';
 import { Task } from '#types/dashboard/tasks/task';
 import { TaskBlock } from '#types/dashboard/timeline/task-block';
 
@@ -17,7 +18,7 @@ export const loadDashboardsSuccess = createAction(
 
 export const createDashbaord = createAction(
     '[Dashboard page] Create dashboard',
-    props<{ dashboard: NewDashboard }>()
+    props<{ title: string }>()
 );
 
 export const dashboardCreated = createAction(
@@ -52,4 +53,13 @@ export const tasksLoaded = createAction(
 export const chooseTask = createAction(
     '[Timeline] Choose task',
     props<{ taskBlock: TaskBlock }>()
+);
+
+export const openSidebar = createAction(
+    '[Dashboard page] Open sidebar',
+    props<{ sidebarType: SidebarType }>()
+);
+
+export const closeSidebar = createAction(
+    '[Dashboard page] Close sidebar'
 );

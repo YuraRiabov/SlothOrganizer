@@ -65,7 +65,7 @@
         </mat-form-field>
     </div>
     <div class="button-row">
-        <button mat-flat-button class="cancel-button" (click)="cancel.emit()">Cancel</button>
+        <button mat-flat-button class="cancel-button" (click)="closeForm()">Cancel</button>
         <button mat-flat-button class="save-button" color="primary" [disabled]="!taskForm.valid" (click)="createTask()">Save</button>
     </div>
 </form>

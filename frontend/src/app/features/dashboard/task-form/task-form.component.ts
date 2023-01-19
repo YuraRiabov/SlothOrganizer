@@ -1,6 +1,6 @@
 import * as dashboardActions from '@store/actions/dashboard.actions';
 
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { endRepeatingValidator, getDescriptionValidators, getTitleValidators, repeatingPeriodValidator, startBeforeEndValidator } from '@utils/validators/task-validators';
 import { getEnd, getPeriodLabel, getStart } from '@utils/form-helpers/task-form.helper';
@@ -19,7 +19,6 @@ import { selectChosenDashboardId } from '@store/selectors/dashboard.selectors';
     styleUrls: ['./task-form.component.sass']
 })
 export class TaskFormComponent extends BaseComponent implements OnInit {
-    @Output() public cancel = new EventEmitter<void>();
     public taskForm: FormGroup = {} as FormGroup;
 
     public isRepeating: boolean = false;
@@ -71,8 +70,12 @@ export class TaskFormComponent extends BaseComponent implements OnInit {
                 endRepeating: this.taskForm.get('endRepeating')?.value
             };
             this.store.dispatch(dashboardActions.createTask({ newTask }));
-            this.cancel.emit();
+            this.closeForm();
         });
+    }
+
+    public closeForm(): void {
+        this.store.dispatch(dashboardActions.closeSidebar());
     }
 
     private buildTaskFrom(): FormGroup {
