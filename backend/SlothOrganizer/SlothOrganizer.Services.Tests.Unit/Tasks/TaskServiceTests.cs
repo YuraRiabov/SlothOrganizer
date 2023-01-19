@@ -20,7 +20,7 @@ namespace SlothOrganizer.Services.Tests.Unit.Tasks
         private readonly IMapper _mapper;
         private readonly ITaskRepository _taskRepository;
         private readonly ITaskCompletionService _taskCompletionService;
-        private readonly IDateTimeService _dateTimeService;
+        private readonly ITaskCompletionPeriodConverter _taskCompletionPeriodConverter;
 
         public TaskServiceTests()
         {
@@ -28,9 +28,9 @@ namespace SlothOrganizer.Services.Tests.Unit.Tasks
             _mapper = config.CreateMapper();
             _taskRepository = A.Fake<ITaskRepository>();
             _taskCompletionService= A.Fake<ITaskCompletionService>();
-            _dateTimeService = new DateTimeService();
+            _taskCompletionPeriodConverter = new TaskCompletionPeriodConverter();
 
-            _taskService = new TaskService(_taskCompletionService, _mapper, _taskRepository, _dateTimeService);
+            _taskService = new TaskService(_taskCompletionService, _mapper, _taskRepository, _taskCompletionPeriodConverter);
         }
 
         [Theory]

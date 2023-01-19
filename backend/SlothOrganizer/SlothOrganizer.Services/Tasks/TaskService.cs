@@ -13,18 +13,18 @@ namespace SlothOrganizer.Services.Tasks
         private readonly ITaskCompletionService _taskCompletionService;
         private readonly IMapper _mapper;
         private readonly ITaskRepository _taskRepository;
-        private readonly IDateTimeService _dateTimeService;
-        public TaskService(ITaskCompletionService taskCompletionService, IMapper mapper, ITaskRepository taskRepository, IDateTimeService dateTimeService)
+        private readonly ITaskCompletionPeriodConverter _taskCompletionPeriodConverter;
+        public TaskService(ITaskCompletionService taskCompletionService, IMapper mapper, ITaskRepository taskRepository, ITaskCompletionPeriodConverter taskCompletionPeriodConverter)
         {
             _taskCompletionService = taskCompletionService;
             _mapper = mapper;
             _taskRepository = taskRepository;
-            _dateTimeService = dateTimeService;
+            _taskCompletionPeriodConverter = taskCompletionPeriodConverter;
         }
 
         public async Task<TaskDto> Create(NewTaskDto newTask)
         {
-            if (newTask.End - newTask.Start > _dateTimeService.GetLength(newTask.RepeatingPeriod))
+            if (newTask.End - newTask.Start > _taskCompletionPeriodConverter.GetLength(newTask.RepeatingPeriod))
             {
                 throw new InvalidPeriodException();
             }
