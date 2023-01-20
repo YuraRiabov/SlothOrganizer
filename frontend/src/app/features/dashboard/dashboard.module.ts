@@ -1,7 +1,6 @@
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { CommonModule } from '@angular/common';
-import { CreateTaskComponent } from './create-task/create-task.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { DashboardEffects } from '@store/effects/dashboard/dashboard.effects';
 import { DashboardRoutingModule } from './dashboard-routing.module';
@@ -15,7 +14,6 @@ import { TaskFormComponent } from './task-form/task-form.component';
 import { TaskInfoComponent } from './task-info/task-info.component';
 import { TasksEffects } from '@store/effects/dashboard/tasks.effects';
 import { TimelineComponent } from './timeline/timeline.component';
-import { UpdateTaskComponent } from './update-task/update-task.component';
 
 @NgModule({
     declarations: [
@@ -23,9 +21,7 @@ import { UpdateTaskComponent } from './update-task/update-task.component';
         TimelineComponent,
         TaskFormComponent,
         TaskInfoComponent,
-        DashboardSelectionComponent,
-        UpdateTaskComponent,
-        CreateTaskComponent
+        DashboardSelectionComponent
     ],
     imports: [
         CommonModule,

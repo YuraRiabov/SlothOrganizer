@@ -35,7 +35,7 @@ export class TasksEffects {
     public openDisplaySidebar$ = createEffect(
         () => {
             return this.actions$.pipe(
-                ofType(dashboardActions.chooseTask, dashboardActions.taskEdited),
+                ofType(dashboardActions.chooseTask),
                 map(() => dashboardActions.openSidebar({ sidebarType: SidebarType.Display }))
             );
         }
@@ -44,7 +44,7 @@ export class TasksEffects {
     public closeDisplaySidebar$ = createEffect(
         () => {
             return this.actions$.pipe(
-                ofType(dashboardActions.taskCreated),
+                ofType(dashboardActions.taskCreated, dashboardActions.taskEdited),
                 map(() => dashboardActions.closeSidebar())
             );
         }

@@ -33,13 +33,25 @@
     </button>
     <div [ngSwitch]="sidebarType$ | async">
         <so-sidebar class="sidebar" *ngSwitchCase="createSidebar" (closed)="closeSidebar()">
-            <so-create-task></so-create-task>
+            <so-task-form 
+                    (cancel)="closeSidebar()"
+                    (submitted)="createTask($event)"
+                    [initialValue]="null"
+                    [edit]="false"
+            >
+            </so-task-form>
         </so-sidebar>
         <so-sidebar class="sidebar" *ngSwitchCase="displaySidebar" (closed)="closeSidebar()">
             <so-task-info></so-task-info>
         </so-sidebar>
         <so-sidebar class="sidebar" *ngSwitchCase="editSidebar" (closed)="closeSidebar()">
-            <so-update-task></so-update-task>
+            <so-task-form
+                    [initialValue]="taskToUpdate$ | async" 
+                    (submitted)="updateTask($event)" 
+                    (cancel)="closeSidebar()" 
+                    [edit]="true"
+            >
+            </so-task-form>
         </so-sidebar>
     </div>
 </div>
