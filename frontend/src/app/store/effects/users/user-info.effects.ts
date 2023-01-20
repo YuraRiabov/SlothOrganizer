@@ -9,7 +9,7 @@ import { mergeMap } from 'rxjs';
 import { selectUserId } from '@store/selectors/auth.selectors';
 
 @Injectable()
-export class DashboardEffects {
+export class UserInfoEffects {
     public updateFirstName$ = createEffect(
         () => {
             return this.actions$.pipe(
@@ -17,7 +17,8 @@ export class DashboardEffects {
                 concatLatestFrom(() => this.store.select(selectUserId)),
                 mergeMap(([action, id]) => this.userInfoService.update({ id, firstName: action.firstName }))
             );
-        }, {
+        },
+        {
             dispatch: false
         }
     );
@@ -29,7 +30,8 @@ export class DashboardEffects {
                 concatLatestFrom(() => this.store.select(selectUserId)),
                 mergeMap(([action, id]) => this.userInfoService.update({ id, lastName: action.lastName }))
             );
-        }, {
+        },
+        {
             dispatch: false
         }
     );
@@ -41,7 +43,21 @@ export class DashboardEffects {
                 concatLatestFrom(() => this.store.select(selectUserId)),
                 mergeMap(([action, id]) => this.userInfoService.update({ id, avatarUrl: action.url }))
             );
-        }, {
+        },
+        {
+            dispatch: false
+        }
+    );
+
+    public deleteAvatar$ = createEffect(
+        () => {
+            return this.actions$.pipe(
+                ofType(profileActions.deleteAvatar),
+                concatLatestFrom(() => this.store.select(selectUserId)),
+                mergeMap(([, id]) => this.userInfoService.deleteAvatar(id))
+            );
+        },
+        {
             dispatch: false
         }
     );

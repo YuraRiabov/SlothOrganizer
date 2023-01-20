@@ -9,6 +9,9 @@ import { selectAccessToken } from '@store/selectors/auth.selectors';
 export class TokenInterceptor implements HttpInterceptor {
     constructor(private store: Store) {}
     intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+        if (req.url.includes('gyazo')) {
+            return next.handle(req);
+        }
         return this.store.select(selectAccessToken).pipe(
             switchMap((token) => {
                 if (token) {

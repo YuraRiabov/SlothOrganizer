@@ -15,10 +15,10 @@ export class UserInfoService extends HttpService {
     }
 
     public update(userUpdate: UserUpdate): Observable<null> {
-        return this.put('/reset-password', userUpdate);
+        return this.put('', userUpdate);
     }
 
     public deleteAvatar(userId: number): Observable<null> {
-        return this.delete(`${userId}/avatar`);
+        return this.delete(`/${userId}/avatar`);
     }
 }

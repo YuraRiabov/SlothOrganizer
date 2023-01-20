@@ -13,8 +13,7 @@ export const saveAvatar = createAction(
 );
 
 export const deleteAvatar = createAction(
-    '[Profile page] Delete avatar',
-    props<{ userId: number }>()
+    '[Profile page] Delete avatar'
 );
 
 export const updateFirstName = createAction(

@@ -9,6 +9,7 @@ import { MatNativeDateModule } from '@angular/material/core';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatSelectModule } from '@angular/material/select';
 import { MatSidenavModule } from '@angular/material/sidenav';
+import {MatTabsModule} from '@angular/material/tabs';
 import { NgModule } from '@angular/core';
 
 @NgModule({
@@ -25,7 +26,8 @@ import { NgModule } from '@angular/core';
         MatCheckboxModule,
         MatNativeDateModule,
         MatMenuModule,
-        MatSidenavModule
+        MatSidenavModule,
+        MatTabsModule
     ],
     exports: [
         MatInputModule,
@@ -37,7 +39,8 @@ import { NgModule } from '@angular/core';
         MatMenuModule,
         MatSelectModule,
         MatCheckboxModule,
-        MatSidenavModule
+        MatSidenavModule,
+        MatTabsModule
     ]
 })
 export class MaterialModule { }

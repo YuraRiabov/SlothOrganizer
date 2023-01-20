@@ -11,7 +11,11 @@ export class GyazoService {
     constructor(private http: HttpClient) { }
 
     public upload(image: FormData): Observable<string> {
-        return this.http.post<{ url: string }>(this.addToken(environment.gyazo.uploadUri), image).pipe(
+        return this.http.post<{ url: string }>(this.addToken(environment.gyazo.uploadUri), image, {
+            headers: {
+                'Access-Control-Allow-Origin': '*'
+            }
+        }).pipe(
             map(response => response.url)
         );
     }

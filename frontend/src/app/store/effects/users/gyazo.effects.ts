@@ -7,7 +7,7 @@ import { GyazoService } from '@api/gyazo.service';
 import { Injectable } from '@angular/core';
 
 @Injectable()
-export class DashboardEffects {
+export class GyazoEffects {
     public uploadAvatar$ = createEffect(
         () => {
             return this.actions$.pipe(
