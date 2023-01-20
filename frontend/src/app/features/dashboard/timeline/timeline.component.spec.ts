@@ -5,17 +5,13 @@ import { CommonModule } from '@angular/common';
 import { DashboardRoutingModule } from '../dashboard-routing.module';
 import { FormsModule } from '@angular/forms';
 import { MaterialModule } from '@shared/material/material.module';
-import { Store } from '@ngrx/store';
 import { Task } from '#types/dashboard/tasks/task';
 import { TimelineComponent } from './timeline.component';
 import { TimelineScale } from '#types/dashboard/timeline/enums/timeline-scale';
-import { of } from 'rxjs';
-import { selectTasks } from '@store/selectors/dashboard.selectors';
 
 describe('TimelineComponent', () => {
     let component: TimelineComponent;
     let fixture: ComponentFixture<TimelineComponent>;
-    let store: jasmine.SpyObj<Store>;
     const mockTask: Task = {
         title: 'title',
         id: 1,
@@ -89,8 +85,6 @@ describe('TimelineComponent', () => {
     };
 
     beforeEach(async () => {
-        store = jasmine.createSpyObj('Store', ['select', 'dispatch']);
-        store.select.and.returnValue(of([mockTask]));
         await TestBed.configureTestingModule({
             declarations: [TimelineComponent],
             imports: [
@@ -98,9 +92,6 @@ describe('TimelineComponent', () => {
                 DashboardRoutingModule,
                 MaterialModule,
                 FormsModule
-            ],
-            providers: [
-                { provide: Store, useValue: store }
             ]
         })
             .compileComponents();
@@ -109,6 +100,7 @@ describe('TimelineComponent', () => {
         component = fixture.componentInstance;
         component.scale = TimelineScale.Day;
         component.date = new Date(2022, 12, 16, 12);
+        component.tasks = [mockTask];
         fixture.detectChanges();
         spyOn(component.blockClicked, 'emit');
     });
@@ -152,6 +144,5 @@ describe('TimelineComponent', () => {
         fixture.detectChanges();
 
         expect(component.blockClicked.emit).toHaveBeenCalledTimes(1);
-        expect(store.dispatch).toHaveBeenCalledTimes(1);
     });
 });

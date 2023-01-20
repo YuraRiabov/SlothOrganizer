@@ -5,11 +5,11 @@ using SlothOrganizer.Contracts.DTO.Tasks.Task.Enums;
 using SlothOrganizer.Domain.Entities;
 using SlothOrganizer.Domain.Exceptions;
 using SlothOrganizer.Domain.Repositories;
+using SlothOrganizer.Services.Abstractions.Tasks;
 using SlothOrganizer.Services.Abstractions.Utility;
 using SlothOrganizer.Services.Tasks;
 using SlothOrganizer.Services.Tasks.Mapping;
 using Xunit;
-using Task = System.Threading.Tasks.Task;
 
 namespace SlothOrganizer.Services.Tests.Unit.Tasks
 {
@@ -19,6 +19,7 @@ namespace SlothOrganizer.Services.Tests.Unit.Tasks
         private readonly IMapper _mapper;
         private readonly ITaskCompletionRepository _taskCompletionRepository;
         private readonly IDateTimeService _dateTimeService;
+        private readonly ITaskCompletionPeriodConverter _taskCompletionPeriodConverter;
 
         public TaskCompletionServiceTests()
         {
@@ -26,8 +27,9 @@ namespace SlothOrganizer.Services.Tests.Unit.Tasks
             _mapper = config.CreateMapper();
             _taskCompletionRepository = A.Fake<ITaskCompletionRepository>();
             _dateTimeService = A.Fake<IDateTimeService>();
+            _taskCompletionPeriodConverter = A.Fake<ITaskCompletionPeriodConverter>();
 
-            _taskCompletionService = new TaskCompletionService(_mapper, _taskCompletionRepository, _dateTimeService);
+            _taskCompletionService = new TaskCompletionService(_mapper, _taskCompletionRepository, _dateTimeService, _taskCompletionPeriodConverter);
         }
 
         [Theory]
@@ -104,7 +106,7 @@ namespace SlothOrganizer.Services.Tests.Unit.Tasks
             var endRepeating = taskCompletions.Max(tc => tc.End).AddDays(daysAdded);
             A.CallTo(() => _taskCompletionRepository.Insert(A<List<TaskCompletion>>._))
                 .ReturnsLazily((List<TaskCompletion> taskCompletions) => taskCompletions);
-            A.CallTo(() => _dateTimeService.GetRepeatingPeriod(A<TimeSpan>._)).Returns(taskRepeatingPeriod);
+            A.CallTo(() => _taskCompletionPeriodConverter.GetRepeatingPeriod(A<TimeSpan>._)).Returns(taskRepeatingPeriod);
 
             var result = await _taskCompletionService.Add(taskCompletions, endRepeating);
 

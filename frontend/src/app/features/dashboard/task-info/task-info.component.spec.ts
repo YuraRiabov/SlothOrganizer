@@ -54,7 +54,6 @@ describe('TaskInfoComponent', () => {
         fixture = TestBed.createComponent(TaskInfoComponent);
         component = fixture.componentInstance;
         fixture.detectChanges();
-        spyOn(component.switchToEdit, 'emit');
     });
 
     it('should create', () => {
@@ -82,6 +81,6 @@ describe('TaskInfoComponent', () => {
 
         button.click();
 
-        expect(component.switchToEdit.emit).toHaveBeenCalledTimes(1);
+        expect(store.dispatch).toHaveBeenCalledTimes(1);
     });
 });

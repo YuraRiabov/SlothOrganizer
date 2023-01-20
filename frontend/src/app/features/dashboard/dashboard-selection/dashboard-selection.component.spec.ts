@@ -1,26 +1,19 @@
-import * as dashboardActions from '@store/actions/dashboard.actions';
-
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { By } from '@angular/platform-browser';
 import { CommonModule } from '@angular/common';
-import { CreateDashboardComponent } from './create-dashboard.component';
 import { DashboardRoutingModule } from '../dashboard-routing.module';
+import { DashboardSelectionComponent } from './dashboard-selection.component';
 import { MaterialModule } from '@shared/material/material.module';
-import { Store } from '@ngrx/store';
-import { of } from 'rxjs';
 
-describe('CreateDashboardComponent', () => {
-    let component: CreateDashboardComponent;
-    let fixture: ComponentFixture<CreateDashboardComponent>;
-    let store: jasmine.SpyObj<Store>;
+describe('DashboardSelectionComponent', () => {
+    let component: DashboardSelectionComponent;
+    let fixture: ComponentFixture<DashboardSelectionComponent>;
     let submitButton: HTMLElement;
 
     beforeEach(async () => {
-        store = jasmine.createSpyObj('Store', ['select', 'dispatch']);
-        store.select.and.returnValue(of(1));
         await TestBed.configureTestingModule({
             imports: [
                 CommonModule,
@@ -30,18 +23,14 @@ describe('CreateDashboardComponent', () => {
                 ReactiveFormsModule,
                 BrowserAnimationsModule
             ],
-            declarations: [CreateDashboardComponent],
-            providers: [
-                { provide: Store, useValue: store }
-            ]
+            declarations: [DashboardSelectionComponent]
         })
             .compileComponents();
 
-        fixture = TestBed.createComponent(CreateDashboardComponent);
+        fixture = TestBed.createComponent(DashboardSelectionComponent);
         component = fixture.componentInstance;
         fixture.detectChanges();
-        submitButton = fixture.debugElement.query(By.css('.submit-button')).nativeElement;
-        spyOn(component.closed, 'emit');
+        spyOn(component, 'createDashboard');
     });
 
     it('should create', () => {
@@ -49,32 +38,34 @@ describe('CreateDashboardComponent', () => {
     });
 
     it('should be disabled when title empty', () => {
+        component.creating = true;
+        fixture.detectChanges();
+
+        submitButton = fixture.debugElement.query(By.css('.submit-button')).nativeElement;
         submitButton.click();
 
-        expect(store.select).toHaveBeenCalledTimes(0);
+        expect(component.createDashboard).toHaveBeenCalledTimes(0);
     });
 
     it('should call store when title not empty', () => {
+        component.creating = true;
+        fixture.detectChanges();
+
         component.dashboardTitleControl.setValue('Title');
         fixture.detectChanges();
 
+        submitButton = fixture.debugElement.query(By.css('.submit-button')).nativeElement;
         submitButton.click();
 
-        expect(store.select).toHaveBeenCalledTimes(1);
-        expect(store.dispatch)
-            .toHaveBeenCalledOnceWith(dashboardActions.createDashbaord({
-                dashboard: {
-                    userId: 1,
-                    title: 'Title'
-                }
-            }));
+        expect(component.createDashboard).toHaveBeenCalledTimes(1);
     });
 
-    it('should call close on cancel click', () => {
+    it('should close creation on cancel click', () => {
+        component.creating = true;
+        fixture.detectChanges();
         const cancelButton = fixture.debugElement.query(By.css('.cancel-button')).nativeElement;
-
         cancelButton.click();
 
-        expect(component.closed.emit).toHaveBeenCalledTimes(1);
+        expect(component.creating).toBeFalse();
     });
 });

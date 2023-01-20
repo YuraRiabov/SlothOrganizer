@@ -1,0 +1,30 @@
+<div class="dashboard-selection-wrapper">
+    <ng-container *ngIf="!creating">
+        <div [mat-menu-trigger-for]="menu" class="title-selection-item dashboard-title">
+            <p>{{selectedDashboard?.title}}</p>
+            <mat-icon>keyboard_arrow_down</mat-icon>
+        </div>
+        <mat-menu #menu="matMenu" yPosition="below" xPosition="after">
+            <div class="title-selection-item" mat-menu-item *ngFor="let dashboard of dashboards" (click)="selectDashboard.emit(dashboard)">
+                <p>{{dashboard.title}}</p>
+            </div>
+            <div mat-menu-item (click)="creating = true" class="title-selection-item">
+                <mat-icon>add</mat-icon>
+                <p>New</p>
+            </div>
+        </mat-menu>
+    </ng-container>
+    <ng-container *ngIf="creating">
+        <div class="title-selection-item">
+            <mat-form-field class="title-field">
+                <input [formControl]="dashboardTitleControl" matInput type="text">
+            </mat-form-field>
+            <button mat-icon-button class="submit-button" [disabled]="!dashboardTitleControl.valid" (click)="createDashboard()">
+                <mat-icon>check</mat-icon>
+            </button>
+            <button mat-icon-button class="cancel-button" (click)="creating = false">
+                <mat-icon>close</mat-icon>
+            </button>
+        </div>
+    </ng-container>
+</div>

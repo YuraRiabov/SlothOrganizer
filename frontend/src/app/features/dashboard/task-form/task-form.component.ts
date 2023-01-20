@@ -18,10 +18,18 @@ import { hasLengthErrors } from '@utils/validators/common-validators';
 })
 export class TaskFormComponent extends BaseComponent {
     private dashboardId!: number;
-    @Input() public set initialValue(value: NewTask) {
-        this.isRepeating = !!value.endRepeating;
-        this.dashboardId = value.dashboardId;
-        this.taskForm = this.buildTaskFrom(value);
+    @Input() public set initialValue(value: NewTask | null) {
+        const initialValue = value ?? {
+            dashboardId: -1,
+            title: '',
+            description: '',
+            repeatingPeriod: TaskRepeatingPeriod.None,
+            start: startOfDay(new Date()),
+            end: endOfDay(new Date()),
+        };
+        this.isRepeating = !!initialValue.endRepeating;
+        this.dashboardId = initialValue.dashboardId;
+        this.taskForm = this.buildTaskFrom(initialValue);
         this.update();
     }
     @Output() public submitted = new EventEmitter<NewTask>();
@@ -85,12 +93,11 @@ export class TaskFormComponent extends BaseComponent {
         const titleContol = new FormControl(initialValue.title, getTitleValidators());
         const descriptionControl = new FormControl(initialValue.description, getDescriptionValidators());
 
-        const validators = [ startBeforeEndValidator(), endRepeatingValidator()];
+        const validators = [startBeforeEndValidator(), endRepeatingValidator()];
         if (!this.editing) {
             validators.push(repeatingPeriodValidator());
         }
         const datePipe = new DatePipe('en-US');
-
         return new FormGroup({
             title: titleContol,
             description: descriptionControl,

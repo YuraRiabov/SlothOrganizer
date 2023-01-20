@@ -11,7 +11,6 @@ using SlothOrganizer.Services.Abstractions.Utility;
 using SlothOrganizer.Services.Auth.Tokens;
 using SlothOrganizer.Services.Users;
 using Xunit;
-using Task = System.Threading.Tasks.Task;
 
 namespace SlothOrganizer.Services.Tests.Unit.Users
 {

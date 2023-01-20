@@ -54,6 +54,7 @@ namespace SlothOrganizer.Web.Extensions
             services.AddScoped<IDashboardService, DashboardService>();
             services.AddScoped<ITaskService, TaskService>();
             services.AddScoped<ITaskCompletionService, TaskCompletionService>();
+            services.AddScoped<ITaskCompletionPeriodConverter, TaskCompletionPeriodConverter>();
             return services;
         }
 

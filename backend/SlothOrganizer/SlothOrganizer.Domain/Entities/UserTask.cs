@@ -1,6 +1,6 @@
 ﻿namespace SlothOrganizer.Domain.Entities
 {
-    public class Task
+    public class UserTask
     {
         public long Id { get; set; }
         public long DashboardId { get; set; }

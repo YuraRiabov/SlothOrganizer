@@ -31,10 +31,6 @@ namespace SlothOrganizer.Web.Tests.Integration.Base
             DateTimeService = A.Fake<IDateTimeService>();
             RealDateTimeService = new DateTimeService();
             A.CallTo(() => DateTimeService.Now()).Returns(new DateTime(2022, 12, 8, 12, 0, 0));
-            A.CallTo(() => DateTimeService.GetLength(A<TaskRepeatingPeriod>._))
-                .ReturnsLazily((TaskRepeatingPeriod period) => RealDateTimeService.GetLength(period));
-            A.CallTo(() => DateTimeService.GetRepeatingPeriod(A<TimeSpan>._))
-                .ReturnsLazily((TimeSpan span) => RealDateTimeService.GetRepeatingPeriod(span));
             RandomService = A.Fake<IRandomService>();
             RealRandomService = new RandomService();
             A.CallTo(() => RandomService.GetRandomBytes(16)).Returns(RealRandomService.GetRandomBytes(16));

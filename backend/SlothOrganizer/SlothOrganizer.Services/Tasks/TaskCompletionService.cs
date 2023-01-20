@@ -16,11 +16,13 @@ namespace SlothOrganizer.Services.Tasks
         private readonly IMapper _mapper;
         private readonly ITaskCompletionRepository _taskCompletionRepository;
         private readonly IDateTimeService _dateTimeService;
-        public TaskCompletionService(IMapper mapper, ITaskCompletionRepository taskCompletionRepository, IDateTimeService dateTimeService)
+        private readonly ITaskCompletionPeriodConverter _taskCompletionPeriodConverter;
+        public TaskCompletionService(IMapper mapper, ITaskCompletionRepository taskCompletionRepository, IDateTimeService dateTimeService, ITaskCompletionPeriodConverter taskCompletionPeriodConverter)
         {
             _mapper = mapper;
             _taskCompletionRepository = taskCompletionRepository;
             _dateTimeService = dateTimeService;
+            _taskCompletionPeriodConverter = taskCompletionPeriodConverter;
         }
 
         public async Task<List<TaskCompletionDto>> Create(NewTaskDto newTask, long taskId)
@@ -57,7 +59,7 @@ namespace SlothOrganizer.Services.Tasks
             var lastCompletion = lastTwoCompletions.Last();
             var repeatingPeriodLength = lastCompletion.Start - lastTwoCompletions.First().Start;
             var length = lastCompletion.End - lastCompletion.Start;
-            var repeatingPeriod = _dateTimeService.GetRepeatingPeriod(repeatingPeriodLength);
+            var repeatingPeriod = _taskCompletionPeriodConverter.GetRepeatingPeriod(repeatingPeriodLength);
             var firstStart = GetNextStart(lastCompletion.Start, repeatingPeriod);
 
             var newCompletions = Generate(firstStart, length, repeatingPeriod, endRepeating, lastCompletion.TaskId);

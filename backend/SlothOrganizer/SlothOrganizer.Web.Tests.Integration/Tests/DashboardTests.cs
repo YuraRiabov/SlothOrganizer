@@ -2,7 +2,6 @@
 using SlothOrganizer.Contracts.DTO.Tasks.Dashboard;
 using SlothOrganizer.Web.Tests.Integration.Base;
 using SlothOrganizer.Web.Tests.Integration.Setup;
-using Task = System.Threading.Tasks.Task;
 
 namespace SlothOrganizer.Web.Tests.Integration.Tests
 {

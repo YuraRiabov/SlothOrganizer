@@ -2,6 +2,7 @@
 using FakeItEasy;
 using SlothOrganizer.Contracts.DTO.Tasks.Task;
 using SlothOrganizer.Contracts.DTO.Tasks.Task.Enums;
+using SlothOrganizer.Domain.Entities;
 using SlothOrganizer.Domain.Exceptions;
 using SlothOrganizer.Domain.Repositories;
 using SlothOrganizer.Services.Abstractions.Tasks;
@@ -10,7 +11,6 @@ using SlothOrganizer.Services.Tasks;
 using SlothOrganizer.Services.Tasks.Mapping;
 using SlothOrganizer.Services.Utility;
 using Xunit;
-using Entities = SlothOrganizer.Domain.Entities;
 
 namespace SlothOrganizer.Services.Tests.Unit.Tasks
 {
@@ -20,7 +20,7 @@ namespace SlothOrganizer.Services.Tests.Unit.Tasks
         private readonly IMapper _mapper;
         private readonly ITaskRepository _taskRepository;
         private readonly ITaskCompletionService _taskCompletionService;
-        private readonly IDateTimeService _dateTimeService;
+        private readonly ITaskCompletionPeriodConverter _taskCompletionPeriodConverter;
 
         public TaskServiceTests()
         {
@@ -28,9 +28,9 @@ namespace SlothOrganizer.Services.Tests.Unit.Tasks
             _mapper = config.CreateMapper();
             _taskRepository = A.Fake<ITaskRepository>();
             _taskCompletionService = A.Fake<ITaskCompletionService>();
-            _dateTimeService = new DateTimeService();
+            _taskCompletionPeriodConverter = new TaskCompletionPeriodConverter();
 
-            _taskService = new TaskService(_taskCompletionService, _mapper, _taskRepository, _dateTimeService);
+            _taskService = new TaskService(_taskCompletionService, _mapper, _taskRepository, _taskCompletionPeriodConverter);
         }
 
         [Theory]
@@ -40,10 +40,10 @@ namespace SlothOrganizer.Services.Tests.Unit.Tasks
         public async Task Create_WhenValidPeriod_ShouldCreate(TaskRepeatingPeriod period)
         {
             var newTask = GetNewTask(period);
-            var task = _mapper.Map<Entities.Task>(newTask);
+            var task = _mapper.Map<UserTask>(newTask);
             task.Id = 1;
             var taskCompletions = GetTaskCompletions();
-            A.CallTo(() => _taskRepository.Insert(A<Entities.Task>._)).Returns(task);
+            A.CallTo(() => _taskRepository.Insert(A<UserTask>._)).Returns(task);
             A.CallTo(() => _taskCompletionService.Create(newTask, 1)).Returns(taskCompletions);
 
             var result = await _taskService.Create(newTask);
@@ -84,7 +84,7 @@ namespace SlothOrganizer.Services.Tests.Unit.Tasks
         public async Task Get_WhenNoData_ShouldReturnEmpty()
         {
             var dashboardId = 1;
-            A.CallTo(() => _taskRepository.Get(dashboardId)).Returns(new List<Entities.Task>());
+            A.CallTo(() => _taskRepository.Get(dashboardId)).Returns(new List<UserTask>());
 
             var result = await _taskRepository.Get(dashboardId);
 
@@ -96,14 +96,14 @@ namespace SlothOrganizer.Services.Tests.Unit.Tasks
         {
             var updateTaskDto = GetTaskUpdate();
             updateTaskDto.Task.TaskCompletions = updateTaskDto.Task.TaskCompletions.Take(1).ToList();
-            A.CallTo(() => _taskRepository.Update(A<Entities.Task>._))
-                .ReturnsLazily((Entities.Task task) => task);
+            A.CallTo(() => _taskRepository.Update(A<UserTask>._))
+                .ReturnsLazily((UserTask task) => task);
             A.CallTo(() => _taskCompletionService.Update(A<TaskCompletionDto>._))
                 .Returns(updateTaskDto.TaskCompletion);
 
             var result = await _taskService.Update(updateTaskDto);
 
-            A.CallTo(() => _taskRepository.Update(A<Entities.Task>._)).MustHaveHappenedOnceExactly();
+            A.CallTo(() => _taskRepository.Update(A<UserTask>._)).MustHaveHappenedOnceExactly();
             A.CallTo(() => _taskCompletionService.Update(A<TaskCompletionDto>._)).MustHaveHappenedOnceExactly();
             A.CallTo(() => _taskCompletionService.Add(A<List<TaskCompletionDto>>._, A<DateTime>._)).MustNotHaveHappened();
             A.CallTo(() => _taskCompletionService.Delete(A<long>._, A<DateTime>._)).MustNotHaveHappened();
@@ -115,8 +115,8 @@ namespace SlothOrganizer.Services.Tests.Unit.Tasks
         public async Task Update_WhenEndRepeatingLater_ShouldAdd()
         {
             var updateTaskDto = GetTaskUpdate();
-            A.CallTo(() => _taskRepository.Update(A<Entities.Task>._))
-                .ReturnsLazily((Entities.Task task) => task);
+            A.CallTo(() => _taskRepository.Update(A<UserTask>._))
+                .ReturnsLazily((UserTask task) => task);
             A.CallTo(() => _taskCompletionService.Update(A<TaskCompletionDto>._))
                 .Returns(updateTaskDto.TaskCompletion);
             A.CallTo(() => _taskCompletionService.Add(A<List<TaskCompletionDto>>._, A<DateTime>._))
@@ -124,7 +124,7 @@ namespace SlothOrganizer.Services.Tests.Unit.Tasks
 
             var result = await _taskService.Update(updateTaskDto);
 
-            A.CallTo(() => _taskRepository.Update(A<Entities.Task>._)).MustHaveHappenedOnceExactly();
+            A.CallTo(() => _taskRepository.Update(A<UserTask>._)).MustHaveHappenedOnceExactly();
             A.CallTo(() => _taskCompletionService.Update(A<TaskCompletionDto>._)).MustHaveHappenedOnceExactly();
             A.CallTo(() => _taskCompletionService.Add(A<List<TaskCompletionDto>>._, A<DateTime>._)).MustHaveHappenedOnceExactly();
             A.CallTo(() => _taskCompletionService.Delete(A<long>._, A<DateTime>._)).MustNotHaveHappened();
@@ -137,14 +137,14 @@ namespace SlothOrganizer.Services.Tests.Unit.Tasks
         {
             var updateTaskDto = GetTaskUpdate();
             updateTaskDto.EndRepeating = updateTaskDto.EndRepeating.Value.AddDays(-15);
-            A.CallTo(() => _taskRepository.Update(A<Entities.Task>._))
-                .ReturnsLazily((Entities.Task task) => task);
+            A.CallTo(() => _taskRepository.Update(A<UserTask>._))
+                .ReturnsLazily((UserTask task) => task);
             A.CallTo(() => _taskCompletionService.Update(A<TaskCompletionDto>._))
                 .Returns(updateTaskDto.TaskCompletion);
 
             var result = await _taskService.Update(updateTaskDto);
 
-            A.CallTo(() => _taskRepository.Update(A<Entities.Task>._)).MustHaveHappenedOnceExactly();
+            A.CallTo(() => _taskRepository.Update(A<UserTask>._)).MustHaveHappenedOnceExactly();
             A.CallTo(() => _taskCompletionService.Update(A<TaskCompletionDto>._)).MustHaveHappenedOnceExactly();
             A.CallTo(() => _taskCompletionService.Add(A<List<TaskCompletionDto>>._, A<DateTime>._)).MustNotHaveHappened();
             A.CallTo(() => _taskCompletionService.Delete(A<long>._, A<DateTime>._)).MustHaveHappenedOnceExactly();
@@ -156,7 +156,7 @@ namespace SlothOrganizer.Services.Tests.Unit.Tasks
         public async Task Update_WhenInvalidData_ShouldThrow()
         {
             var updateTaskDto = GetTaskUpdate();
-            A.CallTo(() => _taskRepository.Update(A<Entities.Task>._)).Returns(Task.FromResult<Entities.Task?>(null));
+            A.CallTo(() => _taskRepository.Update(A<UserTask>._)).Returns(Task.FromResult<UserTask?>(null));
 
             var code = async () => await _taskService.Update(updateTaskDto);
 
@@ -230,18 +230,18 @@ namespace SlothOrganizer.Services.Tests.Unit.Tasks
             };
         }
 
-        private static List<Entities.Task> GetTasks()
+        private static List<UserTask> GetTasks()
         {
-            return new List<Entities.Task>
+            return new List<UserTask>
             {
-                new Entities.Task
+                new UserTask
                 {
                     Id = 1,
                     DashboardId = 1,
                     Title = "Test",
                     Description = "Test"
                 },
-                new Entities.Task
+                new UserTask
                 {
                     Id = 2,
                     DashboardId = 1,
