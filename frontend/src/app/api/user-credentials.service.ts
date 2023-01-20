@@ -5,6 +5,7 @@ import { Injectable } from '@angular/core';
 import { Login } from '#types/auth/login';
 import { NewUser } from '#types/user/new-user';
 import { Observable } from 'rxjs';
+import { PasswordUpdate } from '#types/user/password-update';
 import { ResetPassword } from '#types/user/reset-password';
 import { User } from '#types/user/user';
 import { VerificationCode } from '#types/auth/verification-code';
@@ -33,5 +34,9 @@ export class UserCredentialsService extends HttpService {
 
     public resetPassword(resetPassword: ResetPassword) : Observable<AuthState> {
         return this.put<AuthState>('/reset-password', resetPassword);
+    }
+
+    public updatePassword(passwordUpdate: PasswordUpdate): Observable<null> {
+        return this.put('/password', passwordUpdate);
     }
 }
