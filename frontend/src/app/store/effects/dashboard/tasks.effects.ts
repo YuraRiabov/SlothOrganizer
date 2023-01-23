@@ -15,7 +15,8 @@ export class TasksEffects {
         () => {
             return this.actions$.pipe(
                 ofType(dashboardActions.createTask),
-                mergeMap((action) => this.tasksService.create(action.newTask)),
+                concatLatestFrom(() => this.store.select(selectChosenDashboardId)),
+                mergeMap(([action, id]) => this.tasksService.create({ ...action.newTask, dashboardId: id})),
                 map((task) => dashboardActions.taskCreated({ task }))
             );
         }
