@@ -103,7 +103,7 @@ namespace SlothOrganizer.Persistence.Repositories
 
         public async Task<User?> UpdateAvatar(string? avatar, long id)
         {
-            var query = Resources.UpdateUser;
+            var query = Resources.UpdateUserAvatar;
 
             var parameters = new
             {

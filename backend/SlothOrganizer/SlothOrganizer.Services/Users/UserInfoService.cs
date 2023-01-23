@@ -12,10 +12,11 @@ namespace SlothOrganizer.Services.Users
         private readonly IUserRepository _userRepository;
         private readonly IMapper _mapper;
         private readonly IImageService _imageService;
-        public UserInfoService(IUserRepository userRepository, IMapper mapper)
+        public UserInfoService(IUserRepository userRepository, IMapper mapper, IImageService imageService)
         {
             _userRepository = userRepository;
             _mapper = mapper;
+            _imageService = imageService;
         }
 
         public async Task Update(UpdateUserDto updateUserDto)

@@ -28,7 +28,7 @@ export class PersonalInfoComponent {
 
         if(file) {
             const formData = new FormData();
-            formData.append('imagedata', file);
+            formData.append('avatar', file);
             this.avatarUpdated.emit(formData);
         }
     }

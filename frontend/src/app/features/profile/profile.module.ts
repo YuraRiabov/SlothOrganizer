@@ -1,6 +1,5 @@
 import { CommonModule } from '@angular/common';
 import { EffectsModule } from '@ngrx/effects';
-import { GyazoEffects } from '@store/effects/users/gyazo.effects';
 import { MaterialModule } from '@shared/material/material.module';
 import { NgModule } from '@angular/core';
 import { PersonalInfoComponent } from './personal-info/personal-info.component';
@@ -20,7 +19,7 @@ import { UserInfoEffects } from '@store/effects/users/user-info.effects';
         ProfileRoutingModule,
         MaterialModule,
         ReactiveFormsModule,
-        EffectsModule.forFeature([UserCredentialsEffects, UserInfoEffects, GyazoEffects])
+        EffectsModule.forFeature([UserCredentialsEffects, UserInfoEffects])
     ]
 })
 export class ProfileModule { }

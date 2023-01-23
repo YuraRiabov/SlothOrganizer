@@ -25,7 +25,7 @@ namespace SlothOrganizer.Presentation.Controllers
         }
 
         [HttpPut("{userId}/avatar")]
-        public async Task<UserDto> Update(long userId, IFormFile avatar)
+        public async Task<UserDto> Update(long userId, [FromForm] IFormFile avatar)
         {
             byte[] avatarBytes;
             using (var memoryStream = new MemoryStream())
