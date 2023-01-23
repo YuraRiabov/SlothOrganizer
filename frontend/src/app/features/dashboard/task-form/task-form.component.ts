@@ -17,7 +17,6 @@ import { hasLengthErrors } from '@utils/validators/common-validators';
     styleUrls: ['./task-form.component.sass']
 })
 export class TaskFormComponent extends BaseComponent {
-    private dashboardId!: number;
     @Input() public set initialValue(value: NewTask | null) {
         const initialValue = value ?? {
             dashboardId: -1,
@@ -28,7 +27,6 @@ export class TaskFormComponent extends BaseComponent {
             end: endOfDay(new Date()),
         };
         this.isRepeating = !!initialValue.endRepeating;
-        this.dashboardId = initialValue.dashboardId;
         this.taskForm = this.buildTaskFrom(initialValue);
         this.update();
     }
@@ -78,7 +76,6 @@ export class TaskFormComponent extends BaseComponent {
 
     public createTask(): void {
         const newTask: NewTask = {
-            dashboardId: this.dashboardId,
             title: this.taskForm.get('title')?.value,
             description: this.taskForm.get('description')?.value,
             start: getStart(this.taskForm),
