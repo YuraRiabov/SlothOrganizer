@@ -7,7 +7,6 @@ using SlothOrganizer.Domain.Exceptions;
 using SlothOrganizer.Domain.Repositories;
 using SlothOrganizer.Services.Abstractions.Tasks;
 using SlothOrganizer.Services.Abstractions.Utility;
-using Task = System.Threading.Tasks.Task;
 
 namespace SlothOrganizer.Services.Tasks
 {

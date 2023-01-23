@@ -1,9 +1,7 @@
-﻿using System.Threading.Tasks;
-using Dapper;
+﻿using Dapper;
 using SlothOrganizer.Domain.Entities;
 using SlothOrganizer.Domain.Repositories;
 using SlothOrganizer.Persistence.Properties;
-using Task = System.Threading.Tasks.Task;
 
 namespace SlothOrganizer.Persistence.Repositories
 {
