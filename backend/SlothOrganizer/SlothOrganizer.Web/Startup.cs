@@ -25,6 +25,7 @@ namespace SlothOrganizer.Web
             services.AddCustomServices();
             services.AddEmailService(Configuration);
             services.AddJwtOptions(Configuration);
+            services.AddImageService(Configuration);
             services.AddFluentMigrations(Configuration);
             services.AddCustomAuthentication(Configuration);
 

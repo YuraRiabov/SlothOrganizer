@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using SlothOrganizer.Contracts.DTO.User;
 using SlothOrganizer.Services.Abstractions.Users;
@@ -21,6 +22,18 @@ namespace SlothOrganizer.Presentation.Controllers
         public async Task Update([FromBody] UpdateUserDto updateUserDto)
         {
             await _userInfoService.Update(updateUserDto);
+        }
+
+        [HttpPut("{userId}/avatar")]
+        public async Task<UserDto> Update(long userId, IFormFile avatar)
+        {
+            byte[] avatarBytes;
+            using (var memoryStream = new MemoryStream())
+            {
+                avatar.CopyTo(memoryStream);
+                avatarBytes = memoryStream.ToArray();
+            }
+            return await _userInfoService.UpdateAvatar(userId, avatarBytes, avatar.FileName);
         }
 
         [HttpDelete("{userId}/avatar")]

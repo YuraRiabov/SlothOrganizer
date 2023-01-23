@@ -332,7 +332,9 @@ namespace SlothOrganizer.Persistence.Properties {
         /// <summary>
         ///   Looks up a localized string similar to UPDATE Users SET 
         ///	AvatarUrl = @AvatarUrl
-        ///WHERE Id = @Id.
+        ///WHERE Id = @Id
+        ///
+        ///SELECT * FROM Users WHERE Id = @Id.
         /// </summary>
         internal static string UpdateUserAvatar {
             get {

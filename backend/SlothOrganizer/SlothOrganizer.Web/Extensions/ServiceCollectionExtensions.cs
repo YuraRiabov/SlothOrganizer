@@ -21,6 +21,7 @@ using SlothOrganizer.Services.Auth.UserVerification;
 using SlothOrganizer.Services.Abstractions.Auth.UserVerification;
 using SlothOrganizer.Services.Tasks;
 using SlothOrganizer.Services.Abstractions.Tasks;
+using SlothOrganizer.Services.Utility.Gyazo;
 
 namespace SlothOrganizer.Web.Extensions
 {
@@ -78,6 +79,19 @@ namespace SlothOrganizer.Web.Extensions
                 options.Password = configuration["SmtpPassword"];
             });
             services.AddScoped<IEmailService, EmailService>();
+            return services;
+        }
+
+        public static IServiceCollection AddImageService(this IServiceCollection services, IConfiguration configuration)
+        {
+            var smtpSection = configuration.GetRequiredSection("Gyazo");
+            services.Configure<GyazoOptions>(options =>
+            {
+                smtpSection.Bind(options);
+                options.AccessToken = configuration["GyazoToken"];
+            });
+            services.AddScoped<IImageService, GyazoService>();
+            services.AddHttpClient<IImageService, GyazoService>();
             return services;
         }
 

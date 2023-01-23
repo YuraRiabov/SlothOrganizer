@@ -6,5 +6,6 @@ namespace SlothOrganizer.Services.Abstractions.Users
     {
         Task DeleteAvatar(long userId);
         Task Update(UpdateUserDto updateUserDto);
+        Task<UserDto> UpdateAvatar(long userId, byte[] avatar, string fileName);
     }
 }

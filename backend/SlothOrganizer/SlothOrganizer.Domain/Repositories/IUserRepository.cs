@@ -12,7 +12,7 @@ namespace SlothOrganizer.Domain.Repositories
         public Task Delete(long id);
         Task<User?> VerifyEmail(string email, int code);
         Task<User?> Get(string email, int verificationCode);
-        Task UpdateAvatar(string? avatar, long id);
+        Task<User?> UpdateAvatar(string? avatar, long id);
         Task UpdateFirstName(string firstName, long id);
         Task UpdateLastName(string lastName, long id);
     }
