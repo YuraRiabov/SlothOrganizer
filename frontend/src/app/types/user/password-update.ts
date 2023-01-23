@@ -1,5 +1,5 @@
 export interface PasswordUpdate {
-    email: string;
+    email?: string;
     password: string;
     oldPassword: string;
 }
