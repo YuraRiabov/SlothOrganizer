@@ -1,9 +1,9 @@
 <div class="dashboard-wrapper">
-    <div class="header">
+    <so-header class="header">
         <so-dashboard-selection [dashboards]="(dashboards$ | async) || []" [selectedDashboard]="currentDashboard$ | async"
             (newDashboardTitle)="createDashboard($event)" (selectDashboard)="selectDashboard($event)">
         </so-dashboard-selection>
-    </div>
+    </so-header>
     <div class="toolbar">
         <img class="logo" src="assets/logo.png"/>
         <div class="go-to-date-button">

@@ -1,0 +1,19 @@
+<div class="header-wrapper">
+    <ng-content></ng-content>
+    <div class="header-button" [mat-menu-trigger-for]="menu">
+        <img class="avatar-image" *ngIf="avatar$ | async as avatar; else default" [src]="avatar">
+        <ng-template #default>
+            <img class="avatar-image" src="assets/logo.png"/>
+        </ng-template>
+    </div>
+    <mat-menu #menu="matMenu">
+        <div mat-menu-item (click)="goToProfile()">
+            <mat-icon>settings</mat-icon>
+            Profile
+        </div>
+        <div mat-menu-item (click)="logout()">
+            <mat-icon>exit_to_app</mat-icon>
+            Logout
+        </div>
+    </mat-menu>
+</div>

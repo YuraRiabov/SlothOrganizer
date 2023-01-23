@@ -1,7 +1,46 @@
+@import 'src/styles/color-variables'
+    
 .profile-wrapper
-    display: flex
-    flex-direction: column
+    display: grid
+    grid-template-rows: 60px 1fr
+    grid-template-columns: 1fr
     width: 100%
     height: 100%
-    place-content: center
-    padding: 15%
+    background-color: $light-blue
+
+    .header
+        background-color: white
+        grid-row: 1
+        
+        .app-name-wrapper
+            cursor: pointer
+            display: flex
+            flex-direction: row
+            gap: 15px
+
+            .logo
+                max-width: 40px
+                max-height: 40px
+
+
+    .profile-content-wrapper
+        width: 50%
+        height: 70%
+        border-radius: 40px
+        display: flex
+        flex-direction: column
+        align-self: center
+        justify-self: center
+        justify-content: flex-start
+        align-items: center
+        background-color: white
+
+        h1
+            text-align: center
+
+        mat-tab-group
+            flex: 1
+            width: 100%
+            
+::ng-deep .profile-content-wrapper .mat-tab-body-wrapper
+    flex: 1

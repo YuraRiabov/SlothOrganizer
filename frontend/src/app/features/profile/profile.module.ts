@@ -7,6 +7,7 @@ import { PersonalInfoComponent } from './personal-info/personal-info.component';
 import { ProfileComponent } from './profile/profile.component';
 import { ProfileRoutingModule } from './profile-routing.module';
 import { ReactiveFormsModule } from '@angular/forms';
+import { SharedModule } from '@shared/components/shared/shared.module';
 import { UserCredentialsEffects } from '@store/effects/users/user-credentials.effects';
 import { UserInfoEffects } from '@store/effects/users/user-info.effects';
 
@@ -21,6 +22,7 @@ import { UserInfoEffects } from '@store/effects/users/user-info.effects';
         ProfileRoutingModule,
         MaterialModule,
         ReactiveFormsModule,
+        SharedModule,
         EffectsModule.forFeature([UserCredentialsEffects, UserInfoEffects])
     ]
 })

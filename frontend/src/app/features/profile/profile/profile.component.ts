@@ -5,6 +5,7 @@ import { selectInvalidPassword, selectUser } from '@store/selectors/auth.selecto
 
 import { Observable } from 'rxjs';
 import { PasswordUpdate } from '#types/user/password-update';
+import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { User } from '#types/user/user';
 
@@ -17,7 +18,7 @@ export class ProfileComponent implements OnInit {
     public user$?: Observable<User>;
     public incorrectPassword$?: Observable<boolean | undefined>;
 
-    constructor(private store: Store) { }
+    constructor(private store: Store, private router: Router) { }
 
     ngOnInit(): void {
         this.user$ = this.store.select(selectUser);
@@ -40,7 +41,11 @@ export class ProfileComponent implements OnInit {
         this.store.dispatch(profileActions.updateLastName({ lastName }));
     }
 
-    public updatePassword(passwordUpdate: PasswordUpdate) {
+    public updatePassword(passwordUpdate: PasswordUpdate): void {
         this.store.dispatch(profileActions.updatePassword({ passwordUpdate }));
+    }
+
+    public goToDashboard(): void {
+        this.router.navigate(['dashboard']);
     }
 }
