@@ -45,7 +45,7 @@ export class PersonalInfoComponent {
 
     public updateLastName(): void {
         if (this.lastNameControl.valid) {
-            this.firstNameUpdated.emit(this.lastNameControl.value!);
+            this.lastNameUpdated.emit(this.lastNameControl.value!);
         }
     }
 

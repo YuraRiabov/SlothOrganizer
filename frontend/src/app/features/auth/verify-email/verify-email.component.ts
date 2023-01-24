@@ -66,7 +66,7 @@ export class VerifyEmailComponent extends BaseComponent implements OnInit {
         this.email$
             .pipe(
                 this.untilDestroyed,
-                concatMap((email) => this.authService.resendCode(email))
+                concatMap((email) => this.authService.sendCode(email))
             ).subscribe();
     }
 }

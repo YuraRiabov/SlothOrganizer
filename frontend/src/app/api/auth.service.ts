@@ -14,7 +14,7 @@ export class AuthService extends HttpService {
         super(http);
     }
 
-    public resendCode(email: string) : Observable<null> {
+    public sendCode(email: string) : Observable<null> {
         return this.post(`/send-code/${email}`);
     }
 

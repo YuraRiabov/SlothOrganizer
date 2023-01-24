@@ -15,15 +15,16 @@ import { By } from '@angular/platform-browser';
 import { CommonModule } from '@angular/common';
 import { MaterialModule } from '@shared/material/material.module';
 import { Store } from '@ngrx/store';
+import { UserCredentialsService } from '@api/user-credentials.service';
 import { VerifyEmailComponent } from './verify-email.component';
 
 describe('VerifyEmailComponent', () => {
     let component: VerifyEmailComponent;
     let fixture: ComponentFixture<VerifyEmailComponent>;
-    let mockAuthService: jasmine.SpyObj<AuthService>;
-    let mockStore: jasmine.SpyObj<Store>;
+    let authService: jasmine.SpyObj<AuthService>;
+    let store: jasmine.SpyObj<Store>;
     let router: jasmine.SpyObj<Router>;
-    let paramMap: jasmine.SpyObj<ParamMap>;
+    let userCredentialsService: jasmine.SpyObj<UserCredentialsService>;
     let button: HTMLElement;
 
     const getAuthState = () => ({
@@ -40,10 +41,11 @@ describe('VerifyEmailComponent', () => {
     });
 
     beforeEach(async () => {
-        mockAuthService = jasmine.createSpyObj(['verifyEmail', 'resendCode']);
-        mockStore = jasmine.createSpyObj(['select', 'dispatch']);
+        authService = jasmine.createSpyObj(['sendCode']);
+        store = jasmine.createSpyObj(['select', 'dispatch']);
         router = jasmine.createSpyObj(['navigate']);
-        mockStore.select.and.returnValue(of(1));
+        userCredentialsService = jasmine.createSpyObj(['verifyEmail']);
+        store.select.and.returnValue(of(1));
         await TestBed.configureTestingModule({
             imports: [
                 CommonModule,
@@ -55,8 +57,9 @@ describe('VerifyEmailComponent', () => {
             ],
             declarations: [VerifyEmailComponent],
             providers: [
-                { provide: AuthService, useValue: mockAuthService },
-                { provide: Store, useValue: mockStore },
+                { provide: AuthService, useValue: authService },
+                { provide: UserCredentialsService, useValue: userCredentialsService },
+                { provide: Store, useValue: store },
                 { provide: Router, useValue: router }
             ]
         }).compileComponents();
@@ -81,7 +84,7 @@ describe('VerifyEmailComponent', () => {
     it('should be disabled when empty', () => {
         button.click();
 
-        expect(mockAuthService.verifyEmail).toHaveBeenCalledTimes(0);
+        expect(userCredentialsService.verifyEmail).toHaveBeenCalledTimes(0);
         expect(component.codeControl.valid).toBeFalse();
     });
 
@@ -90,13 +93,13 @@ describe('VerifyEmailComponent', () => {
         fixture.detectChanges();
 
         const auth: AuthState = getAuthState();
-        mockAuthService.verifyEmail.and.returnValue(of(auth));
+        userCredentialsService.verifyEmail.and.returnValue(of(auth));
 
         button.click();
 
-        expect(mockStore.select).toHaveBeenCalledTimes(1);
-        expect(mockAuthService.verifyEmail).toHaveBeenCalledTimes(1);
-        expect(mockStore.dispatch).toHaveBeenCalledOnceWith(authActions.verifyEmail({ authState: auth }));
+        expect(store.select).toHaveBeenCalledTimes(1);
+        expect(userCredentialsService.verifyEmail).toHaveBeenCalledTimes(1);
+        expect(store.dispatch).toHaveBeenCalledOnceWith(authActions.verifyEmail({ authState: auth }));
     });
 
     it('should redirect to root', () => {
@@ -104,7 +107,7 @@ describe('VerifyEmailComponent', () => {
         fixture.detectChanges();
 
         const auth: AuthState = getAuthState();
-        mockAuthService.verifyEmail.and.returnValue(of(auth));
+        userCredentialsService.verifyEmail.and.returnValue(of(auth));
 
         button.click();
 
@@ -115,21 +118,21 @@ describe('VerifyEmailComponent', () => {
         component.codeControl.setValue(111111);
         fixture.detectChanges();
 
-        mockAuthService.verifyEmail.and.returnValue(throwError(() => new Error()));
+        userCredentialsService.verifyEmail.and.returnValue(throwError(() => new Error()));
 
         button.click();
 
-        expect(mockStore.select).toHaveBeenCalledTimes(1);
-        expect(mockAuthService.verifyEmail).toHaveBeenCalledTimes(1);
-        expect(mockStore.dispatch).toHaveBeenCalledTimes(0);
+        expect(store.select).toHaveBeenCalledTimes(1);
+        expect(userCredentialsService.verifyEmail).toHaveBeenCalledTimes(1);
+        expect(store.dispatch).toHaveBeenCalledTimes(0);
         expect(component.codeControl.hasError('invalidCode')).toBeTrue();
     });
 
     it('should call resend code when clicked', () => {
-        mockAuthService.resendCode.and.returnValue(of(null));
-        component.resendCode();
+        authService.sendCode.and.returnValue(of(null));
+        component.sendCode();
 
-        expect(mockStore.select).toHaveBeenCalledTimes(1);
-        expect(mockAuthService.resendCode).toHaveBeenCalledTimes(1);
+        expect(store.select).toHaveBeenCalledTimes(1);
+        expect(authService.sendCode).toHaveBeenCalledTimes(2);
     });
 });
