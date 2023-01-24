@@ -6,15 +6,13 @@ using SlothOrganizer.Domain.Entities;
 using SlothOrganizer.Domain.Exceptions;
 using SlothOrganizer.Domain.Repositories;
 using SlothOrganizer.Services.Abstractions.Auth.Tokens;
-using SlothOrganizer.Services.Abstractions.Auth.UserVerification;
 using SlothOrganizer.Services.Abstractions.Utility;
-using SlothOrganizer.Services.Auth.Tokens;
 using SlothOrganizer.Services.Users;
 using Xunit;
 
 namespace SlothOrganizer.Services.Tests.Unit.Users
 {
-    public class UserServiceTests
+    public class UserCredentialsServiceTests
     {
         private readonly UserCredentialsService _userCredentialsService;
         private readonly IHashService _hashService;
@@ -24,7 +22,7 @@ namespace SlothOrganizer.Services.Tests.Unit.Users
         private readonly ITokenService _tokenService;
         private readonly IMapper _mapper;
 
-        public UserServiceTests()
+        public UserCredentialsServiceTests()
         {
             _hashService = A.Fake<IHashService>();
             _randomService = A.Fake<IRandomService>();
@@ -199,6 +197,47 @@ namespace SlothOrganizer.Services.Tests.Unit.Users
             Assert.Equal(login.Email, result.User.Email);
         }
 
+        [Fact]
+        public async Task UpdatePassword_WhenValidPassword_ShouldUpdate()
+        {
+            var passwordUpdate = GetPasswordUpdate();
+            var user = GetUser();
+            A.CallTo(() => _hashService.VerifyPassword(passwordUpdate.OldPassword, A<byte[]>.Ignored, user.Password))
+                .Returns(true);
+            A.CallTo(() => _userRepository.Get(passwordUpdate.Email)).Returns(user);
+
+            await _userCredentialsService.UpdatePassword(passwordUpdate);
+
+            A.CallTo(() => _userRepository.Update(user)).MustHaveHappenedOnceExactly();
+        }
+
+        [Fact]
+        public async Task UpdatePassword_WhenInvalidPassword_ShouldThrow()
+        {
+            var passwordUpdate = GetPasswordUpdate();
+            var user = GetUser();
+            A.CallTo(() => _hashService.VerifyPassword(passwordUpdate.OldPassword, A<byte[]>.Ignored, user.Password))
+                .Returns(false);
+            A.CallTo(() => _userRepository.Get(passwordUpdate.Email)).Returns(user);
+
+            var code = async () => await _userCredentialsService.UpdatePassword(passwordUpdate);
+
+            var exception = await Assert.ThrowsAsync<InvalidCredentialsException>(code);
+            Assert.Equal("Invalid password", exception.Message);
+        }
+
+        [Fact]
+        public async Task UpdatePassword_WhenNoUser_ShouldThrow()
+        {
+            var passwordUpdate = GetPasswordUpdate();
+            A.CallTo(() => _userRepository.Get(passwordUpdate.Email)).Returns(Task.FromResult<User?>(null));
+
+            var code = async () => await _userCredentialsService.UpdatePassword(passwordUpdate);
+
+            var exception = await Assert.ThrowsAsync<EntityNotFoundException>(code);
+            Assert.Equal("No user with such email", exception.Message);
+        }
+
         private ResetPasswordDto GetResetPasswordDto()
         {
             return new ResetPasswordDto
@@ -268,6 +307,16 @@ namespace SlothOrganizer.Services.Tests.Unit.Users
             {
                 AccessToken = "expired",
                 RefreshToken = "notExpired"
+            };
+        }
+
+        private static PasswordUpdateDto GetPasswordUpdate()
+        {
+            return new PasswordUpdateDto
+            {
+                Email = "test",
+                Password = "test",
+                OldPassword = "old"
             };
         }
     }

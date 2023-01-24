@@ -7,7 +7,6 @@ using SlothOrganizer.Domain.Repositories;
 using SlothOrganizer.Services.Abstractions.Auth.Tokens;
 using SlothOrganizer.Services.Abstractions.Users;
 using SlothOrganizer.Services.Abstractions.Utility;
-using Task = System.Threading.Tasks.Task;
 
 namespace SlothOrganizer.Services.Users
 {
@@ -97,7 +96,6 @@ namespace SlothOrganizer.Services.Users
             }
             var hash = _hashService.HashPassword(passwordUpdate.Password, Convert.FromBase64String(user.Salt));
             user.Password = hash;
-            user.EmailVerified = true;
             await _userRepository.Update(user);
         }
 

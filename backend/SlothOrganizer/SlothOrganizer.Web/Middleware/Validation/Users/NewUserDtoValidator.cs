@@ -1,5 +1,4 @@
-﻿using System.Text.RegularExpressions;
-using FluentValidation;
+﻿using FluentValidation;
 using SlothOrganizer.Contracts.DTO.User;
 using SlothOrganizer.Contracts.Validation;
 
