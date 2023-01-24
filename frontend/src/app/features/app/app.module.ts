@@ -6,13 +6,14 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { BrowserModule } from '@angular/platform-browser';
 import { EffectsModule } from '@ngrx/effects';
 import { ErrorInterceptor } from '@shared/interceptors/error.interceptor';
-import { HydrationEffects } from '@store/effects/hydration.effects';
+import { HydrationEffects } from '@store/effects/meta/hydration.effects';
 import { LoadingInterceptor } from '@shared/interceptors/loading.interceptor';
 import { MaterialModule } from '@shared/material/material.module';
 import { NgModule } from '@angular/core';
 import { StoreModule } from '@ngrx/store';
 import { TokenInterceptor } from '@shared/interceptors/token.interceptor';
 import { authReducer } from '@store/reducers/auth.reducers';
+import { dashboardReducer } from '@store/reducers/dashboard.reducers';
 import { metaReducers } from '@store/reducers/meta/metareducers';
 
 @NgModule({
@@ -20,7 +21,7 @@ import { metaReducers } from '@store/reducers/meta/metareducers';
     imports: [
         BrowserModule,
         AppRoutingModule,
-        StoreModule.forRoot({ authState: authReducer }, { metaReducers }),
+        StoreModule.forRoot({ authState: authReducer, dashboard: dashboardReducer }, { metaReducers }),
         EffectsModule.forRoot([HydrationEffects]),
         BrowserAnimationsModule,
         HttpClientModule,

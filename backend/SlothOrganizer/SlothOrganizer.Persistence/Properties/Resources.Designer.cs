@@ -70,6 +70,26 @@ namespace SlothOrganizer.Persistence.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to SELECT * FROM Dashboards 
+        ///WHERE UserId=@UserId.
+        /// </summary>
+        internal static string GetAllDashboards {
+            get {
+                return ResourceManager.GetString("GetAllDashboards", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to SELECT * FROM Tasks 
+        ///WHERE DashboardId=@DashboardId.
+        /// </summary>
+        internal static string GetAllTasks {
+            get {
+                return ResourceManager.GetString("GetAllTasks", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to SELECT TOP(1) * FROM Users WHERE Id=@Id.
         /// </summary>
         internal static string GetByUserId {
@@ -131,6 +151,18 @@ namespace SlothOrganizer.Persistence.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to IF EXISTS (SELECT * FROM Users WHERE Id = @UserId)
+        ///	INSERT INTO Dashboards (UserId, Title)
+        ///	VALUES (@UserId, @Title)
+        ///	SELECT CAST(SCOPE_IDENTITY() AS bigint).
+        /// </summary>
+        internal static string InsertDashboard {
+            get {
+                return ResourceManager.GetString("InsertDashboard", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to INSERT INTO RefreshTokens(UserId, Token, ExpirationTime)
         ///VALUES (
         ///	(SELECT TOP(1) Id FROM Users WHERE Email=@UserEmail),
@@ -141,6 +173,28 @@ namespace SlothOrganizer.Persistence.Properties {
         internal static string InsertRefreshToken {
             get {
                 return ResourceManager.GetString("InsertRefreshToken", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to INSERT INTO Tasks (DashboardId, Title, Description)
+        ///VALUES (@DashboardId, @Title, @Description)
+        ///SELECT CAST(SCOPE_IDENTITY() AS bigint).
+        /// </summary>
+        internal static string InsertTask {
+            get {
+                return ResourceManager.GetString("InsertTask", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to INSERT INTO TaskCompletions (TaskId, IsSuccessful, Start, [End], LastEdited)
+        ///VALUES (@TaskId, @IsSuccessful, @Start, @End, @LastEdited)
+        ///SELECT CAST(SCOPE_IDENTITY() AS bigint).
+        /// </summary>
+        internal static string InsertTaskCompletion {
+            get {
+                return ResourceManager.GetString("InsertTaskCompletion", resourceCulture);
             }
         }
         

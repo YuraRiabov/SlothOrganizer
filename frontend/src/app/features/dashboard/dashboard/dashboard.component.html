@@ -1,8 +1,11 @@
 <div class="dashboard-wrapper">
     <div class="header">
-
+        <so-dashboard-selection [dashboards]="(dashboards$ | async) || []" [selectedDashboard]="currentDashboard$ | async"
+            (newDashboardTitle)="createDashboard($event)" (selectDashboard)="selectDashboard($event)">
+        </so-dashboard-selection>
     </div>
     <div class="toolbar">
+        <img class="logo" src="assets/logo.png"/>
         <div class="go-to-date-button">
             <input hidden [value]="currentDate" (dateChange)="goToDate($event)" [matDatepicker]="picker">
             <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
@@ -18,5 +21,13 @@
         <button mat-fab color="primary" [disabled]="timelineScale === 3" (click)="zoomOut()">
             <mat-icon>zoom_out</mat-icon>
         </button>
+    </div>
+    <button class="create-task-button" color="primary" mat-fab (click)="openCreateSidebar()">
+        <mat-icon>add</mat-icon>
+    </button>
+    <div [ngSwitch]="sidebarType$ | async">
+        <so-sidebar class="sidebar" *ngSwitchCase="createSidebar" (closed)="closeSidebar()">
+            <so-task-form></so-task-form>
+        </so-sidebar>
     </div>
 </div>

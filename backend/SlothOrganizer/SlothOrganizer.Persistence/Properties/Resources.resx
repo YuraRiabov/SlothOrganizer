@@ -121,6 +121,12 @@
   <data name="DeleteUser" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>User\DeleteUser.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
+  <data name="GetAllDashboards" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Dashboards\GetAllDashboards.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="GetAllTasks" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Tasks\GetAllTasks.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
   <data name="GetByUserId" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>User\GetByUserId.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
@@ -136,8 +142,17 @@
   <data name="GetVerificationCodeByUserEmail" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>VerificationCode\GetVerificationCodeByUserEmail.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
+  <data name="InsertDashboard" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Dashboards\InsertDashboard.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
   <data name="InsertRefreshToken" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>RefreshTokens\InsertRefreshToken.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="InsertTask" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Tasks\InsertTask.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="InsertTaskCompletion" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>TaskCompletions\InsertTaskCompletion.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
   <data name="InsertUser" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>User\InsertUser.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>

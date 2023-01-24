@@ -1,7 +1,16 @@
-import { Component } from '@angular/core';
+import * as dashboardActions from '@store/actions/dashboard.actions';
+
+import { Component, OnInit } from '@angular/core';
+import { Observable, of } from 'rxjs';
+import { selectChosenDashboard, selectDashboards, selectSidebarType } from '@store/selectors/dashboard.selectors';
+
+import { BaseComponent } from '@shared/components/base/base.component';
+import { Dashboard } from '#types/dashboard/dashboard/dashboard';
 import { MatDatepickerInputEvent } from '@angular/material/datepicker';
-import { Task } from '#types/tasks/task';
-import { TimelineScale } from '#types/tasks/timeline/enums/timeline-scale';
+import { SidebarType } from '#types/dashboard/timeline/enums/sidebar-type';
+import { Store } from '@ngrx/store';
+import { TaskBlock } from '#types/dashboard/timeline/task-block';
+import { TimelineScale } from '#types/dashboard/timeline/enums/timeline-scale';
 import { addHours } from 'date-fns';
 
 @Component({
@@ -9,8 +18,9 @@ import { addHours } from 'date-fns';
     templateUrl: './dashboard.component.html',
     styleUrls: ['./dashboard.component.sass']
 })
-export class DashboardComponent {
-    public tasks: Task[] = [
+export class DashboardComponent extends BaseComponent implements OnInit {
+    public readonly createSidebar = SidebarType.Create;
+    public tasks: TaskBlock[] = [
         {
             start: new Date(2022, 11, 16, 8),
             end: new Date(2022, 13, 1, 0),
@@ -80,22 +90,54 @@ export class DashboardComponent {
 
     public currentDate: Date = new Date(2022, 12, 16, 12);
     public timelineScale = TimelineScale.Day;
-    constructor() { }
 
-    public zoomIn(date? : Date) : void {
+    public dashboards$?: Observable<Dashboard[]>;
+    public currentDashboard$?: Observable<Dashboard>;
+
+    public sidebarType$: Observable<SidebarType> = of(SidebarType.None);
+
+    constructor(private store: Store) {
+        super();
+    }
+
+    ngOnInit(): void {
+        this.store.dispatch(dashboardActions.loadDashboards());
+
+        this.dashboards$ = this.store.select(selectDashboards);
+        this.currentDashboard$ = this.store.select(selectChosenDashboard);
+        this.sidebarType$ = this.store.select(selectSidebarType);
+    }
+
+    public openCreateSidebar(): void {
+        this.store.dispatch(dashboardActions.openSidebar({ sidebarType: SidebarType.Create }));
+    }
+
+    public closeSidebar(): void {
+        this.store.dispatch(dashboardActions.closeSidebar());
+    }
+
+    public selectDashboard(dashboard: Dashboard): void {
+        this.store.dispatch(dashboardActions.chooseDashboard({ dashboardId: dashboard.id }));
+    }
+
+    public createDashboard(title: string): void {
+        this.store.dispatch(dashboardActions.createDashbaord({ title }));
+    }
+
+    public zoomIn(date?: Date): void {
         this.currentDate = date ?? this.currentDate;
         if (this.timelineScale != TimelineScale.Day) {
             this.timelineScale--;
         }
     }
 
-    public zoomOut() : void {
+    public zoomOut(): void {
         if (this.timelineScale != TimelineScale.Year) {
             this.timelineScale++;
         }
     }
 
-    public goToDate(event: MatDatepickerInputEvent<Date>) {
+    public goToDate(event: MatDatepickerInputEvent<Date>): void {
         this.currentDate = addHours(event.value!, 12);
     }
 }

@@ -36,7 +36,7 @@ export class ErrorInterceptor implements HttpInterceptor {
                     );
                 }
 
-                return next.handle(req);
+                return throwError(() => new Error(response));
             })
         );
     }

@@ -19,6 +19,8 @@ using SlothOrganizer.Services.Auth.Tokens;
 using SlothOrganizer.Services.Auth.Tokens.Options;
 using SlothOrganizer.Services.Auth.UserVerification;
 using SlothOrganizer.Services.Abstractions.Auth.UserVerification;
+using SlothOrganizer.Services.Tasks;
+using SlothOrganizer.Services.Abstractions.Tasks;
 
 namespace SlothOrganizer.Web.Extensions
 {
@@ -29,6 +31,9 @@ namespace SlothOrganizer.Web.Extensions
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IVerificationCodeRepository, VerificationCodeRepository>();
             services.AddScoped<IRefreshTokenRepository, RefreshTokenRepository>();
+            services.AddScoped<IDashboardRepository, DashboardRepository>();
+            services.AddScoped<ITaskRepository, TaskRepository>();
+            services.AddScoped<ITaskCompletionRepository, TaskCompletionRepository>();
             return services;
         }
 
@@ -44,6 +49,10 @@ namespace SlothOrganizer.Web.Extensions
             services.AddScoped<INotificationService, EmailNotificationService>();
             services.AddScoped<ICryptoService, CryptoService>();
             services.AddScoped<IDateTimeService, DateTimeService>();
+            services.AddScoped<IDashboardService, DashboardService>();
+            services.AddScoped<ITaskService, TaskService>();
+            services.AddScoped<ITaskCompletionService, TaskCompletionService>();
+            services.AddScoped<ITaskCompletionPeriodConverter, TaskCompletionPeriodConverter>();
             return services;
         }
 
