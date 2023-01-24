@@ -156,7 +156,7 @@ export class TaskFormComponent extends BaseComponent implements OnInit {
         };
     }
 
-    private getEndRepeatingValidator = (): ValidatorFn => {
+    private getEndRepeatingValidator(): ValidatorFn {
         return (group: AbstractControl) => {
             const repeatingPeriodControl = group.get('repeatingPeriod');
             const endRepeatingControl = group.get('endRepeating');
@@ -168,7 +168,7 @@ export class TaskFormComponent extends BaseComponent implements OnInit {
             }
             return null;
         };
-    };
+    }
 
     private getStart(group: AbstractControl): Date {
         const startDateControl = group.get('startDate');
