@@ -3,7 +3,7 @@ import * as dashboardActions from '@store/actions/dashboard.actions';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { endRepeatingValidator, getDescriptionValidators, getTitleValidators, repeatingPeriodValidator, startBeforeEndValidator } from '@utils/validators/task-validators';
-import { getEnd, getPeriodLabel, getStart } from '@utils/form-helpers/task-form.helper';
+import { getEnd, getStart } from '@utils/form-helpers/task-form.helper';
 
 import { BaseComponent } from '@shared/components/base/base.component';
 import { NewTask } from '#types/dashboard/tasks/new-task';
@@ -12,6 +12,7 @@ import { TaskRepeatingPeriod } from '#types/dashboard/tasks/enums/task-repeating
 import { getRepeatingPeriods } from '@utils/creation-functions/repeating-period.helper';
 import { hasLengthErrors } from '@utils/validators/common-validators';
 import { selectChosenDashboardId } from '@store/selectors/dashboard.selectors';
+import { take } from 'rxjs';
 
 @Component({
     selector: 'so-task-form',
@@ -36,7 +37,20 @@ export class TaskFormComponent extends BaseComponent implements OnInit {
     }
 
     public getLabel(period: TaskRepeatingPeriod): string {
-        return getPeriodLabel(period);
+        switch (period) {
+        case TaskRepeatingPeriod.None:
+            return 'None';
+        case TaskRepeatingPeriod.Day:
+            return 'Day';
+        case TaskRepeatingPeriod.Week:
+            return 'Week';
+        case TaskRepeatingPeriod.Month:
+            return 'Month';
+        case TaskRepeatingPeriod.Year:
+            return 'Year';
+        default:
+            throw new Error('Invalid repeating period');
+        }
     }
 
     public validate(): void {
@@ -58,7 +72,8 @@ export class TaskFormComponent extends BaseComponent implements OnInit {
 
     public createTask(): void {
         this.store.select(selectChosenDashboardId).pipe(
-            this.untilDestroyed
+            this.untilDestroyed,
+            take(1)
         ).subscribe(id => {
             const newTask: NewTask = {
                 dashboardId: id,

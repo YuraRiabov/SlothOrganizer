@@ -48,20 +48,3 @@ export const getPeriodDays = (period: TaskRepeatingPeriod) => {
         throw new Error('Invalid repeating period');
     }
 };
-
-export const getPeriodLabel = (period: TaskRepeatingPeriod) => {
-    switch (period) {
-    case TaskRepeatingPeriod.None:
-        return 'None';
-    case TaskRepeatingPeriod.Day:
-        return 'Day';
-    case TaskRepeatingPeriod.Week:
-        return 'Week';
-    case TaskRepeatingPeriod.Month:
-        return 'Month';
-    case TaskRepeatingPeriod.Year:
-        return 'Year';
-    default:
-        throw new Error('Invalid repeating period');
-    }
-};

@@ -1,11 +1,10 @@
-import * as dashboardActions from '@store/actions/dashboard.actions';
-
 import { AfterViewInit, Component, ElementRef, EventEmitter, Input, OnDestroy, OnInit, Output, ViewChild } from '@angular/core';
 import { addHours, differenceInHours } from 'date-fns';
 
 import { BaseComponent } from '@shared/components/base/base.component';
 import { Task } from '#types/dashboard/tasks/task';
 import { TaskBlock } from '#types/dashboard/timeline/task-block';
+import { TaskStatus } from '#types/dashboard/timeline/enums/task-status';
 import { Timeline } from '#types/dashboard/timeline/timeline';
 import { TimelineCreator } from '@utils/timeline/timeline-creator';
 import { TimelineScale } from '#types/dashboard/timeline/enums/timeline-scale';
@@ -18,6 +17,10 @@ import { TimelineSection } from '#types/dashboard/timeline/timeline-section';
 })
 export class TimelineComponent extends BaseComponent implements OnInit, AfterViewInit, OnDestroy {
     public readonly defaultPageNumber = 12;
+    public readonly completedTask = TaskStatus.Completed;
+    public readonly failedTask = TaskStatus.Failed;
+    public readonly inProgressTask = TaskStatus.InProgress;
+    public readonly toDoTask = TaskStatus.ToDo;
     private timelineScale: TimelineScale = TimelineScale.Day;
     private currentDate: Date = new Date();
     private returnDate: Date = this.currentDate;

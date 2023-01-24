@@ -1,4 +1,4 @@
-<div class="task-info-wrapper">
+<div class="task-info-wrapper" *ngIf="taskBlock$ | async as taskBlock">
     <button mat-icon-button class="go-back-button" (click)="close()">
         <mat-icon>arrow_back</mat-icon>
     </button>
@@ -17,7 +17,7 @@
     </div>
     <div class="task-info-item">
         <h3>Status:</h3>
-        <p>{{getBlockStatus()}}</p>
+        <p>{{taskBlock.status}}</p>
     </div>
     <div class="task-info-item">
         <h3>Last edited:</h3>

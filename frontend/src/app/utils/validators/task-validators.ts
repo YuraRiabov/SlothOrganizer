@@ -4,13 +4,13 @@ import { getEnd, getPeriodDays, getStart } from '@utils/form-helpers/task-form.h
 import { TaskRepeatingPeriod } from '#types/dashboard/tasks/enums/task-repeating-period';
 import { differenceInDays } from 'date-fns';
 
-export const getTitleValidators = () => [
+export const getTitleValidators = (): Validators => [
     Validators.required,
     Validators.minLength(2),
     Validators.maxLength(60)
 ];
 
-export const getDescriptionValidators = () => [
+export const getDescriptionValidators = (): Validators => [
     Validators.maxLength(400)
 ];
 
