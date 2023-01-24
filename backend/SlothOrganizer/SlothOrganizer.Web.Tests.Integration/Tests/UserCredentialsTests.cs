@@ -242,10 +242,54 @@ namespace SlothOrganizer.Web.Tests.Integration.Tests
         public async Task ResetPassword_WhenInvalidPassword_BadRequest(string password)
         {
             await SetupVerifiedUser();
-            var dto = DtoProvider.GetResetPasswordDto();
-            dto.Password = password;
+            var passwordReset = DtoProvider.GetResetPasswordDto();
+            passwordReset.Password = password;
 
-            var response = await Client.PutAsync($"{ControllerRoute}/reset-password", GetStringContent(dto));
+            var response = await Client.PutAsync($"{ControllerRoute}/reset-password", GetStringContent(passwordReset));
+
+            Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
+        }
+
+        [Fact]
+        public async Task UpdatePassword_WhenValidData_ShouldUpdate()
+        {
+            await SetupVerifiedUser();
+            var passwordUpdate = DtoProvider.GetPasswordUpdate();
+
+            var response = await Client.PutAsync($"{ControllerRoute}/password", GetStringContent(passwordUpdate));
+
+            Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+
+            var loginDto = new { email = passwordUpdate.Email, password = passwordUpdate.Password };
+            var signInResponse = await Client.PostAsync($"{ControllerRoute}/sign-in", GetStringContent(loginDto));
+
+            Assert.Equal(HttpStatusCode.OK, signInResponse.StatusCode);
+        }
+
+        [Fact]
+        public async Task UpdatePassword_WhenInvalidOldPassword_Forbidden()
+        {
+            await SetupVerifiedUser();
+            var passwordUpdate = DtoProvider.GetPasswordUpdate();
+            passwordUpdate.OldPassword = "wrong";
+
+            var response = await Client.PutAsync($"{ControllerRoute}/password", GetStringContent(passwordUpdate));
+
+            Assert.Equal(HttpStatusCode.Forbidden, response.StatusCode);
+        }
+
+        [Theory]
+        [InlineData("short1")]
+        [InlineData("loooooooooooooong1")]
+        [InlineData("invalidpattern")]
+        [InlineData("11111111111")]
+        public async Task UpdatePassword_WhenInvalidPassword_BadRequest(string password)
+        {
+            await SetupVerifiedUser();
+            var passwordUpdate = DtoProvider.GetPasswordUpdate();
+            passwordUpdate.Password = password;
+
+            var response = await Client.PutAsync($"{ControllerRoute}/password", GetStringContent(passwordUpdate));
 
             Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
         }

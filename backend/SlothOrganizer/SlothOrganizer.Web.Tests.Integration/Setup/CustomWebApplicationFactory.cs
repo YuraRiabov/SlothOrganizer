@@ -12,7 +12,12 @@ namespace SlothOrganizer.Web.Tests.Integration.Setup
         private readonly IRandomService _randomService;
         private readonly IDateTimeService _dateService;
         private readonly ICryptoService _cryptoService;
-        public CustomWebApplicationFactory(IEmailService emailService, IRandomService randomService, IDateTimeService dateService, ICryptoService cryptoService)
+        private readonly IImageService _imageService;
+        public CustomWebApplicationFactory(IEmailService emailService,
+            IRandomService randomService,
+            IDateTimeService dateService,
+            ICryptoService cryptoService,
+            IImageService imageService)
         {
             _emailService = emailService;
             _randomService = randomService;
@@ -24,6 +29,7 @@ namespace SlothOrganizer.Web.Tests.Integration.Setup
             builder.UseEnvironment("Test");
             builder.ConfigureServices(services =>
             {
+                ReplaceService(services, _imageService);
                 ReplaceService(services, _emailService);
                 ReplaceService(services, _randomService);
                 ReplaceService(services, _dateService);

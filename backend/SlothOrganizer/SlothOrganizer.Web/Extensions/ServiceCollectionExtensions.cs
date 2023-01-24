@@ -90,7 +90,6 @@ namespace SlothOrganizer.Web.Extensions
                 smtpSection.Bind(options);
                 options.AccessToken = configuration["GyazoToken"];
             });
-            services.AddScoped<IImageService, GyazoService>();
             services.AddHttpClient<IImageService, GyazoService>();
             return services;
         }

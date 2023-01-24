@@ -102,5 +102,25 @@ namespace SlothOrganizer.Web.Tests.Integration.Setup
                 EndRepeating = new DateTime(2023, 2, 5)
             };
         }
+
+        public static PasswordUpdateDto GetPasswordUpdate()
+        {
+            return new PasswordUpdateDto
+            {
+                Email = "test@test.com",
+                OldPassword = "passw0rd",
+                Password = "newpassw0rd"
+            };
+        }
+
+        public static UpdateUserDto GetUserUpdate()
+        {
+            return new UpdateUserDto
+            {
+                Id = 1,
+                FirstName = "Test",
+                LastName = "Test"
+            };
+        }
     }
 }
