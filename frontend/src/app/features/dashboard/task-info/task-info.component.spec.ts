@@ -7,6 +7,7 @@ import { MaterialModule } from '@shared/material/material.module';
 import { Store } from '@ngrx/store';
 import { TaskBlock } from '#types/dashboard/timeline/task-block';
 import { TaskInfoComponent } from './task-info.component';
+import { TaskStatus } from '#types/dashboard/timeline/enums/task-status';
 import { of } from 'rxjs';
 
 describe('TaskInfoComponent', () => {
@@ -28,7 +29,7 @@ describe('TaskInfoComponent', () => {
             taskId: 1,
             isSuccessful: false
         },
-        color: 'blue'
+        status: TaskStatus.InProgress
     };
 
     beforeEach(async () => {
