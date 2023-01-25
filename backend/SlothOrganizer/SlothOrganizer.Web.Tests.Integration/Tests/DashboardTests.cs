@@ -44,7 +44,7 @@ namespace SlothOrganizer.Web.Tests.Integration.Tests
         {
             await AddAuthorizationHeader();
 
-            var response = await Client.GetAsync($"{ControllerRoute}/1");
+            var response = await Client.GetAsync($"{ControllerRoute}");
             var result = await GetResponse<List<DashboardDto>>(response);
 
             await Verify(new
@@ -62,7 +62,7 @@ namespace SlothOrganizer.Web.Tests.Integration.Tests
 
             await Client.PostAsync(ControllerRoute, GetStringContent(dashboard));
 
-            var response = await Client.GetAsync($"{ControllerRoute}/1");
+            var response = await Client.GetAsync($"{ControllerRoute}");
             var result = await GetResponse<List<DashboardDto>>(response);
 
             await Verify(new

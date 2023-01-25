@@ -3,6 +3,7 @@ import * as dashboardActions from '@store/actions/dashboard.actions';
 import { Component, OnInit } from '@angular/core';
 
 import { BaseComponent } from '@shared/components/base/base.component';
+import { Observable } from 'rxjs';
 import { SidebarType } from '#types/dashboard/timeline/enums/sidebar-type';
 import { Store } from '@ngrx/store';
 import { TaskBlock } from '#types/dashboard/timeline/task-block';
@@ -14,32 +15,18 @@ import { selectChosenTaskBlock } from '@store/selectors/dashboard.selectors';
     styleUrls: ['./task-info.component.sass']
 })
 export class TaskInfoComponent extends BaseComponent implements OnInit {
-    public taskBlock!: TaskBlock;
+    public taskBlock$?: Observable<TaskBlock>;
+
     constructor(private store: Store) {
         super();
     }
 
     ngOnInit(): void {
-        this.store.select(selectChosenTaskBlock)
-            .pipe(this.untilDestroyed)
-            .subscribe(taskBlock => this.taskBlock = taskBlock);
+        this.taskBlock$ = this.store.select(selectChosenTaskBlock);
     }
 
     public close(): void {
         this.store.dispatch(dashboardActions.closeSidebar());
-    }
-
-    public getBlockStatus(): string {
-        if (this.taskBlock.taskCompletion.isSuccessful) {
-            return 'Completed';
-        }
-        if (this.taskBlock.taskCompletion.end < new Date()) {
-            return 'Failed';
-        }
-        if (this.taskBlock.taskCompletion.start > new Date()) {
-            return 'To do';
-        }
-        return 'In progress';
     }
 
     public markAsCompleted(): void {

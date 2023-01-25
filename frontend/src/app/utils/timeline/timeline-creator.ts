@@ -7,6 +7,7 @@ import { JoinedTasksBlock } from '#types/dashboard/timeline/joined-tasks-block';
 import { Task } from '#types/dashboard/tasks/task';
 import { TaskBlock } from '#types/dashboard/timeline/task-block';
 import { TaskCompletion } from '#types/dashboard/tasks/task-completion';
+import { TaskStatus } from '#types/dashboard/timeline/enums/task-status';
 import { Timeline } from '#types/dashboard/timeline/timeline';
 import { TimelineScale } from '#types/dashboard/timeline/enums/timeline-scale';
 import { TimelineSection } from '#types/dashboard/timeline/timeline-section';
@@ -57,7 +58,7 @@ export class TimelineCreator {
                 taskBlocks.push({
                     task,
                     taskCompletion: localTaskCompletion,
-                    color: this.getBlockColor(localTaskCompletion)
+                    status: this.getBlockStatus(localTaskCompletion)
                 });
             }
         }
@@ -327,16 +328,16 @@ export class TimelineCreator {
         }
     }
 
-    private getBlockColor(taskCompletion: TaskCompletion) {
+    private getBlockStatus(taskCompletion: TaskCompletion): TaskStatus {
         if (taskCompletion.isSuccessful) {
-            return 'green';
+            return TaskStatus.Completed;
         }
         if (taskCompletion.end < new Date()) {
-            return 'red';
+            return TaskStatus.Failed;
         }
         if (taskCompletion.start > new Date()) {
-            return 'gray';
+            return TaskStatus.ToDo;
         }
-        return 'blue';
+        return TaskStatus.InProgress;
     }
 }

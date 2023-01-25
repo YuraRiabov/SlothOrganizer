@@ -1,4 +1,7 @@
-IF EXISTS (SELECT * FROM Users WHERE Id = @UserId)
-	INSERT INTO Dashboards (UserId, Title)
-	VALUES (@UserId, @Title)
-	SELECT CAST(SCOPE_IDENTITY() AS bigint)
+INSERT INTO Dashboards (UserId, Title)
+VALUES (
+	(SELECT TOP(1) Id FROM Users WHERE Email = @Email),
+	@Title
+)
+
+SELECT * FROM Dashboards WHERE Id = CAST(SCOPE_IDENTITY() AS bigint)

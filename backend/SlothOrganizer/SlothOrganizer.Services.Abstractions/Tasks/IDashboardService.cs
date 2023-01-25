@@ -4,7 +4,7 @@ namespace SlothOrganizer.Services.Abstractions.Tasks
 {
     public interface IDashboardService
     {
-        Task<DashboardDto> Create(NewDashboardDto dashboardDto);
-        Task<List<DashboardDto>> Get(long userId);
+        Task<DashboardDto> Create(NewDashboardDto dashboardDto, string userEmail);
+        Task<List<DashboardDto>> Get(string userEmail);
     }
 }

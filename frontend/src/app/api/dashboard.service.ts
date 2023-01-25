@@ -19,7 +19,7 @@ export class DashboardService extends HttpService {
         return this.post<Dashboard>('', newDashboard);
     }
 
-    public find(userId: number): Observable<Dashboard[]> {
-        return this.get<Dashboard[]>(`/${userId}`);
+    public retrieve(): Observable<Dashboard[]> {
+        return this.get<Dashboard[]>('');
     }
 }

@@ -1,2 +1,2 @@
 SELECT * FROM Dashboards 
-WHERE UserId = @UserId
+WHERE EXISTS (SELECT * FROM Users WHERE Email = @Email AND Users.Id = Dashboards.UserId)
