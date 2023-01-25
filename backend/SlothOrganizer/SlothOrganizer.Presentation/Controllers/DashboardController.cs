@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using System.Security.Claims;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using SlothOrganizer.Contracts.DTO.Tasks.Dashboard;
 using SlothOrganizer.Services.Abstractions.Tasks;
@@ -18,15 +19,31 @@ namespace SlothOrganizer.Presentation.Controllers
         }
 
         [HttpPost]
-        public async Task<DashboardDto> Create([FromBody] NewDashboardDto newDashboard)
+        public async Task<ActionResult<DashboardDto>> Create([FromBody] NewDashboardDto newDashboard)
         {
-            return await _dashboardService.Create(newDashboard);
+            var email = GetCurrentUserEmail();
+            if (email is null)
+            {
+                return Unauthorized();
+            }
+            return Ok(await _dashboardService.Create(newDashboard, email));
         }
 
-        [HttpGet("{userId}")]
-        public async Task<List<DashboardDto>> Get(long userId)
+        [HttpGet]
+        public async Task<ActionResult<List<DashboardDto>>> Get()
         {
-            return await _dashboardService.Get(userId);
+            var email = GetCurrentUserEmail();
+            if (email is null)
+            {
+                return Unauthorized();
+            }
+            return Ok(await _dashboardService.Get(email));
+        }
+
+        private string? GetCurrentUserEmail()
+        {
+            var identity = HttpContext.User.Identity as ClaimsIdentity;
+            return identity?.FindFirst(ClaimTypes.Email)?.Value;
         }
     }
 }
