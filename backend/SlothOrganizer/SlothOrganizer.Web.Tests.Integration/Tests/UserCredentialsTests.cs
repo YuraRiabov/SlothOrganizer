@@ -63,7 +63,7 @@ namespace SlothOrganizer.Web.Tests.Integration.Tests
         public async Task VerifyEmail_WhenValidData_ShouldReturnTokenAndVerify()
         {
             A.CallTo(() => RandomService.GetRandomNumber(6)).Returns(111111);
-            A.CallTo(() => DateTimeService.Now()).Returns(DateTime.Now.AddHours(1));
+            A.CallTo(() => DateTimeService.Now()).Returns(DateTimeOffset.Now.AddHours(1));
             var newUser = DtoProvider.GetNewUser();
 
             var signUpResponse = await Client.PostAsync($"{ControllerRoute}/sign-up", GetStringContent(newUser));

@@ -4,6 +4,6 @@
     {
         public TaskDto Task { get; set; }
         public TaskCompletionDto TaskCompletion { get; set; }
-        public DateTime? EndRepeating { get; set; }
+        public DateTimeOffset? EndRepeating { get; set; }
     }
 }

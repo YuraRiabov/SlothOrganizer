@@ -2,6 +2,6 @@
 {
     public interface IDateTimeService
     {
-        DateTime Now();
+        DateTimeOffset Now();
     }
 }

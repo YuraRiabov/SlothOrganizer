@@ -60,7 +60,7 @@ namespace SlothOrganizer.Services.Auth.Tokens
             var token = new JwtSecurityToken(_jwtOptions.Issuer,
                 _jwtOptions.Audience,
                 claims,
-                expires: _dateTimeService.Now().AddMinutes(60),
+                expires: _dateTimeService.Now().DateTime.AddMinutes(60),
                 signingCredentials: credentials);
 
 

@@ -50,7 +50,7 @@ namespace SlothOrganizer.Services.Tasks
                 throw new EntityNotFoundException("Task with such id not found");
             } 
             var latestCompletion = updatedTask.TaskCompletions.MaxBy(tc => tc.End);
-            if (updateTaskDto.EndRepeating is DateTime endRepeating && updatedTask.TaskCompletions.Count > 1)
+            if (updateTaskDto.EndRepeating is DateTimeOffset endRepeating && updatedTask.TaskCompletions.Count > 1)
             {
                 if (latestCompletion.End > endRepeating)
                 {
