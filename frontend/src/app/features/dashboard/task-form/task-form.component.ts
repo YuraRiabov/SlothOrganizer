@@ -1,5 +1,6 @@
+import { AbstractControl, FormControl, FormGroup, ValidatorFn, Validators } from '@angular/forms';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { differenceInDays, endOfDay, startOfDay } from 'date-fns';
+import { addDays, differenceInDays, endOfDay, startOfDay } from 'date-fns';
 
 import { BaseComponent } from '@shared/components/base/base.component';
 import { DatePipe } from '@angular/common';
@@ -7,6 +8,7 @@ import { NewTask } from '#types/dashboard/tasks/new-task';
 import { TaskRepeatingPeriod } from '#types/dashboard/tasks/enums/task-repeating-period';
 import { getRepeatingPeriods } from '@utils/creation-functions/repeating-period.helper';
 import { hasLengthErrors } from '@utils/validators/common-validators';
+import { setTime } from '@utils/dates/dates.helper';
 
 @Component({
     selector: 'so-task-form',
@@ -88,8 +90,8 @@ export class TaskFormComponent extends BaseComponent {
         const newTask: NewTask = {
             title: this.taskForm.get('title')?.value,
             description: this.taskForm.get('description')?.value,
-            start: getStart(this.taskForm),
-            end: getEnd(this.taskForm),
+            start: this.getStart(this.taskForm),
+            end: this.getEnd(this.taskForm),
             repeatingPeriod: this.taskForm.get('repeatingPeriod')?.value,
             endRepeating: addDays(this.taskForm.get('endRepeating')?.value, 1)
         };
@@ -97,12 +99,12 @@ export class TaskFormComponent extends BaseComponent {
     }
 
     private buildTaskFrom(initialValue: NewTask): FormGroup {
-        const titleContol = new FormControl(initialValue.title, getTitleValidators());
-        const descriptionControl = new FormControl(initialValue.description, getDescriptionValidators());
+        const titleContol = new FormControl(initialValue.title, this.getTitleValidators());
+        const descriptionControl = new FormControl(initialValue.description, this.getDescriptionValidators());
 
-        const validators = [startBeforeEndValidator(), endRepeatingValidator()];
+        const validators = [this.getStartBeforeEndValidator(), this.getEndRepeatingValidator()];
         if (!this.editing) {
-            validators.push(repeatingPeriodValidator());
+            validators.push(this.getRepeatingPeriodValidator());
         }
         const datePipe = new DatePipe('en-US');
         return new FormGroup({
