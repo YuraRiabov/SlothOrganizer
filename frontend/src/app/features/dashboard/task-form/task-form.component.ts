@@ -1,8 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { addDays, endOfDay, startOfDay } from 'date-fns';
-import { endRepeatingValidator, getDescriptionValidators, getTitleValidators, repeatingPeriodValidator, startBeforeEndValidator } from '@utils/validators/task-validators';
-import { getEnd, getPeriodLabel, getStart } from '@utils/form-helpers/task-form.helper';
+import { differenceInDays, endOfDay, startOfDay } from 'date-fns';
 
 import { BaseComponent } from '@shared/components/base/base.component';
 import { DatePipe } from '@angular/common';
@@ -51,7 +48,20 @@ export class TaskFormComponent extends BaseComponent {
     }
 
     public getLabel(period: TaskRepeatingPeriod): string {
-        return getPeriodLabel(period);
+        switch (period) {
+        case TaskRepeatingPeriod.None:
+            return 'None';
+        case TaskRepeatingPeriod.Day:
+            return 'Day';
+        case TaskRepeatingPeriod.Week:
+            return 'Week';
+        case TaskRepeatingPeriod.Month:
+            return 'Month';
+        case TaskRepeatingPeriod.Year:
+            return 'Year';
+        default:
+            throw new Error('Invalid repeating period');
+        }
     }
 
     public validate(): void {
@@ -109,5 +119,103 @@ export class TaskFormComponent extends BaseComponent {
         }, {
             validators
         });
+    }
+
+    private getTitleValidators(): Validators {
+        return [
+            Validators.required,
+            Validators.minLength(2),
+            Validators.maxLength(60)
+        ];
+    }
+
+    private getDescriptionValidators(): Validators {
+        return [Validators.maxLength(400)];
+    }
+
+    private getStartBeforeEndValidator(): ValidatorFn {
+        return (group: AbstractControl) => {
+            const startDateControl = group.get('startDate');
+            const endDateControl = group.get('endDate');
+            const start = this.getStart(group);
+            const end = this.getEnd(group);
+            if (start > end) {
+                startDateControl?.setErrors({ startBeforeEnd: true });
+                endDateControl?.setErrors({ startBeforeEnd: true });
+            }
+            return null;
+        };
+    }
+
+    private getRepeatingPeriodValidator(): ValidatorFn {
+        return (group: AbstractControl) => {
+            const repeatingPeriodControl = group.get('repeatingPeriod');
+            const end = this.getEnd(group);
+            const start = this.getStart(group);
+            const repeatingPeriod = repeatingPeriodControl?.value as TaskRepeatingPeriod;
+            if (this.getPeriodDays(repeatingPeriod) < differenceInDays(end, start)) {
+                repeatingPeriodControl?.setErrors({ shortRepeatingPeriod: true });
+            }
+            return null;
+        };
+    }
+
+    private getEndRepeatingValidator(): ValidatorFn {
+        return (group: AbstractControl) => {
+            const repeatingPeriodControl = group.get('repeatingPeriod');
+            const endRepeatingControl = group.get('endRepeating');
+            const end = this.getEnd(group);
+            const repeatingPeriod = repeatingPeriodControl?.value as TaskRepeatingPeriod;
+            const endRepeating = endRepeatingControl?.value as Date;
+            if (repeatingPeriod !== TaskRepeatingPeriod.None && end > endRepeating) {
+                endRepeatingControl?.setErrors({ endBeforeEndRepeating: true });
+            }
+            return null;
+        };
+    }
+
+    private getStart(group: AbstractControl): Date {
+        const startDateControl = group.get('startDate');
+        const startTimeControl = group.get('startTime');
+        const startTimeCheckbox = group.get('startTimeCheckbox');
+
+        let startDate = new Date(startDateControl?.value);
+        if (startTimeCheckbox?.value) {
+            startDate = setTime(startDate, startTimeControl?.value);
+        } else {
+            startDate = startOfDay(startDate);
+        }
+        return startDate;
+    }
+
+    private getEnd(group: AbstractControl): Date {
+        const endDateControl = group.get('endDate');
+        const endTimeControl = group.get('endTime');
+        const endTimeCheckbox = group.get('endTimeCheckbox');
+
+        let endDate = new Date(endDateControl?.value);
+        if (endTimeCheckbox?.value) {
+            endDate = setTime(endDate, endTimeControl?.value);
+        } else {
+            endDate = endOfDay(endDate);
+        }
+        return endDate;
+    }
+
+    private getPeriodDays(period: TaskRepeatingPeriod) {
+        switch (period) {
+        case TaskRepeatingPeriod.None:
+            return Number.MAX_SAFE_INTEGER;
+        case TaskRepeatingPeriod.Day:
+            return 1;
+        case TaskRepeatingPeriod.Week:
+            return 7;
+        case TaskRepeatingPeriod.Month:
+            return 28;
+        case TaskRepeatingPeriod.Year:
+            return 365;
+        default:
+            throw new Error('Invalid repeating period');
+        }
     }
 }

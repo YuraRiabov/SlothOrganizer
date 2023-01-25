@@ -21,14 +21,30 @@
         </div>
         <div class="timeline-row" *ngFor="let taskRow of timeline.tasksByRows; index as i"
             [ngStyle]="{'grid-template-columns' : 'repeat(' + timeline.columnNumber + ', 1fr', 'grid-row': i+3}">
-            <div class="task-block" (click)="chooseTask(task)" [ngClass]="task.color" *ngFor="let task of timeline.tasksByRows[i]"
-                [ngStyle]="{'grid-column': task.startColumn + '/' + task.endColumn}">
+            <div class="task-block" 
+                    (click)="chooseTask(task)"
+                    [ngClass]="{ 
+                        'red': task.status === failedTask,
+                        'blue': task.status === inProgressTask,
+                        'green': task.status === completedTask,
+                        'gray': task.status === toDoTask
+                    }"
+                    *ngFor="let task of timeline.tasksByRows[i]"
+                    [ngStyle]="{'grid-column': task.startColumn + '/' + task.endColumn}"
+            >
                 {{task.task.title}}
             </div>
         </div>
         <div class="timeline-row"
             [ngStyle]="{'grid-template-columns' : 'repeat(' + timeline.columnNumber + ', 1fr', 'grid-row': 8 }">
-            <div class="task-block" [ngClass]="block.tasks[0].color" *ngFor="let block of timeline.exceedingTaskBlocks; let i=index"
+            <div class="task-block" 
+                [ngClass]="{ 
+                    'red': block.tasks[0].status === failedTask,
+                    'blue': block.tasks[0].status === inProgressTask,
+                    'green': block.tasks[0].status === completedTask,
+                    'gray': block.tasks[0].status === toDoTask
+                }"
+                *ngFor="let block of timeline.exceedingTaskBlocks; let i=index"
                 [ngStyle]="{'grid-column': block.startColumn + '/' + block.endColumn}">
                 <div class="expand-tasks-container" *ngIf="block.tasks.length > 1">
                     <div class="expand-tasks-trigger" [mat-menu-trigger-for]="i">

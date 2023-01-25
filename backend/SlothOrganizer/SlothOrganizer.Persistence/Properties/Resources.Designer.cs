@@ -91,7 +91,7 @@ namespace SlothOrganizer.Persistence.Properties {
         
         /// <summary>
         ///   Looks up a localized string similar to SELECT * FROM Dashboards 
-        ///WHERE UserId = @UserId.
+        ///WHERE EXISTS (SELECT * FROM Users WHERE Email = @Email AND Users.Id = Dashboards.UserId).
         /// </summary>
         internal static string GetAllDashboards {
             get {
@@ -198,10 +198,13 @@ namespace SlothOrganizer.Persistence.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to IF EXISTS (SELECT * FROM Users WHERE Id = @UserId)
-        ///	INSERT INTO Dashboards (UserId, Title)
-        ///	VALUES (@UserId, @Title)
-        ///	SELECT CAST(SCOPE_IDENTITY() AS bigint).
+        ///   Looks up a localized string similar to INSERT INTO Dashboards (UserId, Title)
+        ///VALUES (
+        ///	(SELECT TOP(1) Id FROM Users WHERE Email = @Email),
+        ///	@Title
+        ///)
+        ///
+        ///SELECT * FROM Dashboards WHERE Id = CAST(SCOPE_IDENTITY() AS bigint).
         /// </summary>
         internal static string InsertDashboard {
             get {

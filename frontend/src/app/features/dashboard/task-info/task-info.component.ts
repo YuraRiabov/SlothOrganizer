@@ -4,6 +4,7 @@ import { Component, OnInit } from '@angular/core';
 
 import { BaseComponent } from '@shared/components/base/base.component';
 import { SidebarType } from '#types/dashboard/timeline/enums/sidebar-type';
+import { Observable } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { TaskBlock } from '#types/dashboard/timeline/task-block';
 import { selectChosenTaskBlock } from '@store/selectors/dashboard.selectors';
@@ -14,15 +15,14 @@ import { selectChosenTaskBlock } from '@store/selectors/dashboard.selectors';
     styleUrls: ['./task-info.component.sass']
 })
 export class TaskInfoComponent extends BaseComponent implements OnInit {
-    public taskBlock!: TaskBlock;
+    public taskBlock$?: Observable<TaskBlock>;
+
     constructor(private store: Store) {
         super();
     }
 
     ngOnInit(): void {
-        this.store.select(selectChosenTaskBlock)
-            .pipe(this.untilDestroyed)
-            .subscribe(taskBlock => this.taskBlock = taskBlock);
+        this.taskBlock$ = this.store.select(selectChosenTaskBlock);
     }
 
     public close(): void {

@@ -6,7 +6,6 @@ import { map, mergeMap } from 'rxjs';
 import { DashboardService } from '@api/dashboard.service';
 import { Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { selectUserId } from '@store/selectors/auth.selectors';
 
 @Injectable()
 export class DashboardEffects {
@@ -14,8 +13,7 @@ export class DashboardEffects {
         () => {
             return this.actions$.pipe(
                 ofType(dashboardActions.loadDashboards),
-                concatLatestFrom(() => this.store.select(selectUserId)),
-                mergeMap(([action, id]) => this.dashboardService.find(id)),
+                mergeMap(() => this.dashboardService.retrieve()),
                 map((dashboards) => dashboardActions.loadDashboardsSuccess({ dashboards }))
             );
         }
@@ -25,11 +23,7 @@ export class DashboardEffects {
         () => {
             return this.actions$.pipe(
                 ofType(dashboardActions.createDashbaord),
-                concatLatestFrom(() => this.store.select(selectUserId)),
-                mergeMap(([action, id]) => this.dashboardService.create({
-                    title: action.title,
-                    userId: id
-                })),
+                mergeMap((action) => this.dashboardService.create({ title: action.title })),
                 map(dashboard => dashboardActions.dashboardCreated({ dashboard }))
             );
         }
@@ -38,11 +32,11 @@ export class DashboardEffects {
     public changeDashboard$ = createEffect(
         () => {
             return this.actions$.pipe(
-                ofType(dashboardActions.chooseDashboard),
+                ofType(dashboardActions.chooseDashboard, dashboardActions.dashboardCreated),
                 map(() => dashboardActions.loadTasks())
             );
         }
     );
 
-    constructor(private dashboardService: DashboardService, private actions$: Actions, private store: Store) {}
+    constructor(private dashboardService: DashboardService, private actions$: Actions) {}
 }
