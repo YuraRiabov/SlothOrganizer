@@ -34,5 +34,11 @@ namespace SlothOrganizer.Services.Tasks
             taskDto.TaskCompletions = taskCompletions;
             return taskDto;
         }
+
+        public async Task<List<TaskDto>> Get(long dashboardId)
+        {
+            var tasks = await _taskRepository.Get(dashboardId);
+            return _mapper.Map<List<TaskDto>>(tasks);
+        }
     }
 }

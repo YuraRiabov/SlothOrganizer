@@ -21,27 +21,45 @@
         </div>
         <div class="timeline-row" *ngFor="let taskRow of timeline.tasksByRows; index as i"
             [ngStyle]="{'grid-template-columns' : 'repeat(' + timeline.columnNumber + ', 1fr', 'grid-row': i+3}">
-            <div class="task-block" *ngFor="let task of timeline.tasksByRows[i]"
-                [ngStyle]="{'grid-column': task.startColumn + '/' + task.endColumn}">
-                {{task.title}}
+            <div class="task-block" 
+                    (click)="chooseTask(task)"
+                    [ngClass]="{ 
+                        'red': task.status === TaskStatus.Failed,
+                        'blue': task.status === TaskStatus.InProgress,
+                        'green': task.status === TaskStatus.Completed,
+                        'gray': task.status === TaskStatus.ToDo
+                    }"
+                    *ngFor="let task of timeline.tasksByRows[i]"
+                    [ngStyle]="{'grid-column': task.startColumn + '/' + task.endColumn}"
+            >
+                {{task.task.title}}
             </div>
         </div>
         <div class="timeline-row"
             [ngStyle]="{'grid-template-columns' : 'repeat(' + timeline.columnNumber + ', 1fr', 'grid-row': 8 }">
-            <div class="task-block" *ngFor="let block of timeline.exceedingTaskBlocks; let i=index"
+            <div class="task-block" 
+                [ngClass]="{ 
+                    'red': block.tasks[0].status === TaskStatus.Failed,
+                    'blue': block.tasks[0].status === TaskStatus.InProgress,
+                    'green': block.tasks[0].status === TaskStatus.Completed,
+                    'gray': block.tasks[0].status === TaskStatus.ToDo
+                }"
+                *ngFor="let block of timeline.exceedingTaskBlocks; let i=index"
                 [ngStyle]="{'grid-column': block.startColumn + '/' + block.endColumn}">
                 <div class="expand-tasks-container" *ngIf="block.tasks.length > 1">
                     <div class="expand-tasks-trigger" [mat-menu-trigger-for]="i">
                         {{ block.tasks.length }} more
                     </div>
                     <mat-menu #i="matMenu" yPosition="above">
-                        <div mat-menu-item *ngFor="let task of block.tasks">
-                            <h2>{{ task.title }}</h2>
+                        <div mat-menu-item (click)="chooseTask(block.tasks[0])" *ngFor="let task of block.tasks">
+                            <h2>{{ task.task.title }}</h2>
                         </div>
                     </mat-menu>
                 </div>
-                <div *ngIf="block.tasks.length === 1">
-                    {{block.tasks[0].title}}
+                <div *ngIf="block.tasks.length === 1" (click)="chooseTask(block.tasks[0])">
+                    <p class="task-title">
+                        {{block.tasks[0].task.title}}
+                    </p>
                 </div>
             </div>
         </div>

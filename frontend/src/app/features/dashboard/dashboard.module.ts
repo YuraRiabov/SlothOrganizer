@@ -10,6 +10,7 @@ import { MaterialModule } from '@shared/material/material.module';
 import { NgModule } from '@angular/core';
 import { SharedModule } from '@shared/components/shared/shared.module';
 import { TaskFormComponent } from './task-form/task-form.component';
+import { TaskInfoComponent } from './task-info/task-info.component';
 import { TasksEffects } from '@store/effects/dashboard/tasks.effects';
 import { TimelineComponent } from './timeline/timeline.component';
 
@@ -18,6 +19,7 @@ import { TimelineComponent } from './timeline/timeline.component';
         DashboardComponent,
         TimelineComponent,
         TaskFormComponent,
+        TaskInfoComponent,
         DashboardSelectionComponent
     ],
     imports: [

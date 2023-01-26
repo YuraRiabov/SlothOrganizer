@@ -12,7 +12,13 @@
             <mat-datepicker #picker></mat-datepicker>
         </div>
     </div>
-    <so-timeline [tasks]="tasks" [date]="currentDate" [scale]="timelineScale" (scaleIncreased)="zoomIn($event)">
+    <so-timeline 
+            [date]="currentDate" 
+            [scale]="timelineScale"
+            [tasks]="(tasks$ | async) || []"
+            (blockClicked)="displayTask($event)" 
+            (scaleIncreased)="zoomIn($event)"
+    >
     </so-timeline>
     <div class="zoom-buttons">
         <button mat-fab color="primary" [disabled]="timelineScale === 0" (click)="zoomIn()">
@@ -26,8 +32,11 @@
         <mat-icon>add</mat-icon>
     </button>
     <div [ngSwitch]="sidebarType$ | async">
-        <so-sidebar class="sidebar" *ngSwitchCase="createSidebar" (closed)="closeSidebar()">
+        <so-sidebar class="sidebar" *ngSwitchCase="SidebarType.Create" (closed)="closeSidebar()">
             <so-task-form></so-task-form>
+        </so-sidebar>
+        <so-sidebar class="sidebar" *ngSwitchCase="SidebarType.Display" (closed)="closeSidebar()">
+            <so-task-info></so-task-info>
         </so-sidebar>
     </div>
 </div>

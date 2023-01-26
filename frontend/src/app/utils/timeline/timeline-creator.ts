@@ -1,10 +1,13 @@
-import { HOURS_IN_DAY, MAX_DAYS_IN_MONTH, intercept } from '@utils/dates/dates.helper';
+import { HOURS_IN_DAY, MAX_DAYS_IN_MONTH, hasTimezone, intercept, toLocal } from '@utils/dates/dates.helper';
 import { addDays, addHours, addMonths, addWeeks, addYears, daysInWeek, daysInYear, differenceInHours, differenceInYears, endOfDay, endOfMonth, endOfWeek, endOfYear, monthsInYear, startOfDay, startOfMonth, startOfWeek, startOfYear } from 'date-fns';
 
 import { DatePipe } from '@angular/common';
 import { Injectable } from '@angular/core';
 import { JoinedTasksBlock } from '#types/dashboard/timeline/joined-tasks-block';
+import { Task } from '#types/dashboard/tasks/task';
 import { TaskBlock } from '#types/dashboard/timeline/task-block';
+import { TaskCompletion } from '#types/dashboard/tasks/task-completion';
+import { TaskStatus } from '#types/dashboard/timeline/enums/task-status';
 import { Timeline } from '#types/dashboard/timeline/timeline';
 import { TimelineScale } from '#types/dashboard/timeline/enums/timeline-scale';
 import { TimelineSection } from '#types/dashboard/timeline/timeline-section';
@@ -20,7 +23,7 @@ export class TimelineCreator {
     private boundaries!: TimelineSection;
     private columnNumber!: number;
 
-    public create(currentDate: Date, scale: TimelineScale, pageNumber: number, tasks: TaskBlock[]): Timeline {
+    public create(currentDate: Date, scale: TimelineScale, pageNumber: number, tasks: Task[]): Timeline {
         this.boundaries = this.getTimelineBoundaries(currentDate, scale, pageNumber);
         this.columnNumber = pageNumber * this.pageColumnNumber;
         let timeline: Timeline = {
@@ -32,9 +35,36 @@ export class TimelineCreator {
             sections: this.getTimelineSections(this.boundaries, scale),
             subsections: this.getTimelineSubsections(this.boundaries, scale)
         };
-        const tasksToAdd = this.getVisibleTasks(tasks).map(task => this.addColumns(task));
+        const tasksToAdd = this.getVisibleTasks(this.mapToBlocks(tasks)).map(task => this.addColumns(task));
         timeline = this.addTasks(tasksToAdd, timeline);
         return timeline;
+    }
+
+    private mapToBlocks(tasks: Task[]): TaskBlock[] {
+        const taskBlocks: TaskBlock[] = [];
+        for (const task of tasks) {
+            for (const taskCompletion of task.taskCompletions) {
+                const localTaskCompletion: TaskCompletion = hasTimezone(taskCompletion.start.toString())
+                    ? {
+                        ...taskCompletion,
+                        start:new Date(taskCompletion.start),
+                        end: new Date(taskCompletion.end)
+                    }
+                    : {
+                        ...taskCompletion,
+                        start: toLocal(new Date(taskCompletion.start)),
+                        end: toLocal(new Date(taskCompletion.end))
+                    };
+                taskBlocks.push({
+                    task,
+                    taskCompletion: localTaskCompletion,
+                    status: this.getBlockStatus(localTaskCompletion)
+                });
+            }
+        }
+        return taskBlocks.sort(
+            (first, second) => first.taskCompletion.start.getTime() - second.taskCompletion.start.getTime()
+        );
     }
 
     public getDateRatio(date: Date): number {
@@ -42,7 +72,7 @@ export class TimelineCreator {
     }
 
     private addColumns(task: TaskBlock): TaskBlock {
-        return { ...task, startColumn: this.getColumn(task.start), endColumn: this.getColumn(task.end) };
+        return { ...task, startColumn: this.getColumn(task.taskCompletion.start), endColumn: this.getColumn(task.taskCompletion.end) };
     }
 
     private getVisibleTasks(tasks: TaskBlock[]): TaskBlock[] {
@@ -50,7 +80,7 @@ export class TimelineCreator {
     }
 
     private isVisible(task: TaskBlock): boolean {
-        return this.getColumn(task.end) - this.getColumn(task.start) >= this.minimumColumnNumber;
+        return this.getColumn(task.taskCompletion.end) - this.getColumn(task.taskCompletion.start) >= this.minimumColumnNumber;
     }
 
     private getColumn(date: Date): number {
@@ -64,11 +94,15 @@ export class TimelineCreator {
     }
 
     private getBlockStart(block: TaskBlock[]): Date {
-        return block.sort((first, second) => first.start.getTime() - second.start.getTime())[0].start;
+        return block.sort(
+            (first, second) => first.taskCompletion.start.getTime() - second.taskCompletion.start.getTime()
+        )[0].taskCompletion.start;
     }
 
     private getBlockEnd(block: TaskBlock[]): Date {
-        return block.sort((first, second) => second.end.getTime() - first.end.getTime())[0].end;
+        return block.sort(
+            (first, second) => second.taskCompletion.end.getTime() - first.taskCompletion.end.getTime()
+        )[0].taskCompletion.end;
     }
 
     private getTimelineLength(): number {
@@ -81,7 +115,7 @@ export class TimelineCreator {
         for (const task of tasks) {
             let inserted = false;
             for (let i = 0; i < tasksByRows.length && !inserted; i++) {
-                if (!tasksByRows[i].find(t => intercept(t, task))) {
+                if (!tasksByRows[i].find(t => intercept(t.taskCompletion, task.taskCompletion))) {
                     tasksByRows[i].push(task);
                     inserted = true;
                 }
@@ -124,7 +158,7 @@ export class TimelineCreator {
         let inserted = false;
         for (let i = 0; i < exceeding.length && !inserted; i++) {
             const block = exceeding[i];
-            if (intercept(task, { start: this.getBlockStart(block), end: this.getBlockEnd(block)})) {
+            if (intercept(task.taskCompletion, { start: this.getBlockStart(block), end: this.getBlockEnd(block)})) {
                 block.push(task);
                 inserted = true;
             }
@@ -292,5 +326,18 @@ export class TimelineCreator {
         default:
             throw new Error('Invalid scale');
         }
+    }
+
+    private getBlockStatus(taskCompletion: TaskCompletion): TaskStatus {
+        if (taskCompletion.isSuccessful) {
+            return TaskStatus.Completed;
+        }
+        if (taskCompletion.end < new Date()) {
+            return TaskStatus.Failed;
+        }
+        if (taskCompletion.start > new Date()) {
+            return TaskStatus.ToDo;
+        }
+        return TaskStatus.InProgress;
     }
 }

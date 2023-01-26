@@ -34,10 +34,11 @@ namespace SlothOrganizer.Services.Auth
 
         public async Task<TokenDto> RefreshToken(TokenDto expiredToken)
         {
-            var email = _accessTokenService.GetEmailFromToken(expiredToken.AccessToken);
+            var email = _accessTokenService.GetEmail(expiredToken.AccessToken);
+            var id = _accessTokenService.GetId(expiredToken.AccessToken);
             if (await _refreshTokenService.Validate(email, expiredToken.RefreshToken))
             {
-                return await GenerateToken(email);
+                return await GenerateToken(email, id);
             }
             throw new InvalidCredentialsException("Invalid refresh token");
         }
@@ -52,7 +53,7 @@ namespace SlothOrganizer.Services.Auth
                     User = user
                 };
             }
-            var token = await GenerateToken(user.Email);
+            var token = await GenerateToken(user.Email, user.Id);
             return new UserAuthDto
             {
                 User = user,
@@ -75,7 +76,7 @@ namespace SlothOrganizer.Services.Auth
                 return new UserAuthDto
                 {
                     User = user,
-                    Token = await GenerateToken(user.Email)
+                    Token = await GenerateToken(user.Email, user.Id)
                 };
             }
             throw new InvalidCredentialsException("Invalid verification code");
@@ -87,7 +88,7 @@ namespace SlothOrganizer.Services.Auth
             return new UserAuthDto
             {
                 User = user,
-                Token = await GenerateToken(user.Email)
+                Token = await GenerateToken(user.Email, user.Id)
             };
         }
 
@@ -97,11 +98,11 @@ namespace SlothOrganizer.Services.Auth
             await _notificationServcie.SendPasswordResetLink(user.Email);
         }
 
-        private async Task<TokenDto> GenerateToken(string email)
+        private async Task<TokenDto> GenerateToken(string email, long id)
         {
             return new TokenDto
             {
-                AccessToken = _accessTokenService.Generate(email),
+                AccessToken = _accessTokenService.Generate(email, id),
                 RefreshToken = await _refreshTokenService.Generate(email)
             };
         }

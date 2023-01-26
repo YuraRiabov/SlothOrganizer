@@ -1,7 +1,10 @@
 import { AfterViewInit, Component, ElementRef, EventEmitter, Input, OnDestroy, OnInit, Output, ViewChild } from '@angular/core';
 import { addHours, differenceInHours } from 'date-fns';
 
+import { BaseComponent } from '@shared/components/base/base.component';
+import { Task } from '#types/dashboard/tasks/task';
 import { TaskBlock } from '#types/dashboard/timeline/task-block';
+import { TaskStatus } from '#types/dashboard/timeline/enums/task-status';
 import { Timeline } from '#types/dashboard/timeline/timeline';
 import { TimelineCreator } from '@utils/timeline/timeline-creator';
 import { TimelineScale } from '#types/dashboard/timeline/enums/timeline-scale';
@@ -12,33 +15,43 @@ import { TimelineSection } from '#types/dashboard/timeline/timeline-section';
     templateUrl: './timeline.component.html',
     styleUrls: ['./timeline.component.sass']
 })
-export class TimelineComponent implements OnInit, AfterViewInit, OnDestroy {
+export class TimelineComponent extends BaseComponent implements OnInit, AfterViewInit, OnDestroy {
     public readonly defaultPageNumber = 12;
+    public readonly TaskStatus = TaskStatus;
     private timelineScale: TimelineScale = TimelineScale.Day;
     private currentDate: Date = new Date();
     private returnDate: Date = this.currentDate;
     private timelineResizeObserver!: ResizeObserver;
+    private _tasks: Task[] = [];
 
     @Input() set date(value: Date) {
         this.currentDate = value;
         this.initializeTimeline();
     }
-    @Input() public tasks: TaskBlock[] = [];
     @Input() public set scale(value: TimelineScale) {
         this.timelineScale = value;
         this.initializeTimeline();
     }
 
+    @Input() public set tasks(tasks: Task[]) {
+        this._tasks = tasks;
+        this.initializeTimeline();
+    }
+
     @Output() scaleIncreased = new EventEmitter<Date>();
+    @Output() blockClicked = new EventEmitter<TaskBlock>();
 
     @ViewChild('timelineScroll') timelineScroll!: ElementRef;
     @ViewChild('timelineContainer') timelineContainer!: ElementRef;
 
     public timeline!: Timeline;
 
-    constructor(private timelineCreator: TimelineCreator) { }
+    constructor(private timelineCreator: TimelineCreator) {
+        super();
+    }
 
-    ngOnDestroy(): void {
+    override ngOnDestroy(): void {
+        super.ngOnDestroy();
         this.timelineResizeObserver.disconnect();
     }
 
@@ -63,9 +76,13 @@ export class TimelineComponent implements OnInit, AfterViewInit, OnDestroy {
         this.initializeTimeline(this.timeline.pageNumber * 2, false);
     }
 
+    public chooseTask(taskBlock: TaskBlock): void {
+        this.blockClicked.emit(taskBlock);
+    }
+
     private initializeTimeline(pageNumber?: number, scroll: boolean = true): void {
         const newPageNumber = pageNumber ?? this.defaultPageNumber;
-        this.timeline = this.timelineCreator.create(this.currentDate, this.timelineScale, newPageNumber, this.tasks);
+        this.timeline = this.timelineCreator.create(this.currentDate, this.timelineScale, newPageNumber, this._tasks);
         if (this.timelineScroll && scroll) {
             this.scrollTo(this.currentDate);
         }

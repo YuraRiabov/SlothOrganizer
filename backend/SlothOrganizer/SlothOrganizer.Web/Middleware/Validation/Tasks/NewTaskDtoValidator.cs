@@ -11,9 +11,9 @@ namespace SlothOrganizer.Web.Middleware.Validation.Tasks
             RuleFor(t => t.Title)
                 .NotEmpty()
                 .MinimumLength(2)
-                .MaximumLength(30);
+                .MaximumLength(60);
 
-            RuleFor(t => t.Description).MaximumLength(200);
+            RuleFor(t => t.Description).MaximumLength(400);
 
             RuleFor(t => t.RepeatingPeriod).IsInEnum();
 

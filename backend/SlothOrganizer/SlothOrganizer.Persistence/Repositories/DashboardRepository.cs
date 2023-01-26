@@ -25,8 +25,7 @@ namespace SlothOrganizer.Persistence.Repositories
             };
 
             using var connection = _context.CreateConnection();
-            var id = await connection.QuerySingleAsync<long>(query, parameters);
-            dashboard.Id = id;
+            dashboard.Id = await connection.QuerySingleAsync<long>(query, parameters);
             return dashboard;
         }
 

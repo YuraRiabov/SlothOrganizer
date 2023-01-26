@@ -18,4 +18,8 @@ export class TasksService extends HttpService {
     public create(newTask: NewTask): Observable<Task> {
         return this.post<Task>('', newTask);
     }
+
+    public load(dashboardId: number): Observable<Task[]> {
+        return this.get<Task[]>(`/${dashboardId}`);
+    }
 }

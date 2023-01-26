@@ -34,10 +34,22 @@ namespace SlothOrganizer.Persistence.Repositories
         public async Task<List<UserTask>> Get(long dashboardId)
         {
             var query = Resources.GetAllTasks;
+            var tasks = new Dictionary<long, UserTask>();
 
             using var connection = _context.CreateConnection();
-            var tasks = await connection.QueryAsync<UserTask>(query, new { dashboardId });
-            return tasks.ToList();
+            await connection.QueryAsync<UserTask, TaskCompletion, UserTask>(query, (task, completion) =>
+                {
+                    if (!tasks.TryGetValue(task.Id, out var uniqueTask))
+                    {
+                        tasks.Add(task.Id, task);
+                        uniqueTask = task;
+                    }
+                    uniqueTask.TaskCompletions.Add(completion);
+                    return uniqueTask;
+                },
+                param: new { dashboardId }
+            );
+            return tasks.Values.ToList();
         }
     }
 }

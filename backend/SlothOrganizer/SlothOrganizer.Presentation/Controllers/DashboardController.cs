@@ -1,6 +1,8 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using System.Security.Claims;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using SlothOrganizer.Contracts.DTO.Tasks.Dashboard;
+using SlothOrganizer.Presentation.Extensions;
 using SlothOrganizer.Services.Abstractions.Tasks;
 
 namespace SlothOrganizer.Presentation.Controllers
@@ -20,13 +22,16 @@ namespace SlothOrganizer.Presentation.Controllers
         [HttpPost]
         public async Task<DashboardDto> Create([FromBody] NewDashboardDto newDashboard)
         {
-            return await _dashboardService.Create(newDashboard);
+
+            var id = HttpContext.User.GetId();
+            return await _dashboardService.Create(newDashboard, id);
         }
 
-        [HttpGet("{userId}")]
-        public async Task<List<DashboardDto>> Get(long userId)
+        [HttpGet]
+        public async Task<List<DashboardDto>> Get()
         {
-            return await _dashboardService.Get(userId);
+            var id = HttpContext.User.GetId();
+            return await _dashboardService.Get(id);
         }
     }
 }

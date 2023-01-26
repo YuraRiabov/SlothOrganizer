@@ -1,18 +1,22 @@
-import { chooseDashboard, closeSidebar, dashboardCreated, loadDashboardsSuccess, openSidebar, taskCreated } from '@store/actions/dashboard.actions';
+import { chooseDashboard, chooseTask, closeSidebar, dashboardCreated, loadDashboardsSuccess, openSidebar, taskCreated, tasksLoaded } from '@store/actions/dashboard.actions';
 import { createReducer, on } from '@ngrx/store';
 
 import { DashboardState } from '@store/states/dashboard-state';
 import { SidebarType } from '#types/dashboard/timeline/enums/sidebar-type';
+import { TaskBlock } from '#types/dashboard/timeline/task-block';
 
 const initialState: DashboardState = {
     sidebarType: SidebarType.None,
     chosenDashboardId: -1,
     dashboards: [],
-    tasks: []
+    tasks: [],
+    chosenTaskBlock: {} as TaskBlock
 };
 
 export const dashboardReducer = createReducer(
     initialState,
+    on(tasksLoaded, (state, { tasks }): DashboardState => ({ ...state, tasks })),
+    on(chooseTask, (state, { taskBlock }): DashboardState => ({ ...state, chosenTaskBlock: taskBlock })),
     on(loadDashboardsSuccess, (state, { dashboards }): DashboardState => ({
         ...state,
         dashboards,

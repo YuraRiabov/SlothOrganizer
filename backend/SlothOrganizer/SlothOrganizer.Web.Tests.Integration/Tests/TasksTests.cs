@@ -51,5 +51,27 @@ namespace SlothOrganizer.Web.Tests.Integration.Tests
 
             Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
         }
+
+        [Fact]
+        public async Task Get_WhenHasData_ShouldReturn()
+        {
+            await AddAuthorizationHeader();
+            A.CallTo(() => DateTimeService.Now()).Returns(new DateTime(2023, 1, 1));
+
+            var dashboard = DtoProvider.GetNewDashboard();
+            await Client.PostAsync("dashboards", GetStringContent(dashboard));
+
+            var newTask = DtoProvider.GetNewTask();
+            await Client.PostAsync(ControllerRoute, GetStringContent(newTask));
+
+            var response = await Client.GetAsync($"{ControllerRoute}/{newTask.DashboardId}");
+            var result = GetResponse<List<TaskDto>>(response);
+
+            await Verify(new
+            {
+                response.StatusCode,
+                result
+            }).DontScrubDateTimes();
+        }
     }
 }

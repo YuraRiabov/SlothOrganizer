@@ -37,7 +37,7 @@ describe('DashboardComponent', () => {
         store = jasmine.createSpyObj('Store', ['select', 'dispatch']);
         store.select.and.returnValue(of(dashboards));
         await TestBed.configureTestingModule({
-            declarations: [DashboardComponent, TimelineComponent],
+            declarations: [DashboardComponent],
             imports: [
                 CommonModule,
                 DashboardRoutingModule,

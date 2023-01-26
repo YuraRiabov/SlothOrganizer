@@ -29,18 +29,19 @@ namespace SlothOrganizer.Services.Tests.Unit.Tasks
         public async Task Create_ShouldCallRepositoryAndReturnSameData()
         {
             var newDashboard = GetNewDashboard();
-            A.CallTo(() => _dashboardRepository.Insert(A<Dashboard>._)).Returns(
+            var userId = 1;
+            A.CallTo(() => _dashboardRepository.Insert(A<Dashboard>.Ignored)).Returns(
                 new Dashboard
                 {
                     Title = newDashboard.Title,
-                    UserId = newDashboard.UserId
+                    UserId = userId
                 });
 
-            var result = await _dashboardService.Create(newDashboard);
+            var result = await _dashboardService.Create(newDashboard, userId);
 
             Assert.Equal(newDashboard.Title, result.Title);
-            Assert.Equal(newDashboard.UserId, result.UserId);
-            A.CallTo(() => _dashboardRepository.Insert(A<Dashboard>._)).MustHaveHappenedOnceExactly();
+            Assert.Equal(userId, result.UserId);
+            A.CallTo(() => _dashboardRepository.Insert(A<Dashboard>.Ignored)).MustHaveHappenedOnceExactly();
         }
 
         [Fact]
@@ -63,10 +64,11 @@ namespace SlothOrganizer.Services.Tests.Unit.Tasks
         public async Task Get_WhenEmpty_ShouldGenerateDefault()
         {
             var defaultDashboards = GetDefaultDashboards();
+            var userId = defaultDashboards[0].UserId;
             A.CallTo(() => _dashboardRepository.Insert(A<Dashboard>._)).ReturnsNextFromSequence(defaultDashboards.ToArray());
-            A.CallTo(() => _dashboardRepository.Get(1)).Returns(new List<Dashboard>());
+            A.CallTo(() => _dashboardRepository.Get(userId)).Returns(new List<Dashboard>());
 
-            var result = await _dashboardService.Get(1);
+            var result = await _dashboardService.Get(userId);
 
             Assert.Equal(2, result.Count);
             Assert.Equal("Routine", result[0].Title);
@@ -77,7 +79,6 @@ namespace SlothOrganizer.Services.Tests.Unit.Tasks
         {
             return new NewDashboardDto
             {
-                UserId = 1,
                 Title = "Title"
             };
         }

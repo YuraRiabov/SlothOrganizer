@@ -51,7 +51,6 @@ namespace SlothOrganizer.Web.Tests.Integration.Setup
         {
             return new NewDashboardDto
             {
-                UserId = 1,
                 Title = "Test",
             };
         }
