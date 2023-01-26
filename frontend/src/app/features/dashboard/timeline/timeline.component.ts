@@ -17,10 +17,7 @@ import { TimelineSection } from '#types/dashboard/timeline/timeline-section';
 })
 export class TimelineComponent extends BaseComponent implements OnInit, AfterViewInit, OnDestroy {
     public readonly defaultPageNumber = 12;
-    public readonly completedTask = TaskStatus.Completed;
-    public readonly failedTask = TaskStatus.Failed;
-    public readonly inProgressTask = TaskStatus.InProgress;
-    public readonly toDoTask = TaskStatus.ToDo;
+    public readonly TaskStatus = TaskStatus;
     private timelineScale: TimelineScale = TimelineScale.Day;
     private currentDate: Date = new Date();
     private returnDate: Date = this.currentDate;

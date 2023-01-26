@@ -16,6 +16,7 @@ import { setTime } from '@utils/dates/dates.helper';
     styleUrls: ['./task-form.component.sass']
 })
 export class TaskFormComponent extends BaseComponent {
+    public readonly TaskRepeatingPeriod = TaskRepeatingPeriod;
     @Input() public set initialValue(value: NewTask | null) {
         const initialValue = value ?? {
             dashboardId: -1,
@@ -47,23 +48,6 @@ export class TaskFormComponent extends BaseComponent {
 
     constructor() {
         super();
-    }
-
-    public getLabel(period: TaskRepeatingPeriod): string {
-        switch (period) {
-        case TaskRepeatingPeriod.None:
-            return 'None';
-        case TaskRepeatingPeriod.Day:
-            return 'Day';
-        case TaskRepeatingPeriod.Week:
-            return 'Week';
-        case TaskRepeatingPeriod.Month:
-            return 'Month';
-        case TaskRepeatingPeriod.Year:
-            return 'Year';
-        default:
-            throw new Error('Invalid repeating period');
-        }
     }
 
     public validate(): void {

@@ -26,9 +26,10 @@ namespace SlothOrganizer.Services.Auth
         public async Task<TokenDto> RefreshToken(TokenDto expiredToken)
         {
             var email = _tokenService.GetEmail(expiredToken);
+            var id = _tokenService.GetId(expiredToken);
             if (await _tokenService.Validate(email, expiredToken))
             {
-                return await _tokenService.Generate(email);
+                return await _tokenService.Generate(email, id);
             }
             throw new InvalidCredentialsException("Invalid refresh token");
         }

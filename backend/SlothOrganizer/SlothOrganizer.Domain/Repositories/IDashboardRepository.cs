@@ -4,7 +4,7 @@ namespace SlothOrganizer.Domain.Repositories
 {
     public interface IDashboardRepository
     {
-        Task<List<Dashboard>> Get(string email);
-        Task<Dashboard> Insert(string title, string userEmail);
+        Task<List<Dashboard>> Get(long userId);
+        Task<Dashboard> Insert(Dashboard dashboard);
     }
 }

@@ -49,7 +49,7 @@ namespace SlothOrganizer.Services.Tests.Unit.Users
             var user = GetUser(verificationCodeDto.Email, true);
 
             A.CallTo(() => _userRepository.VerifyEmail(user.Email, verificationCodeDto.VerificationCode)).Returns(user);
-            A.CallTo(() => _tokenService.Generate(verificationCodeDto.Email)).Returns(new TokenDto { AccessToken = "test" });
+            A.CallTo(() => _tokenService.Generate(verificationCodeDto.Email, user.Id)).Returns(new TokenDto { AccessToken = "test" });
 
             var result = await _userCredentialsService.VerifyEmail(verificationCodeDto);
 
@@ -165,7 +165,7 @@ namespace SlothOrganizer.Services.Tests.Unit.Users
             };
             A.CallTo(() => _userRepository.Get("test@test.com")).Returns(Task.FromResult<User?>(user));
             A.CallTo(() => _hashService.VerifyPassword(login.Password, A<byte[]>._, user.Password)).Returns(true);
-            A.CallTo(() => _tokenService.Generate(user.Email)).Returns(token);
+            A.CallTo(() => _tokenService.Generate(user.Email, user.Id)).Returns(token);
 
             var result = await _userCredentialsService.SignIn(login);
 
@@ -189,7 +189,7 @@ namespace SlothOrganizer.Services.Tests.Unit.Users
             };
             A.CallTo(() => _userRepository.Get("test@test.com")).Returns(Task.FromResult<User?>(user));
             A.CallTo(() => _hashService.VerifyPassword(login.Password, A<byte[]>._, user.Password)).Returns(true);
-            A.CallTo(() => _tokenService.Generate(user.Email)).Returns(token);
+            A.CallTo(() => _tokenService.Generate(user.Email, user.Id)).Returns(token);
 
             var result = await _userCredentialsService.SignIn(login);
 

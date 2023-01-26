@@ -17,28 +17,41 @@ namespace SlothOrganizer.Services.Tasks
             _mapper = mapper;
         }
 
-        public async Task<DashboardDto> Create(NewDashboardDto dashboardDto, string userEmail)
+        public async Task<DashboardDto> Create(NewDashboardDto dashboardDto, long userId)
         {
-            var dashboard = await _dashboardRepository.Insert(dashboardDto.Title, userEmail);
+            var dashboard = _mapper.Map<Dashboard>(dashboardDto);
+            dashboard.UserId = userId;
+            var insertedDashboard = await _dashboardRepository.Insert(dashboard);
             return _mapper.Map<DashboardDto>(dashboard);
         }
 
-        public async Task<List<DashboardDto>> Get(string userEmail)
+        public async Task<List<DashboardDto>> Get(long userId)
         {
-            var dashboards = await _dashboardRepository.Get(userEmail);
+            var dashboards = await _dashboardRepository.Get(userId);
             if (dashboards.Count == 0)
             {
-                foreach (var title in GetDefaultTitles())
+                foreach (var dashboard in GetDefault(userId))
                 { 
-                    dashboards.Add(await _dashboardRepository.Insert(title, userEmail));
+                    dashboards.Add(await _dashboardRepository.Insert(dashboard));
                 }
             }
             return _mapper.Map<List<DashboardDto>>(dashboards);
         }
 
-        private List<string> GetDefaultTitles()
+        private List<Dashboard> GetDefault(long userId)
         {
-            return new List<string> { "Routine", "Work" };
+            return new List<Dashboard> { 
+                new Dashboard
+                {
+                    Title = "Routine",
+                    UserId = userId,
+                },
+                new Dashboard
+                {
+                    Title = "Work",
+                    UserId = userId,
+                }
+            };
         }
     }
 }

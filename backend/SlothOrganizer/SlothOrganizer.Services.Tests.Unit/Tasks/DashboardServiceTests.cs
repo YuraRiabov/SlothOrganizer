@@ -30,29 +30,27 @@ namespace SlothOrganizer.Services.Tests.Unit.Tasks
         {
             var newDashboard = GetNewDashboard();
             var userId = 1;
-            var userEmail = "test";
-            A.CallTo(() => _dashboardRepository.Insert(newDashboard.Title, userEmail)).Returns(
+            A.CallTo(() => _dashboardRepository.Insert(A<Dashboard>.Ignored)).Returns(
                 new Dashboard
                 {
                     Title = newDashboard.Title,
                     UserId = userId
                 });
 
-            var result = await _dashboardService.Create(newDashboard, userEmail);
+            var result = await _dashboardService.Create(newDashboard, userId);
 
             Assert.Equal(newDashboard.Title, result.Title);
             Assert.Equal(userId, result.UserId);
-            A.CallTo(() => _dashboardRepository.Insert(newDashboard.Title, userEmail)).MustHaveHappenedOnceExactly();
+            A.CallTo(() => _dashboardRepository.Insert(A<Dashboard>.Ignored)).MustHaveHappenedOnceExactly();
         }
 
         [Fact]
         public async Task Get_WhenNotEmpty_ShouldReturn()
         {
             var dashboard = GetDashboard();
-            var userEmail = "test";
-            A.CallTo(() => _dashboardRepository.Get(userEmail)).Returns(new List<Dashboard> { dashboard });
+            A.CallTo(() => _dashboardRepository.Get(dashboard.UserId)).Returns(new List<Dashboard> { dashboard });
 
-            var result = await _dashboardService.Get(userEmail);
+            var result = await _dashboardService.Get(dashboard.UserId);
 
             Assert.NotNull(result);
             Assert.Single(result);
@@ -66,11 +64,11 @@ namespace SlothOrganizer.Services.Tests.Unit.Tasks
         public async Task Get_WhenEmpty_ShouldGenerateDefault()
         {
             var defaultDashboards = GetDefaultDashboards();
-            var userEmail = "test";
-            A.CallTo(() => _dashboardRepository.Insert(A<string>._, userEmail)).ReturnsNextFromSequence(defaultDashboards.ToArray());
-            A.CallTo(() => _dashboardRepository.Get(userEmail)).Returns(new List<Dashboard>());
+            var userId = defaultDashboards[0].UserId;
+            A.CallTo(() => _dashboardRepository.Insert(A<Dashboard>._)).ReturnsNextFromSequence(defaultDashboards.ToArray());
+            A.CallTo(() => _dashboardRepository.Get(userId)).Returns(new List<Dashboard>());
 
-            var result = await _dashboardService.Get(userEmail);
+            var result = await _dashboardService.Get(userId);
 
             Assert.Equal(2, result.Count);
             Assert.Equal("Routine", result[0].Title);

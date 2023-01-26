@@ -21,7 +21,36 @@ namespace SlothOrganizer.Services.Auth.Tokens
             _dateTimeService = dateTimeService;
         }
 
-        public string GetEmailFromToken(string token)
+        public string GetEmail(string token)
+        {
+            return GetFromToken(token, ClaimTypes.Email);
+        }
+
+        public long GetId(string token)
+        {
+            return long.Parse(GetFromToken(token, ClaimTypes.NameIdentifier));
+        }
+
+        public string Generate(string email, long id)
+        {
+            var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_jwtOptions.Secret));
+            var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
+            var claims = new[]
+            {
+                new Claim(ClaimTypes.Email, email),
+                new Claim(ClaimTypes.NameIdentifier, id.ToString())
+            };
+            var token = new JwtSecurityToken(_jwtOptions.Issuer,
+                _jwtOptions.Audience,
+                claims,
+                expires: _dateTimeService.Now().AddMinutes(60),
+                signingCredentials: credentials);
+
+
+            return new JwtSecurityTokenHandler().WriteToken(token);
+        }
+
+        private string GetFromToken(string token, string claim)
         {
             var tokenValidationParameters = new TokenValidationParameters
             {
@@ -41,30 +70,12 @@ namespace SlothOrganizer.Services.Auth.Tokens
                 {
                     throw new Exception();
                 }
-                return principal.FindFirst(ClaimTypes.Email)?.Value ?? throw new InvalidCredentialsException("Token doesn't contain email claim");
+                return principal.FindFirst(claim)?.Value ?? throw new InvalidCredentialsException("Token doesn't contain claim");
             }
             catch (Exception)
             {
                 throw new InvalidCredentialsException("Invalid token");
             }
-        }
-
-        public string Generate(string email)
-        {
-            var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_jwtOptions.Secret));
-            var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
-            var claims = new[]
-            {
-                new Claim(ClaimTypes.Email, email)
-            };
-            var token = new JwtSecurityToken(_jwtOptions.Issuer,
-                _jwtOptions.Audience,
-                claims,
-                expires: _dateTimeService.Now().AddMinutes(60),
-                signingCredentials: credentials);
-
-
-            return new JwtSecurityTokenHandler().WriteToken(token);
         }
     }
 }
