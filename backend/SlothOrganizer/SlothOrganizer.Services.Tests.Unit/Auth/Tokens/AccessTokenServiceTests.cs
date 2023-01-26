@@ -35,31 +35,34 @@ namespace SlothOrganizer.Services.Tests.Unit.Auth.Tokens
         public void GenerateToken_ShouldGenerateValidToken()
         {
             var email = "test@test.com";
+            var id = 1;
             A.CallTo(() => _dateTimeService.Now()).Returns(new DateTime(1800, 1, 1));
 
             var tokenValidationParameters = GetTokenParameters(false);
             var tokenHandler = new JwtSecurityTokenHandler();
             SecurityToken securityToken;
 
-            var token = _accessTokenService.Generate(email);
+            var token = _accessTokenService.Generate(email, id);
             var principal = tokenHandler.ValidateToken(token, tokenValidationParameters, out securityToken);
             var jwtSecurityToken = securityToken as JwtSecurityToken;
 
             Assert.NotNull(jwtSecurityToken);
             Assert.Equal(email, principal.FindFirst(ClaimTypes.Email)?.Value);
+            Assert.Equal(id.ToString(), principal.FindFirst(ClaimTypes.NameIdentifier)?.Value);
         }
 
         [Fact]
         public void GenerateToken_WhenExpired_ShouldThrow()
         {
             var email = "test@test.com";
+            var id = 1;
             A.CallTo(() => _dateTimeService.Now()).Returns(new DateTime(1800, 1, 1));
 
             var tokenValidationParameters = GetTokenParameters(true);
             var tokenHandler = new JwtSecurityTokenHandler();
             SecurityToken securityToken;
 
-            var token = _accessTokenService.Generate(email);
+            var token = _accessTokenService.Generate(email, id);
             var code = () => tokenHandler.ValidateToken(token, tokenValidationParameters, out securityToken);
 
             Assert.Throws<SecurityTokenExpiredException>(code);
@@ -70,7 +73,7 @@ namespace SlothOrganizer.Services.Tests.Unit.Auth.Tokens
         {
             var token = "invalidToken";
 
-            var code = () => _accessTokenService.GetEmailFromToken(token);
+            var code = () => _accessTokenService.GetEmail(token);
 
             var exception = Assert.Throws<InvalidCredentialsException>(code);
             Assert.Equal("Invalid token", exception.Message);
@@ -80,10 +83,11 @@ namespace SlothOrganizer.Services.Tests.Unit.Auth.Tokens
         public void GetEmailFromToken_WhenValid_ShouldGet()
         {
             var email = "test@test.com";
+            var id = 1;
             A.CallTo(() => _dateTimeService.Now()).Returns(new DateTime(1800, 1, 1));
-            var token = _accessTokenService.Generate(email);
+            var token = _accessTokenService.Generate(email, id);
 
-            var result = _accessTokenService.GetEmailFromToken(token);
+            var result = _accessTokenService.GetEmail(token);
 
             Assert.Equal(email, result);
         }

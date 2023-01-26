@@ -21,29 +21,33 @@ namespace SlothOrganizer.Presentation.Controllers
         [HttpPost]
         public async Task<ActionResult<DashboardDto>> Create([FromBody] NewDashboardDto newDashboard)
         {
-            var email = GetCurrentUserEmail();
-            if (email is null)
+            var id = GetCurrentUserId();
+            if (id is null)
             {
                 return Unauthorized();
             }
-            return Ok(await _dashboardService.Create(newDashboard, email));
+            return Ok(await _dashboardService.Create(newDashboard, (long)id));
         }
 
         [HttpGet]
         public async Task<ActionResult<List<DashboardDto>>> Get()
         {
-            var email = GetCurrentUserEmail();
-            if (email is null)
+            var id = GetCurrentUserId();
+            if (id is null)
             {
                 return Unauthorized();
             }
-            return Ok(await _dashboardService.Get(email));
+            return Ok(await _dashboardService.Get((long)id));
         }
 
-        private string? GetCurrentUserEmail()
+        private long? GetCurrentUserId()
         {
             var identity = HttpContext.User.Identity as ClaimsIdentity;
-            return identity?.FindFirst(ClaimTypes.Email)?.Value;
+            if (!long.TryParse(identity?.FindFirst(ClaimTypes.NameIdentifier)?.Value, out var id))
+            {
+                return null;
+            }
+            return id;
         }
     }
 }
