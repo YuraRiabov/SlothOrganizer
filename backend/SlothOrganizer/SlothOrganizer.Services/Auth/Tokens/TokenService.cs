@@ -14,18 +14,23 @@ namespace SlothOrganizer.Services.Auth.Tokens
             _accessTokenService = accessTokenService;
         }
 
-        public async Task<TokenDto> Generate(string email)
+        public async Task<TokenDto> Generate(string email, long id)
         {
             return new TokenDto
             {
-                AccessToken = _accessTokenService.Generate(email),
+                AccessToken = _accessTokenService.Generate(email, id),
                 RefreshToken = await _refreshTokenService.Generate(email)
             };
         }
 
         public string GetEmail(TokenDto token)
         {
-            return _accessTokenService.GetEmailFromToken(token.AccessToken);
+            return _accessTokenService.GetEmail(token.AccessToken);
+        }
+
+        public long GetId(TokenDto token)
+        {
+            return _accessTokenService.GetId(token.AccessToken);
         }
 
         public async Task<bool> Validate(string email, TokenDto token)

@@ -2,7 +2,8 @@
 {
     public interface IAccessTokenService
     {
-        string Generate(string email);
-        string GetEmailFromToken(string token);
+        string Generate(string email, long id);
+        string GetEmail(string token);
+        long GetId(string token);
     }
 }

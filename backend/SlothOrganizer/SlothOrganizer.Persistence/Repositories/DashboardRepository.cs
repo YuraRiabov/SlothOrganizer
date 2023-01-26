@@ -14,26 +14,27 @@ namespace SlothOrganizer.Persistence.Repositories
             _context = context;
         }
 
-        public async Task<Dashboard> Insert(string title, string userEmail)
+        public async Task<Dashboard> Insert(Dashboard dashboard)
         {
             var query = Resources.InsertDashboard;
 
             var parameters = new
             {
-                Email = userEmail,
-                Title = title,
+                UserId = dashboard.UserId,
+                Title = dashboard.Title,
             };
 
             using var connection = _context.CreateConnection();
-            return await connection.QuerySingleAsync<Dashboard>(query, parameters);
+            dashboard.Id = await connection.QuerySingleAsync<long>(query, parameters);
+            return dashboard;
         }
 
-        public async Task<List<Dashboard>> Get(string userEmail)
+        public async Task<List<Dashboard>> Get(long userId)
         {
             var query = Resources.GetAllDashboards;
 
             using var connection = _context.CreateConnection();
-            var dashboards = await connection.QueryAsync<Dashboard>(query, new { Email = userEmail });
+            var dashboards = await connection.QueryAsync<Dashboard>(query, new { userId });
             return dashboards.ToList();
         }
     }

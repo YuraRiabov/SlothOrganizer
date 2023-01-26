@@ -46,9 +46,11 @@ namespace SlothOrganizer.Services.Tests.Unit.Auth
         {
             var token = GetTokenDto();
             var email = "test";
+            var userId = 1;
             A.CallTo(() => _tokenService.GetEmail(token)).Returns(email);
+            A.CallTo(() => _tokenService.GetId(token)).Returns(userId);
             A.CallTo(() => _tokenService.Validate(email, token)).Returns(true);
-            A.CallTo(() => _tokenService.Generate(email)).Returns(token);
+            A.CallTo(() => _tokenService.Generate(email, userId)).Returns(token);
 
             var result = await _authService.RefreshToken(token);
 

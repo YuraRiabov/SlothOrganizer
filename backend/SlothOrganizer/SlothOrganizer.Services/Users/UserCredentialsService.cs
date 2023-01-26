@@ -41,7 +41,7 @@ namespace SlothOrganizer.Services.Users
             {
                 throw new InvalidCredentialsException("Invalid password");
             }
-            var token = user.EmailVerified ? await _tokenService.Generate(user.Email) : null;
+            var token = user.EmailVerified ? await _tokenService.Generate(user.Email, user.Id) : null;
             return new UserAuthDto
             {
                 User = _mapper.Map<UserDto>(user),
@@ -57,7 +57,7 @@ namespace SlothOrganizer.Services.Users
                 return new UserAuthDto
                 {
                     User = _mapper.Map<UserDto>(user),
-                    Token = await _tokenService.Generate(user.Email)
+                    Token = await _tokenService.Generate(user.Email, user.Id)
                 };
             }
             throw new InvalidCredentialsException("Invalid verification code");
@@ -83,7 +83,7 @@ namespace SlothOrganizer.Services.Users
             return new UserAuthDto
             {
                 User = _mapper.Map<UserDto>(user),
-                Token = await _tokenService.Generate(user.Email)
+                Token = await _tokenService.Generate(user.Email, user.Id)
             };
         }
 

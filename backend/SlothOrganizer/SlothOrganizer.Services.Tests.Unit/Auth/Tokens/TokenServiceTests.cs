@@ -24,11 +24,12 @@ namespace SlothOrganizer.Services.Tests.Unit.Auth.Tokens
         public async Task Generate_ShouldGenerate()
         {
             var email = "test";
+            var id = 1;
             var token = GetTokenDto();
             A.CallTo(() => _refreshTokenService.Generate(email)).Returns(token.RefreshToken);
-            A.CallTo(() => _acceessTokenService.Generate(email)).Returns(token.AccessToken);
+            A.CallTo(() => _acceessTokenService.Generate(email, id)).Returns(token.AccessToken);
 
-            var result = await _tokenService.Generate(email);
+            var result = await _tokenService.Generate(email, id);
 
             Assert.Equal(result.AccessToken, token.AccessToken);
             Assert.Equal(result.RefreshToken, token.RefreshToken);
@@ -51,7 +52,7 @@ namespace SlothOrganizer.Services.Tests.Unit.Auth.Tokens
         {
             var email = "test";
             var token = GetTokenDto();
-            A.CallTo(() => _acceessTokenService.GetEmailFromToken(token.AccessToken)).Returns(email);
+            A.CallTo(() => _acceessTokenService.GetEmail(token.AccessToken)).Returns(email);
 
             var result = _tokenService.GetEmail(token);
 
