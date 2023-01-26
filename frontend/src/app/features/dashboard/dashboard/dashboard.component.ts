@@ -20,8 +20,7 @@ import { addHours } from 'date-fns';
     styleUrls: ['./dashboard.component.sass']
 })
 export class DashboardComponent extends BaseComponent implements OnInit {
-    public readonly createSidebar = SidebarType.Create;
-    public readonly displaySidebar = SidebarType.Display;
+    public readonly SidebarType = SidebarType;
     public currentDate: Date = new Date();
     public timelineScale = TimelineScale.Day;
 

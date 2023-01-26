@@ -4,35 +4,40 @@
     </button>
     <h2>{{ taskBlock.task.title }}</h2>
     <div *ngIf="taskBlock.task.description" class="task-info-item">
-        <h3>Description:</h3>
+        <h3 i18n>Description:</h3>
         <p>{{ taskBlock.task.description }}</p>
     </div>
     <div class="task-info-item">
-        <h3>Starts:</h3>
+        <h3 i18n>Starts:</h3>
         <p>{{ taskBlock.taskCompletion.start | date: 'medium'}}</p>
     </div>
     <div class="task-info-item">
-        <h3>Ends:</h3>
+        <h3 i18n>Ends:</h3>
         <p>{{ taskBlock.taskCompletion.end | date: 'medium'}}</p>
     </div>
     <div class="task-info-item">
-        <h3>Status:</h3>
-        <p>{{taskBlock.status}}</p>
+        <h3 i18n>Status:</h3>
+        <p [ngSwitch]="taskBlock.status">
+            <ng-container i18n *ngSwitchCase="TaskStatus.Completed">Completed</ng-container>
+            <ng-container i18n *ngSwitchCase="TaskStatus.Failed">Failed</ng-container>
+            <ng-container i18n *ngSwitchCase="TaskStatus.InProgress">In progress</ng-container>
+            <ng-container i18n *ngSwitchCase="TaskStatus.ToDo">To do</ng-container>
+        </p>
     </div>
     <div class="task-info-item">
-        <h3>Last edited:</h3>
+        <h3 i18n>Last edited:</h3>
         <p>{{ taskBlock.taskCompletion.lastEdited | date: 'medium'}}</p>
     </div>
     <div class="buttons">
-        <button *ngIf="!taskBlock.taskCompletion.isSuccessful" mat-flat-button
+        <button i18n *ngIf="!taskBlock.taskCompletion.isSuccessful" mat-flat-button
                 class="mark-completed-button" color="primary">
                 Mark as completed
         </button>
-        <button mat-flat-button color="primary" class="edit-button">
+        <button i18n mat-flat-button color="primary" class="edit-button">
             <mat-icon>edit</mat-icon>
             Edit
         </button>
-        <button mat-flat-button color="warn" class="delete-button">
+        <button i18n mat-flat-button color="warn" class="delete-button">
             <mat-icon>delete</mat-icon>
             Delete
         </button>
