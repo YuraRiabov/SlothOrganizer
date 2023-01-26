@@ -7,6 +7,7 @@ import { Observable } from 'rxjs';
 import { SidebarType } from '#types/dashboard/timeline/enums/sidebar-type';
 import { Store } from '@ngrx/store';
 import { TaskBlock } from '#types/dashboard/timeline/task-block';
+import { TaskStatus } from '#types/dashboard/timeline/enums/task-status';
 import { selectChosenTaskBlock } from '@store/selectors/dashboard.selectors';
 
 @Component({
@@ -15,6 +16,7 @@ import { selectChosenTaskBlock } from '@store/selectors/dashboard.selectors';
     styleUrls: ['./task-info.component.sass']
 })
 export class TaskInfoComponent extends BaseComponent implements OnInit {
+    public readonly TaskStatus = TaskStatus;
     public taskBlock$?: Observable<TaskBlock>;
 
     constructor(private store: Store) {

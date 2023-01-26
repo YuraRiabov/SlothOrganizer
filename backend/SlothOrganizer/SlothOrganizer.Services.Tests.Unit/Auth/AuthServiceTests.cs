@@ -37,7 +37,7 @@ namespace SlothOrganizer.Services.Tests.Unit.Auth
             var verificationCodeDto = GetVerificationCodeDto();
             var user = GetUser(verificationCodeDto.Email, true);
             A.CallTo(() => _userService.VerifyEmail(verificationCodeDto.Email, 111111)).Returns(user);
-            A.CallTo(() => _accessTokenService.Generate(verificationCodeDto.Email)).Returns("test");
+            A.CallTo(() => _accessTokenService.Generate(verificationCodeDto.Email, user.Id)).Returns("test");
 
             var result = await _authService.VerifyEmail(verificationCodeDto);
 
@@ -100,11 +100,13 @@ namespace SlothOrganizer.Services.Tests.Unit.Auth
         {
             var token = GetTokenDto();
             var email = "test";
+            var id = 1;
             var accessToken = "access";
             var refreshToken = "refresh";
-            A.CallTo(() => _accessTokenService.GetEmailFromToken(token.AccessToken)).Returns(email);
+            A.CallTo(() => _accessTokenService.GetEmail(token.AccessToken)).Returns(email);
+            A.CallTo(() => _accessTokenService.GetId(token.AccessToken)).Returns(id);
             A.CallTo(() => _refreshTokenService.Validate(email, token.RefreshToken)).Returns(true);
-            A.CallTo(() => _accessTokenService.Generate(email)).Returns(accessToken);
+            A.CallTo(() => _accessTokenService.Generate(email, id)).Returns(accessToken);
             A.CallTo(() => _refreshTokenService.Generate(email)).Returns(refreshToken);
 
             var result = await _authService.RefreshToken(token);
@@ -118,7 +120,7 @@ namespace SlothOrganizer.Services.Tests.Unit.Auth
         {
             var token = GetTokenDto();
             var email = "test";
-            A.CallTo(() => _accessTokenService.GetEmailFromToken(token.AccessToken)).Returns(email);
+            A.CallTo(() => _accessTokenService.GetEmail(token.AccessToken)).Returns(email);
             A.CallTo(() => _refreshTokenService.Validate(email, token.RefreshToken)).Returns(false);
 
             var code = async () => await _authService.RefreshToken(token);
@@ -136,7 +138,7 @@ namespace SlothOrganizer.Services.Tests.Unit.Auth
             var accessToken = "access";
             var refreshToken = "refresh";
             A.CallTo(() => _userService.Get(login)).Returns(user);
-            A.CallTo(() => _accessTokenService.Generate(user.Email)).Returns(accessToken);
+            A.CallTo(() => _accessTokenService.Generate(user.Email, user.Id)).Returns(accessToken);
             A.CallTo(() => _refreshTokenService.Generate(user.Email)).Returns(refreshToken);
 
             var result = await _authService.SignIn(login);
