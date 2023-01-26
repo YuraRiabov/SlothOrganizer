@@ -20,6 +20,8 @@ namespace SlothOrganizer.Persistence.Repositories
             var query = Resources.InsertTaskCompletion;
 
             using var connection = _context.CreateConnection();
+            connection.Open();
+            using var transaction = connection.BeginTransaction();
             foreach (var taskCompletion in taskCompletions)
             {
                 var parameters = new
@@ -30,9 +32,10 @@ namespace SlothOrganizer.Persistence.Repositories
                     End = taskCompletion.End,
                     LastEdited = taskCompletion.LastEdited
                 };
-                var id = await connection.QuerySingleAsync<long>(query, parameters);
+                var id = await connection.QuerySingleAsync<long>(query, parameters, transaction);
                 taskCompletion.Id = id;
             }
+            transaction.Commit();
             
             return taskCompletions;
         }
