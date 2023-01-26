@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using SlothOrganizer.Contracts.DTO.Tasks.Dashboard;
+using SlothOrganizer.Presentation.Extensions;
 using SlothOrganizer.Services.Abstractions.Tasks;
 
 namespace SlothOrganizer.Presentation.Controllers
@@ -19,35 +20,18 @@ namespace SlothOrganizer.Presentation.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<DashboardDto>> Create([FromBody] NewDashboardDto newDashboard)
+        public async Task<DashboardDto> Create([FromBody] NewDashboardDto newDashboard)
         {
-            var id = GetCurrentUserId();
-            if (id is null)
-            {
-                return Unauthorized();
-            }
-            return Ok(await _dashboardService.Create(newDashboard, (long)id));
+
+            var id = HttpContext.User.GetId();
+            return await _dashboardService.Create(newDashboard, id);
         }
 
         [HttpGet]
-        public async Task<ActionResult<List<DashboardDto>>> Get()
+        public async Task<List<DashboardDto>> Get()
         {
-            var id = GetCurrentUserId();
-            if (id is null)
-            {
-                return Unauthorized();
-            }
-            return Ok(await _dashboardService.Get((long)id));
-        }
-
-        private long? GetCurrentUserId()
-        {
-            var identity = HttpContext.User.Identity as ClaimsIdentity;
-            if (!long.TryParse(identity?.FindFirst(ClaimTypes.NameIdentifier)?.Value, out var id))
-            {
-                return null;
-            }
-            return id;
+            var id = HttpContext.User.GetId();
+            return await _dashboardService.Get(id);
         }
     }
 }
