@@ -19,11 +19,11 @@ export class UserInfoService extends HttpService {
         return this.put('', userUpdate);
     }
 
-    public updateAvater(formData: FormData, userId: number): Observable<User> {
-        return this.put<User>(`/${userId}/avatar`, formData);
+    public updateAvater(formData: FormData): Observable<User> {
+        return this.put<User>('/avatar', formData);
     }
 
-    public deleteAvatar(userId: number): Observable<null> {
-        return this.delete(`/${userId}/avatar`);
+    public deleteAvatar(): Observable<null> {
+        return this.delete('/avatar');
     }
 }
