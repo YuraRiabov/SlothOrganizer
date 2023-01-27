@@ -36,7 +36,6 @@
             <so-task-form 
                     (cancel)="closeSidebar()"
                     (submitted)="createTask($event)"
-                    [initialValue]="null"
                     [edit]="false"
             >
             </so-task-form>
@@ -45,8 +44,8 @@
             <so-task-info></so-task-info>
         </so-sidebar>
         <so-sidebar class="sidebar" *ngSwitchCase="SidebarType.Edit" (closed)="closeSidebar()">
-            <so-task-form
-                    [initialValue]="taskToUpdate$ | async" 
+            <so-task-form *ngIf="(taskToUpdate$ | async) as taskToUpdate"
+                    [initialValue]="taskToUpdate" 
                     (submitted)="updateTask($event)" 
                     (cancel)="closeSidebar()" 
                     [edit]="true"
