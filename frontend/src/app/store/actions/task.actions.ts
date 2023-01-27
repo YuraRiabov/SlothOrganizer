@@ -10,8 +10,8 @@ export const createTask = createAction(
     props<{ newTask: NewTask }>()
 );
 
-export const taskCreated = createAction(
-    '[API] Task created',
+export const createTaskSuccess = createAction(
+    '[API] Create task success',
     props<{ task: Task }>()
 );
 
@@ -19,8 +19,8 @@ export const loadTasks = createAction(
     '[Dashboard page] Load tasks'
 );
 
-export const tasksLoaded = createAction(
-    '[API] Tasks loaded',
+export const loadTasksSuccess = createAction(
+    '[API] Load tasks success',
     props<{ tasks: Task[] }>()
 );
 
@@ -29,12 +29,12 @@ export const chooseTask = createAction(
     props<{ taskBlock: TaskBlock }>()
 );
 
-export const markTaskCompleted = createAction(
-    '[Dashboard sidebar] Mark task completed'
+export const markCompleted = createAction(
+    '[Dashboard sidebar] Mark completed'
 );
 
-export const taskMarkedCompleted = createAction(
-    '[API] Task marked completed',
+export const markCompletedSuccess = createAction(
+    '[API] Mark completed success',
     props<{ taskCompletion: TaskCompletion }>()
 );
 
@@ -43,8 +43,8 @@ export const editTask = createAction(
     props<{ task: NewTask }>()
 );
 
-export const taskEdited = createAction(
-    '[API] Task edited',
+export const editTaskSuccess = createAction(
+    '[API] Edit task success',
     props<{ task: Task }>()
 );
 

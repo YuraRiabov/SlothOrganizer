@@ -1,4 +1,4 @@
-import { chooseDashboard, closeSidebar, dashboardCreated, loadDashboardsSuccess, openSidebar } from '@store/actions/dashboard.actions';
+import { chooseDashboard, closeSidebar, createDashboardSuccess, loadDashboardsSuccess, openSidebar } from '@store/actions/dashboard.actions';
 import { createReducer, on } from '@ngrx/store';
 
 import { DashboardState } from '@store/states/dashboard-state';
@@ -17,7 +17,7 @@ export const dashboardReducer = createReducer(
         dashboards,
         chosenDashboardId: state.chosenDashboardId === -1 ? dashboards[0].id : state.chosenDashboardId
     })),
-    on(dashboardCreated, (state, { dashboard }): DashboardState => ({
+    on(createDashboardSuccess, (state, { dashboard }): DashboardState => ({
         ...state,
         dashboards: state.dashboards.concat(dashboard),
         chosenDashboardId: dashboard.id

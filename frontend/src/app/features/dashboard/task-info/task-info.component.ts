@@ -33,7 +33,7 @@ export class TaskInfoComponent extends BaseComponent implements OnInit {
     }
 
     public markAsCompleted(): void {
-        this.store.dispatch(taskActions.markTaskCompleted());
+        this.store.dispatch(taskActions.markCompleted());
     }
 
     public delete(): void {

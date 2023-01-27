@@ -21,8 +21,8 @@ export const createDashbaord = createAction(
     props<{ title: string }>()
 );
 
-export const dashboardCreated = createAction(
-    '[API] Dashboard created',
+export const createDashboardSuccess = createAction(
+    '[API] Create dashboard success',
     props<{ dashboard: Dashboard }>()
 );
 

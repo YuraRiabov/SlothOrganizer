@@ -17,7 +17,7 @@ export class TasksEffects {
                 ofType(taskActions.createTask),
                 concatLatestFrom(() => this.store.select(selectChosenDashboardId)),
                 mergeMap(([action, id]) => this.tasksService.create({ ...action.newTask, dashboardId: id})),
-                map((task) => taskActions.taskCreated({ task }))
+                map((task) => taskActions.createTaskSuccess({ task }))
             );
         }
     );
@@ -28,7 +28,7 @@ export class TasksEffects {
                 ofType(taskActions.loadTasks),
                 concatLatestFrom(() => this.store.select(selectChosenDashboardId)),
                 mergeMap(([, id]) => this.tasksService.load(id)),
-                map((tasks) => taskActions.tasksLoaded({ tasks }))
+                map((tasks) => taskActions.loadTasksSuccess({ tasks }))
             );
         }
     );
@@ -51,7 +51,7 @@ export class TasksEffects {
                     },
                     endRepeating: action.task.endRepeating
                 })),
-                map((task) => taskActions.taskEdited({ task }))
+                map((task) => taskActions.editTaskSuccess({ task }))
             );
         }
     );

@@ -75,7 +75,7 @@ describe('TaskInfoComponent', () => {
 
         button.click();
 
-        expect(store.dispatch).toHaveBeenCalledOnceWith(taskActions.markTaskCompleted());
+        expect(store.dispatch).toHaveBeenCalledOnceWith(taskActions.markCompleted());
     });
 
     it('should change to edit when edit clicked', () => {

@@ -25,7 +25,7 @@ export class DashboardEffects {
             return this.actions$.pipe(
                 ofType(dashboardActions.createDashbaord),
                 mergeMap((action) => this.dashboardService.create({ title: action.title })),
-                map(dashboard => dashboardActions.dashboardCreated({ dashboard }))
+                map(dashboard => dashboardActions.createDashboardSuccess({ dashboard }))
             );
         }
     );
@@ -33,7 +33,7 @@ export class DashboardEffects {
     public changeDashboard$ = createEffect(
         () => {
             return this.actions$.pipe(
-                ofType(dashboardActions.chooseDashboard, dashboardActions.dashboardCreated),
+                ofType(dashboardActions.chooseDashboard, dashboardActions.createDashboardSuccess),
                 map(() => taskActions.loadTasks())
             );
         }
@@ -51,7 +51,7 @@ export class DashboardEffects {
     public closeDisplaySidebar$ = createEffect(
         () => {
             return this.actions$.pipe(
-                ofType(taskActions.taskCreated, taskActions.taskEdited, taskActions.deleteTask),
+                ofType(taskActions.createTaskSuccess, taskActions.editTaskSuccess, taskActions.deleteTask),
                 map(() => dashboardActions.closeSidebar())
             );
         }

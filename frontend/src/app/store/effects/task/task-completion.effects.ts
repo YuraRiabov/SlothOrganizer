@@ -13,10 +13,10 @@ export class TaskCompletionEffects {
     public markCompleted$ = createEffect(
         () => {
             return this.actions$.pipe(
-                ofType(taskActions.markTaskCompleted),
+                ofType(taskActions.markCompleted),
                 concatLatestFrom(() => this.store.select(selectChosenTaskCompletion)),
                 mergeMap(([, taskCompletion]) => this.taskCompletionService.update({...taskCompletion, isSuccessful: true})),
-                map((taskCompletion) => taskActions.taskMarkedCompleted({ taskCompletion }))
+                map((taskCompletion) => taskActions.markCompletedSuccess({ taskCompletion }))
             );
         }
     );

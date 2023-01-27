@@ -1,4 +1,4 @@
-import { chooseTask, deleteTask, taskCreated, taskEdited, taskMarkedCompleted, tasksLoaded } from '@store/actions/task.actions';
+import { chooseTask, createTaskSuccess, deleteTask, editTaskSuccess, loadTasksSuccess, markCompletedSuccess } from '@store/actions/task.actions';
 import { createReducer, on } from '@ngrx/store';
 
 import { TaskBlock } from '#types/dashboard/timeline/task-block';
@@ -11,9 +11,9 @@ const initialState: TaskState = {
 
 export const taskReducer = createReducer(
     initialState,
-    on(tasksLoaded, (state, { tasks }): TaskState => ({ ...state, tasks })),
+    on(loadTasksSuccess, (state, { tasks }): TaskState => ({ ...state, tasks })),
     on(chooseTask, (state, { taskBlock }): TaskState => ({ ...state, chosenTaskBlock: taskBlock })),
-    on(taskCreated, (state, { task }): TaskState => ({ ...state, tasks: state.tasks.concat(task) })),
+    on(createTaskSuccess, (state, { task }): TaskState => ({ ...state, tasks: state.tasks.concat(task) })),
     on(deleteTask, (state) => ({
         ...state,
         tasks: state.tasks.map(
@@ -27,7 +27,7 @@ export const taskReducer = createReducer(
                 }
         )
     })),
-    on(taskMarkedCompleted, (state, { taskCompletion }) => ({
+    on(markCompletedSuccess, (state, { taskCompletion }) => ({
         ...state,
         tasks: state.tasks.map(
             task => task.id !== taskCompletion.taskId
@@ -49,7 +49,7 @@ export const taskReducer = createReducer(
             }
         }
     })),
-    on(taskEdited, (state, { task }) => ({
+    on(editTaskSuccess, (state, { task }) => ({
         ...state,
         tasks: state.tasks.map(
             oldTask => oldTask.id !== task.id
