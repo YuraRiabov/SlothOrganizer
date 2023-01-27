@@ -44,28 +44,46 @@ namespace SlothOrganizer.Services.Tasks
         {
             await _taskCompletionService.Update(updateTaskDto.TaskCompletion);
             var task = _mapper.Map<UserTask>(updateTaskDto.Task);
-            var updatedTask = _mapper.Map<TaskDto>(await _taskRepository.Update(task));
-            if (updatedTask is null)
+            var updatedTask = await _taskRepository.Update(task);
+            var updatedTaskDto = _mapper.Map<TaskDto>(updatedTask);
+
+            if (updatedTaskDto is null)
             {
                 throw new EntityNotFoundException("Task with such id not found");
             } 
-            var latestCompletion = updatedTask.TaskCompletions.MaxBy(tc => tc.End);
-            if (updateTaskDto.EndRepeating is DateTime endRepeating && updatedTask.TaskCompletions.Count > 1)
+
+            if (updateTaskDto.EndRepeating is DateTime endRepeating && updatedTaskDto.TaskCompletions.Count > 1)
             {
-                if (latestCompletion.End > endRepeating)
-                {
-                    await _taskCompletionService.Delete(updatedTask.Id, endRepeating);
-                    updatedTask.TaskCompletions = updatedTask.TaskCompletions
-                        .Where(tc => tc.End < updateTaskDto.EndRepeating)
-                        .ToList();
-                }
-                if (latestCompletion.End < endRepeating)
-                {
-                    var addedCompletions = await _taskCompletionService.Add(updatedTask.TaskCompletions, endRepeating);
-                    updatedTask.TaskCompletions.AddRange(addedCompletions);
-                }
+                await UpdateCompletions(updatedTaskDto, endRepeating);
             }
-            return updatedTask;
+            return updatedTaskDto;
+        }
+
+        private async Task UpdateCompletions(TaskDto task, DateTime endRepeating)
+        {
+            var latestCompletion = task.TaskCompletions.MaxBy(tc => tc.End);
+            if (latestCompletion.End > endRepeating)
+            {
+                await DeleteExceedingCompletions(task, endRepeating);
+            }
+            if (latestCompletion.End < endRepeating)
+            {
+                await AddLackingCompletions(task, endRepeating);
+            }
+        }
+
+        private async Task AddLackingCompletions(TaskDto task, DateTime endRepeating)
+        {
+            var addedCompletions = await _taskCompletionService.Add(task.TaskCompletions, endRepeating);
+            task.TaskCompletions.AddRange(addedCompletions);
+        }
+
+        private async Task DeleteExceedingCompletions(TaskDto task, DateTime endLimit)
+        {
+            await _taskCompletionService.Delete(task.Id, endLimit);
+            task.TaskCompletions = task.TaskCompletions
+                .Where(tc => tc.End < endLimit)
+                .ToList();
         }
     }
 }

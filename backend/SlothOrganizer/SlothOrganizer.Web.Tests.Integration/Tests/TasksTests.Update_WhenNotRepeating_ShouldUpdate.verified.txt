@@ -10,9 +10,9 @@
         Id: 1,
         TaskId: 1,
         IsSuccessful: true,
-        Start: 2023-01-01,
-        End: 2023-01-06,
-        LastEdited: 2023-01-01
+        Start: DateTime_1,
+        End: DateTime_2,
+        LastEdited: DateTime_3
       }
     ]
   }

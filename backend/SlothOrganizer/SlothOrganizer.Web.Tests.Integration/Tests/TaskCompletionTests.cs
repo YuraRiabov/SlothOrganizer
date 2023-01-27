@@ -36,7 +36,7 @@ namespace SlothOrganizer.Web.Tests.Integration.Tests
             {
                 response.StatusCode,
                 result
-            }).DontScrubDateTimes();
+            });
         }
 
         [Fact]

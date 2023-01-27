@@ -42,9 +42,9 @@ namespace SlothOrganizer.Services.Tasks
             return _mapper.Map<TaskCompletionDto>(updatedTaskCompletion);
         }
 
-        public async Task Delete(long taskId, DateTime endRepeating)
+        public async Task Delete(long taskId, DateTime endLimit)
         {
-            await _taskCompletionRepository.Delete(taskId, endRepeating);
+            await _taskCompletionRepository.Delete(taskId, endLimit);
         }
 
         public async Task Delete(long id)
@@ -52,7 +52,7 @@ namespace SlothOrganizer.Services.Tasks
             await _taskCompletionRepository.Delete(id);
         }
 
-        public async Task<List<TaskCompletionDto>> Add(List<TaskCompletionDto> completions, DateTime endRepeating)
+        public async Task<IEnumerable<TaskCompletionDto>> Add(IEnumerable<TaskCompletionDto> completions, DateTime endRepeating)
         {
             var lastTwoCompletions = completions.OrderBy(tc => tc.End).TakeLast(2);
             var lastCompletion = lastTwoCompletions.Last();
@@ -62,7 +62,7 @@ namespace SlothOrganizer.Services.Tasks
             var firstStart = GetNextStart(lastCompletion.Start, repeatingPeriod);
 
             var newCompletions = Generate(firstStart, length, repeatingPeriod, endRepeating, lastCompletion.TaskId);
-            return _mapper.Map<List<TaskCompletionDto>>(await _taskCompletionRepository.Insert(newCompletions));
+            return _mapper.Map<IEnumerable<TaskCompletionDto>>(await _taskCompletionRepository.Insert(newCompletions));
         }
 
         private List<TaskCompletion> GenerateNew(NewTaskDto task, long taskId)

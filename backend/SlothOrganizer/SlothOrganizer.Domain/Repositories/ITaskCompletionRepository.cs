@@ -4,9 +4,9 @@ namespace SlothOrganizer.Domain.Repositories
 {
     public interface ITaskCompletionRepository
     {
-        Task Delete(long taskId, DateTime repeatingEnd);
+        Task Delete(long taskId, DateTime endLimit);
         Task Delete(long id);
-        Task<List<TaskCompletion>> Insert(List<TaskCompletion> taskCompletions);
+        Task<IEnumerable<TaskCompletion>> Insert(IEnumerable<TaskCompletion> taskCompletions);
         Task<TaskCompletion?> Update(TaskCompletion taskCompletion);
     }
 }

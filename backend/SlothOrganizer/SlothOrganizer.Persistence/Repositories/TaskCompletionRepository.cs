@@ -14,7 +14,7 @@ namespace SlothOrganizer.Persistence.Repositories
             _context = context;
         }
 
-        public async Task<List<TaskCompletion>> Insert(List<TaskCompletion> taskCompletions)
+        public async Task<IEnumerable<TaskCompletion>> Insert(IEnumerable<TaskCompletion> taskCompletions)
         {
             var query = Resources.InsertTaskCompletion;
 
@@ -47,21 +47,20 @@ namespace SlothOrganizer.Persistence.Repositories
                 Id = taskCompletion.Id,
                 IsSuccessful = taskCompletion.IsSuccessful,
                 Start = taskCompletion.Start,
-                End = taskCompletion.End,
-                LastEdited = taskCompletion.LastEdited
+                End = taskCompletion.End
             };
             using var connection = _context.CreateConnection();
             return await connection.QuerySingleOrDefaultAsync<TaskCompletion>(query, parameters);
         }
 
-        public async Task Delete(long taskId, DateTime repeatingEnd)
+        public async Task Delete(long taskId, DateTime endLimit)
         {
             var command = Resources.DeleteTaskCompletions;
 
             var parameters = new
             {
                 TaskId = taskId,
-                RepeatingEnd = repeatingEnd
+                EndLimit = endLimit
             };
 
             using var connection = _context.CreateConnection();
