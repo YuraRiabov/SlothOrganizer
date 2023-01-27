@@ -14,8 +14,7 @@ export class UserInfoEffects {
         () => {
             return this.actions$.pipe(
                 ofType(profileActions.uploadAvatar),
-                concatLatestFrom(() => this.store.select(selectUserId)),
-                mergeMap(([action, id]) => this.userInfoService.updateAvater(action.image, id)),
+                mergeMap((action) => this.userInfoService.updateAvater(action.image)),
                 map((user) => profileActions.saveAvatar({ url: user.avatarUrl! }))
             );
         }
@@ -51,8 +50,7 @@ export class UserInfoEffects {
         () => {
             return this.actions$.pipe(
                 ofType(profileActions.deleteAvatar),
-                concatLatestFrom(() => this.store.select(selectUserId)),
-                mergeMap(([, id]) => this.userInfoService.deleteAvatar(id))
+                mergeMap(() => this.userInfoService.deleteAvatar())
             );
         },
         {
