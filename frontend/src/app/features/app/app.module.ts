@@ -15,23 +15,30 @@ import { TokenInterceptor } from '@shared/interceptors/token.interceptor';
 import { authReducer } from '@store/reducers/auth.reducers';
 import { dashboardReducer } from '@store/reducers/dashboard.reducers';
 import { metaReducers } from '@store/reducers/meta/metareducers';
+import { taskReducer } from '@store/reducers/task.reducers';
 
 @NgModule({
     declarations: [AppComponent],
     imports: [
         BrowserModule,
         AppRoutingModule,
-        StoreModule.forRoot({ authState: authReducer, dashboard: dashboardReducer }, { metaReducers }),
+        StoreModule.forRoot({
+            authState: authReducer,
+            dashboard: dashboardReducer,
+            task: taskReducer,
+        }, {
+            metaReducers
+        }),
         EffectsModule.forRoot([HydrationEffects]),
         BrowserAnimationsModule,
         HttpClientModule,
         MaterialModule
     ],
     providers: [
-        { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true},
-        { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true},
-        { provide: HTTP_INTERCEPTORS, useClass: LoadingInterceptor, multi: true}
+        { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true },
+        { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
+        { provide: HTTP_INTERCEPTORS, useClass: LoadingInterceptor, multi: true }
     ],
     bootstrap: [AppComponent]
 })
-export class AppModule {}
+export class AppModule { }

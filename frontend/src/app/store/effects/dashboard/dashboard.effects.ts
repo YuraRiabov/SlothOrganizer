@@ -1,11 +1,12 @@
 import * as dashboardActions from '@store/actions/dashboard.actions';
+import * as taskActions from '@store/actions/task.actions';
 
-import { Actions, concatLatestFrom, createEffect, ofType } from '@ngrx/effects';
+import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { map, mergeMap } from 'rxjs';
 
 import { DashboardService } from '@api/dashboard.service';
 import { Injectable } from '@angular/core';
-import { Store } from '@ngrx/store';
+import { SidebarType } from '#types/dashboard/timeline/enums/sidebar-type';
 
 @Injectable()
 export class DashboardEffects {
@@ -33,7 +34,25 @@ export class DashboardEffects {
         () => {
             return this.actions$.pipe(
                 ofType(dashboardActions.chooseDashboard, dashboardActions.dashboardCreated),
-                map(() => dashboardActions.loadTasks())
+                map(() => taskActions.loadTasks())
+            );
+        }
+    );
+
+    public openDisplaySidebar$ = createEffect(
+        () => {
+            return this.actions$.pipe(
+                ofType(taskActions.chooseTask),
+                map(() => dashboardActions.openSidebar({ sidebarType: SidebarType.Display }))
+            );
+        }
+    );
+
+    public closeDisplaySidebar$ = createEffect(
+        () => {
+            return this.actions$.pipe(
+                ofType(taskActions.taskCreated, taskActions.taskEdited, taskActions.deleteTask),
+                map(() => dashboardActions.closeSidebar())
             );
         }
     );

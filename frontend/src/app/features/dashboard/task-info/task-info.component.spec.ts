@@ -1,4 +1,5 @@
 import * as dashboardActions from '@store/actions/dashboard.actions';
+import * as taskActions from '@store/actions/task.actions';
 
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
@@ -66,7 +67,7 @@ describe('TaskInfoComponent', () => {
 
         button.click();
 
-        expect(store.dispatch).toHaveBeenCalledOnceWith(dashboardActions.deleteTask());
+        expect(store.dispatch).toHaveBeenCalledOnceWith(taskActions.deleteTask());
     });
 
     it('should dispatch mark as completed when mark as completed clicked', () => {
@@ -74,7 +75,7 @@ describe('TaskInfoComponent', () => {
 
         button.click();
 
-        expect(store.dispatch).toHaveBeenCalledOnceWith(dashboardActions.markTaskCompleted());
+        expect(store.dispatch).toHaveBeenCalledOnceWith(taskActions.markTaskCompleted());
     });
 
     it('should change to edit when edit clicked', () => {

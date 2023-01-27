@@ -1,8 +1,8 @@
-import * as dashboardActions from '@store/actions/dashboard.actions';
+import * as taskActions from '@store/actions/task.actions';
 
 import { Actions, concatLatestFrom, createEffect, ofType } from '@ngrx/effects';
-import { map, mergeMap, switchMap } from 'rxjs';
-import { selectChosenTaskCompletion, selectChosenTaskCompletionId } from '@store/selectors/dashboard.selectors';
+import { map, mergeMap } from 'rxjs';
+import { selectChosenTaskCompletion, selectChosenTaskCompletionId } from '@store/selectors/task.selectors';
 
 import { Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
@@ -13,10 +13,10 @@ export class TaskCompletionEffects {
     public markCompleted$ = createEffect(
         () => {
             return this.actions$.pipe(
-                ofType(dashboardActions.markTaskCompleted),
+                ofType(taskActions.markTaskCompleted),
                 concatLatestFrom(() => this.store.select(selectChosenTaskCompletion)),
                 mergeMap(([, taskCompletion]) => this.taskCompletionService.update({...taskCompletion, isSuccessful: true})),
-                map((taskCompletion) => dashboardActions.taskMarkedCompleted({ taskCompletion }))
+                map((taskCompletion) => taskActions.taskMarkedCompleted({ taskCompletion }))
             );
         }
     );
@@ -24,11 +24,13 @@ export class TaskCompletionEffects {
     public delete$ = createEffect(
         () => {
             return this.actions$.pipe(
-                ofType(dashboardActions.deleteTask),
+                ofType(taskActions.deleteTask),
                 concatLatestFrom(() => this.store.select(selectChosenTaskCompletionId)),
-                mergeMap(([, id]) => this.taskCompletionService.remove(id)),
-                map(() => dashboardActions.closeSidebar())
+                mergeMap(([, id]) => this.taskCompletionService.remove(id))
             );
+        },
+        {
+            dispatch: false
         }
     );
 

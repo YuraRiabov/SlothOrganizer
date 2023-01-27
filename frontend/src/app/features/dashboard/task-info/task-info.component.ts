@@ -1,4 +1,5 @@
 import * as dashboardActions from '@store/actions/dashboard.actions';
+import * as taskActions from '@store/actions/task.actions';
 
 import { Component, OnInit } from '@angular/core';
 
@@ -8,7 +9,7 @@ import { SidebarType } from '#types/dashboard/timeline/enums/sidebar-type';
 import { Store } from '@ngrx/store';
 import { TaskBlock } from '#types/dashboard/timeline/task-block';
 import { TaskStatus } from '#types/dashboard/timeline/enums/task-status';
-import { selectChosenTaskBlock } from '@store/selectors/dashboard.selectors';
+import { selectChosenTaskBlock } from '@store/selectors/task.selectors';
 
 @Component({
     selector: 'so-task-info',
@@ -32,11 +33,11 @@ export class TaskInfoComponent extends BaseComponent implements OnInit {
     }
 
     public markAsCompleted(): void {
-        this.store.dispatch(dashboardActions.markTaskCompleted());
+        this.store.dispatch(taskActions.markTaskCompleted());
     }
 
     public delete(): void {
-        this.store.dispatch(dashboardActions.deleteTask());
+        this.store.dispatch(taskActions.deleteTask());
     }
 
     public edit(): void {
