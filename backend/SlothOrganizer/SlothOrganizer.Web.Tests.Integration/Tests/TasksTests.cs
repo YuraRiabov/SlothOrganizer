@@ -2,14 +2,14 @@
 using FakeItEasy;
 using SlothOrganizer.Contracts.DTO.Tasks.Task;
 using SlothOrganizer.Contracts.DTO.Tasks.Task.Enums;
-using SlothOrganizer.Web.Tests.Integration.Base;
 using SlothOrganizer.Web.Tests.Integration.Setup;
+using SlothOrganizer.Web.Tests.Integration.Tests.Base;
 
 namespace SlothOrganizer.Web.Tests.Integration.Tests
 {
     [UsesVerify]
     [Collection("DbUsingTests")]
-    public class TasksTests : TestBase
+    public class TasksTests : TaskTestBase
     {
         private const string ControllerRoute = "tasks";
 

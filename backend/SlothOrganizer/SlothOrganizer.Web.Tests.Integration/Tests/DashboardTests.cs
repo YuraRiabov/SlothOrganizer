@@ -1,13 +1,13 @@
 ﻿using System.Net;
 using SlothOrganizer.Contracts.DTO.Tasks.Dashboard;
-using SlothOrganizer.Web.Tests.Integration.Base;
 using SlothOrganizer.Web.Tests.Integration.Setup;
+using SlothOrganizer.Web.Tests.Integration.Tests.Base;
 
 namespace SlothOrganizer.Web.Tests.Integration.Tests
 {
     [UsesVerify]
     [Collection("DbUsingTests")]
-    public class DashboardTests : TestBase
+    public class DashboardTests : AuthorizedTestBase
     {
         private const string ControllerRoute = "dashboards";
 

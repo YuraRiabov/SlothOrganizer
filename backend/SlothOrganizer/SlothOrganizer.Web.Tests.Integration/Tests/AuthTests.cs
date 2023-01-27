@@ -1,17 +1,15 @@
 ﻿using System.Net;
 using FakeItEasy;
-using Microsoft.AspNetCore.Mvc;
 using SlothOrganizer.Contracts.DTO.Auth;
 using SlothOrganizer.Contracts.DTO.User;
 using SlothOrganizer.Persistence.Repositories;
-using SlothOrganizer.Web.Tests.Integration.Base;
 using SlothOrganizer.Web.Tests.Integration.Setup;
-using Xunit;
+using SlothOrganizer.Web.Tests.Integration.Tests.Base;
 
 namespace SlothOrganizer.Web.Tests.Integration.Tests
 {
     [Collection("DbUsingTests")]
-    public class AuthTests : TestBase
+    public class AuthTests : AuthorizedTestBase
     {
         private const string ControllerRoute = "auth";
         [Fact]

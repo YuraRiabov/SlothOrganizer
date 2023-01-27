@@ -1,14 +1,14 @@
 ﻿using System.Net;
 using SlothOrganizer.Contracts.DTO.Tasks.Task;
 using SlothOrganizer.Persistence.Repositories;
-using SlothOrganizer.Web.Tests.Integration.Base;
 using SlothOrganizer.Web.Tests.Integration.Setup;
+using SlothOrganizer.Web.Tests.Integration.Tests.Base;
 
 namespace SlothOrganizer.Web.Tests.Integration.Tests
 {
     [UsesVerify]
     [Collection("DbUsingTests")]
-    public class TaskCompletionTests : TestBase
+    public class TaskCompletionTests : TaskTestBase
     {
         private const string ControllerRoute = "task-completions";
         [Fact]
