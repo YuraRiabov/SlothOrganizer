@@ -1,21 +1,27 @@
 ﻿using System.Net;
 using SlothOrganizer.Contracts.DTO.Tasks.Dashboard;
-using SlothOrganizer.Web.Tests.Integration.Base;
-using SlothOrganizer.Web.Tests.Integration.Setup;
+using SlothOrganizer.Web.Tests.Integration.Setup.Providers;
+using SlothOrganizer.Web.Tests.Integration.Tests.Base;
 
 namespace SlothOrganizer.Web.Tests.Integration.Tests
 {
     [UsesVerify]
     [Collection("DbUsingTests")]
-    public class DashboardTests : TestBase
+    public class DashboardTests : AuthorizedTestBase
     {
         private const string ControllerRoute = "dashboards";
+        private readonly DashboardDtoProvider _dashboardDtoProvider;
+
+        public DashboardTests()
+        {
+            _dashboardDtoProvider = new DashboardDtoProvider();
+        }
 
         [Fact]
         public async Task CreateDashboard_WhenValidData_ShouldCreate()
         {
             await AddAuthorizationHeader();
-            var dashboard = DtoProvider.GetNewDashboard();
+            var dashboard = _dashboardDtoProvider.GetNewDashboard();
 
             var response = await Client.PostAsync(ControllerRoute, GetStringContent(dashboard));
             var result = await GetResponse<DashboardDto>(response);
@@ -31,7 +37,7 @@ namespace SlothOrganizer.Web.Tests.Integration.Tests
         public async Task CreateDashboard_WhenEmptyTitle_BadRequest()
         {
             await AddAuthorizationHeader();
-            var dashboard = DtoProvider.GetNewDashboard();
+            var dashboard = _dashboardDtoProvider.GetNewDashboard();
             dashboard.Title = string.Empty;
 
             var response = await Client.PostAsync(ControllerRoute, GetStringContent(dashboard));
@@ -58,7 +64,7 @@ namespace SlothOrganizer.Web.Tests.Integration.Tests
         public async Task GetDashboards_WhenExist_ShouldReturn()
         {
             await AddAuthorizationHeader();
-            var dashboard = DtoProvider.GetNewDashboard();
+            var dashboard = _dashboardDtoProvider.GetNewDashboard();
 
             await Client.PostAsync(ControllerRoute, GetStringContent(dashboard));
 

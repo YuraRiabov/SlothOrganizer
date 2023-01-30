@@ -16,14 +16,6 @@ import { TimelineSection } from '#types/dashboard/timeline/timeline-section';
     styleUrls: ['./timeline.component.sass']
 })
 export class TimelineComponent extends BaseComponent implements OnInit, AfterViewInit, OnDestroy {
-    public readonly defaultPageNumber = 12;
-    public readonly TaskStatus = TaskStatus;
-    private timelineScale: TimelineScale = TimelineScale.Day;
-    private currentDate: Date = new Date();
-    private returnDate: Date = this.currentDate;
-    private timelineResizeObserver!: ResizeObserver;
-    private _tasks: Task[] = [];
-
     @Input() set date(value: Date) {
         this.currentDate = value;
         this.initializeTimeline();
@@ -41,10 +33,19 @@ export class TimelineComponent extends BaseComponent implements OnInit, AfterVie
     @Output() scaleIncreased = new EventEmitter<Date>();
     @Output() blockClicked = new EventEmitter<TaskBlock>();
 
-    @ViewChild('timelineScroll') timelineScroll!: ElementRef;
-    @ViewChild('timelineContainer') timelineContainer!: ElementRef;
+    private timelineScale: TimelineScale = TimelineScale.Day;
+    private currentDate: Date = new Date();
+    private returnDate: Date = this.currentDate;
+    private timelineResizeObserver!: ResizeObserver;
+    private _tasks: Task[] = [];
+
+    public readonly defaultPageNumber = 12;
+    public readonly TaskStatus = TaskStatus;
 
     public timeline!: Timeline;
+
+    @ViewChild('timelineScroll') timelineScroll!: ElementRef;
+    @ViewChild('timelineContainer') timelineContainer!: ElementRef;
 
     constructor(private timelineCreator: TimelineCreator) {
         super();

@@ -72,7 +72,7 @@ namespace SlothOrganizer.Persistence.Properties {
         
         /// <summary>
         ///   Looks up a localized string similar to DELETE FROM TaskCompletions
-        ///WHERE TaskId = @TaskId AND [End] &gt; @RepeatingEnd.
+        ///WHERE TaskId = @TaskId AND [End] &gt; @EndLimit.
         /// </summary>
         internal static string DeleteTaskCompletions {
             get {
@@ -301,7 +301,7 @@ namespace SlothOrganizer.Persistence.Properties {
         ///	IsSuccessful = @IsSuccessful,
         ///	[Start] = @Start,
         ///	[End] = @End,
-        ///	LastEdited = @LastEdited
+        ///	LastEdited = GETDATE()
         ///WHERE Id=@Id
         ///SELECT TOP 1 * FROM TaskCompletions
         ///WHERE Id=@Id.

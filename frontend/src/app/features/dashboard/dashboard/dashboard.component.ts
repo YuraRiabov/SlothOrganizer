@@ -1,8 +1,10 @@
 import * as dashboardActions from '@store/actions/dashboard.actions';
+import * as taskActions from '@store/actions/task.actions';
 
 import { Component, OnInit } from '@angular/core';
 import { Observable, of } from 'rxjs';
-import { selectChosenDashboard, selectDashboards, selectSidebarType, selectTaskToUpdate, selectTasks } from '@store/selectors/dashboard.selectors';
+import { selectChosenDashboard, selectDashboards, selectSidebarType } from '@store/selectors/dashboard.selectors';
+import { selectTaskToUpdate, selectTasks } from '@store/selectors/task.selectors';
 
 import { BaseComponent } from '@shared/components/base/base.component';
 import { Dashboard } from '#types/dashboard/dashboard/dashboard';
@@ -52,7 +54,7 @@ export class DashboardComponent extends BaseComponent implements OnInit {
     }
 
     public displayTask(taskBlock: TaskBlock): void {
-        this.store.dispatch(dashboardActions.chooseTask({ taskBlock }));
+        this.store.dispatch(taskActions.chooseTask({ taskBlock }));
     }
 
     public closeSidebar(): void {
@@ -68,11 +70,11 @@ export class DashboardComponent extends BaseComponent implements OnInit {
     }
 
     public updateTask(task: NewTask): void {
-        this.store.dispatch(dashboardActions.editTask({ task }));
+        this.store.dispatch(taskActions.editTask({ task }));
     }
 
     public createTask(newTask: NewTask) {
-        this.store.dispatch(dashboardActions.createTask({ newTask }));
+        this.store.dispatch(taskActions.createTask({ newTask }));
     }
 
     public zoomIn(date?: Date): void {

@@ -1,5 +1,5 @@
 import { AbstractControl, FormControl, FormGroup, ValidatorFn, Validators } from '@angular/forms';
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { addDays, differenceInDays, endOfDay, startOfDay } from 'date-fns';
 
 import { BaseComponent } from '@shared/components/base/base.component';
@@ -16,26 +16,30 @@ import { setTime } from '@utils/dates/dates.helper';
     styleUrls: ['./task-form.component.sass']
 })
 export class TaskFormComponent extends BaseComponent {
-    public readonly TaskRepeatingPeriod = TaskRepeatingPeriod;
-    @Input() public set initialValue(value: NewTask | null) {
-        const initialValue = value ?? {
-            dashboardId: -1,
-            title: '',
-            description: '',
-            repeatingPeriod: TaskRepeatingPeriod.None,
-            start: startOfDay(new Date()),
-            end: endOfDay(new Date()),
-        };
-        this.isRepeating = !!initialValue.endRepeating;
-        this.taskForm = this.buildTaskFrom(initialValue);
+    @Input() public set initialValue(value: NewTask) {
+        this.isRepeating = !!value.endRepeating;
+        this.taskForm = this.buildTaskForm(value);
         this.update();
     }
-    @Output() public submitted = new EventEmitter<NewTask>();
     @Input() public set edit(value: boolean) {
         this.editing = value;
         this.update();
     }
+
+    @Output() public submitted = new EventEmitter<NewTask>();
     @Output() public cancel = new EventEmitter<void>();
+
+    private readonly defaultInitialValue: NewTask = {
+        dashboardId: -1,
+        title: '',
+        description: '',
+        repeatingPeriod: TaskRepeatingPeriod.None,
+        start: startOfDay(new Date()),
+        end: endOfDay(new Date()),
+    };
+
+    public readonly TaskRepeatingPeriod = TaskRepeatingPeriod;
+
     public taskForm: FormGroup = {} as FormGroup;
     public title: string = '';
 
@@ -48,6 +52,7 @@ export class TaskFormComponent extends BaseComponent {
 
     constructor() {
         super();
+        this.taskForm = this.buildTaskForm(this.defaultInitialValue);
     }
 
     public validate(): void {
@@ -82,7 +87,7 @@ export class TaskFormComponent extends BaseComponent {
         this.submitted.emit(newTask);
     }
 
-    private buildTaskFrom(initialValue: NewTask): FormGroup {
+    private buildTaskForm(initialValue: NewTask): FormGroup {
         const titleContol = new FormControl(initialValue.title, this.getTitleValidators());
         const descriptionControl = new FormControl(initialValue.description, this.getDescriptionValidators());
 
