@@ -7,8 +7,8 @@ export const uploadAvatar = createAction(
     props<{ image: FormData }>()
 );
 
-export const saveAvatar = createAction(
-    '[API] Save avatar',
+export const uploadAvatarSuccess = createAction(
+    '[Profile page] Upload avatar success',
     props<{ url: string }>()
 );
 
@@ -32,9 +32,9 @@ export const updatePassword = createAction(
 );
 
 export const updatePasswordSuccess = createAction(
-    '[API] Update password success'
+    '[Profile page] Update password success'
 );
 
 export const updatePasswordFailure = createAction(
-    '[API] Update password failure'
+    '[Profile page] Update password failure'
 );

@@ -15,7 +15,7 @@ export class UserInfoEffects {
             return this.actions$.pipe(
                 ofType(profileActions.uploadAvatar),
                 mergeMap((action) => this.userInfoService.updateAvater(action.image)),
-                map((user) => profileActions.saveAvatar({ url: user.avatarUrl! }))
+                map((user) => profileActions.uploadAvatarSuccess({ url: user.avatarUrl! }))
             );
         }
     );
