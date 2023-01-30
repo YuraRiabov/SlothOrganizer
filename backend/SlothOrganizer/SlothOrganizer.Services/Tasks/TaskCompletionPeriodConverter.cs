@@ -20,19 +20,13 @@ namespace SlothOrganizer.Services.Tasks
 
         public TaskRepeatingPeriod GetRepeatingPeriod(TimeSpan repeatsDifference)
         {
-            if (repeatsDifference < TimeSpan.FromDays(3))
+            return repeatsDifference.Days switch
             {
-                return TaskRepeatingPeriod.Day;
-            }
-            if (repeatsDifference < TimeSpan.FromDays(14))
-            {
-                return TaskRepeatingPeriod.Week;
-            }
-            if (repeatsDifference < TimeSpan.FromDays(40))
-            {
-                return TaskRepeatingPeriod.Month;
-            }
-            return TaskRepeatingPeriod.Year;
+                < 3 => TaskRepeatingPeriod.Day,
+                < 14 => TaskRepeatingPeriod.Week,
+                < 40 => TaskRepeatingPeriod.Month,
+                _ => TaskRepeatingPeriod.Year
+            };
         }
     }
 }

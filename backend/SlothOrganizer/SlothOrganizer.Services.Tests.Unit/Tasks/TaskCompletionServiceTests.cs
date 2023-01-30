@@ -43,7 +43,7 @@ namespace SlothOrganizer.Services.Tests.Unit.Tasks
         {
             var newTask = GetNewTask(repeatingPeriod, daysRepeating);
 
-            A.CallTo(() => _taskCompletionRepository.Insert(A<List<TaskCompletion>>._)).ReturnsLazily((List<TaskCompletion> completions) => completions);
+            A.CallTo(() => _taskCompletionRepository.Insert(A<List<TaskCompletion>>._)).ReturnsLazily((IEnumerable<TaskCompletion> completions) => completions);
 
             var result = await _taskCompletionService.Create(newTask, 1);
 
@@ -104,13 +104,13 @@ namespace SlothOrganizer.Services.Tests.Unit.Tasks
         {
             var taskCompletions = GetTaskCompletions(daysBetweenCompletions);
             var endRepeating = taskCompletions.Max(tc => tc.End).AddDays(daysAdded);
-            A.CallTo(() => _taskCompletionRepository.Insert(A<List<TaskCompletion>>._))
-                .ReturnsLazily((List<TaskCompletion> taskCompletions) => taskCompletions);
+            A.CallTo(() => _taskCompletionRepository.Insert(A<IEnumerable<TaskCompletion>>._))
+                .ReturnsLazily((IEnumerable<TaskCompletion> taskCompletions) => taskCompletions);
             A.CallTo(() => _taskCompletionPeriodConverter.GetRepeatingPeriod(A<TimeSpan>._)).Returns(taskRepeatingPeriod);
 
             var result = await _taskCompletionService.Add(taskCompletions, endRepeating);
 
-            Assert.Equal(expectedCount, result.Count);
+            Assert.Equal(expectedCount, result.Count());
             A.CallTo(() => _taskCompletionRepository.Insert(A<List<TaskCompletion>>._)).MustHaveHappenedOnceExactly();
         }
 

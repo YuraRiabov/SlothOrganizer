@@ -10,25 +10,25 @@
         Id: 1,
         TaskId: 1,
         IsSuccessful: true,
-        Start: 2023-01-01 +2,
-        End: 2023-01-06 +2,
-        LastEdited: 2023-01-01 +2
+        Start: DateTimeOffset_1,
+        End: DateTimeOffset_2,
+        LastEdited: DateTimeOffset_3
       },
       {
         Id: 2,
         TaskId: 1,
         IsSuccessful: false,
-        Start: 2023-01-08 +2,
-        End: 2023-01-12 +2,
-        LastEdited: 2023-01-01 +2
+        Start: DateTimeOffset_4,
+        End: DateTimeOffset_5,
+        LastEdited: DateTimeOffset_1
       },
       {
         Id: 3,
         TaskId: 1,
         IsSuccessful: false,
-        Start: 2023-01-15 +2,
-        End: 2023-01-19 +2,
-        LastEdited: 2023-01-01 +2
+        Start: DateTimeOffset_6,
+        End: DateTimeOffset_7,
+        LastEdited: DateTimeOffset_1
       }
     ]
   }
