@@ -11,7 +11,7 @@ export const createTask = createAction(
 );
 
 export const createTaskSuccess = createAction(
-    '[API] Create task success',
+    '[Timeline] Create task success',
     props<{ task: Task }>()
 );
 
@@ -20,7 +20,7 @@ export const loadTasks = createAction(
 );
 
 export const loadTasksSuccess = createAction(
-    '[API] Load tasks success',
+    '[Dashboard page] Load tasks success',
     props<{ tasks: Task[] }>()
 );
 
@@ -30,24 +30,24 @@ export const chooseTask = createAction(
 );
 
 export const markCompleted = createAction(
-    '[Dashboard sidebar] Mark completed'
+    '[Task info] Mark completed'
 );
 
 export const markCompletedSuccess = createAction(
-    '[API] Mark completed success',
+    '[Task info] Mark completed success',
     props<{ taskCompletion: TaskCompletion }>()
 );
 
 export const editTask = createAction(
-    '[Dasboard sidebar] Edit task',
+    '[Task info] Edit task',
     props<{ task: NewTask }>()
 );
 
 export const editTaskSuccess = createAction(
-    '[API] Edit task success',
+    '[Task info] Edit task success',
     props<{ task: Task }>()
 );
 
 export const deleteTask = createAction(
-    '[Dashboard sidebar] Delete task'
+    '[Task info] Delete task'
 );
