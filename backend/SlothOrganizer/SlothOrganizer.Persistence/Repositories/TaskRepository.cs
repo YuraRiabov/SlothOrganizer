@@ -1,4 +1,6 @@
-﻿using Dapper;
+﻿using System.Text.Json.Serialization;
+using Dapper;
+using Newtonsoft.Json;
 using SlothOrganizer.Domain.Entities;
 using SlothOrganizer.Domain.Repositories;
 using SlothOrganizer.Persistence.Properties;
@@ -63,19 +65,16 @@ namespace SlothOrganizer.Persistence.Repositories
                 Description = task.Description,
             };
 
-            UserTask? updatedTask = null;
             var connection = _context.CreateConnection();
-            await connection.QueryAsync<UserTask, TaskCompletion, UserTask>(query, (task, completion) =>
+            var updatedTask = await connection.QueryAsync(query, parameters);
+            return updatedTask.Select(t => new UserTask
             {
-                if (updatedTask is null)
-                {
-                    updatedTask = task;
-                }
-                updatedTask.TaskCompletions.Add(completion);
-                return updatedTask;
-            }, 
-            param: parameters);
-            return updatedTask;
+                Id = t.Id,
+                Title = t.Title,
+                Description = t.Description,
+                DashboardId = t.DashboardId,
+                TaskCompletions = JsonConvert.DeserializeObject<List<TaskCompletion>>(t.TaskCompletions)
+            }).First();
         }
     }
 }
