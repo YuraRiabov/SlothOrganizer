@@ -66,15 +66,15 @@ namespace SlothOrganizer.Persistence.Repositories
             };
 
             var connection = _context.CreateConnection();
-            var updatedTask = await connection.QueryAsync(query, parameters);
-            return updatedTask.Select(t => new UserTask
+            var updatedTask = await connection.QueryFirstAsync(query, parameters);
+            return new UserTask
             {
-                Id = t.Id,
-                Title = t.Title,
-                Description = t.Description,
-                DashboardId = t.DashboardId,
-                TaskCompletions = JsonConvert.DeserializeObject<List<TaskCompletion>>(t.TaskCompletions)
-            }).First();
+                Id = updatedTask.Id,
+                Title = updatedTask.Title,
+                Description = updatedTask.Description,
+                DashboardId = updatedTask.DashboardId,
+                TaskCompletions = JsonConvert.DeserializeObject<List<TaskCompletion>>(updatedTask.TaskCompletions)
+            };
         }
     }
 }
