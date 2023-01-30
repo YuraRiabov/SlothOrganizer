@@ -101,7 +101,7 @@ namespace SlothOrganizer.Persistence.Repositories
             await connection.ExecuteAsync(command, parameters);
         }
 
-        public async Task<User?> UpdateAvatar(string? avatar, long id)
+        public async Task<User> UpdateAvatar(string? avatar, long id)
         {
             var query = Resources.UpdateUserAvatar;
 
@@ -112,7 +112,7 @@ namespace SlothOrganizer.Persistence.Repositories
             };
 
             using var connection = _dapperContext.CreateConnection();
-            return await connection.QuerySingleOrDefaultAsync<User>(query, parameters);
+            return await connection.QuerySingleAsync<User>(query, parameters);
         }
 
         public async Task UpdateFirstName(string firstName, long id)
