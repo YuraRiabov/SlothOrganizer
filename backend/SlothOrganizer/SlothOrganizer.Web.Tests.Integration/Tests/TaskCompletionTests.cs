@@ -1,7 +1,7 @@
 ﻿using System.Net;
 using SlothOrganizer.Contracts.DTO.Tasks.Task;
 using SlothOrganizer.Persistence.Repositories;
-using SlothOrganizer.Web.Tests.Integration.Setup;
+using SlothOrganizer.Web.Tests.Integration.Setup.Providers;
 using SlothOrganizer.Web.Tests.Integration.Tests.Base;
 
 namespace SlothOrganizer.Web.Tests.Integration.Tests
@@ -11,12 +11,19 @@ namespace SlothOrganizer.Web.Tests.Integration.Tests
     public class TaskCompletionTests : TaskTestBase
     {
         private const string ControllerRoute = "task-completions";
+        private readonly DashboardDtoProvider _dashboardDtoProvider;
+
+        public TaskCompletionTests()
+        {
+            _dashboardDtoProvider = new DashboardDtoProvider();
+        }
+
         [Fact]
         public async Task Update_WhenInvalidId_NotFound()
         {
             await AddAuthorizationHeader();
 
-            var taskCompletionDto = DtoProvider.GetTaskCompletion();
+            var taskCompletionDto = _dashboardDtoProvider.GetTaskCompletion();
             var response = await Client.PutAsync(ControllerRoute, GetStringContent(taskCompletionDto));
 
             Assert.Equal(HttpStatusCode.NotFound, response.StatusCode);
@@ -28,7 +35,7 @@ namespace SlothOrganizer.Web.Tests.Integration.Tests
             await AddAuthorizationHeader();
             await SetUpTask();
 
-            var taskCompletionDto = DtoProvider.GetTaskCompletion();
+            var taskCompletionDto = _dashboardDtoProvider.GetTaskCompletion();
             var response = await Client.PutAsync(ControllerRoute, GetStringContent(taskCompletionDto));
             var result = await GetResponse<TaskCompletionDto>(response);
 

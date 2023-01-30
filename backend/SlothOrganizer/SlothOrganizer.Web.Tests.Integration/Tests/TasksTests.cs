@@ -2,7 +2,7 @@
 using FakeItEasy;
 using SlothOrganizer.Contracts.DTO.Tasks.Task;
 using SlothOrganizer.Contracts.DTO.Tasks.Task.Enums;
-using SlothOrganizer.Web.Tests.Integration.Setup;
+using SlothOrganizer.Web.Tests.Integration.Setup.Providers;
 using SlothOrganizer.Web.Tests.Integration.Tests.Base;
 
 namespace SlothOrganizer.Web.Tests.Integration.Tests
@@ -12,6 +12,12 @@ namespace SlothOrganizer.Web.Tests.Integration.Tests
     public class TasksTests : TaskTestBase
     {
         private const string ControllerRoute = "tasks";
+        private readonly DashboardDtoProvider _dashboardDtoProvider;
+
+        public TasksTests()
+        {
+            _dashboardDtoProvider = new DashboardDtoProvider();
+        }
 
         [Fact]
         public async Task CreateTask_WhenValidData_ShouldCreate()
@@ -19,10 +25,10 @@ namespace SlothOrganizer.Web.Tests.Integration.Tests
             await AddAuthorizationHeader();
             A.CallTo(() => DateTimeService.Now()).Returns(new DateTime(2023, 1, 1));
 
-            var dashboard = DtoProvider.GetNewDashboard();
+            var dashboard = _dashboardDtoProvider.GetNewDashboard();
             await Client.PostAsync("dashboards", GetStringContent(dashboard));
 
-            var newTask = DtoProvider.GetNewTask(TaskRepeatingPeriod.Week);
+            var newTask = _dashboardDtoProvider.GetNewTask(TaskRepeatingPeriod.Week);
             var response = await Client.PostAsync(ControllerRoute, GetStringContent(newTask));
             var result = await GetResponse<TaskDto>(response);
 
@@ -42,7 +48,7 @@ namespace SlothOrganizer.Web.Tests.Integration.Tests
         public async Task CreateTask_WhenInvalidDates_BadRequest(TaskRepeatingPeriod period, int length, int? repeatingLength)
         {
             await AddAuthorizationHeader();
-            var newTask = DtoProvider.GetNewTask();
+            var newTask = _dashboardDtoProvider.GetNewTask();
             newTask.End = newTask.Start.AddDays(length);
             newTask.RepeatingPeriod = period;
             newTask.EndRepeating = repeatingLength == null ? null : newTask.Start.AddDays((int)repeatingLength);
@@ -74,7 +80,7 @@ namespace SlothOrganizer.Web.Tests.Integration.Tests
         {
             await AddAuthorizationHeader();
 
-            var updateTaskDto = DtoProvider.GetUpdateTask();
+            var updateTaskDto = _dashboardDtoProvider.GetUpdateTask();
             var response = await Client.PutAsync(ControllerRoute, GetStringContent(updateTaskDto));
 
             Assert.Equal(HttpStatusCode.NotFound, response.StatusCode);
@@ -86,7 +92,7 @@ namespace SlothOrganizer.Web.Tests.Integration.Tests
             await AddAuthorizationHeader();
             await SetUpTask();
 
-            var updateTaskDto = DtoProvider.GetUpdateTask();
+            var updateTaskDto = _dashboardDtoProvider.GetUpdateTask();
             updateTaskDto.TaskCompletion.Id = 0;
             var response = await Client.PutAsync(ControllerRoute, GetStringContent(updateTaskDto));
 
@@ -100,7 +106,7 @@ namespace SlothOrganizer.Web.Tests.Integration.Tests
             await AddAuthorizationHeader();
             await SetUpTask();
 
-            var updateTaskDto = DtoProvider.GetUpdateTask();
+            var updateTaskDto = _dashboardDtoProvider.GetUpdateTask();
             updateTaskDto.TaskCompletion.End = updateTaskDto.TaskCompletion.Start.AddHours(-1);
             var response = await Client.PutAsync(ControllerRoute, GetStringContent(updateTaskDto));
 
@@ -113,7 +119,7 @@ namespace SlothOrganizer.Web.Tests.Integration.Tests
             await AddAuthorizationHeader();
             await SetUpTask(false);
 
-            var updateTaskDto = DtoProvider.GetUpdateTask();
+            var updateTaskDto = _dashboardDtoProvider.GetUpdateTask();
             var response = await Client.PutAsync(ControllerRoute, GetStringContent(updateTaskDto));
             var result = await GetResponse<TaskDto>(response);
 
@@ -130,7 +136,7 @@ namespace SlothOrganizer.Web.Tests.Integration.Tests
             await AddAuthorizationHeader();
             await SetUpTask();
 
-            var updateTaskDto = DtoProvider.GetUpdateTask();
+            var updateTaskDto = _dashboardDtoProvider.GetUpdateTask();
             updateTaskDto.EndRepeating = updateTaskDto.EndRepeating.Value.AddDays(40);
             var response = await Client.PutAsync(ControllerRoute, GetStringContent(updateTaskDto));
             var result = await GetResponse<TaskDto>(response);
@@ -148,7 +154,7 @@ namespace SlothOrganizer.Web.Tests.Integration.Tests
             await AddAuthorizationHeader();
             await SetUpTask();
 
-            var updateTaskDto = DtoProvider.GetUpdateTask();
+            var updateTaskDto = _dashboardDtoProvider.GetUpdateTask();
             updateTaskDto.EndRepeating = updateTaskDto.EndRepeating.Value.AddDays(-10);
             var response = await Client.PutAsync(ControllerRoute, GetStringContent(updateTaskDto));
             var result = await GetResponse<TaskDto>(response);

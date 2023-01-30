@@ -4,50 +4,11 @@ using SlothOrganizer.Contracts.DTO.Tasks.Task;
 using SlothOrganizer.Contracts.DTO.Tasks.Task.Enums;
 using SlothOrganizer.Contracts.DTO.User;
 
-namespace SlothOrganizer.Web.Tests.Integration.Setup
+namespace SlothOrganizer.Web.Tests.Integration.Setup.Providers
 {
-    public static class DtoProvider
+    public class DashboardDtoProvider
     {
-        public static VerificationCodeDto GetVerificationCode(string email)
-        {
-            return new VerificationCodeDto
-            {
-                VerificationCode = 111111,
-                Email = email
-            };
-        }
-
-        public static NewUserDto GetNewUser()
-        {
-            return new NewUserDto
-            {
-                FirstName = "Yura",
-                LastName = "Riabov",
-                Email = "test@test.com",
-                Password = "passw0rd"
-            };
-        }
-
-        public static LoginDto GetLogin()
-        {
-            return new LoginDto
-            {
-                Email = "test@test.com",
-                Password = "passw0rd"
-            };
-        }
-
-        public static ResetPasswordDto GetResetPasswordDto()
-        {
-            return new ResetPasswordDto
-            {
-                Email = "test@test.com",
-                Password = "newpassw0rd",
-                Code = "111111"
-            };
-        }
-
-        public static NewDashboardDto GetNewDashboard()
+        public NewDashboardDto GetNewDashboard()
         {
             return new NewDashboardDto
             {
@@ -55,7 +16,7 @@ namespace SlothOrganizer.Web.Tests.Integration.Setup
             };
         }
 
-        public static NewTaskDto GetNewTask(TaskRepeatingPeriod period = TaskRepeatingPeriod.None)
+        public NewTaskDto GetNewTask(TaskRepeatingPeriod period = TaskRepeatingPeriod.None)
         {
             return new NewTaskDto
             {
@@ -69,7 +30,7 @@ namespace SlothOrganizer.Web.Tests.Integration.Setup
             };
         }
 
-        public static TaskDto GetTask()
+        public TaskDto GetTask()
         {
             return new TaskDto
             {
@@ -80,7 +41,7 @@ namespace SlothOrganizer.Web.Tests.Integration.Setup
             };
         }
 
-        public static TaskCompletionDto GetTaskCompletion()
+        public TaskCompletionDto GetTaskCompletion()
         {
             return new TaskCompletionDto
             {
@@ -92,7 +53,7 @@ namespace SlothOrganizer.Web.Tests.Integration.Setup
             };
         }
 
-        public static UpdateTaskDto GetUpdateTask()
+        public UpdateTaskDto GetUpdateTask()
         {
             return new UpdateTaskDto
             {
