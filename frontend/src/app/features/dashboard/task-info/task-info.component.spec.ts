@@ -1,5 +1,9 @@
+import * as dashboardActions from '@store/actions/dashboard.actions';
+import * as taskActions from '@store/actions/task.actions';
+
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
+import { By } from '@angular/platform-browser';
 import { CommonModule } from '@angular/common';
 import { DashboardRoutingModule } from '../dashboard-routing.module';
 import { FormsModule } from '@angular/forms';
@@ -33,7 +37,7 @@ describe('TaskInfoComponent', () => {
     };
 
     beforeEach(async () => {
-        store = jasmine.createSpyObj('Store', ['select']);
+        store = jasmine.createSpyObj('Store', ['select', 'dispatch']);
         store.select.and.returnValue(of(taskBlock));
         await TestBed.configureTestingModule({
             declarations: [TaskInfoComponent],
@@ -56,5 +60,29 @@ describe('TaskInfoComponent', () => {
 
     it('should create', () => {
         expect(component).toBeTruthy();
+    });
+
+    it('should dispatch delete when delete clicked', () => {
+        const button = fixture.debugElement.query(By.css('.delete-button')).nativeElement;
+
+        button.click();
+
+        expect(store.dispatch).toHaveBeenCalledOnceWith(taskActions.deleteTask());
+    });
+
+    it('should dispatch mark as completed when mark as completed clicked', () => {
+        const button = fixture.debugElement.query(By.css('.mark-completed-button')).nativeElement;
+
+        button.click();
+
+        expect(store.dispatch).toHaveBeenCalledOnceWith(taskActions.markCompleted());
+    });
+
+    it('should change to edit when edit clicked', () => {
+        const button = fixture.debugElement.query(By.css('.edit-button')).nativeElement;
+
+        button.click();
+
+        expect(store.dispatch).toHaveBeenCalledTimes(1);
     });
 });

@@ -6,5 +6,6 @@ namespace SlothOrganizer.Domain.Repositories
     {
         Task<List<UserTask>> Get(long dashboardId);
         Task<UserTask> Insert(UserTask task);
+        Task<UserTask?> Update(UserTask task);
     }
 }

@@ -20,17 +20,7 @@ export const selectChosenDashboard = createSelector(
     (state) => state.dashboards.find(d => d.id === state.chosenDashboardId) ?? getDefaultDashboard()
 );
 
-export const selectTasks = createSelector(
-    selectDashboardState,
-    (state) => state.tasks
-);
-
 export const selectSidebarType = createSelector(
     selectDashboardState,
     (state) => state.sidebarType
-);
-
-export const selectChosenTaskBlock = createSelector(
-    selectDashboardState,
-    (state) => state.chosenTaskBlock
 );

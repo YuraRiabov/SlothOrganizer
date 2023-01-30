@@ -5,5 +5,6 @@ namespace SlothOrganizer.Services.Abstractions.Tasks
     public interface ITaskCompletionPeriodConverter
     {
         TimeSpan GetLength(TaskRepeatingPeriod period);
+        TaskRepeatingPeriod GetRepeatingPeriod(TimeSpan repeatsDifference);
     }
 }

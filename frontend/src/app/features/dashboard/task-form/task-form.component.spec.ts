@@ -1,5 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { endOfDay, startOfDay } from 'date-fns';
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { By } from '@angular/platform-browser';
@@ -16,6 +17,14 @@ describe('TaskFormComponent', () => {
     let fixture: ComponentFixture<TaskFormComponent>;
     let store: jasmine.SpyObj<Store>;
     let saveButton: HTMLElement;
+    const initialValue = {
+        dashboardId: 1,
+        title: '',
+        description: '',
+        repeatingPeriod: TaskRepeatingPeriod.None,
+        start: startOfDay(new Date()),
+        end: endOfDay(new Date()),
+    };
 
     const buildValidForm = () => {
         component.taskForm.get('title')?.setValue('Title');
@@ -49,8 +58,10 @@ describe('TaskFormComponent', () => {
 
         fixture = TestBed.createComponent(TaskFormComponent);
         component = fixture.componentInstance;
+        component.initialValue = initialValue;
         fixture.detectChanges();
         saveButton = fixture.debugElement.query(By.css('.save-button')).nativeElement;
+        spyOn(component.submitted, 'emit');
     });
 
     it('should create', () => {
@@ -64,13 +75,13 @@ describe('TaskFormComponent', () => {
         expect(component.taskForm.valid).toBeTrue();
     });
 
-    it('should call createTask when valid data and saved', () => {
+    it('should emit data when valid data and saved', () => {
         buildValidForm();
         fixture.detectChanges();
 
         saveButton.click();
 
-        expect(store.dispatch).toHaveBeenCalledTimes(2);
+        expect(component.submitted.emit).toHaveBeenCalledTimes(1);
     });
 
     it('should have error when start after end', () => {

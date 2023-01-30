@@ -1,12 +1,15 @@
 import * as dashboardActions from '@store/actions/dashboard.actions';
+import * as taskActions from '@store/actions/task.actions';
 
 import { Component, OnInit } from '@angular/core';
 import { Observable, of } from 'rxjs';
-import { selectChosenDashboard, selectDashboards, selectSidebarType, selectTasks } from '@store/selectors/dashboard.selectors';
+import { selectChosenDashboard, selectDashboards, selectSidebarType } from '@store/selectors/dashboard.selectors';
+import { selectTaskToUpdate, selectTasks } from '@store/selectors/task.selectors';
 
 import { BaseComponent } from '@shared/components/base/base.component';
 import { Dashboard } from '#types/dashboard/dashboard/dashboard';
 import { MatDatepickerInputEvent } from '@angular/material/datepicker';
+import { NewTask } from '#types/dashboard/tasks/new-task';
 import { SidebarType } from '#types/dashboard/timeline/enums/sidebar-type';
 import { Store } from '@ngrx/store';
 import { Task } from '#types/dashboard/tasks/task';
@@ -28,6 +31,7 @@ export class DashboardComponent extends BaseComponent implements OnInit {
     public currentDashboard$?: Observable<Dashboard>;
 
     public tasks$?: Observable<Task[]>;
+    public taskToUpdate$?: Observable<NewTask>;
 
     public sidebarType$: Observable<SidebarType> = of(SidebarType.None);
 
@@ -42,6 +46,7 @@ export class DashboardComponent extends BaseComponent implements OnInit {
         this.currentDashboard$ = this.store.select(selectChosenDashboard);
         this.sidebarType$ = this.store.select(selectSidebarType);
         this.tasks$ = this.store.select(selectTasks);
+        this.taskToUpdate$ = this.store.select(selectTaskToUpdate);
     }
 
     public openCreateSidebar(): void {
@@ -49,7 +54,7 @@ export class DashboardComponent extends BaseComponent implements OnInit {
     }
 
     public displayTask(taskBlock: TaskBlock): void {
-        this.store.dispatch(dashboardActions.chooseTask({ taskBlock }));
+        this.store.dispatch(taskActions.chooseTask({ taskBlock }));
     }
 
     public closeSidebar(): void {
@@ -62,6 +67,14 @@ export class DashboardComponent extends BaseComponent implements OnInit {
 
     public createDashboard(title: string): void {
         this.store.dispatch(dashboardActions.createDashbaord({ title }));
+    }
+
+    public updateTask(task: NewTask): void {
+        this.store.dispatch(taskActions.editTask({ task }));
+    }
+
+    public createTask(newTask: NewTask) {
+        this.store.dispatch(taskActions.createTask({ newTask }));
     }
 
     public zoomIn(date?: Date): void {

@@ -1,5 +1,5 @@
 <form [formGroup]="taskForm" class="task-form-wrapper">
-    <h1 i18n>Create task</h1>
+    <h1 i18n>{{title}}</h1>
     <mat-form-field class="task-field">
         <mat-label i18n>Title</mat-label>
         <input formControlName="title" matInput type="text">
@@ -45,7 +45,7 @@
         </mat-form-field>
     </div>
     <div class="date-row">
-        <mat-form-field appearance="fill" class="period-field">
+        <mat-form-field *ngIf="!editing" appearance="fill" class="period-field">
             <mat-label i18n>Repeating period</mat-label>
             <mat-select formControlName="repeatingPeriod" (selectionChange)="validate()">
                 <mat-option *ngFor="let option of repeatingOptions" [value]="option">
@@ -62,7 +62,7 @@
                 Repeating period must be longer than task
             </mat-error>
         </mat-form-field>
-        <mat-form-field class="date-field row-end" *ngIf="isRepeating" appearance="fill">
+        <mat-form-field [ngClass]="{ 'row-end': !editing }" class="date-field" *ngIf="isRepeating" appearance="fill">
             <mat-label i18n>End repeating</mat-label>
             <input formControlName="endRepeating" matInput [matDatepicker]="endRepeatingPicker">
             <mat-datepicker-toggle matSuffix [for]="endRepeatingPicker"></mat-datepicker-toggle>
@@ -73,7 +73,7 @@
         </mat-form-field>
     </div>
     <div class="button-row">
-        <button i18n mat-flat-button class="cancel-button" (click)="closeForm()">Cancel</button>
+        <button i18n mat-flat-button class="cancel-button" (click)="cancel.emit()">Cancel</button>
         <button i18n mat-flat-button class="save-button" color="primary" [disabled]="!taskForm.valid" (click)="createTask()">Save</button>
     </div>
 </form>

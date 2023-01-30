@@ -1,0 +1,19 @@
+﻿{
+  StatusCode: OK,
+  result: {
+    Id: 1,
+    DashboardId: 1,
+    Title: Title,
+    Description: Description,
+    TaskCompletions: [
+      {
+        Id: 1,
+        TaskId: 1,
+        IsSuccessful: true,
+        Start: DateTime_1,
+        End: DateTime_2,
+        LastEdited: DateTime_3
+      }
+    ]
+  }
+}

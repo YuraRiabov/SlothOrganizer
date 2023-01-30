@@ -1,11 +1,12 @@
 import * as dashboardActions from '@store/actions/dashboard.actions';
+import * as taskActions from '@store/actions/task.actions';
 
-import { Actions, concatLatestFrom, createEffect, ofType } from '@ngrx/effects';
+import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { map, mergeMap } from 'rxjs';
 
 import { DashboardService } from '@api/dashboard.service';
 import { Injectable } from '@angular/core';
-import { Store } from '@ngrx/store';
+import { SidebarType } from '#types/dashboard/timeline/enums/sidebar-type';
 
 @Injectable()
 export class DashboardEffects {
@@ -24,7 +25,7 @@ export class DashboardEffects {
             return this.actions$.pipe(
                 ofType(dashboardActions.createDashbaord),
                 mergeMap((action) => this.dashboardService.create({ title: action.title })),
-                map(dashboard => dashboardActions.dashboardCreated({ dashboard }))
+                map(dashboard => dashboardActions.createDashboardSuccess({ dashboard }))
             );
         }
     );
@@ -32,8 +33,26 @@ export class DashboardEffects {
     public changeDashboard$ = createEffect(
         () => {
             return this.actions$.pipe(
-                ofType(dashboardActions.chooseDashboard, dashboardActions.dashboardCreated),
-                map(() => dashboardActions.loadTasks())
+                ofType(dashboardActions.chooseDashboard, dashboardActions.createDashboardSuccess),
+                map(() => taskActions.loadTasks())
+            );
+        }
+    );
+
+    public openDisplaySidebar$ = createEffect(
+        () => {
+            return this.actions$.pipe(
+                ofType(taskActions.chooseTask),
+                map(() => dashboardActions.openSidebar({ sidebarType: SidebarType.Display }))
+            );
+        }
+    );
+
+    public closeDisplaySidebar$ = createEffect(
+        () => {
+            return this.actions$.pipe(
+                ofType(taskActions.createTaskSuccess, taskActions.editTaskSuccess, taskActions.deleteTask),
+                map(() => dashboardActions.closeSidebar())
             );
         }
     );

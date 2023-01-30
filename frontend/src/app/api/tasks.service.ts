@@ -4,6 +4,7 @@ import { Injectable } from '@angular/core';
 import { NewTask } from '#types/dashboard/tasks/new-task';
 import { Observable } from 'rxjs';
 import { Task } from '#types/dashboard/tasks/task';
+import { TaskUpdate } from '#types/dashboard/tasks/task-update';
 
 @Injectable({
     providedIn: 'root'
@@ -21,5 +22,9 @@ export class TasksService extends HttpService {
 
     public load(dashboardId: number): Observable<Task[]> {
         return this.get<Task[]>(`/${dashboardId}`);
+    }
+
+    public update(taskUpdate: TaskUpdate): Observable<Task> {
+        return this.put('', taskUpdate);
     }
 }

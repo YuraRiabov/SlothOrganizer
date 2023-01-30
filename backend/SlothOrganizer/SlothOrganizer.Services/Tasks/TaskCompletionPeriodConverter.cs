@@ -17,5 +17,16 @@ namespace SlothOrganizer.Services.Tasks
                 _ => TimeSpan.MinValue
             };
         }
+
+        public TaskRepeatingPeriod GetRepeatingPeriod(TimeSpan repeatsDifference)
+        {
+            return repeatsDifference.Days switch
+            {
+                < 3 => TaskRepeatingPeriod.Day,
+                < 14 => TaskRepeatingPeriod.Week,
+                < 40 => TaskRepeatingPeriod.Month,
+                _ => TaskRepeatingPeriod.Year
+            };
+        }
     }
 }

@@ -1,18 +1,14 @@
 import { createAction, props } from '@ngrx/store';
 
 import { Dashboard } from '#types/dashboard/dashboard/dashboard';
-import { NewDashboard } from '#types/dashboard/dashboard/new-dashboard';
-import { NewTask } from '#types/dashboard/tasks/new-task';
 import { SidebarType } from '#types/dashboard/timeline/enums/sidebar-type';
-import { Task } from '#types/dashboard/tasks/task';
-import { TaskBlock } from '#types/dashboard/timeline/task-block';
 
 export const loadDashboards = createAction(
     '[Dashboard page] Load dashboards'
 );
 
 export const loadDashboardsSuccess = createAction(
-    '[API] Load dashboards success',
+    '[Dashboard page] Load dashboards success',
     props<{ dashboards: Dashboard[] }>()
 );
 
@@ -21,38 +17,14 @@ export const createDashbaord = createAction(
     props<{ title: string }>()
 );
 
-export const dashboardCreated = createAction(
-    '[API] Dashboard created',
+export const createDashboardSuccess = createAction(
+    '[Dashboard page] Create dashboard success',
     props<{ dashboard: Dashboard }>()
 );
 
 export const chooseDashboard = createAction(
     '[Dashboard page] Select dashboard',
     props<{ dashboardId: number }>()
-);
-
-export const createTask = createAction(
-    '[Timeline] Create task',
-    props<{ newTask: NewTask }>()
-);
-
-export const taskCreated = createAction(
-    '[API] Task created',
-    props<{ task: Task }>()
-);
-
-export const loadTasks = createAction(
-    '[Dashboard page] Load tasks'
-);
-
-export const tasksLoaded = createAction(
-    '[API] Tasks loaded',
-    props<{ tasks: Task[] }>()
-);
-
-export const chooseTask = createAction(
-    '[Timeline] Choose task',
-    props<{ taskBlock: TaskBlock }>()
 );
 
 export const openSidebar = createAction(

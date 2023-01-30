@@ -1,7 +1,7 @@
 import { TaskRepeatingPeriod } from './enums/task-repeating-period';
 
 export interface NewTask {
-    dashboardId: number;
+    dashboardId?: number;
     title: string;
     description: string;
     start: Date;

@@ -30,14 +30,14 @@
     </div>
     <div class="buttons">
         <button i18n *ngIf="!taskBlock.taskCompletion.isSuccessful" mat-flat-button
-                class="mark-completed-button" color="primary">
+                class="mark-completed-button" color="primary" (click)="markAsCompleted()">
                 Mark as completed
         </button>
-        <button i18n mat-flat-button color="primary" class="edit-button">
+        <button i18n (click)="edit()" mat-flat-button color="primary" class="edit-button">
             <mat-icon>edit</mat-icon>
             Edit
         </button>
-        <button i18n mat-flat-button color="warn" class="delete-button">
+        <button i18n mat-flat-button color="warn" class="delete-button" (click)="delete()">
             <mat-icon>delete</mat-icon>
             Delete
         </button>

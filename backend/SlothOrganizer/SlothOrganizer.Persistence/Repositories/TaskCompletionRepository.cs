@@ -1,5 +1,4 @@
-﻿using System.Threading.Tasks;
-using Dapper;
+﻿using Dapper;
 using SlothOrganizer.Domain.Entities;
 using SlothOrganizer.Domain.Repositories;
 using SlothOrganizer.Persistence.Properties;
@@ -15,7 +14,7 @@ namespace SlothOrganizer.Persistence.Repositories
             _context = context;
         }
 
-        public async Task<List<TaskCompletion>> Insert(List<TaskCompletion> taskCompletions)
+        public async Task<IEnumerable<TaskCompletion>> Insert(IEnumerable<TaskCompletion> taskCompletions)
         {
             var query = Resources.InsertTaskCompletion;
 
@@ -38,6 +37,42 @@ namespace SlothOrganizer.Persistence.Repositories
             transaction.Commit();
             
             return taskCompletions;
+        }
+
+        public async Task<TaskCompletion?> Update(TaskCompletion taskCompletion)
+        {
+            var query = Resources.UpdateTaskCompletion;
+            var parameters = new
+            {
+                Id = taskCompletion.Id,
+                IsSuccessful = taskCompletion.IsSuccessful,
+                Start = taskCompletion.Start,
+                End = taskCompletion.End
+            };
+            using var connection = _context.CreateConnection();
+            return await connection.QuerySingleOrDefaultAsync<TaskCompletion>(query, parameters);
+        }
+
+        public async Task Delete(long taskId, DateTime endLimit)
+        {
+            var command = Resources.DeleteTaskCompletions;
+
+            var parameters = new
+            {
+                TaskId = taskId,
+                EndLimit = endLimit
+            };
+
+            using var connection = _context.CreateConnection();
+            await connection.ExecuteAsync(command, parameters);
+        }
+
+        public async Task Delete(long id)
+        {
+            var command = Resources.DeleteTaskCompletion;
+
+            using var connection = _context.CreateConnection();
+            await connection.ExecuteAsync(command, new { id });
         }
     }
 }

@@ -9,9 +9,10 @@ import { EffectsModule } from '@ngrx/effects';
 import { MaterialModule } from '@shared/material/material.module';
 import { NgModule } from '@angular/core';
 import { SharedModule } from '@shared/components/shared/shared.module';
+import { TaskCompletionEffects } from '@store/effects/task/task-completion.effects';
 import { TaskFormComponent } from './task-form/task-form.component';
 import { TaskInfoComponent } from './task-info/task-info.component';
-import { TasksEffects } from '@store/effects/dashboard/tasks.effects';
+import { TasksEffects } from '@store/effects/task/tasks.effects';
 import { TimelineComponent } from './timeline/timeline.component';
 
 @NgModule({
@@ -29,7 +30,7 @@ import { TimelineComponent } from './timeline/timeline.component';
         SharedModule,
         FormsModule,
         ReactiveFormsModule,
-        EffectsModule.forFeature([DashboardEffects, TasksEffects])
+        EffectsModule.forFeature([DashboardEffects, TasksEffects, TaskCompletionEffects])
     ]
 })
 export class DashboardModule { }
