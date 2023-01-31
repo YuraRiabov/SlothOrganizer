@@ -33,7 +33,7 @@ export class DashboardEffects {
     public loadTasks$ = createEffect(
         () => {
             return this.actions$.pipe(
-                ofType(dashboardActions.chooseDashboard, dashboardActions.createDashboardSuccess),
+                ofType(dashboardActions.chooseDashboard, dashboardActions.createDashboardSuccess, dashboardActions.loadDashboardsSuccess),
                 map(() => taskActions.loadTasks())
             );
         }
