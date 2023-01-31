@@ -1,7 +1,7 @@
 import * as profileActions from '@store/actions/profile.actions';
 
 import { Actions, concatLatestFrom, createEffect, ofType } from '@ngrx/effects';
-import { map, mergeMap } from 'rxjs';
+import { map, mergeMap, take } from 'rxjs';
 
 import { Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
@@ -14,7 +14,7 @@ export class UserInfoEffects {
         () => {
             return this.actions$.pipe(
                 ofType(profileActions.uploadAvatar),
-                mergeMap((action) => this.userInfoService.updateAvater(action.image)),
+                mergeMap((action) => this.userInfoService.updateAvater(action.image).pipe(take(1))),
                 map((user) => profileActions.uploadAvatarSuccess({ url: user.avatarUrl! }))
             );
         }
@@ -25,7 +25,7 @@ export class UserInfoEffects {
             return this.actions$.pipe(
                 ofType(profileActions.updateFirstName),
                 concatLatestFrom(() => this.store.select(selectUserId)),
-                mergeMap(([action, id]) => this.userInfoService.update({ id, firstName: action.firstName }))
+                mergeMap(([action, id]) => this.userInfoService.update({ id, firstName: action.firstName }).pipe(take(1)))
             );
         },
         {
@@ -38,7 +38,7 @@ export class UserInfoEffects {
             return this.actions$.pipe(
                 ofType(profileActions.updateLastName),
                 concatLatestFrom(() => this.store.select(selectUserId)),
-                mergeMap(([action, id]) => this.userInfoService.update({ id, lastName: action.lastName }))
+                mergeMap(([action, id]) => this.userInfoService.update({ id, lastName: action.lastName }).pipe(take(1)))
             );
         },
         {
@@ -50,7 +50,7 @@ export class UserInfoEffects {
         () => {
             return this.actions$.pipe(
                 ofType(profileActions.deleteAvatar),
-                mergeMap(() => this.userInfoService.deleteAvatar())
+                mergeMap(() => this.userInfoService.deleteAvatar().pipe(take(1)))
             );
         },
         {

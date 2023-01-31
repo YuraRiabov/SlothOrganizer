@@ -1,7 +1,7 @@
 import * as profileActions from '@store/actions/profile.actions';
 
 import { Actions, concatLatestFrom, createEffect, ofType } from '@ngrx/effects';
-import { catchError, map, mergeMap, repeat } from 'rxjs';
+import { catchError, map, mergeMap, repeat, take } from 'rxjs';
 
 import { Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
@@ -15,7 +15,7 @@ export class UserCredentialsEffects {
             return this.actions$.pipe(
                 ofType(profileActions.updatePassword),
                 concatLatestFrom(() => this.store.select(selectUserEmail)),
-                mergeMap(([action, email]) => this.userCredentialsService.updatePassword({ ...action.passwordUpdate, email })),
+                mergeMap(([action, email]) => this.userCredentialsService.updatePassword({ ...action.passwordUpdate, email }).pipe(take(1))),
                 map(() => profileActions.updatePasswordSuccess()),
                 catchError(async () => profileActions.updatePasswordFailure()),
                 repeat()

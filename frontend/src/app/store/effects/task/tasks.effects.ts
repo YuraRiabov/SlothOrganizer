@@ -1,7 +1,7 @@
 import * as taskActions from '@store/actions/task.actions';
 
 import { Actions, concatLatestFrom, createEffect, ofType } from '@ngrx/effects';
-import { map, mergeMap } from 'rxjs';
+import { map, mergeMap, take } from 'rxjs';
 
 import { Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
@@ -16,7 +16,7 @@ export class TasksEffects {
             return this.actions$.pipe(
                 ofType(taskActions.createTask),
                 concatLatestFrom(() => this.store.select(selectChosenDashboardId)),
-                mergeMap(([action, id]) => this.tasksService.create({ ...action.newTask, dashboardId: id})),
+                mergeMap(([action, id]) => this.tasksService.create({ ...action.newTask, dashboardId: id}).pipe(take(1))),
                 map((task) => taskActions.createTaskSuccess({ task }))
             );
         }
@@ -27,7 +27,7 @@ export class TasksEffects {
             return this.actions$.pipe(
                 ofType(taskActions.loadTasks),
                 concatLatestFrom(() => this.store.select(selectChosenDashboardId)),
-                mergeMap(([, id]) => this.tasksService.load(id)),
+                mergeMap(([, id]) => this.tasksService.load(id).pipe(take(1))),
                 map((tasks) => taskActions.loadTasksSuccess({ tasks }))
             );
         }
@@ -50,7 +50,7 @@ export class TasksEffects {
                         end: action.task.end,
                     },
                     endRepeating: action.task.endRepeating
-                })),
+                }).pipe(take(1))),
                 map((task) => taskActions.editTaskSuccess({ task }))
             );
         }
