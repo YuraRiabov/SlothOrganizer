@@ -10,6 +10,7 @@ import { BaseComponent } from '@shared/components/base/base.component';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { UserCredentialsService } from '@api/user-credentials.service';
+import { rootRoute } from '@shared/routes/routes';
 import { selectUserEmail } from '@store/selectors/auth.selectors';
 
 @Component({
@@ -25,10 +26,12 @@ export class VerifyEmailComponent extends BaseComponent implements OnInit {
         Validators.pattern('[0-9]*')
     ]);
 
-    constructor(private userCredentialsService: UserCredentialsService,
+    constructor(
+        private userCredentialsService: UserCredentialsService,
         private authService: AuthService,
         private store: Store,
-        private router: Router) {
+        private router: Router
+    ) {
         super();
         this.email$ = store.select(selectUserEmail);
     }
@@ -58,7 +61,7 @@ export class VerifyEmailComponent extends BaseComponent implements OnInit {
             map(auth => auth as AuthState)
         ).subscribe((auth) => {
             this.store.dispatch(authActions.verifyEmail({ authState: auth }));
-            this.router.navigate(['']);
+            this.router.navigate([rootRoute]);
         });
     }
 

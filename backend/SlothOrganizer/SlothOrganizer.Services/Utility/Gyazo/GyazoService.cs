@@ -21,13 +21,12 @@ namespace SlothOrganizer.Services.Utility.Gyazo
 
         public async Task<string> Upload(byte[] image, string fileName)
         {
-            using (var content = new MultipartFormDataContent())
-            {
-                content.Add(new StreamContent(new MemoryStream(image)), "imagedata", fileName);
-                var response = await _httpClient.PostAsync(_options.UploadUrl, content);
-                var contentString = await response.Content.ReadAsStringAsync();
-                return JsonConvert.DeserializeObject<GyazoResponseDto>(contentString).Url;
-            }
+            using var content = new MultipartFormDataContent();
+            using var imageStream = new MemoryStream(image);
+            content.Add(new StreamContent(imageStream), "imagedata", fileName);
+            var response = await _httpClient.PostAsync(_options.UploadUrl, content);
+            var contentString = await response.Content.ReadAsStringAsync();
+            return JsonConvert.DeserializeObject<GyazoResponseDto>(contentString).Url;
         }
     }
 }

@@ -10,6 +10,7 @@ import { BaseComponent } from '@shared/components/base/base.component';
 import { Store } from '@ngrx/store';
 import { UserCredentialsService } from '@api/user-credentials.service';
 import { hasLengthErrors } from '@utils/validators/common-validators';
+import { rootRoute } from '@shared/routes/routes';
 
 @Component({
     selector: 'so-reset-password',
@@ -22,10 +23,12 @@ export class ResetPasswordComponent extends BaseComponent implements OnInit {
 
     public resetPassowordGroup: FormGroup = {} as FormGroup;
 
-    constructor(private userCredentialsService: UserCredentialsService,
+    constructor(
+        private userCredentialsService: UserCredentialsService,
         private activatedRoute: ActivatedRoute,
         private router: Router,
-        private store: Store) {
+        private store: Store
+    ) {
         super();
     }
 
@@ -52,7 +55,7 @@ export class ResetPasswordComponent extends BaseComponent implements OnInit {
             this.untilDestroyed
         ).subscribe((auth) => {
             this.store.dispatch(authActions.login({ authState: auth }));
-            this.router.navigate(['']);
+            this.router.navigate([rootRoute]);
         });
     }
 

@@ -20,9 +20,11 @@ import { hasLengthErrors } from '@utils/validators/common-validators';
 export class SignInComponent extends BaseComponent implements OnInit {
     signInGroup: FormGroup = {} as FormGroup;
 
-    constructor(private userCredentialsService: UserCredentialsService,
+    constructor(
+        private userCredentialsService: UserCredentialsService,
         private store: Store,
-        private router: Router) {
+        private router: Router
+    ) {
         super();
     }
 
