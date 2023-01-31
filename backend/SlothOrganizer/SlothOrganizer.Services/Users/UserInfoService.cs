@@ -21,15 +21,17 @@ namespace SlothOrganizer.Services.Users
 
         public async Task Update(UpdateUserDto updateUserDto)
         {
+            var updateTasks = new List<Task>();
             if (updateUserDto.FirstName != null)
             {
-                await _userRepository.UpdateFirstName(updateUserDto.FirstName, updateUserDto.Id);
+                updateTasks.Add(_userRepository.UpdateFirstName(updateUserDto.FirstName, updateUserDto.Id));
             }
 
             if (updateUserDto.LastName != null)
             {
-                await _userRepository.UpdateLastName(updateUserDto.LastName, updateUserDto.Id);
+                updateTasks.Add(_userRepository.UpdateLastName(updateUserDto.LastName, updateUserDto.Id));
             }
+            await Task.WhenAll(updateTasks);
         }
 
         public async Task DeleteAvatar(long userId)

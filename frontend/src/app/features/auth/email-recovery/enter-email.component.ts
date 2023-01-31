@@ -4,7 +4,6 @@ import { catchError, of } from 'rxjs';
 import { AuthService } from '@api/auth.service';
 import { BaseComponent } from '@shared/components/base/base.component';
 import { FormControl } from '@angular/forms';
-import { Store } from '@ngrx/store';
 import { getEmailValidators } from '@utils/validators/user-validators.helper';
 
 @Component({
@@ -19,7 +18,7 @@ export class EmailRecoveryComponent extends BaseComponent implements OnInit {
 
     public emailControl: FormControl = {} as FormControl;
 
-    constructor(private authService: AuthService, private store: Store) {
+    constructor(private authService: AuthService) {
         super();
     }
 

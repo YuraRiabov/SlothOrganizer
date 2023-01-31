@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { logoutAction } from '@store/actions/hydration.actions';
+import { profileRoute } from '@shared/routes/routes';
 import { selectAvatarUrl } from '@store/selectors/auth.selectors';
 
 @Component({
@@ -21,7 +22,7 @@ export class HeaderComponent implements OnInit {
     }
 
     public goToProfile(): void {
-        this.router.navigate(['profile']);
+        this.router.navigate([profileRoute]);
     }
 
     public logout(): void {

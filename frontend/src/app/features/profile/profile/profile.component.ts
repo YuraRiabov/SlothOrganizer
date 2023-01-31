@@ -8,6 +8,7 @@ import { PasswordUpdate } from '#types/user/password-update';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { User } from '#types/user/user';
+import { dashboardRoute } from '@shared/routes/routes';
 
 @Component({
     selector: 'so-profile',
@@ -46,6 +47,6 @@ export class ProfileComponent implements OnInit {
     }
 
     public goToDashboard(): void {
-        this.router.navigate(['dashboard']);
+        this.router.navigate([dashboardRoute]);
     }
 }
