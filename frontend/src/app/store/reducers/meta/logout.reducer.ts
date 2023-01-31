@@ -1,11 +1,11 @@
 import { ActionReducer } from '@ngrx/store';
-import { AuthState } from '@store/states/auth-state';
 import { LOGOUT } from '@store/actions/hydration.actions';
+import { RootState } from '@store/states/root-state';
 import { getEmptyState } from '@utils/creation-functions/auth-state.helper';
 
 export const logoutMetaReducer = (
-    reducer: ActionReducer<AuthState>
-): ActionReducer<AuthState> => {
+    reducer: ActionReducer<RootState>
+): ActionReducer<RootState> => {
     return (state, action) => {
         if (action.type === LOGOUT) {
             return getEmptyState();

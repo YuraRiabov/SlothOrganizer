@@ -2,7 +2,7 @@ import * as dashboardActions from '@store/actions/dashboard.actions';
 import * as taskActions from '@store/actions/task.actions';
 
 import { Actions, createEffect, ofType } from '@ngrx/effects';
-import { map, mergeMap } from 'rxjs';
+import { map, mergeMap, take } from 'rxjs';
 
 import { DashboardService } from '@api/dashboard.service';
 import { Injectable } from '@angular/core';
@@ -14,7 +14,7 @@ export class DashboardEffects {
         () => {
             return this.actions$.pipe(
                 ofType(dashboardActions.loadDashboards),
-                mergeMap(() => this.dashboardService.retrieve()),
+                mergeMap(() => this.dashboardService.retrieve().pipe(take(1))),
                 map((dashboards) => dashboardActions.loadDashboardsSuccess({ dashboards }))
             );
         }
@@ -24,16 +24,16 @@ export class DashboardEffects {
         () => {
             return this.actions$.pipe(
                 ofType(dashboardActions.createDashbaord),
-                mergeMap((action) => this.dashboardService.create({ title: action.title })),
+                mergeMap((action) => this.dashboardService.create({ title: action.title }).pipe(take(1))),
                 map(dashboard => dashboardActions.createDashboardSuccess({ dashboard }))
             );
         }
     );
 
-    public changeDashboard$ = createEffect(
+    public loadTasks$ = createEffect(
         () => {
             return this.actions$.pipe(
-                ofType(dashboardActions.chooseDashboard, dashboardActions.createDashboardSuccess),
+                ofType(dashboardActions.chooseDashboard, dashboardActions.createDashboardSuccess, dashboardActions.loadDashboardsSuccess),
                 map(() => taskActions.loadTasks())
             );
         }
