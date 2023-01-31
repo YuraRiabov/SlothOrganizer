@@ -31,3 +31,13 @@ export const selectAccessToken = createSelector(
     selectToken,
     (token: Token) => token.accessToken
 );
+
+export const selectInvalidPassword = createSelector(
+    selectAuthState,
+    (state) => state.invalidPassword
+);
+
+export const selectAvatarUrl = createSelector(
+    selectUser,
+    (user: User) => user.avatarUrl
+);

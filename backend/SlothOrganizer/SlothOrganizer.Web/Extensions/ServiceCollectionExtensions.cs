@@ -21,6 +21,7 @@ using SlothOrganizer.Services.Auth.UserVerification;
 using SlothOrganizer.Services.Abstractions.Auth.UserVerification;
 using SlothOrganizer.Services.Tasks;
 using SlothOrganizer.Services.Abstractions.Tasks;
+using SlothOrganizer.Services.Utility.Gyazo;
 
 namespace SlothOrganizer.Web.Extensions
 {
@@ -39,9 +40,11 @@ namespace SlothOrganizer.Web.Extensions
 
         public static IServiceCollection AddCustomServices(this IServiceCollection services)
         {
-            services.AddScoped<IUserService, UserService>();
+            services.AddScoped<IUserCredentialsService, UserCredentialsService>();
+            services.AddScoped<IUserInfoService, UserInfoService>();
             services.AddScoped<IAccessTokenService, AccessTokenService>();
             services.AddScoped<IRefreshTokenService, RefreshTokenService>();
+            services.AddScoped<ITokenService, TokenService>();
             services.AddScoped<IHashService, HashService>();
             services.AddScoped<IRandomService, RandomService>();
             services.AddScoped<IAuthService, AuthService>();
@@ -76,6 +79,18 @@ namespace SlothOrganizer.Web.Extensions
                 options.Password = configuration["SmtpPassword"];
             });
             services.AddScoped<IEmailService, EmailService>();
+            return services;
+        }
+
+        public static IServiceCollection AddImageService(this IServiceCollection services, IConfiguration configuration)
+        {
+            var smtpSection = configuration.GetRequiredSection("Gyazo");
+            services.Configure<GyazoOptions>(options =>
+            {
+                smtpSection.Bind(options);
+                options.AccessToken = configuration["GyazoToken"];
+            });
+            services.AddHttpClient<IImageService, GyazoService>();
             return services;
         }
 

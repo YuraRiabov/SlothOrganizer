@@ -5,11 +5,11 @@ import { FormControl, FormGroup } from '@angular/forms';
 import { catchError, filter, map, of } from 'rxjs';
 import { getEmailValidators, getPasswordValidators } from '@utils/validators/user-validators.helper';
 
-import { AuthService } from '@api/auth.service';
 import { AuthState } from '@store/states/auth-state';
 import { BaseComponent } from '@shared/components/base/base.component';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
+import { UserCredentialsService } from '@api/user-credentials.service';
 import { hasLengthErrors } from '@utils/validators/common-validators';
 
 @Component({
@@ -20,9 +20,11 @@ import { hasLengthErrors } from '@utils/validators/common-validators';
 export class SignInComponent extends BaseComponent implements OnInit {
     signInGroup: FormGroup = {} as FormGroup;
 
-    constructor(private authService: AuthService,
+    constructor(
+        private userCredentialsService: UserCredentialsService,
         private store: Store,
-        private router: Router) {
+        private router: Router
+    ) {
         super();
     }
 
@@ -39,7 +41,7 @@ export class SignInComponent extends BaseComponent implements OnInit {
     }
 
     public signInClick(): void {
-        this.authService.signIn({
+        this.userCredentialsService.signIn({
             email: this.signInGroup.get('email')?.value,
             password: this.signInGroup.get('password')?.value
         }).pipe(

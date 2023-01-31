@@ -18,8 +18,9 @@ namespace SlothOrganizer.Web.Tests.Integration.Tests.Base
         {
             var provider = new AuthDtoProvider();
             var user = await SetupUser();
+            await Client.PostAsync($"auth/send-code/{user.Email}", null);
             var verificationCode = provider.GetVerificationCode(user.Email);
-            var verificationResponse = await Client.PutAsync("auth/verify-email", GetStringContent(verificationCode));
+            var verificationResponse = await Client.PutAsync("user-credentials/verify-email", GetStringContent(verificationCode));
             return await GetResponse<UserAuthDto>(verificationResponse);
         }
 
@@ -29,7 +30,7 @@ namespace SlothOrganizer.Web.Tests.Integration.Tests.Base
             A.CallTo(() => RandomService.GetRandomNumber(6)).Returns(111111);
             A.CallTo(() => DateTimeService.Now()).Returns(DateTime.Now.AddHours(1));
             var newUser = provider.GetNewUser();
-            var signUpResponse = await Client.PostAsync("auth/sign-up", GetStringContent(newUser));
+            var signUpResponse = await Client.PostAsync("user-credentials/sign-up", GetStringContent(newUser));
             return await GetResponse<UserDto>(signUpResponse);
         }
     }

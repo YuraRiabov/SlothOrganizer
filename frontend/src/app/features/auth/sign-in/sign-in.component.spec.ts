@@ -7,7 +7,6 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { of, throwError } from 'rxjs';
 
 import { AuthRoutingModule } from '../auth-routing.module';
-import { AuthService } from '@api/auth.service';
 import { AuthState } from '@store/states/auth-state';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { By } from '@angular/platform-browser';
@@ -16,11 +15,12 @@ import { MaterialModule } from '@shared/material/material.module';
 import { Router } from '@angular/router';
 import { SignInComponent } from './sign-in.component';
 import { Store } from '@ngrx/store';
+import { UserCredentialsService } from '@api/user-credentials.service';
 
 describe('SignInComponent', () => {
     let component: SignInComponent;
     let fixture: ComponentFixture<SignInComponent>;
-    let authService: jasmine.SpyObj<AuthService>;
+    let userCredentialsService: jasmine.SpyObj<UserCredentialsService>;
     let store: jasmine.SpyObj<Store>;
     let router: jasmine.SpyObj<Router>;
     let button: HTMLElement;
@@ -43,7 +43,7 @@ describe('SignInComponent', () => {
     };
 
     beforeEach(async () => {
-        authService = jasmine.createSpyObj('AuthService', ['signIn']);
+        userCredentialsService = jasmine.createSpyObj('AuthService', ['signIn']);
         store = jasmine.createSpyObj(['dispatch']);
         router = jasmine.createSpyObj(['navigate']);
         await TestBed.configureTestingModule({
@@ -57,7 +57,7 @@ describe('SignInComponent', () => {
                 ReactiveFormsModule
             ],
             providers: [
-                { provide: AuthService, useValue: authService },
+                { provide: UserCredentialsService, useValue: userCredentialsService },
                 { provide: Store, useValue: store },
                 { provide: Router, useValue: router }
             ]
@@ -83,12 +83,12 @@ describe('SignInComponent', () => {
     it('should be call store and redirect to root when valid input and email verified', () => {
         setUpValidForm();
         fixture.detectChanges();
-        authService.signIn.and.returnValue(of(mockAuth));
+        userCredentialsService.signIn.and.returnValue(of(mockAuth));
 
         button.click();
 
         expect(component.signInGroup.valid).toBeTrue();
-        expect(authService.signIn).toHaveBeenCalledTimes(1);
+        expect(userCredentialsService.signIn).toHaveBeenCalledTimes(1);
         expect(store.dispatch).toHaveBeenCalledOnceWith(authActions.login({authState: mockAuth}));
         expect(router.navigate).toHaveBeenCalledOnceWith(['']);
     });
@@ -96,12 +96,12 @@ describe('SignInComponent', () => {
     it('should be call store and redirect to verify email when valid input and email not verified', () => {
         setUpValidForm();
         fixture.detectChanges();
-        authService.signIn.and.returnValue(of({ user: mockAuth.user }));
+        userCredentialsService.signIn.and.returnValue(of({ user: mockAuth.user }));
 
         button.click();
 
         expect(component.signInGroup.valid).toBeTrue();
-        expect(authService.signIn).toHaveBeenCalledTimes(1);
+        expect(userCredentialsService.signIn).toHaveBeenCalledTimes(1);
         expect(store.dispatch).toHaveBeenCalledOnceWith(authActions.addUser({user: mockAuth.user}));
         expect(router.navigate).toHaveBeenCalledOnceWith(['auth/verify-email']);
     });
@@ -109,12 +109,12 @@ describe('SignInComponent', () => {
     it('should set login error if invalid email or password', () => {
         setUpValidForm();
         fixture.detectChanges();
-        authService.signIn.and.returnValue(throwError(() => new Error()));
+        userCredentialsService.signIn.and.returnValue(throwError(() => new Error()));
 
         button.click();
 
         expect(component.signInGroup.valid).toBeFalse();
-        expect(authService.signIn).toHaveBeenCalledTimes(1);
+        expect(userCredentialsService.signIn).toHaveBeenCalledTimes(1);
         expect(store.dispatch).toHaveBeenCalledTimes(0);
         expect(router.navigate).toHaveBeenCalledTimes(0);
 
@@ -132,7 +132,7 @@ describe('SignInComponent', () => {
 
         expect(component.signInGroup.valid).toBeFalse();
         expect(component.signInGroup.get('email')?.hasError('email')).toBeTrue();
-        expect(authService.signIn).toHaveBeenCalledTimes(0);
+        expect(userCredentialsService.signIn).toHaveBeenCalledTimes(0);
     });
 
     it('should be disabled when invalid password pattern', () => {
@@ -144,7 +144,7 @@ describe('SignInComponent', () => {
 
         expect(component.signInGroup.valid).toBeFalse();
         expect(component.signInGroup.get('password')?.hasError('pattern')).toBeTrue();
-        expect(authService.signIn).toHaveBeenCalledTimes(0);
+        expect(userCredentialsService.signIn).toHaveBeenCalledTimes(0);
     });
 
     it('should be disabled when invalid password length', () => {
@@ -156,7 +156,7 @@ describe('SignInComponent', () => {
 
         expect(component.signInGroup.valid).toBeFalse();
         expect(component.signInGroup.get('password')?.hasError('minlength')).toBeTrue();
-        expect(authService.signIn).toHaveBeenCalledTimes(0);
+        expect(userCredentialsService.signIn).toHaveBeenCalledTimes(0);
     });
 
     it('should redirect to sign-up on link click', () => {

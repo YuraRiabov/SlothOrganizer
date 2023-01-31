@@ -43,5 +43,25 @@ namespace SlothOrganizer.Web.Tests.Integration.Setup.Providers
                 Code = "111111"
             };
         }
+
+        public PasswordUpdateDto GetPasswordUpdate()
+        {
+            return new PasswordUpdateDto
+            {
+                Email = "test@test.com",
+                OldPassword = "passw0rd",
+                Password = "newpassw0rd"
+            };
+        }
+
+        public UpdateUserDto GetUserUpdate()
+        {
+            return new UpdateUserDto
+            {
+                Id = 1,
+                FirstName = "Test",
+                LastName = "Test"
+            };
+        }
     }
 }

@@ -9,6 +9,7 @@ import { distinctUntilChanged, map, switchMap, tap } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { getEmptyState } from '@utils/creation-functions/auth-state.helper';
+import { signInRoute } from '@shared/routes/routes';
 
 @Injectable()
 export class HydrationEffects implements OnInitEffects {
@@ -16,10 +17,9 @@ export class HydrationEffects implements OnInitEffects {
         () => {
             return this.action$.pipe(
                 ofType(HydrationActions.logoutAction),
-                switchMap(() => this.store),
                 tap(() => {
                     localStorage.setItem('state', JSON.stringify(getEmptyState()));
-                    this.router.navigate(['auth/sign-in']);
+                    this.router.navigate([signInRoute]);
                 })
             );
         },

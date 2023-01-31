@@ -14,13 +14,14 @@ import { Router } from '@angular/router';
 import { SignUpComponent } from './sign-up.component';
 import { Store } from '@ngrx/store';
 import { User } from '#types/user/user';
+import { UserCredentialsService } from '@api/user-credentials.service';
 
 describe('SignUpComponent', () => {
     let component: SignUpComponent;
     let fixture: ComponentFixture<SignUpComponent>;
-    let mockAuthService : jasmine.SpyObj<AuthService>;
-    let mockStore : jasmine.SpyObj<Store>;
-    let mockRouter : jasmine.SpyObj<Router>;
+    let userCredentialsService : jasmine.SpyObj<UserCredentialsService>;
+    let store : jasmine.SpyObj<Store>;
+    let router : jasmine.SpyObj<Router>;
     let button : HTMLElement;
 
     const setUpValidForm = (component: SignUpComponent) => {
@@ -32,9 +33,9 @@ describe('SignUpComponent', () => {
     };
 
     beforeEach(async () => {
-        mockAuthService = jasmine.createSpyObj('AuthService', ['signUp']);
-        mockStore = jasmine.createSpyObj(['dispatch']);
-        mockRouter = jasmine.createSpyObj(['navigate']);
+        userCredentialsService = jasmine.createSpyObj(['signUp']);
+        store = jasmine.createSpyObj(['dispatch']);
+        router = jasmine.createSpyObj(['navigate']);
 
         await TestBed.configureTestingModule({
             imports: [
@@ -47,9 +48,9 @@ describe('SignUpComponent', () => {
             ],
             declarations: [SignUpComponent],
             providers: [
-                { provide: AuthService, useValue: mockAuthService },
-                { provide: Store, useValue: mockStore },
-                { provide: Router, useValue: mockRouter }
+                { provide: UserCredentialsService, useValue: userCredentialsService },
+                { provide: Store, useValue: store },
+                { provide: Router, useValue: router }
             ]
         }).compileComponents();
 
@@ -80,26 +81,26 @@ describe('SignUpComponent', () => {
             email: 'test@test.com'
         };
 
-        mockAuthService.signUp.and.returnValue(of(testUser));
+        userCredentialsService.signUp.and.returnValue(of(testUser));
 
         button.click();
 
-        expect(mockRouter.navigate).toHaveBeenCalledOnceWith(['auth/verify-email']);
-        expect(mockStore.dispatch).toHaveBeenCalled();
+        expect(router.navigate).toHaveBeenCalledOnceWith(['auth/verify-email']);
+        expect(store.dispatch).toHaveBeenCalled();
     });
 
     it('should set error if email taken', () => {
         setUpValidForm(component);
         fixture.detectChanges();
 
-        mockAuthService.signUp.and.returnValue(throwError(() => ({ error: 'Account with this email already exists'})));
+        userCredentialsService.signUp.and.returnValue(throwError(() => ({ error: 'Account with this email already exists'})));
 
         button.click();
         fixture.detectChanges();
 
-        expect(mockAuthService.signUp).toHaveBeenCalled();
-        expect(mockRouter.navigate).toHaveBeenCalledTimes(0);
-        expect(mockStore.dispatch).toHaveBeenCalledTimes(0);
+        expect(userCredentialsService.signUp).toHaveBeenCalled();
+        expect(router.navigate).toHaveBeenCalledTimes(0);
+        expect(store.dispatch).toHaveBeenCalledTimes(0);
         expect(component.signUpGroup.get('email')?.hasError('emailTaken')).toBeTrue();
     });
 
@@ -111,7 +112,7 @@ describe('SignUpComponent', () => {
         button.click();
         fixture.detectChanges();
 
-        expect(mockAuthService.signUp).toHaveBeenCalledTimes(0);
+        expect(userCredentialsService.signUp).toHaveBeenCalledTimes(0);
         expect(component.signUpGroup.get('repeatPassword')?.hasError('passwordMismatch')).toBeTrue();
     });
 
@@ -123,7 +124,7 @@ describe('SignUpComponent', () => {
         button.click();
         fixture.detectChanges();
 
-        expect(mockAuthService.signUp).toHaveBeenCalledTimes(0);
+        expect(userCredentialsService.signUp).toHaveBeenCalledTimes(0);
         expect(component.signUpGroup.get('firstName')?.hasError('required')).toBeTrue();
     });
 
@@ -136,7 +137,7 @@ describe('SignUpComponent', () => {
         button.click();
         fixture.detectChanges();
 
-        expect(mockAuthService.signUp).toHaveBeenCalledTimes(0);
+        expect(userCredentialsService.signUp).toHaveBeenCalledTimes(0);
         expect(component.signUpGroup.get('password')?.hasError('pattern')).toBeTrue();
     });
 
@@ -150,7 +151,7 @@ describe('SignUpComponent', () => {
         button.click();
         fixture.detectChanges();
 
-        expect(mockAuthService.signUp).toHaveBeenCalledTimes(0);
+        expect(userCredentialsService.signUp).toHaveBeenCalledTimes(0);
         expect(component.signUpGroup.get('firstName')?.hasError('minlength')).toBeTrue();
         expect(component.signUpGroup.get('lastName')?.hasError('maxlength')).toBeTrue();
         expect(component.signUpGroup.get('email')?.hasError('email')).toBeTrue();
@@ -162,6 +163,6 @@ describe('SignUpComponent', () => {
         link.click();
         fixture.detectChanges();
 
-        expect(mockRouter.navigate).toHaveBeenCalledOnceWith(['auth/sign-in']);
+        expect(router.navigate).toHaveBeenCalledOnceWith(['auth/sign-in']);
     });
 });

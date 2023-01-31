@@ -93,7 +93,50 @@ namespace SlothOrganizer.Persistence.Repositories
                 Password = user.Password,
                 Salt = user.Salt,
                 EmailVerified = user.EmailVerified,
+                AvatarUrl = user.AvatarUrl,
                 Id = user.Id,
+            };
+
+            using var connection = _dapperContext.CreateConnection();
+            await connection.ExecuteAsync(command, parameters);
+        }
+
+        public async Task<User> UpdateAvatar(string? avatar, long id)
+        {
+            var query = Resources.UpdateUserAvatar;
+
+            var parameters = new
+            {
+                AvatarUrl = avatar,
+                Id = id,
+            };
+
+            using var connection = _dapperContext.CreateConnection();
+            return await connection.QuerySingleAsync<User>(query, parameters);
+        }
+
+        public async Task UpdateFirstName(string firstName, long id)
+        {
+            var command = Resources.UpdateUserFirstName;
+
+            var parameters = new
+            {
+                FirstName = firstName,
+                Id = id,
+            };
+
+            using var connection = _dapperContext.CreateConnection();
+            await connection.ExecuteAsync(command, parameters);
+        }
+
+        public async Task UpdateLastName(string lastName, long id)
+        {
+            var command = Resources.UpdateUserLastName;
+
+            var parameters = new
+            {
+                LastName = lastName,
+                Id = id,
             };
 
             using var connection = _dapperContext.CreateConnection();

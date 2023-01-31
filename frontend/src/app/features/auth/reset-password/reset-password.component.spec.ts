@@ -4,7 +4,6 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { map, of } from 'rxjs';
 
 import { AuthRoutingModule } from '../auth-routing.module';
-import { AuthService } from '@api/auth.service';
 import { AuthState } from '@store/states/auth-state';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { By } from '@angular/platform-browser';
@@ -12,12 +11,13 @@ import { CommonModule } from '@angular/common';
 import { MaterialModule } from '@shared/material/material.module';
 import { ResetPasswordComponent } from './reset-password.component';
 import { Store } from '@ngrx/store';
+import { UserCredentialsService } from '@api/user-credentials.service';
 import { login } from '@store/actions/auth.actions';
 
 describe('ResetPasswordComponent', () => {
     let component: ResetPasswordComponent;
     let fixture: ComponentFixture<ResetPasswordComponent>;
-    let authService: jasmine.SpyObj<AuthService>;
+    let userCredentialsService: jasmine.SpyObj<UserCredentialsService>;
     let store: jasmine.SpyObj<Store>;
     let router: jasmine.SpyObj<Router>;
     let button: HTMLElement;
@@ -40,7 +40,7 @@ describe('ResetPasswordComponent', () => {
         component.resetPassowordGroup.get('repeatPassword')?.setValue('testtest8');
     };
     beforeEach(async () => {
-        authService = jasmine.createSpyObj(['resetPassword']);
+        userCredentialsService = jasmine.createSpyObj(['resetPassword']);
         router = jasmine.createSpyObj(['navigate']);
         store = jasmine.createSpyObj(['dispatch']);
         await TestBed.configureTestingModule({
@@ -54,7 +54,7 @@ describe('ResetPasswordComponent', () => {
                 BrowserAnimationsModule
             ],
             providers: [
-                { provide: AuthService, useValue: authService },
+                { provide: UserCredentialsService, useValue: userCredentialsService },
                 { provide: Store, useValue: store },
                 { provide: Router, useValue: router },
                 {
@@ -87,11 +87,11 @@ describe('ResetPasswordComponent', () => {
     it('should redirect when valid data', () => {
         setUpValidForm();
         fixture.detectChanges();
-        authService.resetPassword.and.returnValue(of(mockAuth));
+        userCredentialsService.resetPassword.and.returnValue(of(mockAuth));
 
         button.click();
 
-        expect(authService.resetPassword).toHaveBeenCalledTimes(1);
+        expect(userCredentialsService.resetPassword).toHaveBeenCalledTimes(1);
         expect(store.dispatch).toHaveBeenCalledOnceWith(login({ authState: mockAuth }));
         expect(router.navigate).toHaveBeenCalledOnceWith(['']);
     });
@@ -120,7 +120,7 @@ describe('ResetPasswordComponent', () => {
         button.click();
         fixture.detectChanges();
 
-        expect(authService.resetPassword).toHaveBeenCalledTimes(0);
+        expect(userCredentialsService.resetPassword).toHaveBeenCalledTimes(0);
         expect(component.resetPassowordGroup.get('repeatPassword')?.hasError('passwordMismatch')).toBeTrue();
     });
 });

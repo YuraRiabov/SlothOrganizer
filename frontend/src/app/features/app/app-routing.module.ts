@@ -17,6 +17,11 @@ const routes: Routes = [
         canActivate: [AuthorizedGuard]
     },
     {
+        path: 'profile',
+        loadChildren: () => import('../profile/profile.module').then((m) => m.ProfileModule),
+        canActivate: [AuthorizedGuard]
+    },
+    {
         path: '**',
         redirectTo: 'dashboard'
     }

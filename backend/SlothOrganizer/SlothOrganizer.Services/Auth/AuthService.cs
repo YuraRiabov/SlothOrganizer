@@ -4,107 +4,39 @@ using SlothOrganizer.Domain.Exceptions;
 using SlothOrganizer.Services.Abstractions.Auth;
 using SlothOrganizer.Services.Abstractions.Auth.Tokens;
 using SlothOrganizer.Services.Abstractions.Auth.UserVerification;
-using SlothOrganizer.Services.Abstractions.Users;
 
 namespace SlothOrganizer.Services.Auth
 {
     public class AuthService : IAuthService
     {
-        private readonly IUserService _userService;
-        private readonly IAccessTokenService _accessTokenService;
-        private readonly IRefreshTokenService _refreshTokenService;
-        private readonly INotificationService _notificationServcie;
+        private readonly ITokenService _tokenService;
+        private readonly INotificationService _notificationService;
 
-        public AuthService(IAccessTokenService tokenService,
-            IUserService userService,
-            INotificationService notificationService,
-            IRefreshTokenService refreshTokenService)
+        public AuthService(ITokenService tokenService, INotificationService notificationService)
         {
-            _accessTokenService = tokenService;
-            _userService = userService;
-            _notificationServcie = notificationService;
-            _refreshTokenService = refreshTokenService;
+            _notificationService = notificationService;
+            _tokenService = tokenService;
         }
 
-        public async Task ResendVerificationCode(string email)
+        public async Task SendVerificationCode(string email)
         {
-            var user = await _userService.Get(email);
-            await _notificationServcie.SendVerificationCode(user.Email);
+            await _notificationService.SendVerificationCode(email);
         }
 
         public async Task<TokenDto> RefreshToken(TokenDto expiredToken)
         {
-            var email = _accessTokenService.GetEmail(expiredToken.AccessToken);
-            var id = _accessTokenService.GetId(expiredToken.AccessToken);
-            if (await _refreshTokenService.Validate(email, expiredToken.RefreshToken))
+            var email = _tokenService.GetEmail(expiredToken);
+            var id = _tokenService.GetId(expiredToken);
+            if (await _tokenService.Validate(email, expiredToken))
             {
-                return await GenerateToken(email, id);
+                return await _tokenService.Generate(email, id);
             }
             throw new InvalidCredentialsException("Invalid refresh token");
         }
 
-        public async Task<UserAuthDto> SignIn(LoginDto login)
-        {
-            var user = await _userService.Get(login);
-            if (!user.EmailVerified)
-            {
-                return new UserAuthDto
-                {
-                    User = user
-                };
-            }
-            var token = await GenerateToken(user.Email, user.Id);
-            return new UserAuthDto
-            {
-                User = user,
-                Token = token
-            };
-        }
-
-        public async Task<UserDto> SignUp(NewUserDto newUser)
-        {
-            var user = await _userService.Create(newUser);
-            await _notificationServcie.SendVerificationCode(user.Email);
-            return user;
-        }
-
-        public async Task<UserAuthDto> VerifyEmail(VerificationCodeDto verificationCode)
-        {
-            var user = await _userService.VerifyEmail(verificationCode.Email, verificationCode.VerificationCode);
-            if (user is not null)
-            {
-                return new UserAuthDto
-                {
-                    User = user,
-                    Token = await GenerateToken(user.Email, user.Id)
-                };
-            }
-            throw new InvalidCredentialsException("Invalid verification code");
-        }
-
-        public async Task<UserAuthDto> ResetPassword(ResetPasswordDto resetPasswordDto)
-        {
-            var user = await _userService.ResetPassword(resetPasswordDto);
-            return new UserAuthDto
-            {
-                User = user,
-                Token = await GenerateToken(user.Email, user.Id)
-            };
-        }
-
         public async Task SendResetPassword(string email)
         {
-            var user = await _userService.Get(email);
-            await _notificationServcie.SendPasswordResetLink(user.Email);
-        }
-
-        private async Task<TokenDto> GenerateToken(string email, long id)
-        {
-            return new TokenDto
-            {
-                AccessToken = _accessTokenService.Generate(email, id),
-                RefreshToken = await _refreshTokenService.Generate(email)
-            };
+            await _notificationService.SendPasswordResetLink(email);
         }
     }
 }
