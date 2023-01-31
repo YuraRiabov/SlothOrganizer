@@ -16,7 +16,6 @@ export class HydrationEffects implements OnInitEffects {
         () => {
             return this.action$.pipe(
                 ofType(HydrationActions.logoutAction),
-                switchMap(() => this.store),
                 tap(() => {
                     localStorage.setItem('state', JSON.stringify(getEmptyState()));
                     this.router.navigate(['auth/sign-in']);

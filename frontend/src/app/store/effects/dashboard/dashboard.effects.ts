@@ -30,7 +30,7 @@ export class DashboardEffects {
         }
     );
 
-    public changeDashboard$ = createEffect(
+    public loadTasks$ = createEffect(
         () => {
             return this.actions$.pipe(
                 ofType(dashboardActions.chooseDashboard, dashboardActions.createDashboardSuccess),
