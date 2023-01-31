@@ -374,7 +374,7 @@ namespace SlothOrganizer.Persistence.Properties {
         ///	(SELECT * FROM VerificationCodes AS vc WHERE 
         ///		vc.UserId = Users.Id AND
         ///		vc.Code = @Code AND
-        ///		vc.ExpirationTime &gt; GETDATE())
+        ///		vc.ExpirationTime &gt; SYSDATETIMEOFFSET())
         ///IF @@ROWCOUNT &gt; 0
         ///	SELECT TOP(1) * FROM Users WHERE Email = @Email.
         /// </summary>

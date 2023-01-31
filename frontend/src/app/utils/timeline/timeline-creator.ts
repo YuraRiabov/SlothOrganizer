@@ -47,7 +47,7 @@ export class TimelineCreator {
                 const localTaskCompletion: TaskCompletion = hasTimezone(taskCompletion.start.toString())
                     ? {
                         ...taskCompletion,
-                        start:new Date(taskCompletion.start),
+                        start: new Date(taskCompletion.start),
                         end: new Date(taskCompletion.end)
                     }
                     : {
@@ -158,7 +158,7 @@ export class TimelineCreator {
         let inserted = false;
         for (let i = 0; i < exceeding.length && !inserted; i++) {
             const block = exceeding[i];
-            if (intercept(task.taskCompletion, { start: this.getBlockStart(block), end: this.getBlockEnd(block)})) {
+            if (intercept(task.taskCompletion, { start: this.getBlockStart(block), end: this.getBlockEnd(block) })) {
                 block.push(task);
                 inserted = true;
             }
@@ -197,7 +197,11 @@ export class TimelineCreator {
 
     private getTimelineSections(boundaries: TimelineSection, scale: TimelineScale) {
         if (scale !== TimelineScale.Year) {
-            return this.getTimelineSubsections(boundaries, scale + 1);
+            return this.getTimelineSubsections(boundaries, scale + 1).map(section =>
+                ({
+                    ...section,
+                    title: this.getSectionTitle(section, scale)
+                }));
         }
         const sectionHours = HOURS_IN_DAY * (daysInYear + 2);
         const sectionsCount = differenceInYears(boundaries.end, boundaries.start);

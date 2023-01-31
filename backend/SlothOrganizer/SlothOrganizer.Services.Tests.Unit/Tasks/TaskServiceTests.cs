@@ -105,8 +105,8 @@ namespace SlothOrganizer.Services.Tests.Unit.Tasks
 
             A.CallTo(() => _taskRepository.Update(A<UserTask>._)).MustHaveHappenedOnceExactly();
             A.CallTo(() => _taskCompletionService.Update(A<TaskCompletionDto>._)).MustHaveHappenedOnceExactly();
-            A.CallTo(() => _taskCompletionService.Add(A<List<TaskCompletionDto>>._, A<DateTime>._)).MustNotHaveHappened();
-            A.CallTo(() => _taskCompletionService.Delete(A<long>._, A<DateTime>._)).MustNotHaveHappened();
+            A.CallTo(() => _taskCompletionService.Add(A<List<TaskCompletionDto>>._, A<DateTimeOffset>._)).MustNotHaveHappened();
+            A.CallTo(() => _taskCompletionService.Delete(A<long>._, A<DateTimeOffset>._)).MustNotHaveHappened();
             Assert.Equal(result.Id, updateTaskDto.Task.Id);
             Assert.Equal(result.TaskCompletions.Count, updateTaskDto.Task.TaskCompletions.Count);
         }
@@ -119,15 +119,15 @@ namespace SlothOrganizer.Services.Tests.Unit.Tasks
                 .ReturnsLazily((UserTask task) => task);
             A.CallTo(() => _taskCompletionService.Update(A<TaskCompletionDto>._))
                 .Returns(updateTaskDto.TaskCompletion);
-            A.CallTo(() => _taskCompletionService.Add(A<List<TaskCompletionDto>>._, A<DateTime>._))
+            A.CallTo(() => _taskCompletionService.Add(A<List<TaskCompletionDto>>._, A<DateTimeOffset>._))
                 .Returns(new List<TaskCompletionDto>() { GetTaskCompletion() });
 
             var result = await _taskService.Update(updateTaskDto);
 
             A.CallTo(() => _taskRepository.Update(A<UserTask>._)).MustHaveHappenedOnceExactly();
             A.CallTo(() => _taskCompletionService.Update(A<TaskCompletionDto>._)).MustHaveHappenedOnceExactly();
-            A.CallTo(() => _taskCompletionService.Add(A<List<TaskCompletionDto>>._, A<DateTime>._)).MustHaveHappenedOnceExactly();
-            A.CallTo(() => _taskCompletionService.Delete(A<long>._, A<DateTime>._)).MustNotHaveHappened();
+            A.CallTo(() => _taskCompletionService.Add(A<List<TaskCompletionDto>>._, A<DateTimeOffset>._)).MustHaveHappenedOnceExactly();
+            A.CallTo(() => _taskCompletionService.Delete(A<long>._, A<DateTimeOffset>._)).MustNotHaveHappened();
             Assert.Equal(result.Id, updateTaskDto.Task.Id);
             Assert.Equal(result.TaskCompletions.Count, updateTaskDto.Task.TaskCompletions.Count + 1);
         }
@@ -146,8 +146,8 @@ namespace SlothOrganizer.Services.Tests.Unit.Tasks
 
             A.CallTo(() => _taskRepository.Update(A<UserTask>._)).MustHaveHappenedOnceExactly();
             A.CallTo(() => _taskCompletionService.Update(A<TaskCompletionDto>._)).MustHaveHappenedOnceExactly();
-            A.CallTo(() => _taskCompletionService.Add(A<List<TaskCompletionDto>>._, A<DateTime>._)).MustNotHaveHappened();
-            A.CallTo(() => _taskCompletionService.Delete(A<long>._, A<DateTime>._)).MustHaveHappenedOnceExactly();
+            A.CallTo(() => _taskCompletionService.Add(A<List<TaskCompletionDto>>._, A<DateTimeOffset>._)).MustNotHaveHappened();
+            A.CallTo(() => _taskCompletionService.Delete(A<long>._, A<DateTimeOffset>._)).MustHaveHappenedOnceExactly();
             Assert.Equal(result.Id, updateTaskDto.Task.Id);
             Assert.Equal(result.TaskCompletions.Count, updateTaskDto.Task.TaskCompletions.Count - 1);
         }

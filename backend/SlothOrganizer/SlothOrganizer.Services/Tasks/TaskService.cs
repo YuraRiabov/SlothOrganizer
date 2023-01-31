@@ -52,14 +52,14 @@ namespace SlothOrganizer.Services.Tasks
                 throw new EntityNotFoundException("Task with such id not found");
             } 
 
-            if (updateTaskDto.EndRepeating is DateTime endRepeating && updatedTaskDto.TaskCompletions.Count > 1)
+            if (updateTaskDto.EndRepeating is DateTimeOffset endRepeating && updatedTaskDto.TaskCompletions.Count > 1)
             {
                 await UpdateCompletions(updatedTaskDto, endRepeating);
             }
             return updatedTaskDto;
         }
 
-        private async Task UpdateCompletions(TaskDto task, DateTime endRepeating)
+        private async Task UpdateCompletions(TaskDto task, DateTimeOffset endRepeating)
         {
             var latestCompletion = task.TaskCompletions.MaxBy(tc => tc.End);
             if (latestCompletion.End > endRepeating)
@@ -72,13 +72,13 @@ namespace SlothOrganizer.Services.Tasks
             }
         }
 
-        private async Task AddLackingCompletions(TaskDto task, DateTime endRepeating)
+        private async Task AddLackingCompletions(TaskDto task, DateTimeOffset endLimit)
         {
-            var addedCompletions = await _taskCompletionService.Add(task.TaskCompletions, endRepeating);
+            var addedCompletions = await _taskCompletionService.Add(task.TaskCompletions, endLimit);
             task.TaskCompletions.AddRange(addedCompletions);
         }
 
-        private async Task DeleteExceedingCompletions(TaskDto task, DateTime endLimit)
+        private async Task DeleteExceedingCompletions(TaskDto task, DateTimeOffset endLimit)
         {
             await _taskCompletionService.Delete(task.Id, endLimit);
             task.TaskCompletions = task.TaskCompletions

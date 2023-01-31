@@ -53,7 +53,7 @@ namespace SlothOrganizer.Persistence.Repositories
             return await connection.QuerySingleOrDefaultAsync<TaskCompletion>(query, parameters);
         }
 
-        public async Task Delete(long taskId, DateTime endLimit)
+        public async Task Delete(long taskId, DateTimeOffset endLimit)
         {
             var command = Resources.DeleteTaskCompletions;
 

@@ -10,25 +10,25 @@
         Id: 1,
         TaskId: 1,
         IsSuccessful: true,
-        Start: DateTime_1,
-        End: DateTime_2,
-        LastEdited: DateTime_3
+        Start: DateTimeOffset_1,
+        End: DateTimeOffset_2,
+        LastEdited: DateTimeOffset_3
       },
       {
         Id: 2,
         TaskId: 1,
         IsSuccessful: false,
-        Start: DateTime_4,
-        End: DateTime_5,
-        LastEdited: DateTime_1
+        Start: DateTimeOffset_4,
+        End: DateTimeOffset_5,
+        LastEdited: DateTimeOffset_1
       },
       {
         Id: 3,
         TaskId: 1,
         IsSuccessful: false,
-        Start: DateTime_6,
-        End: DateTime_7,
-        LastEdited: DateTime_1
+        Start: DateTimeOffset_6,
+        End: DateTimeOffset_7,
+        LastEdited: DateTimeOffset_1
       }
     ]
   }

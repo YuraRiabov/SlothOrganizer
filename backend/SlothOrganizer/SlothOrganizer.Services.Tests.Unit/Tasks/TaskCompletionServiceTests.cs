@@ -90,7 +90,7 @@ namespace SlothOrganizer.Services.Tests.Unit.Tasks
         public async Task Delete_WhenDeletingMany_ShouldCallDelete()
         {
             var taskId = 1;
-            var endRepeating = new DateTime();
+            var endRepeating = new DateTimeOffset();
             await _taskCompletionService.Delete(taskId, endRepeating);
             A.CallTo(() => _taskCompletionRepository.Delete(taskId, endRepeating)).MustHaveHappenedOnceExactly();
         }
