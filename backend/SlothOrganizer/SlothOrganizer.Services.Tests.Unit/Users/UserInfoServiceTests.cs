@@ -73,21 +73,6 @@ namespace SlothOrganizer.Services.Tests.Unit.Users
         }
 
         [Fact]
-        public async Task UpdateAvatar_WhenUserAbsent_ShouldThrow()
-        {
-            var avatar = GetBytes();
-            var fileName = "name";
-            var id = 1;
-            A.CallTo(() => _imageService.Upload(avatar, fileName)).Returns("string");
-            A.CallTo(() => _userRepository.UpdateAvatar("string", id)).Returns(Task.FromResult<User?>(null));
-
-            var code = async () => await _userInfoService.UpdateAvatar(id, avatar, fileName);
-
-            var exceeption = await Assert.ThrowsAsync<EntityNotFoundException>(code);
-            Assert.Equal("No user found with such id", exceeption.Message);
-        }
-
-        [Fact]
         public async Task DeleteAvatar_ShouldDelete()
         {
             var userId = 1;

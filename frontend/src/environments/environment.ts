@@ -4,11 +4,7 @@
 
 export const environment = {
     production: false,
-    apiUrl: 'http://localhost:5217',
-    gyazo: {
-        token: 'rhfYEmCPQUdjNlLJGPTyWovebwXuM4iAkwfXe4P-ZLw',
-        uploadUri: 'https://upload.gyazo.com/api/upload'
-    }
+    apiUrl: 'http://localhost:5217'
 };
 
 /*

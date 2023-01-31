@@ -41,10 +41,6 @@ namespace SlothOrganizer.Services.Users
         {
             var url = await _imageService.Upload(avatar, fileName);
             var user = await _userRepository.UpdateAvatar(url, userId);
-            if (user is null)
-            {
-                throw new EntityNotFoundException("No user found with such id");
-            }
             return _mapper.Map<UserDto>(user);
         }
     }
