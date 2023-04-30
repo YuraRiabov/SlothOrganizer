@@ -1,0 +1,99 @@
+﻿{
+  StatusCode: OK,
+  result: {
+    Id: 1,
+    DashboardId: 1,
+    Title: Title,
+    Description: Description,
+    TaskCompletions: [
+      {
+        Id: 1,
+        TaskId: 1,
+        IsSuccessful: true,
+        Start: DateTimeOffset_1,
+        End: DateTimeOffset_2,
+        LastEdited: DateTimeOffset_3
+      },
+      {
+        Id: 2,
+        TaskId: 1,
+        IsSuccessful: false,
+        Start: DateTimeOffset_4,
+        End: DateTimeOffset_5,
+        LastEdited: DateTimeOffset_1
+      },
+      {
+        Id: 3,
+        TaskId: 1,
+        IsSuccessful: false,
+        Start: DateTimeOffset_6,
+        End: DateTimeOffset_7,
+        LastEdited: DateTimeOffset_1
+      },
+      {
+        Id: 4,
+        TaskId: 1,
+        IsSuccessful: false,
+        Start: DateTimeOffset_8,
+        End: DateTimeOffset_9,
+        LastEdited: DateTimeOffset_1
+      },
+      {
+        Id: 5,
+        TaskId: 1,
+        IsSuccessful: false,
+        Start: DateTimeOffset_10,
+        End: DateTimeOffset_11,
+        LastEdited: DateTimeOffset_1
+      },
+      {
+        Id: 6,
+        TaskId: 1,
+        IsSuccessful: false,
+        Start: DateTimeOffset_12,
+        End: DateTimeOffset_13,
+        LastEdited: DateTimeOffset_1
+      },
+      {
+        Id: 7,
+        TaskId: 1,
+        IsSuccessful: false,
+        Start: DateTimeOffset_14,
+        End: DateTimeOffset_15,
+        LastEdited: DateTimeOffset_1
+      },
+      {
+        Id: 8,
+        TaskId: 1,
+        IsSuccessful: false,
+        Start: DateTimeOffset_16,
+        End: DateTimeOffset_17,
+        LastEdited: DateTimeOffset_1
+      },
+      {
+        Id: 9,
+        TaskId: 1,
+        IsSuccessful: false,
+        Start: DateTimeOffset_18,
+        End: DateTimeOffset_19,
+        LastEdited: DateTimeOffset_1
+      },
+      {
+        Id: 10,
+        TaskId: 1,
+        IsSuccessful: false,
+        Start: DateTimeOffset_20,
+        End: DateTimeOffset_21,
+        LastEdited: DateTimeOffset_1
+      },
+      {
+        Id: 11,
+        TaskId: 1,
+        IsSuccessful: false,
+        Start: DateTimeOffset_22,
+        End: DateTimeOffset_23,
+        LastEdited: DateTimeOffset_1
+      }
+    ]
+  }
+}

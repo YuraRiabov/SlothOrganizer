@@ -1,0 +1,21 @@
+<form class="email-recovery-wrapper">
+    <h1 i18n>Password recovery</h1>
+    <div class="email-recovery-content" *ngIf="!emailSent">
+        <h3 i18n>In order to reset your password, follow the link that will be sent to your email</h3>
+        <mat-form-field class="email-field">
+            <mat-label>Enter your email</mat-label>
+            <input [formControl]="emailControl" matInput type="text">
+            <mat-error *ngIf="emailControl.hasError('email')" i18n>
+                Invalid email address
+            </mat-error>
+        </mat-form-field>
+        <button i18n mat-flat-button color="primary" class="submit-button" (click)="sendPasswordResetLink()"
+            [disabled]="!emailControl.valid">
+            Submit
+        </button>
+    </div>
+    <div class="email-recovery-content" *ngIf="emailSent">
+        <h3 i18n>We've sent password recovery link to {{submittedEmail}}</h3>
+        <p class="link" (click)="emailSent = false">Send again</p>
+    </div>
+</form>

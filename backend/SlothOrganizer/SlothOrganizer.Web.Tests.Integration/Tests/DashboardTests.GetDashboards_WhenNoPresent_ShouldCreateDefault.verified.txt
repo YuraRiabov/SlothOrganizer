@@ -1,0 +1,15 @@
+﻿{
+  StatusCode: OK,
+  result: [
+    {
+      Id: 1,
+      UserId: 1,
+      Title: Routine
+    },
+    {
+      Id: 2,
+      UserId: 1,
+      Title: Work
+    }
+  ]
+}

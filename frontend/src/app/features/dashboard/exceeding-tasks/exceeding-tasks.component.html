@@ -1,0 +1,6 @@
+<div class="exceeding-tasks-wrapper">
+    <div [ngClass]="task.color" class="task-block" (click)="blockClicked.emit(task)" [ngClass]="task.color" *ngFor="let task of tasks">
+        <h2>{{ task.task.title }}</h2>
+        <p> {{ task.taskCompletion.start | date: 'medium'}} - {{ task.taskCompletion.end | date: 'medium'}}</p>
+    </div>
+</div>

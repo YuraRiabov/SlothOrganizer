@@ -1,0 +1,38 @@
+.personal-info-wrapper
+    height: 100%
+    display: flex
+    flex-direction: column
+    align-items: center
+    justify-content: center
+
+.avatar-wrapper
+    position: relative
+    width: 40%
+    max-width: 200px
+    max-height: 200px
+    clip-path: circle(50%)
+
+    .avatar-image
+        width: 100%
+        max-height: 100%
+        height: auto
+
+    .avatar-buttons
+        position: absolute
+        top: 0
+        left: 0
+        display: none
+
+        mat-icon
+            color: white
+
+.avatar-wrapper:hover
+    .avatar-buttons
+        display: flex
+        flex-direction: row
+        align-items: center
+        justify-content: center
+        width: 100%
+        height: 100%
+        box-shadow: inset 0 0 0 1000px rgba(0,0,0,.3)
+
