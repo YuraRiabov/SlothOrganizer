@@ -46,6 +46,10 @@ export class ProfileComponent implements OnInit {
         this.store.dispatch(profileActions.updatePassword({ passwordUpdate }));
     }
 
+    public attachCalendar(): void {
+        this.store.dispatch(profileActions.attachCalendar());
+    }
+
     public goToDashboard(): void {
         this.router.navigate([dashboardRoute]);
     }

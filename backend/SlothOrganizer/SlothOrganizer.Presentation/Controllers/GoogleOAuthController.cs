@@ -24,7 +24,7 @@ public class GoogleOAuthController : ControllerBase
     
     [Authorize]
     [HttpGet("redirect")]
-    public async Task<ActionResult<string>> RedirectOnAuthServer()
+    public ActionResult<string> RedirectOnAuthServer()
     {
         CurrentUserId = HttpContext.User.GetId();
         return Ok(_authService.GetAuthorizationUrl());

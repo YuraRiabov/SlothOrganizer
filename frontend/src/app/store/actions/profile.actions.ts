@@ -38,3 +38,7 @@ export const updatePasswordSuccess = createAction(
 export const updatePasswordFailure = createAction(
     '[Profile page] Update password failure'
 );
+
+export const attachCalendar = createAction(
+    '[Profile page] Attach Calendar'
+);
