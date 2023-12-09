@@ -39,7 +39,7 @@ export class TimelineComponent extends BaseComponent implements OnInit, AfterVie
     private timelineResizeObserver!: ResizeObserver;
     private _tasks: Task[] = [];
 
-    public readonly defaultPageNumber = 12;
+    public readonly defaultPageNumber = 3;
     public readonly TaskStatus = TaskStatus;
 
     public timeline!: Timeline;
