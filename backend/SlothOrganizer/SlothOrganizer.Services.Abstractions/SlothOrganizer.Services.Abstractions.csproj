@@ -10,4 +10,5 @@
     <ProjectReference Include="..\SlothOrganizer.Contracts\SlothOrganizer.Contracts.csproj" />
   </ItemGroup>
 
+
 </Project>

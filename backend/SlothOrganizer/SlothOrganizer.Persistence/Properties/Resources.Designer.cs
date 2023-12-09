@@ -121,6 +121,17 @@ namespace SlothOrganizer.Persistence.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to SELECT TOP 1 *
+        ///FROM Calendars
+        ///WHERE UserId = @UserId.
+        /// </summary>
+        internal static string GetCalendar {
+            get {
+                return ResourceManager.GetString("GetCalendar", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to SELECT * FROM RefreshTokens 
         ///WHERE EXISTS (
         ///	SELECT * FROM Users

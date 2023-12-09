@@ -30,4 +30,17 @@ public class CalendarRepository : ICalendarRepository
         calendar.Id = await connection.QuerySingleAsync<long>(query, parameters);
         return calendar;
     }
+
+    public async Task<Calendar?> Get(long userId)
+    {
+        var query = Resources.GetCalendar;
+
+        var parameters = new
+        {
+            UserId = userId
+        };
+        
+        using var connection = _context.CreateConnection();
+        return await connection.QuerySingleOrDefaultAsync<Calendar>(query, parameters);
+    }
 }

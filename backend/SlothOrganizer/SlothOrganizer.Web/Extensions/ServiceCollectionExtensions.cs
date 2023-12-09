@@ -19,8 +19,10 @@ using SlothOrganizer.Services.Auth.Tokens;
 using SlothOrganizer.Services.Auth.Tokens.Options;
 using SlothOrganizer.Services.Auth.UserVerification;
 using SlothOrganizer.Services.Abstractions.Auth.UserVerification;
+using SlothOrganizer.Services.Abstractions.Calendar;
 using SlothOrganizer.Services.Tasks;
 using SlothOrganizer.Services.Abstractions.Tasks;
+using SlothOrganizer.Services.Calendar;
 using SlothOrganizer.Services.Utility.Gyazo;
 
 namespace SlothOrganizer.Web.Extensions
@@ -35,6 +37,7 @@ namespace SlothOrganizer.Web.Extensions
             services.AddScoped<IDashboardRepository, DashboardRepository>();
             services.AddScoped<ITaskRepository, TaskRepository>();
             services.AddScoped<ITaskCompletionRepository, TaskCompletionRepository>();
+            services.AddScoped<ICalendarRepository, CalendarRepository>();
             return services;
         }
 
@@ -56,6 +59,9 @@ namespace SlothOrganizer.Web.Extensions
             services.AddScoped<ITaskService, TaskService>();
             services.AddScoped<ITaskCompletionService, TaskCompletionService>();
             services.AddScoped<ITaskCompletionPeriodConverter, TaskCompletionPeriodConverter>();
+            services.AddScoped<IHttpService, HttpService>();
+            services.AddScoped<IGoogleOAuthService, GoogleOAuthService>();
+            services.AddScoped<ICalendarService, CalendarService>();
             return services;
         }
 
