@@ -24,7 +24,6 @@ export class ProfileComponent implements OnInit {
     ngOnInit(): void {
         this.user$ = this.store.select(selectUser);
         this.incorrectPassword$ = this.store.select(selectInvalidPassword);
-        this.loadCalendar();
     }
 
     public updateAvatar(formData: FormData | null): void {

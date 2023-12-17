@@ -8,5 +8,6 @@ namespace SlothOrganizer.Domain.Repositories
         Task Delete(long id);
         Task<IEnumerable<TaskCompletion>> Insert(IEnumerable<TaskCompletion> taskCompletions);
         Task<TaskCompletion?> Update(TaskCompletion taskCompletion);
+        Task Export(long taskCompletionId);
     }
 }

@@ -7,4 +7,5 @@ public interface ICalendarService
     Task CreateGoogleCalendarConnection(TokenResultDto tokenResultDto, long currentUserId);
     Task<CalendarDto?> Get(long userId);
     Task Delete(long calendarId);
+    Task AddEvent(CalendarEventDto dto, long userId);
 }

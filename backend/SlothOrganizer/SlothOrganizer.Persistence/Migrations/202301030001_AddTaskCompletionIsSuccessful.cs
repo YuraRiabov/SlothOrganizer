@@ -12,7 +12,7 @@ namespace SlothOrganizer.Persistence.Migrations
 
         public override void Up()
         {
-            Create.Column("IsSuccessful").OnTable("TaskCompletions").AsBoolean().NotNullable();
+            Create.Column("IsSuccessful").OnTable("TaskCompletions").AsBoolean().NotNullable().WithDefaultValue(false);
         }
     }
 }

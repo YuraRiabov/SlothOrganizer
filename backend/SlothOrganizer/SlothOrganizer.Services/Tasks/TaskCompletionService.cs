@@ -1,10 +1,12 @@
 ﻿using System.Threading.Tasks;
 using AutoMapper;
+using SlothOrganizer.Contracts.DTO.Calendar;
 using SlothOrganizer.Contracts.DTO.Tasks.Task;
 using SlothOrganizer.Contracts.DTO.Tasks.Task.Enums;
 using SlothOrganizer.Domain.Entities;
 using SlothOrganizer.Domain.Exceptions;
 using SlothOrganizer.Domain.Repositories;
+using SlothOrganizer.Services.Abstractions.Calendar;
 using SlothOrganizer.Services.Abstractions.Tasks;
 using SlothOrganizer.Services.Abstractions.Utility;
 
@@ -16,12 +18,14 @@ namespace SlothOrganizer.Services.Tasks
         private readonly ITaskCompletionRepository _taskCompletionRepository;
         private readonly IDateTimeService _dateTimeService;
         private readonly ITaskCompletionPeriodConverter _taskCompletionPeriodConverter;
-        public TaskCompletionService(IMapper mapper, ITaskCompletionRepository taskCompletionRepository, IDateTimeService dateTimeService, ITaskCompletionPeriodConverter taskCompletionPeriodConverter)
+        private readonly ICalendarService _calendarService;
+        public TaskCompletionService(IMapper mapper, ITaskCompletionRepository taskCompletionRepository, IDateTimeService dateTimeService, ITaskCompletionPeriodConverter taskCompletionPeriodConverter, ICalendarService calendarService)
         {
             _mapper = mapper;
             _taskCompletionRepository = taskCompletionRepository;
             _dateTimeService = dateTimeService;
             _taskCompletionPeriodConverter = taskCompletionPeriodConverter;
+            _calendarService = calendarService;
         }
 
         public async Task<List<TaskCompletionDto>> Create(NewTaskDto newTask, long taskId)
@@ -63,6 +67,13 @@ namespace SlothOrganizer.Services.Tasks
 
             var newCompletions = Generate(firstStart, length, repeatingPeriod, endLimit, lastCompletion.TaskId);
             return _mapper.Map<IEnumerable<TaskCompletionDto>>(await _taskCompletionRepository.Insert(newCompletions));
+        }
+
+        public async Task Export(ExportTaskCompletionDto completion, long userId)
+        {
+            await _calendarService.AddEvent(_mapper.Map<CalendarEventDto>(completion), userId);
+
+            await _taskCompletionRepository.Export(completion.Id);
         }
 
         private List<TaskCompletion> GenerateNew(NewTaskDto task, long taskId)

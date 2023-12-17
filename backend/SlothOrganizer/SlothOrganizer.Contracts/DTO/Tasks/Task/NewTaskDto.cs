@@ -7,6 +7,7 @@ namespace SlothOrganizer.Contracts.DTO.Tasks.Task
         public long DashboardId { get; set; }
         public string Title { get; set; }
         public string Description { get; set; }
+        public bool ShouldExport { get; set; }
         public DateTimeOffset Start { get; set; }
         public DateTimeOffset End { get; set; } 
         public DateTimeOffset? EndRepeating { get; set; }
