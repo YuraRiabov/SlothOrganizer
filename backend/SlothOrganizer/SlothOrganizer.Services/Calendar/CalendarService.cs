@@ -1,5 +1,7 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using AutoMapper;
+using Microsoft.Extensions.Configuration;
 using SlothOrganizer.Contracts.DTO.Calendar;
+using SlothOrganizer.Domain.Exceptions;
 using SlothOrganizer.Domain.Repositories;
 using SlothOrganizer.Services.Abstractions.Calendar;
 using SlothOrganizer.Services.Abstractions.Utility;
@@ -11,13 +13,15 @@ public class CalendarService : ICalendarService
     private readonly IHttpService _httpService;
     private readonly ICalendarRepository _calendarRepository;
     private readonly IConfiguration _configuration;
+    private readonly IMapper _mapper;
 
     public CalendarService(IHttpService httpService, ICalendarRepository calendarRepository,
-        IConfiguration configuration)
+        IConfiguration configuration, IMapper mapper)
     {
         _httpService = httpService;
         _calendarRepository = calendarRepository;
         _configuration = configuration;
+        _mapper = mapper;
     }
 
     public async Task CreateGoogleCalendarConnection(TokenResultDto tokenResultDto, long currentUserId)
@@ -42,5 +46,17 @@ public class CalendarService : ICalendarService
         };
 
         await _calendarRepository.Insert(calendar);
+    }
+
+    public async Task<CalendarDto?> Get(long userId)
+    {
+        var calendar = await _calendarRepository.Get(userId);
+
+        return _mapper.Map<CalendarDto?>(calendar);
+    }
+
+    public async Task Delete(long calendarId)
+    {
+        await _calendarRepository.Delete(calendarId);
     }
 }

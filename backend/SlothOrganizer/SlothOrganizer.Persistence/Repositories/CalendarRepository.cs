@@ -43,4 +43,17 @@ public class CalendarRepository : ICalendarRepository
         using var connection = _context.CreateConnection();
         return await connection.QuerySingleOrDefaultAsync<Calendar>(query, parameters);
     }
+
+    public async Task Delete(long calendarId)
+    {
+        var query = Resources.DeleteCalendar;
+
+        var parameters = new
+        {
+            Id = calendarId
+        };
+        
+        using var connection = _context.CreateConnection();
+        await connection.ExecuteAsync(query, parameters);
+    }
 }

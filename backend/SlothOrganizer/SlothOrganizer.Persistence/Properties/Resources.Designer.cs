@@ -60,6 +60,16 @@ namespace SlothOrganizer.Persistence.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to delete from Calendars
+        ///where Id = @Id.
+        /// </summary>
+        internal static string DeleteCalendar {
+            get {
+                return ResourceManager.GetString("DeleteCalendar", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to DELETE FROM TaskCompletions
         ///WHERE Id=@Id.
         /// </summary>

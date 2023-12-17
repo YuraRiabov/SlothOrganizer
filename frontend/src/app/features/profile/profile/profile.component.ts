@@ -24,6 +24,7 @@ export class ProfileComponent implements OnInit {
     ngOnInit(): void {
         this.user$ = this.store.select(selectUser);
         this.incorrectPassword$ = this.store.select(selectInvalidPassword);
+        this.loadCalendar();
     }
 
     public updateAvatar(formData: FormData | null): void {
@@ -48,6 +49,14 @@ export class ProfileComponent implements OnInit {
 
     public attachCalendar(): void {
         this.store.dispatch(profileActions.attachCalendar());
+    }
+
+    public detachCalendar(): void {
+        this.store.dispatch(profileActions.deleteCalendar());
+    }
+
+    public loadCalendar(): void {
+        this.store.dispatch(profileActions.getCalendar());
     }
 
     public goToDashboard(): void {

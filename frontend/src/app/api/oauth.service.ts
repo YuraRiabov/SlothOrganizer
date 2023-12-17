@@ -16,6 +16,6 @@ export class OAuthService extends HttpService {
     }
 
     public redirect(): Observable<string> {
-        return this.get<string>('/redirect');
+        return this.getString('/redirect');
     }
 }
