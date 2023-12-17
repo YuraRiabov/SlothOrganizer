@@ -204,7 +204,7 @@ export class TimelineCreator {
                 }));
         }
         const sectionHours = HOURS_IN_DAY * (daysInYear + 2);
-        const sectionsCount = differenceInYears(boundaries.end, boundaries.start);
+        const sectionsCount = differenceInYears(boundaries.end, boundaries.start) + 1;
         const sections: TimelineSection[] = [];
         const firstSectionStart = startOfYear(boundaries.start);
         sections.push({ start: firstSectionStart, end: endOfYear(firstSectionStart) });
@@ -231,7 +231,8 @@ export class TimelineCreator {
             sectionsCount++;
         }
         if (scale == TimelineScale.Year) {
-            sectionsCount = differenceInYears(boundaries.end, boundaries.start) * monthsInYear;
+            const years = differenceInYears(boundaries.end, boundaries.start);
+            sectionsCount = years > 0 ? years * monthsInYear : sectionsCount;
         }
         const sections: TimelineSection[] = [];
         const startFunction = this.getStartFunction(scale);
@@ -241,10 +242,14 @@ export class TimelineCreator {
         sections.push({ start: firstSectionStart, end: endFunction(firstSectionStart) });
         for (let i = 1; i < sectionsCount; i++) {
             const previousDate = sections[i - 1].start;
-            const section = {
+            const section = scale !== TimelineScale.Week ? {
                 start: startFunction(addHours(previousDate, sectionHours)),
                 end: endFunction(addHours(previousDate, sectionHours)),
+            } : {
+                start: startFunction(addHours(startOfDay(previousDate), sectionHours + 2)),
+                end: endFunction(addHours(startOfDay(previousDate), sectionHours + 2))
             };
+
             sections.push(section);
         }
         return sections.map(section => ({
