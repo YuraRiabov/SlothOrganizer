@@ -1,3 +1,3 @@
 UPDATE TaskCompletions
-SET IsExported = TRUE
+SET IsExported = 1
 WHERE Id=@Id

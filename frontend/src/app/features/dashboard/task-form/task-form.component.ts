@@ -25,6 +25,7 @@ export class TaskFormComponent extends BaseComponent {
         this.editing = value;
         this.update();
     }
+    @Input() public hasCalendar: boolean = false;
 
     @Output() public submitted = new EventEmitter<NewTask>();
     @Output() public cancel = new EventEmitter<void>();
@@ -36,6 +37,7 @@ export class TaskFormComponent extends BaseComponent {
         repeatingPeriod: TaskRepeatingPeriod.None,
         start: startOfDay(new Date()),
         end: endOfDay(new Date()),
+        shouldExport: false
     };
 
     public readonly TaskRepeatingPeriod = TaskRepeatingPeriod;
@@ -82,7 +84,8 @@ export class TaskFormComponent extends BaseComponent {
             start: this.getStart(this.taskForm),
             end: this.getEnd(this.taskForm),
             repeatingPeriod: this.taskForm.get('repeatingPeriod')?.value,
-            endRepeating: addDays(this.taskForm.get('endRepeating')?.value, 1)
+            endRepeating: addDays(this.taskForm.get('endRepeating')?.value, 1),
+            shouldExport: this.taskForm.get('exportCheckbox')?.value
         };
         this.submitted.emit(newTask);
     }
@@ -106,7 +109,8 @@ export class TaskFormComponent extends BaseComponent {
             endTimeCheckbox: new FormControl(initialValue.end.getTime() !== endOfDay(initialValue.end).getTime()),
             endTime: new FormControl(datePipe.transform(initialValue.end, 'HH:mm')),
             repeatingPeriod: new FormControl(initialValue.repeatingPeriod),
-            endRepeating: new FormControl(initialValue.endRepeating)
+            endRepeating: new FormControl(initialValue.endRepeating),
+            exportCheckbox: new FormControl(initialValue.shouldExport)
         }, {
             validators
         });

@@ -27,6 +27,10 @@ export const chooseDashboard = createAction(
     props<{ dashboardId: number }>()
 );
 
+export const exportDashboard = createAction(
+    '[Dashboard page] Export dashboard'
+);
+
 export const openSidebar = createAction(
     '[Dashboard page] Open sidebar',
     props<{ sidebarType: SidebarType }>()

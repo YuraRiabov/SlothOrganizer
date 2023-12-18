@@ -51,3 +51,7 @@ export const editTaskSuccess = createAction(
 export const deleteTask = createAction(
     '[Task info] Delete task'
 );
+
+export const exportTask = createAction(
+    '[Task info] Export task'
+);

@@ -100,6 +100,7 @@ namespace SlothOrganizer.Services.Tasks
                     Start = completion.Start,
                     TaskName = taskName
                 }, userId);
+                completion.IsExported = true;
             }
         }
 

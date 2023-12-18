@@ -16,6 +16,7 @@ import { Task } from '#types/dashboard/tasks/task';
 import { TaskBlock } from '#types/dashboard/timeline/task-block';
 import { TimelineScale } from '#types/dashboard/timeline/enums/timeline-scale';
 import { addHours } from 'date-fns';
+import { selectHasCalendar } from '@store/selectors/auth.selectors';
 
 @Component({
     selector: 'so-dashboard',
@@ -33,7 +34,11 @@ export class DashboardComponent extends BaseComponent implements OnInit {
     public tasks$?: Observable<Task[]>;
     public taskToUpdate$?: Observable<NewTask>;
 
+    public hasCalendar$ = this.store.select(selectHasCalendar);
+
     public sidebarType$: Observable<SidebarType> = of(SidebarType.None);
+
+    public creatingNewDashboard: boolean = false;
 
     constructor(private store: Store) {
         super();
@@ -92,5 +97,9 @@ export class DashboardComponent extends BaseComponent implements OnInit {
 
     public goToDate(event: MatDatepickerInputEvent<Date>): void {
         this.currentDate = addHours(event.value!, 12);
+    }
+
+    public exportDashboard(): void {
+        this.store.dispatch(dashboardActions.exportDashboard());
     }
 }

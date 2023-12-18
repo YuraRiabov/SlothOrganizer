@@ -37,6 +37,11 @@
             <mat-icon>edit</mat-icon>
             Edit
         </button>
+        <button i18n *ngIf="!taskBlock.taskCompletion.isExported" mat-flat-button
+                class="mark-completed-button" color="primary" (click)="exportTask()"
+                [disabled]="!(hasCalendar$ | async)">
+                Export
+        </button>
         <button i18n mat-flat-button color="warn" class="delete-button" (click)="delete()">
             <mat-icon>delete</mat-icon>
             Delete

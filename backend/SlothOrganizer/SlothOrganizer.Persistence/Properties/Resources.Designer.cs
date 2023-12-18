@@ -310,7 +310,7 @@ namespace SlothOrganizer.Persistence.Properties {
         
         /// <summary>
         ///   Looks up a localized string similar to UPDATE TaskCompletions
-        ///SET IsExported = TRUE
+        ///SET IsExported = 1
         ///WHERE Id=@Id.
         /// </summary>
         internal static string SetTaskCompletionExported {

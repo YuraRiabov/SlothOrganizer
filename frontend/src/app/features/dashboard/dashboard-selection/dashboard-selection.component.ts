@@ -15,11 +15,14 @@ export class DashboardSelectionComponent {
     @Input() public dashboards: Dashboard[] = [];
     @Input() public selectedDashboard: Dashboard | null = null;
 
-    public creating: boolean = false;
+    @Input() public creating: boolean = false;
+
+    @Output() public creatingChange = new EventEmitter<boolean>();
+
     public dashboardTitleControl: FormControl = new FormControl('', [Validators.required]);
 
     public createDashboard(): void {
         this.newDashboardTitle.emit(this.dashboardTitleControl.value);
-        this.creating = false;
+        this.creatingChange.emit(false);
     }
 }

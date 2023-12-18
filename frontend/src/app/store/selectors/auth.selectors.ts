@@ -56,3 +56,8 @@ export const selectConnectedCalendar = createSelector(
     selectCalendar,
     calendar => calendar?.connectedCalendar
 );
+
+export const selectHasCalendar = createSelector(
+    selectConnectedCalendar,
+    calendar => calendar != null
+)

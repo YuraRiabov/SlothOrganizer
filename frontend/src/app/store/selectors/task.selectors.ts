@@ -3,6 +3,7 @@ import { createFeatureSelector, createSelector } from '@ngrx/store';
 import { NewTask } from '#types/dashboard/tasks/new-task';
 import { TaskRepeatingPeriod } from '#types/dashboard/tasks/enums/task-repeating-period';
 import { TaskState } from '@store/states/task-state';
+import { selectConnectedCalendar, selectHasCalendar } from './auth.selectors';
 
 export const selectDashboardState = createFeatureSelector<TaskState>('task');
 
@@ -33,13 +34,15 @@ export const selectChosenTask = createSelector(
 
 export const selectTaskToUpdate = createSelector(
     selectChosenTaskBlock,
-    (taskBlock): NewTask => ({
+    selectHasCalendar,
+    (taskBlock, hasCalendar): NewTask => ({
         dashboardId: taskBlock.task.dashboardId,
         title: taskBlock.task.title,
         description: taskBlock.task.description,
         start: taskBlock.taskCompletion.start,
         end: taskBlock.taskCompletion.end,
         repeatingPeriod: TaskRepeatingPeriod.None,
+        shouldExport: hasCalendar && !taskBlock.task.taskCompletions.some(tc => !tc.isExported),
         endRepeating: taskBlock.task.taskCompletions.length > 1
             ? taskBlock.task.taskCompletions.map(task => task.end).sort()[taskBlock.task.taskCompletions.length - 1]
             : undefined
