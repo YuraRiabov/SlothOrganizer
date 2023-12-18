@@ -1,3 +1,5 @@
+import { CalendarEffects } from '@store/effects/calendar/calendar.effects';
+import { CalendarTabComponent } from './calendar-tab/calendar-tab.component';
 import { CommonModule } from '@angular/common';
 import { EffectsModule } from '@ngrx/effects';
 import { MaterialModule } from '@shared/material/material.module';
@@ -10,8 +12,6 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { SharedModule } from '@shared/components/shared/shared.module';
 import { UserCredentialsEffects } from '@store/effects/users/user-credentials.effects';
 import { UserInfoEffects } from '@store/effects/users/user-info.effects';
-import { CalendarTabComponent } from './calendar-tab/calendar-tab.component';
-import { CalendarEffects } from '@store/effects/calendar/calendar.effects';
 
 @NgModule({
     declarations: [

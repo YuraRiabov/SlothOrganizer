@@ -35,8 +35,8 @@ export const taskReducer = createReducer(
                 : {
                     ...task,
                     taskCompletions: task.taskCompletions.map(
-                        taskCompletion => taskCompletion.id !== state.chosenTaskBlock.taskCompletion.id 
-                            ? taskCompletion 
+                        taskCompletion => taskCompletion.id !== state.chosenTaskBlock.taskCompletion.id
+                            ? taskCompletion
                             : {
                                 ...taskCompletion,
                                 isExported: true

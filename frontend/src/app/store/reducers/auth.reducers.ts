@@ -25,7 +25,7 @@ export const authReducer = createReducer(
     on(updateLastName, (state, { lastName }): AuthState => ({ ...state, user: { ...state.user, lastName: lastName } })),
     on(updatePasswordFailure, (state): AuthState => ({ ...state, invalidPassword: true })),
     on(updatePassword, (state): AuthState => ({ ...state, invalidPassword: false })),
-    on(getCalendarSuccess, (state, { calendar }) => ({
+    on(getCalendarSuccess, (state, { calendar }): AuthState => ({
         ...state,
         user: {
             ...state.user,

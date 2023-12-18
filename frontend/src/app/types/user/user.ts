@@ -1,4 +1,4 @@
-import { Calendar } from "./calendar";
+import { Calendar } from './calendar';
 
 export interface User {
   id: number;
@@ -6,5 +6,5 @@ export interface User {
   lastName: string;
   email: string;
   avatarUrl?: string;
-  calendar: Calendar | null;
+  calendar?: Calendar | null;
 }

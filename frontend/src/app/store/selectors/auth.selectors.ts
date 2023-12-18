@@ -60,4 +60,4 @@ export const selectConnectedCalendar = createSelector(
 export const selectHasCalendar = createSelector(
     selectConnectedCalendar,
     calendar => calendar != null
-)
+);

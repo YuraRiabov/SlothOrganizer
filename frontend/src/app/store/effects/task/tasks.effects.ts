@@ -1,6 +1,7 @@
 import * as taskActions from '@store/actions/task.actions';
 
 import { Actions, concatLatestFrom, createEffect, ofType } from '@ngrx/effects';
+import { exportDashboard, loadDashboards } from '@store/actions/dashboard.actions';
 import { map, mergeMap, switchMap, take } from 'rxjs';
 
 import { Injectable } from '@angular/core';
@@ -8,7 +9,6 @@ import { Store } from '@ngrx/store';
 import { TasksService } from '@api/tasks.service';
 import { selectChosenDashboardId } from '@store/selectors/dashboard.selectors';
 import { selectChosenTaskBlock } from '@store/selectors/task.selectors';
-import { exportDashboard, loadDashboards } from '@store/actions/dashboard.actions';
 
 @Injectable()
 export class TasksEffects {
@@ -59,13 +59,13 @@ export class TasksEffects {
     );
 
     public export$ = createEffect(() =>
-        this.actions$.pipe(
-            ofType(exportDashboard),
-            concatLatestFrom(() => this.store.select(selectChosenDashboardId)),
-            switchMap(([, id]) => this.tasksService.export(id)),
-            map(() => loadDashboards())
-        )
-    )
+    { return this.actions$.pipe(
+        ofType(exportDashboard),
+        concatLatestFrom(() => this.store.select(selectChosenDashboardId)),
+        switchMap(([, id]) => this.tasksService.export(id)),
+        map(() => loadDashboards())
+    ); }
+    );
 
     constructor(private tasksService: TasksService, private actions$: Actions, private store: Store) { }
 }

@@ -1,7 +1,7 @@
 import { createAction, props } from '@ngrx/store';
 
-import { PasswordUpdate } from '#types/user/password-update';
 import { Calendar } from '#types/user/calendar';
+import { PasswordUpdate } from '#types/user/password-update';
 
 export const uploadAvatar = createAction(
     '[Profile page] Upload image',

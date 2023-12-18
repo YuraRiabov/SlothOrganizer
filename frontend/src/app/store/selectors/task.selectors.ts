@@ -1,9 +1,9 @@
 import { createFeatureSelector, createSelector } from '@ngrx/store';
+import { selectConnectedCalendar, selectHasCalendar } from './auth.selectors';
 
 import { NewTask } from '#types/dashboard/tasks/new-task';
 import { TaskRepeatingPeriod } from '#types/dashboard/tasks/enums/task-repeating-period';
 import { TaskState } from '@store/states/task-state';
-import { selectConnectedCalendar, selectHasCalendar } from './auth.selectors';
 
 export const selectDashboardState = createFeatureSelector<TaskState>('task');
 
