@@ -1,8 +1,12 @@
+<!-- eslint-disable @angular-eslint/template/no-negated-async -->
 <div class="dashboard-wrapper">
     <so-header class="header">
-        <so-dashboard-selection [dashboards]="(dashboards$ | async) || []" [selectedDashboard]="currentDashboard$ | async"
-            (newDashboardTitle)="createDashboard($event)" (selectDashboard)="selectDashboard($event)">
-        </so-dashboard-selection>
+        <div class="header-dashboard">
+            <so-dashboard-selection [dashboards]="(dashboards$ | async) || []" [selectedDashboard]="currentDashboard$ | async" [(creating)]="creatingNewDashboard"
+                (newDashboardTitle)="createDashboard($event)" (selectDashboard)="selectDashboard($event)">
+            </so-dashboard-selection>
+            <button mat-flat-button color="primary" *ngIf="!creatingNewDashboard" (click)="exportDashboard()" [disabled]="!(hasCalendar$ | async)">Export Timeline</button>
+        </div>
     </so-header>
     <div class="toolbar">
         <img class="logo" src="assets/logo.png"/>
@@ -36,6 +40,7 @@
             <so-task-form 
                     (cancel)="closeSidebar()"
                     (submitted)="createTask($event)"
+                    [hasCalendar]="(hasCalendar$ | async) ?? false"
                     [edit]="false"
             >
             </so-task-form>
@@ -48,6 +53,7 @@
                     [initialValue]="taskToUpdate" 
                     (submitted)="updateTask($event)" 
                     (cancel)="closeSidebar()" 
+                    [hasCalendar]="(hasCalendar$ | async) ?? false"
                     [edit]="true"
             >
             </so-task-form>

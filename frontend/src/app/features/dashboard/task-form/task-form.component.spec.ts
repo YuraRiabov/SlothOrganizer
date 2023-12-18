@@ -24,6 +24,7 @@ describe('TaskFormComponent', () => {
         repeatingPeriod: TaskRepeatingPeriod.None,
         start: startOfDay(new Date()),
         end: endOfDay(new Date()),
+        shouldExport: false
     };
 
     const buildValidForm = () => {

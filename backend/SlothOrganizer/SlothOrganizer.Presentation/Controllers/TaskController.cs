@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using SlothOrganizer.Contracts.DTO.Tasks.Task;
+using SlothOrganizer.Presentation.Extensions;
 using SlothOrganizer.Services.Abstractions.Tasks;
 
 namespace SlothOrganizer.Presentation.Controllers
@@ -19,7 +20,7 @@ namespace SlothOrganizer.Presentation.Controllers
         [HttpPost]
         public async Task<TaskDto> Create(NewTaskDto newTask)
         {
-            return await _taskService.Create(newTask);
+            return await _taskService.Create(newTask, HttpContext.User.GetId());
         }
 
         [HttpGet("{dashboardId}")]
@@ -31,7 +32,13 @@ namespace SlothOrganizer.Presentation.Controllers
         [HttpPut]
         public async Task<TaskDto> Update([FromBody] UpdateTaskDto updateTaskDto)
         {
-            return await _taskService.Update(updateTaskDto);
+            return await _taskService.Update(updateTaskDto, HttpContext.User.GetId());
+        }
+
+        [HttpPost("export/{dashboardId}")]
+        public async Task Export(long dashboardId)
+        {
+            await _taskService.Export(dashboardId, HttpContext.User.GetId());
         }
     }
 }

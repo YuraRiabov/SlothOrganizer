@@ -8,7 +8,7 @@
             <div class="title-selection-item" mat-menu-item *ngFor="let dashboard of dashboards" (click)="selectDashboard.emit(dashboard)">
                 <p>{{dashboard.title}}</p>
             </div>
-            <div mat-menu-item (click)="creating = true" class="title-selection-item">
+            <div mat-menu-item (click)="creatingChange.emit(true)" class="title-selection-item">
                 <mat-icon>add</mat-icon>
                 <p>New</p>
             </div>
@@ -22,7 +22,7 @@
             <button mat-icon-button class="submit-button" [disabled]="!dashboardTitleControl.valid" (click)="createDashboard()">
                 <mat-icon>check</mat-icon>
             </button>
-            <button mat-icon-button class="cancel-button" (click)="creating = false">
+            <button mat-icon-button class="cancel-button" (click)="creatingChange.emit(false)">
                 <mat-icon>close</mat-icon>
             </button>
         </div>

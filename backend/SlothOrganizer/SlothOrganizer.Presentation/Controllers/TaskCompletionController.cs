@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using SlothOrganizer.Contracts.DTO.Tasks.Task;
+using SlothOrganizer.Presentation.Extensions;
 using SlothOrganizer.Services.Abstractions.Tasks;
 
 namespace SlothOrganizer.Presentation.Controllers
@@ -27,6 +28,12 @@ namespace SlothOrganizer.Presentation.Controllers
         public async Task Delete(long id)
         {
             await _taskCompletionService.Delete(id);
+        }
+
+        [HttpPost("export")]
+        public async Task Export(ExportTaskCompletionDto dto)
+        {
+            await _taskCompletionService.Export(dto, HttpContext.User.GetId());
         }
     }
 }

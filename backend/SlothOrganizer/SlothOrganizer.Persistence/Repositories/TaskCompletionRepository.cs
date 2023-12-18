@@ -53,6 +53,14 @@ namespace SlothOrganizer.Persistence.Repositories
             return await connection.QuerySingleOrDefaultAsync<TaskCompletion>(query, parameters);
         }
 
+        public async Task Export(long taskCompletionId)
+        {
+            var command = Resources.SetTaskCompletionExported;
+            
+            using var connection = _context.CreateConnection();
+            await connection.ExecuteAsync(command, new { Id = taskCompletionId }); 
+        }
+
         public async Task Delete(long taskId, DateTimeOffset endLimit)
         {
             var command = Resources.DeleteTaskCompletions;

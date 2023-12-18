@@ -31,6 +31,7 @@ describe('DashboardSelectionComponent', () => {
         component = fixture.componentInstance;
         fixture.detectChanges();
         spyOn(component, 'createDashboard');
+        spyOn(component.creatingChange, 'emit');
     });
 
     it('should create', () => {
@@ -66,6 +67,6 @@ describe('DashboardSelectionComponent', () => {
         const cancelButton = fixture.debugElement.query(By.css('.cancel-button')).nativeElement;
         cancelButton.click();
 
-        expect(component.creating).toBeFalse();
+        expect(component.creatingChange.emit).toHaveBeenCalled();
     });
 });

@@ -4,6 +4,7 @@
     {
         public TaskDto Task { get; set; }
         public TaskCompletionDto TaskCompletion { get; set; }
+        public bool ShouldExport { get; set; }
         public DateTimeOffset? EndRepeating { get; set; }
     }
 }

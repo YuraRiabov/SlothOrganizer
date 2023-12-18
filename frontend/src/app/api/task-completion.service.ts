@@ -5,6 +5,7 @@ import { NewTask } from '#types/dashboard/tasks/new-task';
 import { Observable } from 'rxjs';
 import { Task } from '#types/dashboard/tasks/task';
 import { TaskCompletion } from '#types/dashboard/tasks/task-completion';
+import { TaskExport } from '#types/dashboard/tasks/task-export';
 
 @Injectable({
     providedIn: 'root'
@@ -18,6 +19,10 @@ export class TaskComletionService extends HttpService {
 
     public update(taskCompletion: TaskCompletion) : Observable<TaskCompletion> {
         return this.put('', taskCompletion);
+    }
+
+    public export(task: TaskExport) : Observable<void> {
+        return this.post('/export');
     }
 
     public remove(id: number) : Observable<null> {

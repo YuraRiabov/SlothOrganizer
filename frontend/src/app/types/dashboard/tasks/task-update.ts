@@ -5,4 +5,5 @@ export interface TaskUpdate {
     task: Task;
     taskCompletion: TaskCompletion;
     endRepeating?: Date;
+    shouldExport: boolean;
 }

@@ -1,4 +1,4 @@
-import { chooseTask, createTaskSuccess, deleteTask, editTaskSuccess, loadTasksSuccess, markCompletedSuccess } from '@store/actions/task.actions';
+import { chooseTask, createTaskSuccess, deleteTask, editTaskSuccess, exportTask, loadTasksSuccess, markCompletedSuccess } from '@store/actions/task.actions';
 import { createReducer, on } from '@ngrx/store';
 
 import { TaskBlock } from '#types/dashboard/timeline/task-block';
@@ -26,6 +26,31 @@ export const taskReducer = createReducer(
                     )
                 }
         )
+    })),
+    on(exportTask, (state) => ({
+        ...state,
+        tasks: state.tasks.map(
+            task => task.id !== state.chosenTaskBlock.task.id
+                ? task
+                : {
+                    ...task,
+                    taskCompletions: task.taskCompletions.map(
+                        taskCompletion => taskCompletion.id !== state.chosenTaskBlock.taskCompletion.id
+                            ? taskCompletion
+                            : {
+                                ...taskCompletion,
+                                isExported: true
+                            }
+                    )
+                }
+        ),
+        chosenTaskBlock: {
+            ...state.chosenTaskBlock,
+            taskCompletion: {
+                ...state.chosenTaskBlock.taskCompletion,
+                isExported: true
+            }
+        }
     })),
     on(markCompletedSuccess, (state, { taskCompletion }) => ({
         ...state,

@@ -10,6 +10,7 @@ import { Store } from '@ngrx/store';
 import { TaskBlock } from '#types/dashboard/timeline/task-block';
 import { TaskStatus } from '#types/dashboard/timeline/enums/task-status';
 import { selectChosenTaskBlock } from '@store/selectors/task.selectors';
+import { selectHasCalendar } from '@store/selectors/auth.selectors';
 
 @Component({
     selector: 'so-task-info',
@@ -19,6 +20,7 @@ import { selectChosenTaskBlock } from '@store/selectors/task.selectors';
 export class TaskInfoComponent extends BaseComponent implements OnInit {
     public readonly TaskStatus = TaskStatus;
     public taskBlock$?: Observable<TaskBlock>;
+    public hasCalendar$ = this.store.select(selectHasCalendar);
 
     constructor(private store: Store) {
         super();
@@ -42,5 +44,9 @@ export class TaskInfoComponent extends BaseComponent implements OnInit {
 
     public edit(): void {
         this.store.dispatch(dashboardActions.openSidebar({ sidebarType: SidebarType.Edit }));
+    }
+
+    public exportTask(): void {
+        this.store.dispatch(taskActions.exportTask());
     }
 }

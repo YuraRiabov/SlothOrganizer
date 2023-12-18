@@ -1,5 +1,6 @@
 import { createAction, props } from '@ngrx/store';
 
+import { Calendar } from '#types/user/calendar';
 import { PasswordUpdate } from '#types/user/password-update';
 
 export const uploadAvatar = createAction(
@@ -37,4 +38,21 @@ export const updatePasswordSuccess = createAction(
 
 export const updatePasswordFailure = createAction(
     '[Profile page] Update password failure'
+);
+
+export const attachCalendar = createAction(
+    '[Profile page] Attach Calendar'
+);
+
+export const getCalendar = createAction(
+    '[Profile page] Get Calendar'
+);
+
+export const getCalendarSuccess = createAction(
+    '[Profile page] Get Calendar Success',
+    props<{ calendar: Calendar | null }>()
+);
+
+export const deleteCalendar = createAction(
+    '[Profile page] Delete calendar'
 );

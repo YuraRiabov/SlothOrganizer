@@ -1,3 +1,4 @@
+import * as authActions from '@store/actions/auth.actions';
 import * as profileActions from '@store/actions/profile.actions';
 
 import { Actions, concatLatestFrom, createEffect, ofType } from '@ngrx/effects';
@@ -56,6 +57,16 @@ export class UserInfoEffects {
         {
             dispatch: false
         }
+    );
+
+    public loadCalendar$ = createEffect(() =>
+    { return this.actions$.pipe(
+        ofType(
+            authActions.addUser,
+            authActions.login
+        ),
+        map(() => profileActions.getCalendar())
+    ); }
     );
 
     constructor(private userInfoService: UserInfoService, private actions$: Actions, private store: Store) { }

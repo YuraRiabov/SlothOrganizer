@@ -181,6 +181,9 @@
   <data name="UpdateTaskCompletion" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>TaskCompletions\UpdateTaskCompletion.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
+  <data name="SetTaskCompletionExported" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>TaskCompletions\SetTaskCompletionExported.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
   <data name="UpdateUser" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>User\UpdateUser.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
   </data>
@@ -195,5 +198,14 @@
   </data>
   <data name="VerifyEmailByCode" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>User\VerifyEmailByCode.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="InsertCalendar" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Calendar/InsertCalendar.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="GetCalendar" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Calendar/GetCalendar.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="DeleteCalendar" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Calendar/DeleteCalendar.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
 </root>

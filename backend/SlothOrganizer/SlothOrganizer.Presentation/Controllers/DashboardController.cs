@@ -22,7 +22,6 @@ namespace SlothOrganizer.Presentation.Controllers
         [HttpPost]
         public async Task<DashboardDto> Create([FromBody] NewDashboardDto newDashboard)
         {
-
             var id = HttpContext.User.GetId();
             return await _dashboardService.Create(newDashboard, id);
         }

@@ -1,7 +1,8 @@
 import * as taskActions from '@store/actions/task.actions';
 
 import { Actions, concatLatestFrom, createEffect, ofType } from '@ngrx/effects';
-import { map, mergeMap, take } from 'rxjs';
+import { exportDashboard, loadDashboards } from '@store/actions/dashboard.actions';
+import { map, mergeMap, switchMap, take } from 'rxjs';
 
 import { Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
@@ -49,11 +50,21 @@ export class TasksEffects {
                         start: action.task.start,
                         end: action.task.end,
                     },
-                    endRepeating: action.task.endRepeating
+                    endRepeating: action.task.endRepeating,
+                    shouldExport: action.task.shouldExport
                 }).pipe(take(1))),
                 map((task) => taskActions.editTaskSuccess({ task }))
             );
         }
+    );
+
+    public export$ = createEffect(() =>
+    { return this.actions$.pipe(
+        ofType(exportDashboard),
+        concatLatestFrom(() => this.store.select(selectChosenDashboardId)),
+        switchMap(([, id]) => this.tasksService.export(id)),
+        map(() => loadDashboards())
+    ); }
     );
 
     constructor(private tasksService: TasksService, private actions$: Actions, private store: Store) { }

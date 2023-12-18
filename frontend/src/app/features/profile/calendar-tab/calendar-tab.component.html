@@ -1,0 +1,11 @@
+<!-- eslint-disable @angular-eslint/template/eqeqeq -->
+<div class="calendar-tab-wrapper">
+    <div class="calendar-tab-content" *ngIf="connectedCalendar == null">
+        <p>You have no Google Calendar Attached</p>
+        <button mat-flat-button color="primary" (click)="attachCalendar.emit()">Attach</button>
+    </div>
+    <div class="calendar-tab-content" *ngIf="connectedCalendar != null">
+        <p>Connected Calendar: {{ connectedCalendar }}</p>
+        <button mat-flat-button color="warn" (click)="detachCalendar.emit()">Detach</button>
+    </div>
+</div>

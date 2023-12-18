@@ -27,4 +27,8 @@ export class TasksService extends HttpService {
     public update(taskUpdate: TaskUpdate): Observable<Task> {
         return this.put('', taskUpdate);
     }
+
+    public export(dashboardId: number) : Observable<void> {
+        return this.post(`/export/${dashboardId}`);
+    }
 }

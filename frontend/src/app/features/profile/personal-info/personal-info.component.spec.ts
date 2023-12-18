@@ -17,7 +17,8 @@ describe('PersonalInfoComponent', () => {
         id: 1,
         firstName: 'first',
         lastName: 'last',
-        email: 'email'
+        email: 'email',
+        calendar: null
     };
 
     beforeEach(async () => {

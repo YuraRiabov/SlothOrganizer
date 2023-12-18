@@ -41,3 +41,23 @@ export const selectAvatarUrl = createSelector(
     selectUser,
     (user: User) => user.avatarUrl
 );
+
+export const selectCalendar = createSelector(
+    selectUser,
+    user => user.calendar
+);
+
+export const selectCalendarId = createSelector(
+    selectCalendar,
+    calendar => calendar != null ? calendar.id : null
+);
+
+export const selectConnectedCalendar = createSelector(
+    selectCalendar,
+    calendar => calendar?.connectedCalendar
+);
+
+export const selectHasCalendar = createSelector(
+    selectConnectedCalendar,
+    calendar => calendar != null
+);

@@ -1,6 +1,6 @@
 import { addEmail, addToken, addUser, login, verifyEmail } from '../actions/auth.actions';
 import { createReducer, on } from '@ngrx/store';
-import { deleteAvatar, updateFirstName, updateLastName, updatePassword, updatePasswordFailure, updatePasswordSuccess, uploadAvatarSuccess } from '@store/actions/profile.actions';
+import { deleteAvatar, getCalendarSuccess, updateFirstName, updateLastName, updatePassword, updatePasswordFailure, updatePasswordSuccess, uploadAvatarSuccess } from '@store/actions/profile.actions';
 
 import { AuthState } from '../states/auth-state';
 import { Token } from 'src/app/types/auth/token';
@@ -24,5 +24,12 @@ export const authReducer = createReducer(
     on(updateFirstName, (state, { firstName }): AuthState => ({ ...state, user: { ...state.user, firstName: firstName } })),
     on(updateLastName, (state, { lastName }): AuthState => ({ ...state, user: { ...state.user, lastName: lastName } })),
     on(updatePasswordFailure, (state): AuthState => ({ ...state, invalidPassword: true })),
-    on(updatePassword, (state): AuthState => ({ ...state, invalidPassword: false }))
+    on(updatePassword, (state): AuthState => ({ ...state, invalidPassword: false })),
+    on(getCalendarSuccess, (state, { calendar }): AuthState => ({
+        ...state,
+        user: {
+            ...state.user,
+            calendar
+        }
+    }))
 );

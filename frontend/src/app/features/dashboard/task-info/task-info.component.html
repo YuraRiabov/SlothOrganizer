@@ -1,3 +1,4 @@
+<!-- eslint-disable @angular-eslint/template/no-negated-async -->
 <div class="task-info-wrapper" *ngIf="taskBlock$ | async as taskBlock">
     <button mat-icon-button class="go-back-button" (click)="close()">
         <mat-icon>arrow_back</mat-icon>
@@ -36,6 +37,11 @@
         <button i18n (click)="edit()" mat-flat-button color="primary" class="edit-button">
             <mat-icon>edit</mat-icon>
             Edit
+        </button>
+        <button i18n *ngIf="!taskBlock.taskCompletion.isExported" mat-flat-button
+                class="mark-completed-button" color="primary" (click)="exportTask()"
+                [disabled]="!(hasCalendar$ | async)">
+                Export
         </button>
         <button i18n mat-flat-button color="warn" class="delete-button" (click)="delete()">
             <mat-icon>delete</mat-icon>

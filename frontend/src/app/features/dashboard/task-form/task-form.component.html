@@ -72,6 +72,9 @@
             </mat-error>
         </mat-form-field>
     </div>
+    <div class="export-row">
+        <mat-checkbox formControlName="exportCheckbox" color="primary" [disabled]="!hasCalendar">Export</mat-checkbox>
+    </div>
     <div class="button-row">
         <button i18n mat-flat-button class="cancel-button" (click)="cancel.emit()">Cancel</button>
         <button i18n mat-flat-button class="save-button" color="primary" [disabled]="!taskForm.valid" (click)="createTask()">Save</button>

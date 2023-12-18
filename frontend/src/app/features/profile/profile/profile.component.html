@@ -1,30 +1,26 @@
 <div class="profile-wrapper">
     <so-header class="header">
         <div class="app-name-wrapper" (click)="goToDashboard()">
-            <img class="logo" src="assets/logo.png"/>
+            <img class="logo" src="assets/logo.png" />
             <h1>Sloth organizer</h1>
         </div>
     </so-header>
     <div class="profile-content-wrapper">
         <h1>Profile</h1>
-        <mat-tab-group>
+        <mat-tab-group  *ngIf="(user$ | async) as user">
             <mat-tab label="Personal">
-                <ng-container *ngIf="(user$ | async) as user">
-                    <so-personal-info
-                        [user]="user"
-                        (avatarUpdated)="updateAvatar($event)"
-                        (firstNameUpdated)="updateFirstName($event)"
-                        (lastNameUpdated)="updateLastName($event)"
-                    >
-                    </so-personal-info>
-                </ng-container>
+                <so-personal-info [user]="user" (avatarUpdated)="updateAvatar($event)"
+                    (firstNameUpdated)="updateFirstName($event)" (lastNameUpdated)="updateLastName($event)">
+                </so-personal-info>
             </mat-tab>
             <mat-tab label="Password">
-                <so-password-update
-                    [incorrectPassword]="incorrectPassword$ | async"
-                    (updatePassword)="updatePassword($event)"
-                >
+                <so-password-update [incorrectPassword]="incorrectPassword$ | async"
+                    (updatePassword)="updatePassword($event)">
                 </so-password-update>
+            </mat-tab>
+            <mat-tab label="Calendar">
+                <so-calendar-tab [connectedCalendar]="user.calendar?.connectedCalendar ?? null" (attachCalendar)="attachCalendar()"
+                    (detachCalendar)="detachCalendar()"></so-calendar-tab>
             </mat-tab>
         </mat-tab-group>
     </div>

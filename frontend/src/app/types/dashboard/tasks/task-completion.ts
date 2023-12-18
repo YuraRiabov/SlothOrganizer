@@ -4,5 +4,6 @@ export interface TaskCompletion {
     start: Date;
     end: Date;
     isSuccessful: boolean;
+    isExported?: boolean;
     lastEdited?: Date;
 }

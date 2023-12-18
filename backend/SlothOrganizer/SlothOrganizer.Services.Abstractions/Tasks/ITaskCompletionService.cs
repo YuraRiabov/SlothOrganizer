@@ -9,5 +9,6 @@ namespace SlothOrganizer.Services.Abstractions.Tasks
         Task Delete(long taskId, DateTimeOffset endRepeating);
         Task Delete(long id);
         Task<TaskCompletionDto> Update(TaskCompletionDto taskCompletionDto);
+        Task Export(ExportTaskCompletionDto completion, long userId);
     }
 }

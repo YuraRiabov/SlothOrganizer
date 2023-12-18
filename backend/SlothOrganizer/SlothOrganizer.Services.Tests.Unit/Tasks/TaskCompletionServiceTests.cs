@@ -5,6 +5,7 @@ using SlothOrganizer.Contracts.DTO.Tasks.Task.Enums;
 using SlothOrganizer.Domain.Entities;
 using SlothOrganizer.Domain.Exceptions;
 using SlothOrganizer.Domain.Repositories;
+using SlothOrganizer.Services.Abstractions.Calendar;
 using SlothOrganizer.Services.Abstractions.Tasks;
 using SlothOrganizer.Services.Abstractions.Utility;
 using SlothOrganizer.Services.Tasks;
@@ -29,7 +30,7 @@ namespace SlothOrganizer.Services.Tests.Unit.Tasks
             _dateTimeService = A.Fake<IDateTimeService>();
             _taskCompletionPeriodConverter = A.Fake<ITaskCompletionPeriodConverter>();
 
-            _taskCompletionService = new TaskCompletionService(_mapper, _taskCompletionRepository, _dateTimeService, _taskCompletionPeriodConverter);
+            _taskCompletionService = new TaskCompletionService(_mapper, _taskCompletionRepository, _dateTimeService, _taskCompletionPeriodConverter, A.Fake<ICalendarService>());
         }
 
         [Theory]

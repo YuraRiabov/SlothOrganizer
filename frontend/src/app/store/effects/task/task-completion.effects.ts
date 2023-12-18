@@ -1,8 +1,8 @@
 import * as taskActions from '@store/actions/task.actions';
 
 import { Actions, concatLatestFrom, createEffect, ofType } from '@ngrx/effects';
-import { map, mergeMap, take } from 'rxjs';
-import { selectChosenTaskCompletion, selectChosenTaskCompletionId } from '@store/selectors/task.selectors';
+import { map, mergeMap, switchMap, take } from 'rxjs';
+import { selectChosenTaskBlock, selectChosenTaskCompletion, selectChosenTaskCompletionId } from '@store/selectors/task.selectors';
 
 import { Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
@@ -27,6 +27,24 @@ export class TaskCompletionEffects {
                 ofType(taskActions.deleteTask),
                 concatLatestFrom(() => this.store.select(selectChosenTaskCompletionId)),
                 mergeMap(([, id]) => this.taskCompletionService.remove(id).pipe(take(1)))
+            );
+        },
+        {
+            dispatch: false
+        }
+    );
+
+    public export$ = createEffect(
+        () => {
+            return this.actions$.pipe(
+                ofType(taskActions.exportTask),
+                concatLatestFrom(() => this.store.select(selectChosenTaskBlock)),
+                switchMap(([, block]) => this.taskCompletionService.export({
+                    taskName: block.task.title,
+                    start: block.taskCompletion.start,
+                    end: block.taskCompletion.end,
+                    id: block.taskCompletion.id
+                }))
             );
         },
         {

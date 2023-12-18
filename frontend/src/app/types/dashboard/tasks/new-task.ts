@@ -8,4 +8,5 @@ export interface NewTask {
     end: Date;
     repeatingPeriod: TaskRepeatingPeriod;
     endRepeating?: Date;
+    shouldExport: boolean;
 }

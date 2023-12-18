@@ -1,3 +1,5 @@
+import { CalendarEffects } from '@store/effects/calendar/calendar.effects';
+import { CalendarTabComponent } from './calendar-tab/calendar-tab.component';
 import { CommonModule } from '@angular/common';
 import { EffectsModule } from '@ngrx/effects';
 import { MaterialModule } from '@shared/material/material.module';
@@ -15,7 +17,8 @@ import { UserInfoEffects } from '@store/effects/users/user-info.effects';
     declarations: [
         ProfileComponent,
         PersonalInfoComponent,
-        PasswordUpdateComponent
+        PasswordUpdateComponent,
+        CalendarTabComponent
     ],
     imports: [
         CommonModule,
@@ -23,7 +26,7 @@ import { UserInfoEffects } from '@store/effects/users/user-info.effects';
         MaterialModule,
         ReactiveFormsModule,
         SharedModule,
-        EffectsModule.forFeature([UserCredentialsEffects, UserInfoEffects])
+        EffectsModule.forFeature([UserCredentialsEffects, UserInfoEffects, CalendarEffects])
     ]
 })
 export class ProfileModule { }
