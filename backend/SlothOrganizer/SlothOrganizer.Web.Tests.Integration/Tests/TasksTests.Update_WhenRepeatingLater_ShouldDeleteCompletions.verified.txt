@@ -10,6 +10,7 @@
         Id: 1,
         TaskId: 1,
         IsSuccessful: true,
+        IsExported: false,
         Start: DateTimeOffset_1,
         End: DateTimeOffset_2,
         LastEdited: DateTimeOffset_3
@@ -18,6 +19,7 @@
         Id: 2,
         TaskId: 1,
         IsSuccessful: false,
+        IsExported: false,
         Start: DateTimeOffset_4,
         End: DateTimeOffset_5,
         LastEdited: DateTimeOffset_1
@@ -26,6 +28,7 @@
         Id: 3,
         TaskId: 1,
         IsSuccessful: false,
+        IsExported: false,
         Start: DateTimeOffset_6,
         End: DateTimeOffset_7,
         LastEdited: DateTimeOffset_1

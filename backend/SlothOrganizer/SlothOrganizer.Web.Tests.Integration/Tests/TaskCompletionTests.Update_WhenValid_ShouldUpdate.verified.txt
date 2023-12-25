@@ -4,6 +4,7 @@
     Id: 1,
     TaskId: 1,
     IsSuccessful: true,
+    IsExported: false,
     Start: DateTimeOffset_1,
     End: DateTimeOffset_2,
     LastEdited: DateTimeOffset_3

@@ -2,7 +2,7 @@ import * as authActions from '@store/actions/auth.actions';
 
 import { Component, OnInit } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
-import { Observable, catchError, concatMap, filter, map, of } from 'rxjs';
+import { Observable, catchError, concatMap, filter, map, of, switchMap, take } from 'rxjs';
 
 import { AuthService } from '@api/auth.service';
 import { AuthState } from '@store/states/auth-state';
@@ -47,11 +47,11 @@ export class VerifyEmailComponent extends BaseComponent implements OnInit {
     public submit() {
         this.email$.pipe(
             this.untilDestroyed,
-            concatMap((email) =>
+            switchMap((email) =>
                 this.userCredentialsService.verifyEmail({
                     email,
                     verificationCode: this.codeControl.value
-                })
+                }).pipe(take(1))
             ),
             catchError(() => {
                 this.codeControl.setErrors({ invalidCode: true });
@@ -69,7 +69,7 @@ export class VerifyEmailComponent extends BaseComponent implements OnInit {
         this.email$
             .pipe(
                 this.untilDestroyed,
-                concatMap((email) => this.authService.sendCode(email))
+                switchMap((email) => this.authService.sendCode(email).pipe(take(1)))
             ).subscribe();
     }
 }

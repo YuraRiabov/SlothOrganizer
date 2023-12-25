@@ -1,3 +1,5 @@
+/* eslint-disable @ngrx/avoid-dispatching-multiple-actions-sequentially */
+
 import * as dashboardActions from '@store/actions/dashboard.actions';
 import * as taskActions from '@store/actions/task.actions';
 
@@ -16,6 +18,7 @@ import { Task } from '#types/dashboard/tasks/task';
 import { TaskBlock } from '#types/dashboard/timeline/task-block';
 import { TimelineScale } from '#types/dashboard/timeline/enums/timeline-scale';
 import { addHours } from 'date-fns';
+import { getCalendar } from '@store/actions/profile.actions';
 import { selectHasCalendar } from '@store/selectors/auth.selectors';
 
 @Component({
@@ -46,6 +49,7 @@ export class DashboardComponent extends BaseComponent implements OnInit {
 
     ngOnInit(): void {
         this.store.dispatch(dashboardActions.loadDashboards());
+        this.store.dispatch(getCalendar());
 
         this.dashboards$ = this.store.select(selectDashboards);
         this.currentDashboard$ = this.store.select(selectChosenDashboard);

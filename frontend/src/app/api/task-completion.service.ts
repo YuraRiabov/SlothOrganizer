@@ -22,7 +22,7 @@ export class TaskComletionService extends HttpService {
     }
 
     public export(task: TaskExport) : Observable<void> {
-        return this.post('/export');
+        return this.post('/export', task);
     }
 
     public remove(id: number) : Observable<null> {

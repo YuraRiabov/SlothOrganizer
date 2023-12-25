@@ -10,6 +10,7 @@
         Id: 1,
         TaskId: 1,
         IsSuccessful: false,
+        IsExported: false,
         Start: 2023-01-01 +2,
         End: 2023-01-05 +2,
         LastEdited: 2023-01-01 +2
@@ -18,6 +19,7 @@
         Id: 2,
         TaskId: 1,
         IsSuccessful: false,
+        IsExported: false,
         Start: 2023-01-08 +2,
         End: 2023-01-12 +2,
         LastEdited: 2023-01-01 +2
@@ -26,6 +28,7 @@
         Id: 3,
         TaskId: 1,
         IsSuccessful: false,
+        IsExported: false,
         Start: 2023-01-15 +2,
         End: 2023-01-19 +2,
         LastEdited: 2023-01-01 +2
@@ -34,6 +37,7 @@
         Id: 4,
         TaskId: 1,
         IsSuccessful: false,
+        IsExported: false,
         Start: 2023-01-22 +2,
         End: 2023-01-26 +2,
         LastEdited: 2023-01-01 +2
@@ -42,6 +46,7 @@
         Id: 5,
         TaskId: 1,
         IsSuccessful: false,
+        IsExported: false,
         Start: 2023-01-29 +2,
         End: 2023-02-02 +2,
         LastEdited: 2023-01-01 +2
