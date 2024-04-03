@@ -1,5 +1,4 @@
-﻿using System.Threading.Tasks;
-using AutoMapper;
+﻿using AutoMapper;
 using SlothOrganizer.Contracts.DTO.Calendar;
 using SlothOrganizer.Contracts.DTO.Tasks.Task;
 using SlothOrganizer.Contracts.DTO.Tasks.Task.Enums;

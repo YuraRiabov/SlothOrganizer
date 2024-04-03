@@ -6,6 +6,6 @@ namespace SlothOrganizer.Domain.Repositories
     {
         Task<IEnumerable<VerificationCode>> Get(string userEmail);
 
-        Task<VerificationCode> Insert(VerificationCode verificationCode, string UserEmail);
+        Task<VerificationCode> Insert(VerificationCode verificationCode, string userEmail);
     }
 }
